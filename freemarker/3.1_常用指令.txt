@@ -1,0 +1,39 @@
+if
+	判断是否为null
+		<#if (user.name)??>${user.name}</#if>
+	判断list是否大于0
+		<#if (list?size > 0)>有<#else>无</#if>
+	判断是否相等
+		<#if user == "BigJoe">哈哈哈</#if>
+		<#if gender>男<#else>女</#if>
+		<#if price <= 10>便宜<#elseif price <= 20>还可以<#else>贵</#if>
+		<#if price != 0>免费</#if>
+	
+	
+list，items
+	遍历
+		<#list fruits>
+			<ul>
+				<#items as fruit>
+					<li>${fruit}
+				</#items>
+			</ul>
+		</#list>
+	size为0处理
+		<#list fruits as fruit>${fruit}<#sep>, <#else>没有</#list>	<#-- sep需要注意版本 -->
+	string型list
+		${fruits?join(", ", "没有")}	<#-- 如果每个fruit不是string，就不要这么干了 -->
+
+macro -- 宏，自定义指令
+
+function,return -- 自定义函数
+
+		
+include	
+	<#include "/copyright_footer.html">
+	
+<#assign>
+
+<#golable>
+
+<#local>

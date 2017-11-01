@@ -1,0 +1,32 @@
+预定义例外：用于处理常见的oracle错误，二十多个
+	case_not_found
+	cursor_already_open
+	dup_val_on_index
+	invalid_cursor
+	invalid_number
+	no_data_found
+	too_many_rows
+	zero_divide
+	value_error
+	login_denide	用户非法登录
+	not_logged_on	没有登录就执行dml
+	storage_error	超出内存空间或内存损坏
+	timeout_on_resource 超时
+	
+非预定义例外：用于处理预定义例外不能处理的例外
+
+自定义例外：用于处理与oracle错误无关的其他情况
+	    开发人员为特定情况所定义的例外
+
+create or replace procedure exception_pro(kNo number)
+is
+myException exception;
+begin
+    update emp set sal=sal+1000 where empno=kNo;
+    if sql%notfound then --如果没有update
+	raise myException;   --触发myException
+    end if;
+    exception
+	when myException then
+	dbms_output.put_line('没有更新任何用户');
+end;

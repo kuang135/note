@@ -1,0 +1,54 @@
+流程变量相关
+	act_ru_variable: 正在执行的流程变量表
+	act_hi_varinst: 流程变量历史表
+
+流程变量的作用：
+	1．可以用来传递业务参数，用于流程审核等
+	2．动态指定任务的办理人
+	3．设置指定连线的名称，动态指定任务走向
+
+流程变量支持的类型:
+	Integer,Short,Long,Double,Boolean,Binary,Date,String和实现了Serializable接口的类的类型
+
+流程变量的作用域范围:
+	只对应一个流程实例,也就是说各个流程实例的流程变量是不相互影响的.
+
+流程变量的设置:
+	String taskId = "1304";//任务id
+	TaskService taskService = processEngine.getTaskService();//获取任务service
+	taskService.setVariableLocal(taskId, "请假天数", 3);//设置基本类型的流程变量,设置为loacl
+	taskService.setVariable(taskId, "请假日期", new Date());
+	taskService.setVariable(taskId, "请假原因", "约会");
+
+setVariable和setVariableLocal的区别:
+	setVariableLocal是和当前的任务绑定,当任务完成,该变量就在正在执行的变量表中就消失了
+	setVariable是和流程实例绑定,在全流程运行过程中都管用,一般用这个
+
+流程变量的获取:
+	String taskId = "1304";//任务id
+	TaskService taskService = processEngine.getTaskService();//获取任务service
+	//获取基本类型的流程变量
+	Integer days=(Integer)taskService.getVariable(taskId, "请假天数");//如果当前任务已完成,将获取不到,因为上面设为local
+	Date date=(Date)taskService.getVariable(taskId, "请假日期");
+	String reason=(String)taskService.getVariable(taskId, "请假原因");
+
+通过流程变量来设置连线的走向
+	TaskService taskService = processEngine.getTaskService();
+	String taskId = "1304";// 正在执行的任务ID
+	Map<String, Object> variables = new HashMap<String, Object>();// 流程变量
+	variables.put("money", 100);
+	taskService.complete(taskId, variables);//使任务ID完成任务,通过流程变量来设置连线的走向
+
+流程变量的设置和获取的其他方式场景
+    流程变量可以通过任务service和执行service设置:
+	在任务正在执行时（taskService）、
+	完成任务的时候（taskService）
+	流程正在执行的时候(runtimeService)、
+	流程启动的时候(runtimeService)均可设置环境变量。
+    流程变量可以通过任务service和执行service获取:
+	可以通过任务ID+流程变量名称
+	可以通过任务ID+流程变量名称集合
+	可以通过任务ID获取变量Map集合
+	可以通过执行ID+流程变量名称
+	可以通过执行ID+流程变量名称集合
+	可以通过执行ID获取变量Map集合

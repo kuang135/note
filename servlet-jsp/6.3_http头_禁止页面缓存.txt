@@ -1,0 +1,12 @@
+禁止页面缓存的三个头：
+    Cache-Control: no-cache
+    Pragma: no-cache
+    Expires: 时间值
+
+为什么有三个头：
+    浏览器有多种，支持的头不一致
+
+方法：
+    response.setHeader("cache-control","no-cache");
+    response.setHeader("Pragma","no-cache");
+    response.setDateHeader("Expires",0);  //0对应Thu, 01 Jan  1970 00:00:00 GMT

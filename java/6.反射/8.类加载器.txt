@@ -1,0 +1,22 @@
+java虚拟机中可以安装多个类加载器，系统默认三个主要加载器：
+BootStrap,ExtClassLoader,AppClassLoader，他们负责加载特定位置的类。
+
+类加载器也是java类，因为其他是java类的类加载器本身也要被类加载器加载，
+显然必须有第一个类加载器不是java类，这正是BootStrap，
+嵌套在java虚拟机内核里面，java虚拟机内核一启动，它就已经在里面了
+由c++写的二进制代码
+
+BootStrap → JRE/lib/rt.jat
+ExtClassLoader → JRE/lib/ext/*.jar
+AppClassLoader → CLASSPATH指定的所有jar或目录
+由上而下三者是继承关系
+
+
+String name=ClassLoaderTest.class.getClassLoader().getClass().getName();
+System.out.println(name);
+
+sun.misc.Launcher$AppClassLoader
+
+
+System.out.println(System.class.getClassLoader());
+结果为null，System类由BootStrap加载

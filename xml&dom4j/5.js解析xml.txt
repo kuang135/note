@@ -1,0 +1,30 @@
+用js从xml文件中取数据
+
+//一个加载xml文件的函数
+function parseXML(filename){
+	var xmlDoc;
+	try { //Internet Explorer
+		xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+	} catch (e) {
+		try { //Firefox, Mozilla, Opera, etc.
+			xmlDoc = document.implementation.createDocument("", "", null);
+		} catch (e) {
+		}
+	}
+	//关闭异步加载，这样确保在文档完全加载之前解析器不会继续脚本的执行。 
+	xmlDoc.async=false;
+	//解析器加载名为 "note.xml" 的 XML 文档、
+	xmlDoc.load(filename);
+	return xmlDoc;	
+}
+
+//读取xml文件
+var xmlDoc = parseXML("cities.xml");
+//根据标签名拿标签对象
+var xmlProvinceElements = xmlDoc.getElementsByTagName("province");
+//根据标签的属性名拿属性值
+var xmlProvinceName=xmlProvinceElements[i].getAttribute("name")
+//拿标签中的标签对象
+var cityArray = xmlProvinceElements[i].getElementsByTagName("city");
+//拿最后一个标签中的内容
+var cityName = cityArray[j].firstChild.nodeValue;//标签的孩子就是内容,只有一个孩子

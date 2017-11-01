@@ -1,0 +1,16 @@
+格式化的时候会区分为多个区块群组(block group)，
+每个区块群组都有独立的inode/block,superblock系统。
+
+
+superblock：记录filesystem的整体信息，包括inode/block的总量，使用量，剩余量，
+	以及文件系统的格式与相关信息等
+inode：一个文件一个inode，记录文件的属性，文件数据所在的block号码
+block：实际记录文件的内容，若文件太大，会占用多个block
+
+
+系统将inode记录block号码的区域定义为12个直接，1个间接，1个双间接，1个三间接记录区。
+间接就是再拿一个block来记录block号码。
+
+
+文件系统的磁盘空间占用情况
+	df -h

@@ -1,0 +1,73 @@
+TypeHandler：自定义类型处理，比如将数据库的1和0映射为男和女等，不过也可以通过sql语句直接处理
+
+1.编写 SexTypeHandler extends BaseTypeHandler<String>
+
+	@Override
+	public void setNonNullParameter(PreparedStatement ps, int i, String parameter, JdbcType jdbcType) throws SQLException {
+		if ("男".equals(parameter)) {
+			ps.setInt(i, 1);
+		} else if ("女".endsWith(parameter)) {
+			ps.setInt(i, 0);
+		} else {
+			ps.setInt(i, -1);
+		}
+	}
+	@Override
+	public String getNullableResult(ResultSet rs, String columnName) throws SQLException {
+		int sex = rs.getInt(columnName);
+		if (sex == 1) {
+			return "男";
+		} else if (sex == 0) {
+			return "女";
+		} else {
+			return "无";
+		}
+	}
+	@Override
+	public String getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+		int sex = rs.getInt(columnIndex);
+		if (sex == 1) {
+			return "男";
+		} else if (sex == 0) {
+			return "女";
+		} else {
+			return "无";
+		}
+	}
+	@Override
+	public String getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+		int sex = cs.getInt(columnIndex);
+		if (sex == 1) {
+			return "男";
+		} else if (sex == 0) {
+			return "女";
+		} else {
+			return "无";
+		}
+	}
+
+2.config中注册
+	<typeHandlers>
+	    <typeHandler handler="com.demo.mybatis.java.typehandler.SexTypeHandler" 
+	    	javaType="java.lang.String" jdbcType="TINYINT"/>
+	</typeHandlers>
+	
+3.mapper中使用
+	<resultMap type="com.demo.mybatis.java.typehandler.User" id="userResultMap" autoMapping="true">
+		<id property="id" column="id"/>
+		<result property="sex" column="sex" typeHandler="com.demo.mybatis.java.typehandler.SexTypeHandler" jdbcType="TINYINT" javaType="String" />
+	</resultMap>
+
+	<select id="getUserList" resultMap="userResultMap"> 
+		SELECT * FROM USER
+	</select>
+	
+	<insert id="addUser" parameterType="com.demo.mybatis.java.typehandler.User" >
+		INSERT INTO USER
+			( ID, NAME, PASSWORD, SEX )
+		VALUES
+			( #{id,jdbcType=VARCHAR,javaType=String}, 
+			  #{name,jdbcType=VARCHAR,javaType=String}, 
+			  #{password,jdbcType=VARCHAR,javaType=String},
+			  #{sex,typeHandler=com.demo.mybatis.java.typehandler.SexTypeHandler})
+	</insert>

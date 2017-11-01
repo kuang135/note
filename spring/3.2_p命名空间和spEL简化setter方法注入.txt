@@ -1,0 +1,19 @@
+spring2.5以后,为了简化setter方法属性注入,引用p名称空间的概念  
+
+	1.引入p名称空间 xmlns:p="http://www.springframework.org/schema/p"
+
+	2.将<property> 子元素，简化为<bean>元素属性配置
+		<bean id="employee" class="cn.itcast.bean.Employee" p:name="李四" p:car-ref="car"/>
+
+
+spring3.0 以后,提供了spEL(spring expression language)表达式语言 
+	在spring配置文件中通过 #{} 引用另一个Bean，引用属性、调用方法 
+
+	#{beanId} 引用另一个对象
+	#{beanId.属性名} 引用另一个对象的属性
+	#{beanId.方法()} 调用另一个对象的方法
+		
+	<bean id="employee" class="cn.itcast.bean.Employee" 
+	      p:name="#{'王五'.substring(0,1)}" p:car="#{car}"/>
+
+ 

@@ -1,0 +1,65 @@
+1.切片(Slice)，针对list，tuple，str
+	L = list(range(100))
+	取前10 	L[:10]
+	取后10 	L[-10:]
+	取11-20 L[10:20]
+	前10，每2个取1个	L[:10:2]
+	所有数，每5个取1个	L[::5]
+	复制	L[:]
+	
+2.迭代，for ... in ，针对list,tuple,str,dict,set等Iterable对象
+	d = {'a': 1, 'b': 2, 'c': 3}
+	for key in d:
+	for value in d.values():
+	for k, v in d.items():
+	
+	from collections import Iterable
+	isinstance('abc', Iterable) # str是否可迭代
+	
+3.列表生成式，List Comprehensions
+	l = list(range(1,11)) 	#[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+	ll = [x * x for x in l] #[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+	两层循环
+	[m + n for m in 'ABC' for n in 'XYZ']
+	两个变量
+	d = {'x': 'A', 'y': 'B', 'z': 'C' }
+	[k + '=' + v for k, v in d.items()] #['y=B', 'x=A', 'z=C']
+	
+4.生成器，generator，一边循环一边计算的机制
+	第一种方法很简单，只要把一个列表生成式的[]改成()
+	g = (x * x for x in range(10))
+	next(g)
+	
+	generator的另一种方法。如果一个函数定义中包含yield关键字，那么这个函数就不再是一个普通函数，而是一个generator
+	函数是顺序执行，遇到return语句或者最后一行函数语句就返回。
+	而变成generator的函数，在每次调用next()的时候执行，遇到yield语句返回，再次执行时从上次返回的yield语句处继续执行。
+	def odd():
+		print('step 1')
+		yield 1
+		print('step 2')
+		yield(3)
+		print('step 3')
+		yield(5)
+	o = odd()
+	next(o)
+	
+5.迭代器
+	from collections import Iterator
+	isinstance('ab', Iterator)	# False，不是Iterator对象
+	凡是可作用于for循环的对象都是Iterable类型，
+	凡是可作用于next()函数的对象都是Iterator类型，
+	集合数据类型如list、dict、str等是Iterable但不是Iterator，不过可以通过iter()函数获得一个Iterator对象。
+	Python的for循环本质上就是通过不断调用next()函数实现的
+		for x in [1, 2, 3, 4, 5]:
+			pass
+		# 实际上完全等价于：
+		it = iter([1, 2, 3, 4, 5])
+		while True:
+			try:
+				# 获得下一个值:
+				x = next(it)
+			except StopIteration:
+				# 遇到StopIteration就退出循环
+				break
+	
+	

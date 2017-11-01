@@ -1,0 +1,35 @@
+命名查询语句: 给查询语句起个名字,在hbm.xml或注解中配置起来,在程序中通过名字调用语句.
+
+配置hbm.xml
+	<class name="cn.itcast.po.Customer" table="t_customer">
+		... ...
+		<query name="findById1">from Customer where id=?</query>
+		<sql-query name="findById2">
+			<return class="cn.itcast.po.Customer"/> <!--  实体数据封装的对象类型 -->
+			select * from t_customer where c_id=?
+		</sql-query>
+	</class>
+	<query name="findById1">from Customer where id=?</query>
+	<sql-query name="findById2">
+		<return class="cn.itcast.po.Customer"/> <!--  实体数据封装的对象类型 -->
+		select * from t_customer where c_id=?
+	</sql-query>
+
+
+调用
+    1.在<class>标签内配置hql
+	Query query = session.getNamedQuery("cn.itcast.po.Customer.findById1");
+	Customer c = (Customer)query.setParameter(0, 1).uniqueResult();
+
+    2.在<class>标签内配置sql
+	Query query = session.getNamedQuery("cn.itcast.po.Customer.findById2");
+	Customer c = (Customer)query.setParameter(0, 3).uniqueResult();
+
+    3.在<class>标签外配置hql
+	Query query = session.getNamedQuery("findById1");
+	Customer c = (Customer)query.setParameter(0, 1).uniqueResult();
+
+    4.在<class>标签外配置sql
+	Query query = session.getNamedQuery("findById2");
+	Customer c = (Customer)query.setParameter(0, 3).uniqueResult();
+

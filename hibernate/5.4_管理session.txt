@@ -1,0 +1,27 @@
+在实际 Java 应用中, 把管理 Session 对象的生命周期交给 Hibernate 管理, 可以简化 Java 应用程序代码和软件架构.
+
+Hibernate管理 Session 的方法:
+	1.委托程序管理Session的生命周期
+	2.Session与本地线程绑定
+	3.Session与JTA事务绑定
+
+在hibernate.cfg.xml, hibernate.current_session_context_class 属性用于指定 Session 管理方式, 可选值包括
+	1.managed: Hibernate委托程序来管理Session对象的生命周期(默认)
+	2.thread: Session 对象的生命周期与本地线程绑定
+	3.jta*: Session 对象的生命周期与 JTA 事务绑定
+
+方法1:
+	sessionFactory.openSession();
+	session.close();
+
+方法2:	
+	配置hibernate.cfg.xml
+		<property name="hibernate.current_session_context_class">thread</property>
+	代码中调用Session
+		sessionFactory.getCurrentSession();//第一次调用,创建Session,绑定ThreadLocal,再次调用直接从ThreadLocal中取
+		session.getTransaction().rollback();//关闭Session
+		session.getTransaction().commit();//清理Session的缓存,关闭Session
+
+	
+
+

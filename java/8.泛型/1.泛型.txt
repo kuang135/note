@@ -1,0 +1,25 @@
+泛型是提供给javac编译器使用的，可以限定集合中的输入类型，让编译器挡住源程序中的非法输入，
+    编译器编译带类型说明的集合时会去除掉"类型"信息，使程序运行效率不受影响，
+    对于参数化的泛型类型，getClass()方法的返回值和原始类型完全一样。
+
+由于编译城市的字节码会去掉泛型的类型信息，只要跳过编译器，
+就可以往某个泛型集合中加入其他类型的数据，
+例如，用反射得到集合，再调用其add方法即可。
+	ArrayList<Integer> array=new ArrayList<Integer>();
+	array.getClass().getMethod("add",Object.class).invoke(array, "你好");
+	System.out.println(array.get(0));
+
+ArrayList<E>称为泛型类型
+E称为类型变量或类型参数
+ArrayList<Integer>称为参数化的类型
+Integer称为类型参数的实例或实际参数类型
+<>念成typeof，ArrayList typeof Integer
+ArrayList称为原始类型
+
+参数化类型与原始类型的兼容性：
+    Collection<String> c=new Vector();//编译报警告
+    Collection c=new Vector<String>();//编译报警告	
+
+参数化类型不考虑类型参数的继承关系：
+    Vector<String> v=new Vector<Object>();//错误
+    Vector<Object> v=new Vector<String>();//错误

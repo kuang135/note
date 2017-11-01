@@ -1,0 +1,27 @@
+service
+	
+常用内置服务
+	$compile：编译服务
+	$filter: 数据格式化工具，内置8个
+	$interval
+	$timeout
+	$locale：国际化
+	$location
+	$log：提供日志
+	$parse
+	$http：封装了ajax
+	
+		var myModule=angular.module("MyModule",[]);
+		myModule.controller('LoadDataCtrl', ['$scope','$http', function($scope,$http){
+			$http({
+				method: 'GET',
+				url: 'data.json'
+			}).success(function(data, status, headers, config) {
+				console.log("success...");
+				console.log(data);
+				$scope.users=data;
+			}).error(function(data, status, headers, config) {
+				console.log("error...");
+			});
+		}]);
+		

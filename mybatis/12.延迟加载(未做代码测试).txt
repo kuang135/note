@@ -1,0 +1,18 @@
+延迟加载: 关联查询时,不及时将关联的数据查询出来,而是在需要的时候进行查询.
+	  期间如果session关闭,或者事务提交,需重新打开session,开启事务,获取Mapper
+
+开启延迟加载：
+	<setting name="lazyLoadingEnabled" value="true"/> <!-- 默认为true -->
+	<setting name="aggressiveLazyLoading" value="false"/> <!-- 默认为true -->
+
+	lazyLoadingEnabled：true使用延迟加载，false禁用延迟加载.
+	aggressiveLazyLoading：true表示,当延迟加载时,访问对象中一个懒对象属性,将加载这个对象中其他的所有懒对象属性.
+			       false表示,当延迟加载时,访问对象中一个懒对象属性，不会加载对象中其他的懒对象属性.
+添加cglib
+	<dependency>
+		<grounpId>cglib</groupId>
+		<artifactId>cglib</artifactId>
+		<version>3.1</version>
+	</dependency>
+
+代码测试,期间session关闭,或者事务提交

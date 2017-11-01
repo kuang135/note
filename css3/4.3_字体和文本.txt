@@ -1,0 +1,57 @@
+字体
+	font-size 		设置字体的大小
+	font-family 	设置font字体
+	font-variant 	设置英文字体是否转换为小型大写
+	font-style 		设置字体是否倾斜
+	font-weight 	设置字体是否加粗
+	font 			设置字体样式复合写法
+	@font-face 		设置Web字体
+
+
+文本	
+	color		文本颜色
+	text-align 	设置文本对齐方式
+				left 靠左对齐，默认
+				right 靠右对齐
+				center 居中对齐
+				justify 内容两端对齐
+				start 让文本处于开始的边界
+				end 让文本处于结束的边界	
+	text-decoration 装饰文本出现各种划线
+	text-shadow 给文本添加阴影
+				四个值，第一个值：水平偏移；第二个值：垂直偏移；第三个值：阴影模糊度（可选）；第四个值：阴影颜色（可选）
+	line-height 设置行高
+				normal 设置默认间距
+				长度值比如：“数字”+“px”
+				数值比如：1,2,3
+				% 比如：200%
+	text-transform 	将英文文本转换大小写
+	white-space 排版中的空白处理方式
+				normal 默认值，空白符被压缩，文本自动换行
+				nowrap 空白符被压缩，文本不换行
+				pre 空白符被保留，遇到换行符则换行
+				pre-line 空白符被压缩，文本会在排满或遇换行符换行
+				pre-wrap 空白符被保留，文本会在排满或遇换行符换行
+	letter-spacing 	设置字母之间的间距
+	word-spacing 	设置单词之间的间距
+	word-wrap 		控制段词
+	text-indent 设置文本首行的缩进
+				normal 设置默认间距
+				长度值比如：“数字”+“px”
+文本裁剪	
+	text-overflow 属性来控制文本的溢出部分，它的作用是对溢出的部分裁剪掉，然后判定是否添加省略号
+		clip 默认值，裁剪文本时不添加"..."省略号
+		ellipsis 裁剪文本时添加"..."省略号
+		p {
+			width: 160px;
+			background: silver;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+文本描边
+	CSS3 提供了描边属性，即text-stroke、text-stroke-width、text-stroke-color。
+	目前只有webkit 引擎的浏览器支持，并且必须加上-webkit-前缀才能有效。
+文本填充
+	CSS3 提供了一个文本颜色填充功能：text-fill-color，感觉和color 属性很像。
+	其实在配合其他属性才能达到不一样的效果。

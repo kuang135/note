@@ -1,0 +1,24 @@
+{ 
+	parse: [Function: urlParse],
+	resolve: [Function: urlResolve],
+	resolveObject: [Function: urlResolveObject],
+	format: [Function: urlFormat],
+	Url: [Function: Url] 
+}
+
+var url = require('url');
+
+console.log(url.resolve('http://example.com/one/', 'two')); //http://example.com/one/two
+console.log(url.resolve('http://example.com/one', '/two')); //http://example.com/two
+
+var urlObj = url.parse('http://127.0.0.1:8080/user?name=byvoid&email=byvoid@byvoid.com#123', true);
+console.log(urlObj.constructor.toString());
+console.log(urlObj);
+
+var urlObj = new url.Url();
+urlObj.protocol = 'http';
+urlObj.host = '127.0.0.1:8080';
+urlObj.pathname = 'user';
+urlObj.query = { name: 'byvoid'};
+var string = url.format(urlObj);
+console.log(string);

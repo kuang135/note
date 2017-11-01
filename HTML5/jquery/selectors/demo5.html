@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script  src="../jquery-3.1.0.min.js"></script>
+
+<script type="text/javascript">
+	
+$(function(){
+	$(":button").click(function(){
+		$("tr").css("background-color", "#ffffff");
+		var sel=$(":text").val();
+		$("tr:"+sel).css( "background-color", "#bbbbff" );
+	});
+});
+
+</script>
+
+
+</head>
+<body>
+	
+	<table border="1">
+		<tr><td>Row with Index #0</td></tr>
+		<tr><td>Row with Index #1</td></tr>
+		<tr><td>Row with Index #2</td></tr>
+		<tr><td>Row with Index #3</td></tr>
+		<tr><td>Row with Index #4</td></tr>
+		<tr><td>Row with Index #5</td></tr>
+		<tr><td>Row with Index #6</td></tr>
+		<tr><td>Row with Index #7</td></tr>
+	</table>
+
+	<form>
+		<input type="text" />
+		<input type="button" value="do"/>
+	</form>
+
+
+</body>
+</html>

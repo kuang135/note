@@ -1,0 +1,21 @@
+oracle数据库管理员的基本职责：
+  安装和升级oracle数据库
+  建库，表空间，表，视图，索引...
+  制定并实施备份和恢复计划  
+  数据库权限管理，调优，故障排除
+  能参与项目开发，会编写sql语句，存储过程，触发器，规则，约束，包
+
+
+sys和system的区别：
+1.sys：所有oracle的数据字典的基表和视图都存放在sys用户中，
+       sys用户拥有dba，sysdba，sysoper角色或权限
+  system：用于存放次一级的内部数据，如oracle的一些特性或工具的管理信息
+       system用户拥有dba，sysdba角色或系统权限
+2.sys用户必须以as sysdba或as sysoper形式登录，不能以normal方式登录
+  system如果正常登录，就是一个普通的dba用户，也可以as sysdba登录
+
+
+管理初始化参数
+  显示初始化参数
+	show parameter
+  修改参数

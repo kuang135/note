@@ -1,0 +1,20 @@
+--按员工的职位长工资，总裁涨1000元，经理涨800元，其他人员涨400元
+DECLARE
+  CURSOR emp_cursor IS SELECT EMPNO,EMPJOB FROM EMP;
+  pempno EMP.EMPNO%TYPE;
+  pjob EMP.EMPJOB%TYPE;
+BEGIN
+  rollback;
+  OPEN emp_cursor;
+  LOOP
+  FETCH emp_cursor INTO pempno,pjob;
+  EXIT WHEN emp_cursor%notfound;
+    IF pjob = 'PRESIDENT' THEN UPDATE EMP SET SAL=SAL+1000 WHERE EMPNO = pempno;
+    ELSIF pjob = 'MANAGER' THEN UPDATE EMP SET SAL=SAL+800 WHERE EMPNO = pempno;
+    ELSE UPDATE EMP SET SAL=SAL+400 WHERE EMPNO = pempno;
+    END IF;
+  END LOOP;
+  CLOSE emp_cursor;
+  commit;
+END;
+/

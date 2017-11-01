@@ -1,0 +1,10 @@
+集成IKAnalyzer：
+	1.将IKAnalyzer-2012-4x.jar拷贝到example\solr-webapp\webapp\WEB-INF\lib下
+	2.在schema.xml文件中添加fieldType：
+		<fieldType name="text_ik" class="solr.TextField">   
+			 <analyzer class="org.wltea.analyzer.lucene.IKAnalyzer"/>   
+		</fieldType>
+	3.将需要中文分词的字段类型改为text_ik
+		<field name="title" type="text_ik" indexed="true" stored="true"/>
+	4.重启solr
+	5.通过界面上的Analysis测试分词

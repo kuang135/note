@@ -1,0 +1,16 @@
+源码包和RPM包的区别：
+	1.概念上的区别
+	2.安装位置的不同
+
+RPM包默认的安装目录，由软件作者决定
+	/etc	-- 配置文件
+	/usr/bin/	-- 可执行命令
+	/usr/lib/	-- 程序所使用的函数库
+	/usr/share/doc/	-- 基本的软件使用手册
+	/usr/share/man/ -- 帮助文件
+RPM包安装的服务可以使用绝对路径来启动，也可以使用系统服务管理命令(service)来管理
+	/etc/rc.d/init.d/httpd start -- linux标准
+	service httpd start -- redhat，搜索/etc/rc.d/init.d目录
+
+源码包的安装位置：安装在指定的安装目录中，因为没有卸载命令
+源码包安装的服务不能被service命令管理，只能用绝对路径进行服务的管理

@@ -1,0 +1,130 @@
+NameNode
+DataNode
+ResourceManager：Mapreduce的主
+NodeManager：紧跟DataNode，无需配置
+							NN		DN		RM		DM
+	node0: 172.16.129.130	1				1	
+	node1: 172.16.129.131	1		1 				1
+	node2: 172.16.129.132			1 				1 
+	node3: 172.16.129.133			1 				1
+
+/etc/hosts
+	node0: 172.16.129.130
+	node1: 172.16.129.131
+	node2: 172.16.129.132
+	node3: 172.16.129.133
+
+关闭防火墙
+	service iptables stop
+	
+安装jdk，ssh
+	配置ssh零密码登录, 为了node0能无密码登录node1，node2
+		1)ssh localhost -- 每台机子上做无密码本地登录
+		  ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa 
+		  cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+		2)node0把生成的id_dsa.put传给node1,node2,node3
+		  scp id_dsa.pub root@node1:~
+		3)node1,node2,node3把id_dsa.pub的内容追加到authorized_keys中
+		  cat ~/id_dsa.pub >> ~/.ssh/authorized_keys
+		4)node0就能无密码登录node1,node2,node3了
+
+---------------------------------------------------------------------------------------------
+		
+配置hdfs
+	etc/hadoop/hadoop-env.sh 和 etc/hadoop/yarn-env.sh 中添加 JAVA_HOME 配置
+	
+	etc/hadoop/core-site.xml: NameNode在哪台机子上，hdfs的入口
+		<configuration>
+			<property>
+				<name>fs.defaultFS</name>
+                <value>hdfs://node0:9000</value> <!-- node0为namenode -->
+			</property>
+			<property>
+				<name>hadoop.tmp.dir</name> <!-- 临时目录，namenode和datanode的工作目录都是以这个为基础的 -->
+				<value>/opt/hadoop-2.5.2</value>
+			</property>
+		</configuration>
+
+	etc/hadoop/conf/hdfs-site.xml:
+		<configuration>
+			<!-- 服务名 -->
+			<property>
+					<name>dfs.nameservices</name>
+					<value>hadoop-cluster1</value>
+			</property>
+			<property>
+					<name>dfs.namenode.secondary.http-address</name>
+					<value>node1:50090</value>
+			</property>
+			<property>
+					<name>dfs.replication</name> <!-- 副本数，默认为3 -->
+					<value>3</value> <!-- node1,node2,node3作为datanode -->
+			</property>
+	</configuration>
+	
+	etc/hadoop/slaves: 配置datanode的IP地址
+		node1
+		node2
+		node3
+		
+命令
+	格式化
+		[root@node0 bin]# ./hadoop namenode -format 
+			只要格式化一次就好了，否则node0上的clusterID会改变，其他机子上的clusterID不会变
+			一定要保证 /opt/hadoop-2.5.2/dfs/name/current/VERSION, /opt/hadoop-2.5.2/dfs/data/current/VERSION中的clusterID一致
+	启动
+		[root@node0 sbin]# ./start-dfs.sh
+	查看
+		jps
+	关闭
+		[root@node0 sbin]# ./stop-dfs.sh
+		
+访问管理界面
+	http://172.16.129.130:50070/
+  
+创建目录中的目录 
+	[root@node0 bin]# ./hdfs dfs -mkdir -p /usr/kuang
+  上传文件
+	[root@node0 bin]# ./hdfs dfs -put /usr/local/kuang/hadoop_dfs.txt /usr/kuang/hadoop_dfs.txt
+  查看文件内容
+	[root@node0 bin]# ./hdfs dfs -cat /usr/kuang/hadoop_dfs_could.txt
+  下载文件
+	[root@node0 bin]# ./hdfs dfs -get /usr/kuang/hadoop_dfs_could.txt /usr/local/kuang/testtest.txt
+  更多指令参考
+  
+-------------------------------------------------------------------------------------------------------------
+  
+配置mapreduce
+	mapred-site.xml	
+		<configuration>  
+			<property>  
+				<name>mapreduce.framework.name</name>  
+				<value>yarn</value>  
+			</property>   
+		</configuration>
+		
+	yarn-site.xml
+		<configuration>  
+			<property>  
+				<name>yarn.nodemanager.aux-services</name>  
+				<value>mapreduce_shuffle</value>  
+			</property>
+			<!-- resourcemanager的主机 -->
+			<property>  
+				<name>yarn.resourcemanager.hostname</name>  
+				<value>node0</value>  
+			</property> 			
+		</configuration>
+		
+命令
+	启动
+		[root@node0 sbin]# ./start-yarn.sh
+	查看
+		jps
+	关闭
+		[root@node0 sbin]# ./stop-yarn.sh
+		
+访问管理界面
+	http://172.16.129.130:8088
+	
+	

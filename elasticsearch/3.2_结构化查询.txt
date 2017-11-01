@@ -1,0 +1,70 @@
+DSL语句搜索：
+	GET /megacorp/employee/_search
+	{
+		"query" : {
+			"match" : {
+				"last_name" : "Smith"
+			}
+		}
+	}
+	
+DSL搜索举例
+全文搜索，返回相关性最大的结果集
+	GET /megacorp/employee/_search
+	{
+		"query" : {
+			"match" : {
+				"about" : "rock climbing"
+			}
+		}
+	}
+
+短语搜索
+	GET /megacorp/employee/_search
+	{
+		"query" : {
+			"match_phrase" : {
+				"about" : "rock climbing"
+			}
+		}
+	}
+	
+高亮搜索结果
+	GET /megacorp/employee/_search
+	{
+		"query" : {
+			"match_phrase" : {
+				"about" : "rock climbing"
+			}
+		},
+		"highlight": {
+			"fields" : {
+				"about" : {}
+			}
+		}
+	}
+
+
+
+子句格式
+	{
+		"match": {
+			"tweet": "elasticsearch"
+		}
+	}
+	
+	
+多子句合并格式
+	{
+		"bool": {
+			"must": { "match":      { "email": "business opportunity" }},
+			"should": [
+				 { "match":         { "starred": true }},
+				 { "bool": {
+					   "must":      { "folder": "inbox" }},
+					   "must_not":  { "spam": true }}
+				 }}
+			],
+			"minimum_should_match": 1
+		}
+	}

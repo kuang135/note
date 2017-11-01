@@ -1,0 +1,36 @@
+问题: 每次访问Servlet都会去初始化Spring容器
+      一个项目中只需一个Spring容器
+	ApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
+	UserService userService = (UserService) context.getBean("userService");
+	userService.login();
+
+解决: 将Spring容器初始化,交给web容器负责
+      
+原理: 用ServletContextListener监听ServletContext,
+      在ServletContext初始化后将Spring容器对象(WebApplicationContext)放入ServletContext 
+
+步骤: 1.导入spring-web-3.2.0.RELEASE.jar
+      
+      2.web.xml中配置监听器
+        ContextLoaderListener extends ContextLoader implements ServletContextListener
+		<listener>
+	  	    <listener-class>
+	  		org.springframework.web.context.ContextLoaderListener
+	  	    </listener-class>
+  		</listener>
+
+      3.配置xml的路径和名字
+        ContextLoaderListener会从ServletContext中读取名为contextConfigLocation的参数,根据xml的路径和名字
+	创建WebApplicationContext对象并放入ServletContext,名为 WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
+		<context-param>
+  		    <param-name>contextConfigLocation</param-name>
+  		    <param-value>classpath:applicationContext.xml</param-value>
+		</context-param>	
+
+      4.web应用中获取Spring容器
+	a)WebApplicationContext context=(WebApplicationContext) this.getServletContext()
+				.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);//this代表Servlet
+	b)WebApplicationContext context=WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
+
+
+      

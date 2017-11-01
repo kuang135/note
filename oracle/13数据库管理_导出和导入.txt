@@ -1,0 +1,55 @@
+导出：导出表，导出方案，导出数据库
+导出使用export工具，在oracle的BIN目录下操作 D:\oracle\product\10.2.0\db_1\BIN
+导出使用exp命令来完成，该命令的常用选项有：
+    userid：用于指定执行导出操作的用户名，口令，连接字符串
+    tables：用于指定执行导出操作的表
+    owner：用于指定执行导出操作的方案
+    full=y：用于指定执行导出操作的数据库
+    inctype：用于指定执行导出操作的增量类型
+    row：用于指定执行导出操作是否要导出表中的数据
+    file：用于指定导出文件名
+导出自己的表
+    exp userid=scott/cat@myOrcl1 tables=(emp,dept) file=d:\e1.dmp
+导出其他方案的表，需要dba的权限或exp_full_database的权限，比如system用户就可以导出scott的表
+    exp userid=system/manager@myOrcl1 tables=(scott.emp) file=d:\e2.dmp
+导出表的结构
+    exp userid=scott/cat@myOrcl1 tables=(emp,dept) file=d:\e3.dmp rows=n
+直接导出的方式导出表(数据量大时)
+    exp userid=scott/cat@myOrcl1 tables=(emp,dept) file=d:\e3.dmp direct=y
+导出自己的方案
+    exp userid=scott/cat@myOrcl1 owner=scott file=d:\scott.dmp
+导出其他方案，需要dba的权限或是exp_full_database的权限，比如system用户可以导出任何方案
+    exp userid=system/manager@myOrcl1 owner=(system,scott) file=d:\system.dmp
+导出数据库，需要dba的权限或是exp_full_database的权限
+    exp userid=system/manager@myOrcl1 full=y inctype=complete file=d:\x.dmp
+
+
+导入：导入表，导入方案，导入数据库
+导入要使用的文件必须是export锁导出的文件
+导入使用import工具，在oracle的BIN目录下操作 D:\oracle\product\10.2.0\db_1\BIN
+    userid：用于指定执行导入操作的用户名，口令，连接字符串
+    tables：用于指定执行导入操作的表
+    formuser：用于指定源用户
+    touser：用于指定目标用户
+    file：用于指定导入文件名
+    full=y：用于指定执行导入整个文件
+    inctype：用于指定执行导入操作的增量类型
+    row：指定是否要导入表数据
+    ignore：如果表存在，则只导入数据
+    file：用于指定导出文件名
+导入自己的表
+    imp userid=scott/cat@myOrcl1 tables=(emp) file=d:\e1.dmp
+导入其他方案的表，需要dba的权限或exp_full_database的权限
+    imp userid=system/manager@myOrcl1 tables=(scott.emp) file=d:\e2.dmp touser=scott
+导入表的结构
+    imp userid=scott/cat@myOrcl1 tables=(emp,dept) file=d:\e3.dmp rows=n
+直接导出的方式导出表(数据量大时)
+    imp userid=scott/cat@myOrcl1 tables=(emp,dept) file=d:\e3.dmp direct=y
+导入数据，表已经存在可以只导入表的数据
+    imp userid=scott/cat@myOrcl1 tables=(emp) file=d:\xxx.dmp ignore=y
+导出自己的方案
+    imp userid=scott/cat file=d:\scott.dmp
+导出其他方案，需要dba的权限
+    imp userid=system/manager file=d:\system.dmp fromuser=system touser=scott
+导出数据库，会导入所有对象结构和数据
+    imp userid=system/manager full=y  file=d:\x.dmp

@@ -1,0 +1,77 @@
+Socket是网络编程的一个抽象概念。
+通常我们用一个Socket表示“打开了一个网络链接”，而打开一个Socket需要知道目标计算机的IP地址和端口号，再指定协议类型即可。
+一个Socket依赖4项：服务器地址、服务器端口、客户端地址、客户端端口来唯一确定一个Socket.
+
+客户端
+	1.创建一个基于TCP连接的Socket
+		# 导入socket库:
+		import socket
+
+		# 创建一个socket:
+		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		# 建立连接:
+		s.connect(('www.sina.com.cn', 80))
+	AF_INET指定使用IPv4协议，如果要用更先进的IPv6，就指定为AF_INET6
+	SOCK_STREAM指定使用面向流的TCP协议
+
+	Web服务的标准端口是80
+	SMTP服务是25端口
+	FTP服务是21端口
+	端口号小于1024的是Internet标准服务的端口，端口号大于1024的，可以任意使用
+
+	2.建立TCP连接后，我们就可以向新浪服务器发送请求，要求返回首页的内容：
+		# 发送数据:
+		s.send(b'GET / HTTP/1.1\r\nHost: www.sina.com.cn\r\nConnection: close\r\n\r\n')
+		
+	3.接收新浪服务器返回的数据：
+		# 接收数据:
+		buffer = []
+		while True:
+			# 每次最多接收1k字节:
+			d = s.recv(1024)
+			if d:
+				buffer.append(d)
+			else:
+				break
+		data = b''.join(buffer)
+		
+	4.接收完数据后，调用close()方法关闭Socket，这样，一次完整的网络通信就结束了：
+		# 关闭连接:
+		s.close()
+		
+	5.接收到的数据包括HTTP头和网页本身，需要把HTTP头和网页分离一下，把HTTP头打印出来，网页内容保存到文件
+		header, html = data.split(b'\r\n\r\n', 1)
+		print(header.decode('utf-8'))
+		# 把接收的数据写入文件:
+		with open('sina.html', 'wb') as f:
+			f.write(html)
+			
+服务端
+	服务器进程首先要绑定一个端口并监听来自其他客户端的连接。
+	如果某个客户端连接过来了，服务器就与该客户端建立Socket连接，随后的通信就靠这个Socket连接了。
+	服务器同时响应多个客户端的请求，所以，每个连接都需要一个新的进程或者新的线程来处理，否则，服务器一次就只能服务一个客户端了
+		#创建一个Socket：
+		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		# 监听端口:
+		s.bind(('127.0.0.1', 9999))
+		#指定等待连接的最大数量
+		s.listen(5)
+		print('Waiting for connection...')
+		while True:
+			# 接受一个新连接:
+			sock, addr = s.accept()
+			# 创建新线程来处理TCP连接:
+			t = threading.Thread(target=tcplink, args=(sock, addr))
+			t.start()
+		#每个连接都必须创建新线程（或进程）来处理
+		def tcplink(sock, addr):
+			print('Accept new connection from %s:%s...' % addr)
+			sock.send(b'Welcome!')
+			while True:
+				data = sock.recv(1024)
+				time.sleep(1)
+				if not data or data.decode('utf-8') == 'exit':
+					break
+				sock.send(('Hello, %s!' % data).encode('utf-8'))
+			sock.close()
+			print('Connection from %s:%s closed.' % addr)

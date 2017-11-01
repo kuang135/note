@@ -1,0 +1,87 @@
+<#-- 将ftl中的对象转换成json，只转换hash 和 数组 类型数据-->
+<#-- 注意有个坑就是 string?is_hash 也是 true -->
+<#-- item.class.simpleName == 'Boolean' 相当于 item?is_boolean-->
+<#function obj2json object>
+	<#if object??>
+		<#if object?is_enumerable>
+			<#local json = '['>
+			<#list object as item>
+				<#if item?is_number >
+					<#if item_index &gt; 0 && json != "[" >
+						<#local json = json +',' >
+					</#if>
+					<#local json = json + '${item}'>
+				<#elseif item?is_string>
+					<#if item_index &gt; 0 && json != "[" >
+						<#local json = json +',' >
+					</#if>
+					<#local json = json + '"${item?html!""?js_string}"'>
+				<#elseif item?is_boolean  >
+					<#if item_index &gt; 0 && json != "[" >
+						<#local json = json +',' >
+					</#if>
+					<#local json = json + '${item?string("true", "false")}'>
+				<#elseif item?is_date >
+					<#if item_index &gt; 0 && json != "[" >
+						<#local json = json +',' >
+					</#if>
+					<#local json = json + '"${item?string["yyyy-MM-dd HH:mm:ss"]}"'>
+				<#elseif item?is_enumerable && !(item?is_method) >
+					<#if item_index &gt; 0 && json != "[" >
+						<#local json = json +',' >
+					</#if>
+					<#local json = json + objectToJsonFunction(item)>
+				<#elseif item?is_hash>
+					<#if item_index &gt; 0 && json != "[" >
+						<#local json = json +',' >
+					</#if>
+					<#local json = json + objectToJsonFunction(item)>
+				</#if>
+			</#list>
+			<#return json + ']'>
+		<#elseif object?is_hash>
+			<#local json = "{">
+			<#assign keys = object?keys>
+			<#list keys as key>
+				<#if object[key]?? && !(object[key]?is_method) && key != "class">
+					<#if object[key]?is_number>
+						<#if key_index &gt; 0 && json != "{" >
+							<#local json = json +',' >
+						</#if>
+						<#local json = json + '"${key}": ${object[key]}'>
+					<#elseif object[key]?is_string>
+						<#if key_index &gt; 0 && json != "{" >
+							<#local json = json +',' >
+						</#if>
+						<#local json = json + '"${key}": "${object[key]?html!""?js_string}"'>
+					<#elseif object[key]?is_boolean >
+						<#if key_index &gt; 0 && json != "{" >
+							<#local json = json +',' >
+						</#if>
+						<#local json = json + '"${key}": ${object[key]?string("true", "false")}'>
+					<#elseif object[key]?is_date >
+						<#if key_index &gt; 0 && json != "{" >
+							<#local json = json +',' >
+						</#if>
+						<#local json = json + '"${key}": "${object[key]?string["yyyy-MM-dd HH:mm:ss"]}"'>
+					<#elseif object[key]?is_enumerable >
+						<#if key_index &gt; 0 && json != "{" >
+							<#local json = json +',' >
+						</#if>
+						<#local json = json + '"${key}":'+ objectToJsonFunction(object[key])>
+					<#elseif object[key]?is_hash>
+						<#if key_index &gt; 0 && json != "{" >
+							<#local json = json +',' >
+						</#if>
+						<#local json = json + '"${key}":'+ objectToJsonFunction(object[key])>
+					</#if>
+				</#if>
+			</#list>
+			<#return json +"}">
+		</#if>
+	<#else>
+		<#return "{}">
+	</#if>
+</#function>
+
+使用: ${obj2json(user)}

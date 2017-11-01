@@ -1,0 +1,34 @@
+浏览器的下载方式: 
+	1.附件形式 attachment
+	2.在线显示 inline
+
+jsp端设计:
+    指向下载资源的超链接
+servlet端的设计:
+    1.获取文件MIME类型,设置文件下载类型
+	String filename=this.getServletContext().getRealPath("/upload/1.jpg");
+	String type=this.getServletContext().getMimeType(filename);
+	response.setContentType(type);//设置文件下载的类型
+	//两种方式得到文件名,
+	//1.根据不同的浏览器,设置浏览器对文件名的编码
+	String filename = DownLoadUtil.getAttachmentFileName(netDisk.getFilename(),browserType);
+	//2.直接用gbk编码,用iso-8859-1解码
+	String filename=new String(filename.getBytes("gbk"),"iso8859-1");
+
+    2.设置下载形式为附件形式,并根据浏览器类型设置附件名
+	response.setHeader("Content-Disposition","attachment;filename="+filename);
+
+    3.流读取服务器的资源到浏览器客户端
+	InputStream in = new FileInputStream(f);
+	int len = 0;
+	byte[] bytes = new byte[4 * 1024];
+	while ((len = in.read(bytes)) != -1) {
+		response.getOutputStream().write(bytes, 0, len);
+	}
+	in.close();
+
+
+
+注意: 文件名为中文(ie默认按照url编码,firefox默认按照base64编码)
+	
+	

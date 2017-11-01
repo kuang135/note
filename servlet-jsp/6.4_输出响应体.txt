@@ -1,0 +1,33 @@
+输出响应体：
+	输出字节数据：ServletOutputStream response.getOutputStream();
+	输出字符数据：PrintWriter response.getWriter();
+
+乱码问题
+    为什么会乱码：服务器对响应体默认编码为iso8859-1
+		  浏览器默认解码为gbk
+
+    解决方法：编码和解码方式统一
+	1.设置服务器对响应体的编码方式为gbk
+		response.setCharacterEncoding("GBK");
+	
+	2.设置服务器对响应体的编码方式为utf-8，
+	  同时设置浏览器对响应体的解码方式为utf-8
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+	  第1行设置的编码方式会被第2行设置的编码方式覆盖掉，
+	  也就是说response在告诉浏览器以什么方式解码的同时也告诉服务器以同样的方式编码
+	  
+注意：
+    1.将设置编码的代码放在输出代码之前
+    2.response.setCharacterEncoding("UTF-8");
+      会被response.setContentType("text/html;charset=utf-8");覆盖掉
+      只要写response.setContentType("text/html;charset=utf-8");就行
+    3.如果出现以下载文件的方式去打开内容，肯定是"text/html;charset=utf-8"写错了
+
+一次请求中，response的getOutputStream()和getWriter()不能同时被调用，会出现500错误
+为什么：
+    这个两个方法都可以向浏览器输出数据，如果同时调用，不好控制先输出哪个
+代码如何实现：
+    定义标记，调用前判断，调用后更改
+注意：
+    调用任何一个，都不用去关闭，服务器会检测是否已经关闭，否就关闭

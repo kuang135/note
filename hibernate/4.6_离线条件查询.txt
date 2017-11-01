@@ -1,0 +1,11 @@
+离线查询: 提前完成条件查询对象的封装,减少各层次传递参数而带来的复杂性.
+
+DetachedCriteria不依赖于Session存在,可以用在表现层和业务层.
+
+    1.表现层,将参数放到DetachedCriteria,并将DetachedCriteria传到数据层
+	DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Customer.class);
+	detachedCriteria.add(Restrictions.eq("name", "tom"));
+
+    2.在数据数据层拿到DetachedCriteria,和Session结合,完成查询
+	Criteria criteria = detachedCriteria.getExecutableCriteria(session);
+	Customer customer = (Customer) criteria.uniqueResult();

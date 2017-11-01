@@ -1,0 +1,39 @@
+需求：统计每年入职的员工人数，假设年份已知
+total	1980	1981	1982	1987
+14	1	10	1	2
+
+sql语句
+	select to_char(hiredate,'yyyy') from emp
+	--> 光标 --> 循环 -->退出条件：notfound
+变量：1.初始值 2.如何得到
+	每年入职的员工人数
+	count80 number := 0;
+	count81 number := 0;
+	count82 number := 0;
+	count87 number := 0;
+
+set serveroutput on
+declare
+  cursor cemp is select to_char(hiredate,'yyyy') from emp;
+  total number := 0;
+  count80 number := 0;
+  count81 number := 0;
+  count82 number := 0;
+  count87 number := 0;
+  temp varchar2(4);
+begin
+  open cemp;
+  loop
+    fetch cemp into temp;
+    exit when cemp%notfound;
+      if temp = '1980' then count80 := count80+1;
+      elsif temp = '1981' then count81 := count81+1;
+      elsif temp = '1982' then count82 := count82+1;
+      elsif temp = '1987' then count87 := count87+1;
+      end if;
+  end loop;
+  close cemp;
+  total := count80+count81+count82+count87;
+  dbms_output.put_line('total:'||total||'；1980:'||count80||'；1981:'||count81||'；1982:'||count82||'；1987:'||count87);
+end;
+/

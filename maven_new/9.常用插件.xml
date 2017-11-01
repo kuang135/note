@@ -1,0 +1,66 @@
+<!--
+插件：http://maven.apache.org/plugins/index.html
+maven-compiler-plugin用来编译Java代码
+maven-resources-plugin则用来处理资源文件
+maven-surefire-plugin 执行测试的插件
+maven-antrun-plugin能让用户在Maven项目中运行Ant任务
+maven-archetype-plugin生成项目骨架
+maven-assembly-plugin的用途是制作项目分发包，该分发包可能包含了项目的可执行文件、源代码、readme、平台脚本等等
+-->
+
+<build>  
+    <plugins> 
+		<!-- 导出有依赖jar包的jar包，可直接执行，eclipse运行命令 assembly:assembly -->
+		<plugin>  
+			<artifactId>maven-assembly-plugin</artifactId>  
+			<configuration>  
+				<descriptorRefs>  
+					<descriptorRef>jar-with-dependencies</descriptorRef>  
+				</descriptorRefs> 
+			<archive>  
+				<manifest>  
+					<mainClass>com.fccs.kpimail.business.main.KpiMain</mainClass>  
+				</manifest>  
+			</archive>           
+			</configuration>  
+		</plugin>  
+      
+		<!-- install 的时候跳过 test -->
+		<plugin>  
+			<groupId>org.apache.maven.plugins</groupId>  
+			<artifactId>maven-surefire-plugin</artifactId>  
+			<version>2.18.1</version>  
+			<configuration>  
+				<skipTests>true</skipTests>  
+			</configuration>  
+		</plugin>
+	  
+		<!-- 配置tomcat插件 -->
+		<plugin>
+			<groupId>org.apache.tomcat.maven</groupId>
+			<artifactId>tomcat7-maven-plugin</artifactId>
+			<configuration>
+				<port>80</port>
+				<path>/</path>
+			</configuration>
+		</plugin>
+			
+		<!-- 配置jetty插件 -->
+		<plugin>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>maven-jetty-plugin</artifactId>
+			<version>6.1.10</version>
+			<configuration>
+				<webAppConfig>
+					<contextPath>/</contextPath>
+				</webAppConfig>
+				<connectors>
+					<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+						<port>80</port>
+					</connector>
+				</connectors>
+			</configuration>
+		</plugin>
+      
+    </plugins>  
+  </build> 

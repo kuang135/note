@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script  src="../jquery-3.1.0.min.js"></script>
+
+	<script type="text/javascript">
+
+		$(function(){
+
+			$("#bu1").click(function(){
+				$("ul>li").css( "border", "3px double red" );
+			});
+
+
+			$("#bu2").click(function(){
+				$("ul li").css( "border", "3px double red" );
+			});
+
+			$("#bu3").click(function(){
+				$("ul+button").css( "border", "3px double red" );
+			});
+
+			$("#bu4").click(function(){
+				$("ul~button").css( "border", "3px double red" );
+			});
+
+
+
+		});
+
+	</script>
+
+
+</head>
+<body>
+	<ul class="topnav">
+		<li>Item 1</li>
+		<li>Item 2
+			<ol>
+				<li>Nested item 1</li>
+				<li>Nested item 2</li>
+				<li>Nested item 3</li>
+			</ol>
+		</li>
+		<li>Item 3</li>
+	</ul>
+
+	<button id="bu1">bu1</button>
+	<button id="bu2">bu2</button>
+	<button id="bu3">bu3</button>
+	<button id="bu4">bu4</button>
+
+</body>
+</html>

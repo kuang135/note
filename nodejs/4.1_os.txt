@@ -1,0 +1,35 @@
+os
+{	
+	hostname: [Function: getHostname],
+	loadavg: [Function: getLoadAvg],
+	uptime: [Function: getUptime],
+	freemem: [Function: getFreeMem],
+	totalmem: [Function: getTotalMem],
+	cpus: [Function: getCPUs],
+	type: [Function: getOSType],
+	release: [Function: getOSRelease],
+	networkInterfaces: [Function: getInterfaceAddresses],
+	homedir: [Function: getHomeDirectory],
+	arch: [Function],
+	platform: [Function],
+	tmpdir: [Function],
+	tmpDir: [Function],
+	getNetworkInterfaces: [Function: deprecated],
+	EOL: '\r\n',
+	endianness: [Function] 
+}
+
+
+//系统的所有IP地址
+var os = require('os');
+var interfaces = os.networkInterfaces();
+for (item in interfaces) {
+	console.log('Network interface name: ' + item);
+	for (att in interfaces[item]) {
+		var address = interfaces[item][att];
+		console.log('	Family: ' + address.family);
+		console.log('	IP Address: ' + address.address);
+		console.log('	Is Internal: ' + address.internal);
+	}
+	console.log('==================================');
+}

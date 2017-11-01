@@ -1,0 +1,5 @@
+½øÈëbinÄ¿Â¼ mongo mongodb://tdms:tdmsqmre@172.31.3.55:27017/tdms
+
+db.getCollectionNames()
+db.getCollectionInfos()
+show collections

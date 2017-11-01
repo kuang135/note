@@ -1,0 +1,48 @@
+
+ServletContext：servlet用来与servlet容器通信用的，是一个接口
+    每个web应用都有一个与之相对应的ServletContext对象实例，
+    一个web应用中的servlet拿到ServletContext就等于拿到web应用，可以与web应用进行通信了
+应用：统计网站的访问次数，聊天室
+
+
+ServletContext的学习需掌握：
+    1.web应用的成员变量，可以进行数据的共享
+      ServletContext是一个域对象，就是一个容器，可以用来放数据
+	方法：
+	    String getMimeType(String file)
+	    Object getAttribute(String name)
+	    void setAttribute(String name,Object object)
+	    void removeAttribute(String name)
+
+    2.可以获得关于web应用全局的配置参数信息
+	<web-app></web-app>标签下
+		<context-param>
+			<param-name>enconding</param-name>
+			<param-value>UTF-8</param-value>
+		</context-param>
+	方法：
+	    String getInitParameter(String name);
+	    Enumeration<String> getInitParameterNames()
+	
+    3.获得web应用下资源文件的绝对路径，为了获取该资源文件的内容
+	相对路径：相对于jvm启动的目录，jvm启动的目录就是当前项目的目录
+		  tomcat从bin目录启动，jvm的启动目录就是bin
+	绝对路径：带盘符的路径
+	
+	ServletContext去获得磁盘绝对路径，要通过相对于web应用根目录的绝对路径去获得磁盘绝对路径
+	方法：
+	    String getRealPath(String path);		
+	/表示web应用的根目录
+		跟WebRoot同级就没法获取
+		WebRoot/2.txt
+		String realPath = servletContext.getRealPath("/2.txt");
+		WebRoot/WEB-INF/3.txt
+		String realPath=servletContext.getRealPath("/WEB-INF/3.txt");
+		src/4.txt
+		String realPath=servletContext.getRealPath("/WEB-INF/classes/4.txt");
+	如果一个文件在src下，还可以通过类加载器来读取
+		URL url = MyServlet.class.getClassLoader().getResource("/4.txt");
+
+	传统的程序中：通过相对路径的写法，来读取资源文件的内容
+	web应用中：通过ServletContext去获得磁盘的绝对路径，然后去读取资源文件的内容
+	

@@ -1,0 +1,91 @@
+1.http://hadoop.apache.org/releases.html
+  0.x,1.x,2.x是三个不同的体系
+  下载 hadoop-1.2.1.tar.gz 和 hadoop-2.5.2.tar.gz 来学习
+	
+2.vbox搭建3台linux
+  参考 http://hadoop.apache.org/docs/r1.2.1/single_node_setup.html 搭建环境
+
+3.安装jdk，ssh
+  为了在某个节点上启动所有节点
+  在某台linux上配置ssh能登录其他所有的节点
+  配置ssh零密码登录
+  
+	  node0: 172.16.129.130
+	  node1: 172.16.129.131
+	  node2: 172.16.129.132
+	  为了node0能无密码登录node1，node2
+		1)ssh localhost -- 每台机子上做无密码本地登录
+		  ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa 
+		  cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+		2)node0把生成的id_dsa.put传给node1,node2
+		  scp id_dsa.pub root@172.16.129.131:~
+		3)node1,node3把id_dsa.pub的内容追加到authorized_keys中
+		  cat ~/id_dsa.pub >> ~/.ssh/authorized_keys
+		4)node0就能无密码登录node1，node2了
+	
+4.文档
+  docs/core-default.html
+  docs/hdfs-default.html
+	
+5.配置hdfs
+	conf/core-site.xml: NameNode在哪台机子上，hdfs的入口
+		<configuration>
+			 <property>
+				 <name>fs.default.name</name>
+				 <value>hdfs://172.16.129.130:9000</value> <!-- node0为namenode -->
+			 </property>
+			 <property>
+				 <name>hadoop.tmp.dir</name> <!-- 临时目录，namenode和datanode的工作目录都是以这个为基础的 -->
+				 <value>/opt/hadoop-1.2.1</value>
+			 </property>
+		</configuration>
+
+	conf/hdfs-site.xml:
+		<configuration>
+			 <property>
+				 <name>dfs.replication</name> <!-- 副本数，默认为3 -->
+				 <value>2</value> <!-- node1,node2作为datanode -->
+			 </property>
+		</configuration>
+	
+	conf/slaves: 配置datanode的IP地址
+		172.16.129.131
+		172.16.129.132
+	
+	conf/masters: 配置secondarynamenode的主机名，和namenode在不同机器
+		172.16.129.132
+	
+	conf/mapred-site.xml: 配置mapreduce，目前这里不需要，不用配置
+		<configuration>
+			 <property>
+				 <name>mapred.job.tracker</name>
+				 <value>localhost:9001</value>
+			 </property>
+		</configuration>
+		
+6.启动，进入bin目录
+  格式化：./hadoop namenode -format
+  启动：./start-dfs.sh
+		如果出现 Error: JAVA_HOME is not set.
+		./stop-dfs.sh
+		修改 conf/hadoop-env.sh中JAVA_HOME的配置，3台机子一样
+		再启动，无须格式化
+  查看: jps
+		如果在node1，node2上查不到java进程，关闭所有机子的防火墙
+		./stop-dfs.sh
+		service iptables stop
+		./start-dfs.sh
+  关闭：./stop-dfs.sh
+		
+7.访问管理界面
+  http://172.16.129.130:50070/
+  
+8.传文件
+	[root@localhost bin]# ./hadoop fs -put /usr/local/kuang/hadoop_dfs.txt hdfs://172.16.129.130:9000/usr/root/hadoop_dfs.txt
+  下载文件
+	[root@localhost bin]# ./hadoop fs -get hadoop_dfs.txt /usr/local/kuang/hadoop_dfs_could.txt
+  查看文件内容
+	[root@localhost bin]# ./hadoop fs -cat hdfs://172.16.129.130:9000/usr/root/hadoop_dfs.txt
+  更多指令参考
+	hadoop-1.2.1\docs\file_system_shell.html 或 file_system_shell.pdf
+	

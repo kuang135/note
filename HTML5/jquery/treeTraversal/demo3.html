@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>next demo</title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<style>
+		div {
+			width: 80px;
+			height: 80px;
+			background: #abc;
+			border: 2px solid black;
+			margin: 10px;
+			float: left;
+		}
+		div.after {
+			border-color: red;
+		}
+		</style>
+	</head>
+	<body>
+
+		<p>Hello</p>
+		<p >Hello Again</p>
+		<p class="select">Hello Again</p>
+		<p class="selected">Hello Again</p>
+		<div><span>And Again</span></div>
+
+
+
+
+		<script>
+			$( "p" ).next( ".selected" ).css( "background", "yellow" );
+		</script>
+
+		<div>first</div>
+		<div>sibling<div>child</div></div>
+		<div>sibling</div>
+		<div>sibling</div>
+		<script>
+			$( "div:first" ).nextAll().addClass( "after" );
+		</script>
+
+
+	</body>
+	</html>

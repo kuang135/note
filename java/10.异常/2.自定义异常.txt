@@ -1,0 +1,11 @@
+自定义异常：
+	在开发时，Java给出的异常是不够用的，那么需要我们针对性自己的程序定义一些符合我们程序需求的问题描述。
+	就是自己定义一个类，这个类继承Java中已经存在的某个异常类即可。
+	这时自己的类就会变成异常体系中的一员。
+class MyException extends Exception{  	//这时自己定义的异常就是一个编译时期异常了
+
+	public MyException (){ super(); }
+
+	public MyException(String message){ super( message ); }
+
+}

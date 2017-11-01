@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<!-- 配置会话工厂,类似于连接池,功能更强大,session则相当于Connection -->
+	<session-factory>
+
+		<!-- 配置数据库连接，四个JDBC连接属性 -->
+ 		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property> 
+ 		<property name="hibernate.connection.url">jdbc:oracle:thin:@192.168.56.101:1521:orcl</property> 
+ 		<property name="hibernate.connection.username">scott</property> 
+ 		<property name="hibernate.connection.password">tiger</property> 
+		 
+		<!-- 常用hibernate配置 -->
+		<property name="hibernate.show_sql">true</property> <!-- 控制台打印SQL -->
+		<property name="hibernate.format_sql">true</property> <!-- 打印sql格式化 -->
+		<property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property> <!-- 方言 -->
+		<!-- DDL策略,create/create-drop/update/validate,默认为none
+			 update,表示表不存在就建表,存在就更新表结构
+			 validate,如果表结构和配置hbm不同,报错	 -->
+		<property name="hibernate.hbm2ddl.auto">update</property> 
+		<!-- 配置C3P0连接池 -->
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+
+		<!-- 引入hbm映射,xml的时候使用 -->
+		<mapping resource="cn/itcast/domain/Customer.hbm.xml"/>
+		<!-- 引入hbm映射,注解的时候使用 -->
+		<mapping class="cn.itcast.domain.Customer"/>
+	
+	</session-factory>
+</hibernate-configuration>

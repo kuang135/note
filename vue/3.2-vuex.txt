@@ -1,0 +1,34 @@
+状态管理
+	通过事件更新状态，会很复杂
+	
+
+	import Vuex from 'vuex'
+	Vue.use(Vuex)
+	
+	let store = new Vuex.store({
+		state: {
+			totalPrice: 0
+		},
+		actions: { //可以异步
+			increase: function(context, price) {
+			}
+		},
+		mutations: { //只能同步
+			increment: function(state, price) {
+				state.totalPrice += price
+			},
+			decrement: function(state, price) {
+				state.totalPrice -= price
+			}
+		},
+		getters: {},
+		modules: {}
+	})
+	
+	new Vue({
+		el: '#app',
+		store: store
+	})
+	
+子组件调用
+	this.$state.state

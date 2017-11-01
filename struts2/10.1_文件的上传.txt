@@ -1,0 +1,50 @@
+Struts2内部文件上传,默认采用apache的commons-fileupload 
+
+FileUploadInterceptor用于实现文件上传,上传失败跳往input视图
+fileUpload以下3个属性可以设置:
+	maximumSize: 上传文件的最大长度(以字节为单位), 默认值为 2 MB
+	allowedTypes: 允许上传文件的类型, 各类型之间以逗号分隔
+	allowedExtensions: 允许上传文件扩展名, 各扩展名之间以逗号分隔
+
+具体步骤:
+    1.编写jsp上传文件表单
+	1) <form> 设置enctype编码类型 multipart/form-data 
+	2) <form> 设置method提交方式为post
+	3) <input type=”file” name="tagname"> 元素，必须提供name属性
+
+    2.编写Action接收上传后的文件
+	根据file标签的name属性值设置3个参数,并提供get,set方法(可以设在action中,也可以设置模型驱动类中,只要把这3个参数传到后台就行)
+	1) private File tagname;//上传的文件,struts2会将其保存在work目录下的一个临时文件
+	2) private String tagnameFileName;//文件名
+	3) private String tagnameContentType;//文件的MIME类型
+	action的方法中可以用commons-io包中的方法对上传的文件对象进行处理
+		String realpath = ServletActionContext.getServletContext().getRealPath("/uploadfile");
+		File destFile = new File(realpath, tagnameFileName);//生成目标目录,一般要将tagnameFileName进行uuid的映射
+		FileUtils.copyFile(tagname, destFile);//将work目录下的临时文件复制到目标目录就行
+    
+    3.struts.xml中配置action,input视图
+	<!-- 上传文件大小(全局) -->
+	<constant name="struts.multipart.maxSize" value="20971520" />
+	<!-- 文件的上传 -->
+	<action name="upload" class="cn.itcast.action.UploadAction" >
+    		<result name="input">/upload.jsp</result>
+    		<!-- 设置拦截器参数 -->
+    		<interceptor-ref name="defaultStack">
+    			<!-- 设置上传允许大小(局部) -->
+    			<param name="fileUpload.maximumSize">600000</param>
+    			<!-- 设置允许上传文件的扩展名  -->
+    			<param name="fileUpload.allowedExtensions">.avi,.doc,.txt</param>
+			<!-- 设置允许上传文件类型  -->
+    			<param name="fileUpload.allowedType">text/plain,application/vnd.ms-powerpoint</param>
+    		</interceptor-ref>
+    	</action>
+
+    4.设置回显错误信息
+      文件上传有关的出错消息在 struts-messages.properties(org.apache.struts2包下) 里预定义
+      可以根据properties中的key来自定义value
+      jsp用<s:actionerror/>显示错误信息
+
+
+多文件上传:
+	各个input标签中的name要一致
+	action中3个属性的类型均改为数组

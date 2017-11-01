@@ -1,0 +1,33 @@
+1.MVC是手段，最终的目标是实现模块化和复用。
+	ng-controller 使用注意点
+		不要试图去复用Controller，一个控制器一般只负责一小块视图
+		不要在Controller去操作DOM，不是控制器的职责，把操作DOM封装到指令中
+		不要在Controller去数据格式化，ng有很好用的表单控件
+		不要在Controller去做数据过滤，ng有$filter服务
+		Controller是不会互相调用的，通过事件进行
+
+2.模型的实现	
+	ng-model：挂在$rootScope上
+	
+3.视图的实现
+	通过directive实现
+	
+--------------------------------------------------------------
+	
+AngularJS的MVC是借助与$scope实现的	
+	$scope
+		$scope是一个POJO
+		$scope提供了一些方法$watch()/$apply()
+		$scope是表达式的执行环境(作用域)
+		$scope是一个树型结构，与DOM标签平行
+		每一个angular应用只有一个$rootScope对象(一般位于ng-app)
+		$scope可以传播事件，类似DOM事件，可以向上也可以向下
+		$scope不仅是MVC的基础，还是实现双向数据绑定的基础
+		可以用angular.element($0).scope()进行调试
+	
+	$scope的生命周期
+		Creation
+		Watcher registration
+		Model mutation
+		Mutation observation
+		Scope destruction

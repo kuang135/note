@@ -1,0 +1,41 @@
+ognl表达式访问值栈(OgnlValueStack)中的内容:
+	访问root(对象栈CompoundRoot)内容，不需要#
+	访问context(上下文map,OgnlContext)内容，需要#
+		#request.name,相当于request.getAttribute("name")
+
+ognl表达式搜索值栈
+    <s:property value="username"/> -- 先搜索root栈每个对象的属性,都没有再搜索上下文map的key
+    <s:property value="#name"/> -- 直接搜索context(上下文map,OgnlContext)的key,不会搜索root栈
+
+值栈中数据的存取:
+    1.将数据保存到CompoundRoot
+	valueStack.push("itcast");//在root栈的顶部
+	valueStack.set("name","上海");//将数据存入一个Map,再讲Map push到root栈顶
+	valueStack.set("u",user);//存对象
+	Action中提供一个成员变量,并提供get方法(Action在root栈中,Action属性可以被搜索到)
+
+    2.将数据保存到OgnlContext
+	ActionContext.getContext().put("name","传智播客");//保存在context(上下文map)中
+					//这样存也可以通过request.getAttribute("name")取
+	ActionContext.getContext().put("u",user);//存对象
+	
+
+    3.jsp页面中获取
+    	<s:property/> --  指定访问root栈栈顶对象
+	<s:property value="[0].top"/> -- 通过[index].top指定访问root栈某个对象
+	<s:property value="name"/> -- 先搜索root栈对象属性，再搜索map的key				
+	<s:property value="#name"/> -- 搜索map的key
+	取对象的形式: key.属性
+	<s:property value="u.name"/> -- 搜索root栈中map的key(value为对象),不搜索上下文map
+	<s:property value="#u.name"/> -- 搜索上下文map的key(value为对象)
+	${name} -- EL表达式能访问值栈中对象的属性
+	     -- StrutsRequestWrapper extends HttpServletRequestWrapper对Object getAttribute(String key)进行加强了
+	     -- 先用request.getAttribute取值,取不到就用valueStack.findValue(key)取
+	     -- ${requestScope.name}可以,${sessionScope.name}等不可以,只增强了request
+	     -- EL的查找顺序为: pageContext,request,valuestack,session,application
+    
+    4.action代码中获取
+	valueStack.findValue(ognl表达式) -- 先搜索root栈对象属性，再搜索map的key
+
+存取总结: _root中是按对象的属性或HashMap的key去搜索
+	  _values中是按Map的key去搜索

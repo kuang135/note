@@ -1,0 +1,3 @@
+	
+Session.USER.userId
+	后台往session中放入了key为USER的user对象

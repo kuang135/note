@@ -1,0 +1,80 @@
+负载均衡
+反向代理：代理服务器，代理外部网络上的主机，访问内部网络。
+配置位置：http{...},server{...},location{...}
+
+	# 设置一组可以在proxy_pass和fastcgi_pass指令中使用的代理服务器，默认的负载均衡方式为轮询
+	upstream wabacusblank {
+	
+		# 将某个客户端IP的请求通过哈希算法定位到同一台后端服务器上，这样无法保证后端服务器的负载均衡
+		ip_hash
+		
+		# 指定后端服务器的名称和参数
+		# 名称可以是一个域名，一个ip地址，端口号 或UNIX Socket
+		# 跟的参数：weight,max_fails,fail_timeout,down,backup
+		server          127.0.0.1:8081 weight=1 max_fails=1 fail_timeout=10s;
+		server          127.0.0.1:8082 weight=1 max_fails=1 fail_timeout=10s;
+		keepalive 30;
+	}
+	
+	server {
+        listen          80;
+        server_name     data.myfccs.com;
+		
+		proxy_http_version 1.1;
+		proxy_set_header Connection "";
+		proxy_set_header Accept-Encoding "";
+		proxy_redirect          off;
+		
+		# 允许客户端请求的最大单个文件字节数
+		client_max_body_size    1024m;
+		
+		# 缓冲区代理缓冲用户端请求的最大字节数，可以理解为先保存到本地再传给用户
+		client_body_buffer_size 128k;
+		
+		# 跟后端服务器连接的超时时间，发起握手等候响应超时时间
+		proxy_connect_timeout   15s;
+		
+		# 后端服务器数据回传时间，就是在规定时间内后端服务器必须传完所有的数据
+		proxy_send_timeout      600s;
+		
+		# 连接成功后，等候后端服务器响应时间，其实已经进入后端的排队之中等候处理
+		proxy_read_timeout      600s;
+		
+		# proxy缓存临时文件的大小
+		proxy_temp_file_write_size 1024m;
+		proxy_ignore_client_abort on;
+		
+		# 如果后端的服务器返回执行超时等错误，自动将请求转发到upstream负载均衡池中的另一条服务器，实现故障转移
+		proxy_next_upstream error timeout;
+		
+		# 代理请求缓存区，这个缓存区间会保存用户的头信息以供nginx进行规则处理，一般只要保存下头信息即可
+		proxy_buffer_size       128k;
+		
+		# 同上，告诉nginx保存单个用的几个buffer，最大用多大空间
+		proxy_buffers           4 256k;
+		
+		# 如果系统很忙的时候可以申请更大的proxy_buffers,官方推荐*2
+		proxy_busy_buffers_size 256k;
+		
+		# 在向反向代理的后端web服务器发起请求时添加指定的header头信息
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+
+        #tomcat
+        location ~* ^.+\.(do|jsp|wx) {
+                proxy_pass      http://wabacusblank;		
+        }
+
+        location ~ ^/Data/ {
+                proxy_pass      http://wabacusblank;
+        }
+
+        #static
+        location / {
+			index           index.jsp index.html;
+			rewrite ^/$ /Data/index.jsp last;
+			rewrite ^/login.html$ /Data/login.jsp last;
+			break;	
+        }
+	}

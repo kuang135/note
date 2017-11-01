@@ -1,0 +1,36 @@
+一主多从：
+	主 -- JobTracker
+	从 -- TaskTracker
+	
+1.将node0: 172.16.129.130 作为JobTracker
+	配置文件 conf/mapred-site.xml
+		<configuration>
+			 <property>
+				 <name>mapred.job.tracker</name>
+				 <value>172.16.129.130:9001</value>
+			 </property>
+		</configuration>
+	从默认会在datanode上，无须配置
+	
+2.启动
+  [root@localhost bin]# ./start-all.sh
+
+3.访问
+  http://172.16.129.130:50030/
+
+4.eclipse插件安装
+	网上下载hadoop-eclipse-plugin-1.2.1.jar，拷贝到eclipse的plugins下
+	重启eclipse
+	Open Perspective --> Map/Reduce -->控制台new Hadoop Locations
+	
+5.map编程
+	KEYIN：传入的split中的一行数据在文件中的位置下标，LongWritable
+	VALUEIN：文件的内容，Text
+	KEYOUT：
+	VALUEOUT：
+
+6.reduce编程
+	KEYIN：
+	VALUEIN：
+	KEYOUT：
+	VALUEOUT：

@@ -1,0 +1,73 @@
+验证码应用：防止恶意注册
+
+register.jsp的设计:
+    1.<img src="/my_day13/checkCode" style="cursor: pointer" onclick="changeCode(this)"/>
+    2.function changeCode(obj){
+	  obj.src="/my_day13/checkCode?"+new Date().getTime();
+      }
+
+
+CheckCodeServlet的设计：
+    public class CheckCodeServlet extends HttpServlet {
+
+	//定义图片的长和高
+	private final static int WIDTH = 120; 
+	private final static int HEIGHT = 30;
+	
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// 1.在内存中构建图片
+		BufferedImage bf = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		
+		//2. 给图片设置背景
+		Graphics2D graphics = (Graphics2D) bf.getGraphics();
+		graphics.setColor(Color.WHITE);  
+		graphics.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		//3. 画边框  ----- 
+		//在计算机的图形学中， 有一个很重要的概念叫做状态机， 之前调用过 某个api， 如果后续没有再用调用这个api， 那么就仍然 保持之前调用过的状态
+		graphics.setColor(Color.BLUE);
+		graphics.drawRect(0, 0, WIDTH-1, HEIGHT-1);
+		
+		// 4. 添加字符 ，设置字体
+		String base = "ABCDEFGHIJKLMNOPQUVWXYZ";
+		Random rand = new Random();
+		graphics.setColor(Color.RED); 
+		graphics.setFont(new Font("黑体",Font.BOLD,18));
+		StringBuilder sb = new StringBuilder();		//定义一个 StringBuilder ，用于记忆产生的字符
+		int m =10;
+		for(int i=0;i<4;i++){		//4个字符
+			int index = rand.nextInt(base.length());
+			char charAt = base.charAt(index);
+			int jiaodu = rand.nextInt(60)-30;//  -30 ---- +30 
+			double theta = jiaodu*Math.PI/180;//这里的 theta的 弧度  :
+			graphics.rotate(theta, m, 20); //旋转 theta 角度
+			graphics.drawString(charAt+"", m, 20);
+			sb.append(charAt);
+			graphics.rotate(-theta, m, 20);  //  旋转 -theta 角度, 转回到旋转前 
+			m+=25;
+		}
+		request.getSession().setAttribute("checkCodeSession", sb.toString());//将这个stringbuilder 对象存到 session域中
+		
+		//5. 画 干扰线  : 画 4 条 
+		graphics.setColor(Color.GREEN);
+		for(int i=0;i<4;i++){
+			int x1 = rand.nextInt(WIDTH);
+			int x2 = rand.nextInt(WIDTH);
+			int y1 = rand.nextInt(HEIGHT);
+			int y2 = rand.nextInt(HEIGHT);
+			// 这里是随机生成 坐标点 , 两点确定一条直线...
+			graphics.drawLine(x1, y1, x2, y2);
+		}
+		
+		//6.释放 资源
+		graphics.dispose(); 
+		
+		//7.将图片将字节输出流关联起来 
+		ImageIO.write(bf, "png", response.getOutputStream());
+	}
+
+
+RegisterServlet的设计:
+	String session_code=(String)request.getSession().getAttribute("checkCodeSession");
+	request.getSession().removeAttribute("checkCodeSession");//一次性验证

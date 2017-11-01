@@ -1,0 +1,39 @@
+模块化
+
+1.函数作为局部命名空间
+	(function(){
+		var names = ['January','February','March','April','May','June','July',
+					  'August','September','October','November','December'];
+		function getMonthName(number){return names[number];}
+		function getMonthNumber(name) {
+			for(var number = 0; number < names.length; number++) {
+				if (name === names[number]) return number;
+			}
+		}
+		window.getMonthName = getMonthName;
+		window.getMonthNumber = getMonthNumber;
+	})();
+
+	
+2.模块对象：一个属性是函数和函数返回值的单独对象
+	var days = (function(){	//days对象也是一个 singleton
+		var names = ['Sunday','Monday','Tuesday','Wednesday',
+					 'Thursday','Friday','Saturday'];
+		return {
+			getDayName: function(number) {return names[number];},
+			getDayNumber: function(name) {
+				for(var number = 0; number < names.length; number++) {
+					if (names[number] === name) return number; 
+				}
+			}
+		};		 
+	})();
+
+	days.getDayNumber('Wednesday');
+  或
+	var moduleB = new function() {
+		var prop = 1;
+		function func(){}
+		this.func = func;
+		this.prop = prop;
+	};

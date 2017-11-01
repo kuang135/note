@@ -1,0 +1,23 @@
+查看索引中某个字段的分词效果
+	GET /indexName/_analyze?filed=joinDate
+	{2014-01-01}
+
+或者 http://127.0.0.1:9200/fccs/_analyze?filed=employee.joinDate&text=2015-01-01
+
+先删除后设置
+	DELETE /indexName
+
+设置
+PUT /indexName
+{
+    "mappings": {
+        "typeName" : {
+            "properties": {
+                "propertiyName" : {
+                    "type" : "string" ,
+                    "index" : "not_analyzed"    
+                }
+            }
+        }
+    }
+}

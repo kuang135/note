@@ -1,0 +1,21 @@
+具体查看官方api
+
+a
+
+form
+	<form name="myForm" ng-submit="save()" ng-controller="TestFormModule">
+		  <input name="userName" type="text" ng-model="user.userName" required/>
+		  <input name="password" type="password" ng-model="user.password" required/>
+		  <input type="submit" ng-disabled="myForm.$invalid"/>
+	</form>
+	appModule.controller("TestFormModule",function($scope){
+		$scope.user={
+			userName:'damoqiongqiu',
+			password:''
+		};
+		$scope.save=function(){
+			alert("保存数据!");
+		}
+	});
+	
+http://angular-ui.github.io/

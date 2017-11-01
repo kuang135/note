@@ -1,0 +1,54 @@
+使用JPA注解描述PO类
+	@Entity -- 实体类(jpa)
+	@Table -- 映射表(jpa)
+	@Id -- 主键字段(jpa)
+	@GeneratedValue -- 主键生成策略(jpa),只支持 IDENTITY SEQUENCE 和 TABLE
+	@Column -- 普通字段(jpa)
+	@Transient -- 控制不在表中生成字段
+	@Temporal -- 生成日期类型
+hibernate.cfg.xml中要配置mapping映射实体类
+
+自定义主键生成策略
+	@GenericGenerator -- 自定义生成策略(hibernate)
+	@GeneratedValue 的 generator 用于指定自定义生成策略
+
+映射
+	@OneToOne
+	@OneToMany
+	@ManyToOne
+		@JoinColumn -- 添加外键列
+	@ManyToMany
+		@JoinTable -- 添加中间表
+
+映射抓取策略
+	@Fetch 控制生成SQL形式
+		FetchMode.JOIN 迫切做外连接
+		FetchMode.SELECT 多条SQL
+		FetchMode.SUBSELECT 子查询
+	@LazyCollection 控制是否延迟加载
+		LazyCollectionOption.TRUE 延迟加载
+		LazyCollectionOption.FALSE 立即加载
+		LazyCollectionOption.EXTRA 懒惰加载
+
+定义NamedQuery
+	@NamedQuery -- 定义命名查询语句,可以通过session.getNamedQuery获得使用
+
+------------------------------------------------------------------------------------
+
+@Entity
+@Table(name="goods",schema="kuang")
+@NamedQuery(name="Goods.findAll",query="from Goods")
+public class Goods {
+	@Id
+	@GenericGenerator(name="uuidStrategy",strategy="uuid")
+	@GeneratedValue(generator="uuidStrategy")
+	private String id;
+	private String name;
+	private String nm;
+	private String unit;
+	private Integer amount;
+	@ManyToOne
+	@JoinColumn(name="storeid")
+	private Store store;
+	@OneToMany(mappedBy="goods")
+	private Set<History> histories=new HashSet<History>();

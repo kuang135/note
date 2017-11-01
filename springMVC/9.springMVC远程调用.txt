@@ -1,0 +1,29 @@
+1.服务端暴露服务
+		<!-- 配置服务实现的bean -->
+		<bean id="remoteServiceImpl" class="com.fccs.service.service.RemoteServiceImpl"/>
+		<!-- 配置http调用器服务导出器-->
+		<bean id="remoteServiceHttp" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+			<property name="service" ref="remoteServiceImpl"/> <!-- 实现 -->
+			<property name="serviceInterface" value="com.fccs.service.service.RemoteService"/> <!-- 接口 --> 	
+		</bean>
+		<!-- 远程服务的url -->
+		<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+			<property name="mappings">
+				<props>
+					<prop key="/rmi/remote.do">remoteServiceHttp</prop> <!-- url -->
+				</props>
+			</property>
+		</bean>
+  
+  
+2.客户端调用服务
+		<!--客户端http调用器代理-->
+		<bean id="proxyRemoteService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+			<property name="serviceUrl" value="http://localhost:8081/rmi/remote.do"/> <!-- url -->
+			<property name="serviceInterface" value="com.fccs.client.service.RemoteService"/> <!-- 接口 -->
+		</bean>
+		
+		
+注意：如果服务的接口中涉及到 bean类和异常类或其他类，
+	  服务端将这些类打成jar包，
+	  客户端导入这些jar包。

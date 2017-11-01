@@ -1,0 +1,53 @@
+自定义构造函数 Map<String, Object>
+
+function Map() {
+	if (!(this instanceof Map)) {
+		throw new Error('Do not invoke without new.');
+	}
+	var entry = {};
+	this.put = function(key, value) {
+		if(typeof key !== 'string') {
+			throw new Error('key must be string.');
+		}
+		entry[key] = value;
+		return entry;
+	};
+	this.get = function(key) {
+		if (typeof key !== 'string') {
+			throw new Error('key must be string.');
+		}
+		if (Object.prototype.hasOwnProperty.call(entry, key)) {
+			return entry[key];
+		} else {
+			undefined;
+		}
+	};
+	this.remove = function(key) {
+		if (typeof key !== 'string') {
+			throw new Error('key must be string.');
+		}
+		delete entry[key];
+		return entry;
+	};
+	this.removeAll = function() {
+		for(var property in entry) {
+			delete entry[property];
+		}
+		return entry;
+	};
+	this.each = function(action) {
+		for (var property in entry) {
+			if (Object.prototype.hasOwnProperty.call(entry, property)) {
+				action(property, entry[property]);
+			}
+		}
+	};
+}
+
+var m = new Map();
+m.put('age', 11);
+m.put('name', 'kuang');
+Object.prototype.another = 'another';
+m.each(function(key, value){
+	console.log(key + ': ' + value);
+});

@@ -1,0 +1,50 @@
+说明部分
+1.定义基本变量
+  类型：char，varchar2，date，number，boolean，long
+  举例：var1 char(15);
+	married boolean := true;
+	psal number(7,2);
+
+	declare
+	  pnumber number(7,2);
+	  pname varchar2(15);
+	  pdate date;
+	begin
+	  pnumber := 1;
+	  pname := 'scott';
+	  pdate := sysdate;
+	  dbms_output.put_line(pnumber+1);
+	  dbms_output.put_line(pname);
+	  dbms_output.put_line(pdate+1);
+	end;
+	/
+
+2.引用型变量
+  举例：my_name emp.ename%type;
+	--emp表ename列的类型作为my_name的类型
+
+	declare
+	--查询并打印7788的姓名和薪水
+	  pname emp.ename%type;
+	  psal emp.sal%type;
+	begin
+	  select ename,sal into pname,psal from emp where empno = 7788;
+	  DBMS_OUTPUT.put_line(pname||'的薪水:'||psal);
+	end;
+	/
+
+3.记录型变量
+  举例：emp_rec emp%rowtype;
+	--emp表中一行的类型作为emp_rec的类型
+	  所以可以把记录型变量理解为一个数组，而数组的每个元素对应该行上的每一列。
+  记录型变量分量的引用
+	emp_rec.ename := 'ADAMS';
+
+	declare
+	--查询并打印7788的姓名和薪水
+	   emp_rec emp%rowtype;
+	begin
+	  select * into emp_rec from emp where empno = 7788;
+	  DBMS_OUTPUT.put_line(emp_rec.ename||'的薪水:'||emp_rec.sal);
+	end;
+	/

@@ -1,0 +1,50 @@
+struts2运行原理源码分析:
+    1.访问Action,通过hello.action进行访问, 
+      StrutsPrepareAndExecuteFilter 通过 ActionMapper 对象,判断Action是否存在,
+      如果目标Action不存在,执行chain.doFilter(request, response); (struts2 不进行任何操作)
+    2.如果ActionMapper 找到目标Action (获取目标Action),
+      没有直接执行Action的execute,而是调用 ActionProxy (Action代理对象),
+      调用proxy的execute (执行 StrutsActionProxy的execute)
+    3.ActionProxy执行execute 调用 ActionInvocation的 invoke 
+      (执行DefaultActionInvocation的invoke)
+    4.invocation的invoke中判断拦截器是否存在,执行interceptor.getInterceptor().intercept(DefaultActionInvocation.this);
+      拦截器拦截最后 return invocation.invoke(),实现递归 
+    5.当所有拦截器拦截后,执行 invokeActionOnly() 执行Action方法 ，返回result结果集 
+
+
+StrutsPrepareAndExecuteFilter
+	doFilter(req,res,chain)中获取ActionMapping,判断是否为空,
+	为空说明目标action不存在,直接放行chain.doFilter(request, response),
+	不为空,说明存在目标action,调用属性ExecuteOperations的executeAction(request, response, mapping),
+	方法中又调用了Dispatcher的serviceAction(request, response, servletContext, mapping)
+
+Dispatcher
+	serviceAction(request,response,servletContext,mapping)中产生了ActionProxy,
+	通过mapping获取Result,判断是否为空,
+	为空,就调用StrutsActionProxy的execute()方法,不需要返回的resultCode
+   ?	不为空,就执行result.execute(proxy.getInvocation()),里面还是执行了proxy.execute()
+
+? Result
+	execute(ActionInvocation invocation)
+	invocation递归调用interceptor,最终执行action中的方法,
+	返回resultCode,根据resultCode控制跳转页面视图
+
+StrutsActionProxy
+	String execute()返回的是resultCode
+	方法中调用其父类DefaultActionProxy的属性ActionInvocation的invoke()方法
+
+DefaultActionInvocation
+	String invoke()返回的是resultCode
+	invoke()中判断其属性Iterator<InterceptorMapping>是否有拦截器,
+	有就执行拦截器的intercept(DefaultActionInvocation.this),
+	没有就执行invokeActionOnly()
+
+Interceptor
+	String intercept(ActionInvocation invocation)方法返回的是return invocation.invoke();
+	也就是说DefaultActionInvocation会递归调用所有拦截器的intercept(invocation)方法,
+	最后执行invokeActionOnly(),调用action中具体的操作,返回resultCode
+
+
+疑问: 一个Result对象代表什么???
+
+

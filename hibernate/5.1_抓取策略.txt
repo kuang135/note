@@ -1,0 +1,37 @@
+抓取策略的作用: 通过抓取策略的配置,可以分析出一段代码什么时候产生出多少句sql
+
+抓取策略: 立即加载,延迟加载
+    立即加载: 立即执行查询数据库的select语句,返回目标对象的实例
+	
+    延迟加载: 不会立即执行查询数据库的select语句,仅返回代理类对象的实例
+	      代理类实例仅初始化OID属性
+	      第一次访问代理类实例的非OID属性时,hibernate会执行查询数据库的select语句,并初始化代理类实例
+
+如何选取: 如果程序加载一个对象的目的是为了访问它的属性, 可以采取立即检索. 
+	  如果程序加载一个持久化对象的目的是仅仅为了获得它的引用, 可以采用延迟检索
+
+----------------------------------------------------------------------------------------
+
+类级别的抓取:
+	可以通过 <class>元素的lazy属性设置立即加载还是延迟加载,默认lazy=true延迟加载
+	无论lazy为true还是false,get()和list()都执行立即加载
+	配置lazy=true,load()进行延迟加载
+
+关联级别的抓取:
+    对多的抓取,加载一方时,如何加载多方集合的属性
+	通过<set>元素的lazy和fetch属性来配置
+	fetch 决定SQL语句的形式
+	lazy 决定SQL语句的执行时间
+	fetch="select",默认,执行多条简单sql
+	fetch="subselect",执行嵌套子查询
+	fetch="join",执行迫切左外连接查询.get,load时lazy无效,Query查询时fetch无效	
+   
+   对一的抓取(many-to-one,one-to-one)
+	通过<many-to-one>,<one-to-one>元素的fetch和lazy属性来配置 
+	fetch="join",默认,执行迫切左外连接.get,load时lazy无效,Query查询时fetch无效 
+
+小结： 
+    类级别,默认延迟,配置<class>的lazy=false来设置立即 
+    关联级别
+	对多,默认延迟,配置<set>的fetch=”join” lazy=”false”来设置立即
+	对一,默认立即,配置配置<many-to-one>,<one-to-one>的fetch=”select” lazy=”proxy”来设置延迟,修改关联类<class> lazy=true

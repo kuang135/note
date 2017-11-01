@@ -1,0 +1,64 @@
+org.apache.commons.dbcp.BasicDataSourceFactory
+	static DataSource createDataSource(Properties properties);//返回的是BasicDataSource
+
+org.apache.commons.dbcp.BasicDataSource
+	 void setDriverClassName(String driverClassName);
+	 void setUrl(String url);
+	 void setUsername(String username);
+	 void setPassword(String password);
+
+dbcp的DataSource的使用: 
+    1.导入jar包：
+	commons-dbcp-1.2.2.jar
+	commons-pool.jar
+	数据库驱动包
+
+    2.根据set方法名来配置properties文件
+	driverClassName=com.mysql.jdbc.Driver
+	url=jdbc:mysql://localhost:3306/mydb1
+	username=root
+	password=password
+
+    3.程序中得到DataSource
+	Properties prop = new Properties(); 
+	InputStream is = JdbcUtils.class.getClassLoader().getResourceAsStream("dbcpconfig.properties");
+	prop.load(is);
+	DataSource dataSource = BasicDataSourceFactory.createDataSource(prop);//跟配置得到DataSource
+	Connection conn=dataSource.getConnection();//得到连接
+	conn.close();//方法被重写，不关闭，放回到连接池集合
+
+--------------------------------------------------------------
+
+com.mchange.v2.c3p0.ComboPooledDataSource
+	void setDriverClass(java.lang.String driverClass);
+	void setJdbcUrl(java.lang.String jdbcUrl);
+	void setUser(java.lang.String user);
+	void setPassword(java.lang.String password);
+
+c3p0的DataSource的使用:
+    1.导入jar包
+	c3p0-0.9.1.2.jar
+	数据库驱动包
+
+    2.根据set方法名来配置c3p0-config.xml或c3p0.properties,先加载xml
+	<c3p0-config>
+	    <default-config>
+		<property name="driverClass">com.mysql.jdbc.Driver</property>
+		<property name="jdbcUrl">jdbc:mysql://localhost:3306/mydb1</property>
+		<property name="user">root</property>
+		<property name="password">password</property>
+	    </default-config>
+	</c3p0-config>
+
+	c3p0.driverClass=com.mysql.jdbc.Driver
+	c3p0.jdbcUrl=jdbc:mysql://localhost:3306/mydb1
+	c3p0.user=root
+	c3p0.password=password
+
+    3.程序中得到DataSource
+	DataSource dataSource=new ComboPooledDataSource();
+	Connection conn=dataSource.getConnection();//得到连接
+	conn.close();//方法被重写，不关闭，放回到连接池集合
+
+
+

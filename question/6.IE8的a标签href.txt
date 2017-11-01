@@ -1,0 +1,5 @@
+IE8下a标签执行往onClick之后，浏览器地址变为javascript:void(0)
+	<a href="javascript:void(0)" onClick="openCompareHistory('${fieldValue}')">对比</a>
+	
+解决方法
+	<a href="#" onClick="openCompareHistory('${fieldValue}')">对比</a>

@@ -1,0 +1,21 @@
+{ 
+	unescapeBuffer: [Function],
+	unescape: [Function],
+	escape: [Function],
+	encode: [Function],
+	stringify: [Function],
+	decode: [Function],
+	parse: [Function] 
+}
+
+var querystring = require('querystring');
+
+var obj = querystring.parse('foo=bar&baz=qux&baz=quux&corge=中文', '&', '=');
+console.log(obj);
+
+var obj = { foo: 'bar', baz: ['qux', 'quux'], corge: '中文' };
+var string = querystring.stringify(obj, '&', '=');
+console.log(string);
+
+console.log(querystring.escape('中文'));
+console.log(querystring.unescape('%E4%B8%AD%E6%96%87'));

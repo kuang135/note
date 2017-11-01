@@ -1,0 +1,44 @@
+基本内容:
+	配置就是 freemarker.template.Configuration 对象
+		1）存储了常用(全局，应用程序级)的设置
+		2）定义了想要在所有模板中可用的变量(称为共享变量)
+		3）会处理 Template 实例的新建和缓存
+共享变量:
+	可以使用 setSharedVariable 方法向配置中添加共享变量
+		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
+		cfg.setSharedVariable("warp", new WarpDirective());
+		cfg.setSharedVariable("company", "Foo Inc.");
+		在所有使用这个配置的模板中，名为 wrap 的用户自定义指令和一个名为 company 的字符串将会在数据模型的根root上可见
+		那就不用在根哈希表上一次又一次的添加它们
+		在传递给 Template.process 的 根root对象里的变量将会隐藏同名的共享变量
+		
+配置设置:
+	配置设置有很多，例如：locale，number_format， default_encoding， template_exception_handler
+		configuration.setSetting(String name, String value)
+		web应用
+			<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+				<property name="freemarkerSettings">
+					<props>
+						<prop key="incompatible_improvements">2.3.23</prop>
+						<prop key="template_exception_handler">rethrow</prop>
+						<prop key="default_encoding">UTF-8</prop>
+					</props>
+				</property>
+			</bean>
+	配置信息可以被想象成3层(Configuration， Template，Environment)，最高层(有值)为设置信息提供最有效的值
+	
+模版加载:
+	Configuration 中可以使用下面的方法来方便建立三种模板加载
+		void setDirectoryForTemplateLoading(File dir);
+		void setClassForTemplateLoading(Class cl, String prefix);
+		void setServletContextForTemplateLoading(Object servletContext, String path);
+	FreeMarker 是会缓存模板的
+	
+错误控制:
+	TemplateExceptionHandler.DEBUG_HANDLER -- 打印堆栈跟踪信息, 是默认的异常控制器
+	TemplateExceptionHandler.HTML_DEBUG_HANDLER -- 格式化堆栈跟踪信息
+	TemplateExceptionHandler.IGNORE_HANDLER -- 简单地压制所有异常(FreeMarker 仍会写日志)
+	TemplateExceptionHandler.RETHROW_HANDLER -- 简单重新抛出所有异常而不会做其它的事情
+	
+"不兼容改进"设置:
+	该设置指定了 FreeMarker 的版本号，那么就不会100%向后兼容

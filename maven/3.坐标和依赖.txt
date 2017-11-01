@@ -1,0 +1,73 @@
+坐标和依赖是构造在maven世界中的逻辑表示方式
+
+坐标
+	<project>
+		<modelVersion>4.0.0</modelVersion> <!-- pom模型的版本: maven2和maven3来说只能是4.0.0 -->
+		<!-- 坐标元素 -->
+		<groupId></groupId> <!-- 定义项目属于哪个组: com.company.app -->
+		<artifactId></artifactId> <!-- 定义项目在组中唯一的ID: app-util 或 app-web -->
+		<version></version> <!-- 项目的版本 -->
+		<packaging></packaging> <!-- 项目的打包方式: jar(默认) war pom -->
+		
+		<name></name> <!-- 项目的名称，非必须 -->
+		<finalName></finalName> <!-- 打包文件的名称，非必须，默认artifactId-version.packaging -->
+	</project>
+	
+依赖
+	<project>
+		<dependencies>
+			<dependency>
+				<groupId></groupId>
+				<artifactId></artifactId>
+				<version></version>
+				<type></type> <!-- 非必须，默认jar -->
+				<scope></scope> <!-- 依赖范围 -->
+				<optional></optional> <!-- 可选依赖，true或false，true -->
+				<exclusions> <!-- 排除依赖 -->
+					<exclusion> <!--  -->
+					</exclusion>
+				</exclusions>
+			</dependency>
+		</dependencies>
+	</project>
+
+依赖范围：用来控制依赖和三种classpath(编译，测试，运行)的关系
+	compile -- 编译依赖范围：默认，编译、测试、运行三种classpath都有效
+	test -- 测试依赖范围：测试classpath有效，如junit
+	provided -- 已提供依赖范围: 编译、测试classpath有效，如servlet-api
+	runtime -- 运行时依赖范围: 测试、运行classpath有效，如JDBC驱动实现
+	system -- 系统依赖范围: 编译、测试classpath，需通过systemPath指定依赖文件的路径
+	
+传递性依赖
+	myApp -> spring-core -> commons-logging
+	commons-logging是myApp的传递性依赖
+	myApp引入spring-core，commons-logging会以传递性依赖的形式引入到myApp中
+	
+依赖调解
+	A -> B -> C -> X(1.0) 和 A -> D -> X(2.0) 和 A -> E -> X(3.0)
+	第一原则：路径最近者优先, 非X(1.0)
+	第二原则：第一声明者优先, X(3.0)
+	
+可选依赖
+	optional标签，可选依赖不会被传递
+	
+排除依赖
+	exclusions标签
+	
+归类依赖
+	<project>
+		<propertiest>
+			<springframework.version>2.5.6</springframework.version>
+		</propertiest>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${springframework.version}</version>
+			<dependency>
+		</dependencies>
+	</project>
+	
+优化依赖
+	mvn dependency:list
+	mvn dependency:tree

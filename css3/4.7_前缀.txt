@@ -1,0 +1,7 @@
+各大厂商前缀列表
+	Chrome,Safari 	-webkit-
+	Opera 			-o-
+	Firefox 		-moz-
+	IE 				-ms-
+	
+如果是手机等移动端一般采用的是IOS 或安卓系统，那么基本上它的引擎是webkit

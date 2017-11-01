@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script  src="../jquery-3.1.0.min.js"></script>
+
+	<script type="text/javascript">
+
+
+		$(function(){
+			$(":button").click(function(){
+				$( "a" ).attr( "href", "http://www.w3c.org" );
+			});
+
+		});
+
+
+		$(function(){
+			$("a").click(function(){
+				var url=$(this).attr("href");
+				alert(url);
+
+			});
+
+		});
+
+
+	</script>
+
+
+</head>
+<body>
+	
+	<a >w3c</a>
+	<a href="">w3c</a>
+
+	<input type="button"  value="add url"/>
+</body>
+</html>

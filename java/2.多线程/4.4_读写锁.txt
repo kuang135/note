@@ -1,0 +1,32 @@
+¶ÁÐ´Ëø£º·ÖÎª¶ÁËøºÍÐ´Ëø£¬¶à¸ö¶ÁËø²»»¥³â£¬¶ÁËøÓëÐ´Ëø»¥³â£¬Ð´ËøÓëÐ´Ëø»¥³â¡£
+
+public class Cache {
+	private Map<String, Object> cache = new HashMap<String, Object>();
+	private ReadWriteLock rwl = new ReentrantReadWriteLock();
+	//¶ÁÐ´Ëø
+	public Object getData(String key) {
+		//¶ÁËø
+		rwl.readLock().lock();
+		Object value = null;
+		try {
+			value = cache.get(key);
+			if (value == null) {
+				//Ð´ËøÇ°ÏÈÊÍ·Å¶ÁËø£¬Ê¹Ð´Ëø½µ¼¶Îª¸üÐÂËø
+				rwl.readLock().unlock();
+				rwl.writeLock().lock();
+				try {
+					if (value == null) {
+						value = "get data from database";
+					}
+				} finally {
+					rwl.writeLock().unlock();
+				}
+				//»Ö¸´¶ÁËø
+				rwl.readLock().lock();
+			}
+		} finally {
+			rwl.readLock().unlock();
+		}
+		return value;
+	}
+}

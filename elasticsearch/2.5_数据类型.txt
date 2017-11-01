@@ -1,0 +1,43 @@
+Elasticsearch支持以下简单字段类型：
+	类型	  		表示的数据类型
+	String			string
+	Whole number	byte, short, integer, long
+	Floating point	float, double
+	Boolean			boolean
+	Date			date
+	
+当索引一个包含新字段的文档，Elasticsearch将使用动态映射猜测字段类型
+	JSON type							Field type
+	Boolean: true or false				"boolean"
+	Whole number: 123					"long"
+	Floating point: 123.45				"double"
+	String, valid date: "2014-09-15"	"date"
+	String: "foo bar"					"string"
+	
+对于string字段，两个最重要的映射参数是index和analyer
+	index参数控制字符串以何种方式被索引
+		analyzed：首先分析这个字符串，然后索引。换言之，以全文形式索引此字段。
+		not_analyzed：索引这个字段，使之可以被搜索，但是索引内容和指定值一样。不分析此字段。
+		no：不索引这个字段。这个字段不能为搜索到。
+		
+	analyzer参数，指定哪一种分析器将在搜索和索引的时候使用。
+	默认的，Elasticsearch使用standard分析器，但可以通过指定一个内建的分析器来更改它，例如whitespace、simple或english。
+
+其他简单类型——long、double、date等等——也接受index参数，但相应的值只能是no和not_analyzed，它们的值不能被分析。
+
+--------------------------------------------------------------------------------------------------------------------------
+
+JSON还有null值，数组和对象，所有这些Elasticsearch都支持
+
+多值字段(数组)
+	数组中所有值必须为同一类型，Elasticsearch将使用第一个值的类型来确定这个新字段的类型
+	数组是做为多值字段被索引的，它们没有顺序。在搜索阶段不能指定“第一个值”或者“最后一个值”。
+	倒不如把数组当作一个值集合(gag of values)
+	
+空值对象
+	"",null,[],[null] 这四个字段被识别为空字段而不被索引
+
+多层对象(object)
+	
+内部对象是怎样被索引的
+	user.name.first

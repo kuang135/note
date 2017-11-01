@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>eq demo</title>
+	<style>
+		div,li {
+			width: 60px;
+			height: 60px;
+			margin: 10px;
+			float: left;
+			border: 2px solid blue;
+		}
+		.blue {
+			background: blue;
+		}
+
+		.highlight{
+			background-color: yellow
+		}
+
+
+		ul{
+			float: left;
+		}
+
+
+	</style>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+
+	<ul>
+		<li>list item 1</li>
+		<li>list item 2
+			<ul>
+				<li>list item 2-a</li>
+				<li>list item 2-b</li>
+			</ul>
+		</li>
+		<li>list item 3</li>
+		<li>list item 4</li>
+	</ul>
+
+
+	<script>
+		$( "body" ).find( "div" ).eq( 2 ).addClass( "blue" );
+		$( "body div" ).first().addClass( "highlight" );
+		$( "li" ).filter( ":even" ).css( "background-color", "red" );
+		$( "li" ).has( "ul" ).css( "background-color", "yellow" );
+
+
+
+		$( "ul" ).click(function( event ) {
+			var target = $( event.target );
+			if ( target.is( "li" ) ) {
+				alert($(this).html());
+			}
+		});
+
+
+
+	</script>
+
+</body>
+</html>

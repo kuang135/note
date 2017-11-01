@@ -1,0 +1,47 @@
+执行环境：
+	执行环境的类型总共只有两种：全局和局部(函数)
+
+作用域链：
+	内部环境可以通过作用域链访问所有的外部环境，但外部环境不能访问内部环境中的任何变量和函数
+
+垃圾回收机制：
+	某个执行环境中的所有代码执行完毕后，该环境被销毁，保存在其中的所有变量和函数定义也随之销毁
+	
+---------------------------------------------------------------------
+
+js不提倡使用全局变量：
+	1.不安全
+	2.做变量搜索查找的时候效率比较低
+
+闭包的好处：存储变量，形式为函数中返回一个函数的结构体
+	function test() {
+		var temp = 10;
+		return function() { //闭包体，保存了变量temp
+			console.log('闭包保存了变量temp：' + temp);
+			return temp;
+		};
+	}
+	var t = test(); //函数执行完，环境被销毁
+	t();
+
+闭包举例：统计button的点击次数
+	<input type=button id=btn value="点击" onclick="inp.getCount();"/>
+	var inp = (function(){
+			var i = 0;
+			return {getCount:function(){alert(++i);}};
+		})();
+	
+---------------------------------------------------------------------------------
+
+闭包中的this和_self的使用：
+	匿名函数的执行环境具有全局性，因此其this对象通常指向window。
+		var object = {
+			getFunc : function(){
+				var _self = this;
+				return function(){
+					console.log(this);	//匿名函数中的this指向window
+					console.log(_self); //所以，通过_self和闭包，保存外部的this(object)
+				};
+			}
+		};
+		object.getFunc()(); //Window Object

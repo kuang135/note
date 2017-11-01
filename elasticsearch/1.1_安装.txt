@@ -1,0 +1,27 @@
+	
+	1.下载elasticsearch，解压运行
+	  https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html
+	  进入 http://localhost:9200/
+
+	2.安装head插件
+	  https://github.com/mobz/elasticsearch-head
+	  进入 http://localhost:9200/_plugin/head/
+	  
+	3.安装kibana
+	  https://www.elastic.co/downloads/kibana
+	  进入 http://localhost:5601
+	  
+	4.安装marvel插件
+	  https://www.elastic.co/guide/en/marvel/current/installing-marvel.html
+	  elasticsearch: https://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/license/2.3.1/license-2.3.1.zip
+	  elasticsearch: https://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/marvel-agent/2.3.1/marvel-agent-2.3.1.zip
+	  kibana: https://download.elasticsearch.org/elasticsearch/marvel/marvel-2.3.1.tar.gz
+	  进入 http://localhost:5601/app/marvel
+	  
+	5.安装Sense
+	  https://github.com/bleskes/sense
+	  进入 http://localhost:5601/app/sense
+	
+	6.安装ik分词器
+	  https://github.com/medcl/elasticsearch-analysis-ik
+	 

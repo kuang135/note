@@ -1,0 +1,62 @@
+spring框架中提供了一个JdbcTemplate工具类，对JDBC API进行了很好的封装
+在实际项目中可以使用JdbcTemplate类来完全代替直接使用 JDBC API
+
+引入jar包：spring.jar
+	   commons-logging.jar
+
+//通过dbcp的工厂和properties的配置拿到DataSource
+	DataSource ds=BasicDataSourceFactory.createDataSource(prop);
+//通过DataSource拿到JdbcTemplate
+	JdbcTemplate jdbc = new JdbcTemplate(ds);
+//定义好sql语句和参数
+	Object user = jdbc.queryForObject(sql, args, new RowMapper() { //策略设计模式
+		public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+			User user = new User();
+			user.setId(rs.getInt("id"));
+			user.setName(rs.getString("name"));
+			user.setMoney(rs.getFloat("money"));
+			user.setBirthday(rs.getDate("birthday"));
+			return user;
+		}
+	});
+	return (User) user;
+
+//用反射将rs封装为user的方法来取代RowMapper
+//对sql语句有限制，表的列名最好和Bean类的属性名一致
+	Object user = jdbc.queryForObject(sql, args, new BeanPropertyRowMapper(User.class)); //反射技术
+
+//返回多个
+	List users = jdbc.query(sql, args, argTypes, new BeanPropertyRowMapper(User.class));
+
+其他查询方法：
+public int queryForInt(String sql)  如select count(*) from user
+public Map queryForMap(String sql,Object[] args) 返回类型的Map(key:字段名或别名，value:列值)
+public List queryForList(Sring sql,Object[] args) 返回多Map
+
+更新方法：
+public int update(String sql,Object[] args) 更新，删除
+public Object execute(ConnectionCallback action)  插入
+插入后返回主键
+	static int addUser(final User user) {
+		jdbc.execute(new ConnectionCallback() { //匿名类，想干什么自己都可以去干
+
+			public Object doInConnection(Connection con) throws SQLException,
+					DataAccessException {
+				String sql = "insert into user(name,birthday, money) values (?,?,?) ";
+				PreparedStatement ps = con.prepareStatement(sql,
+						Statement.RETURN_GENERATED_KEYS);
+				ps.setString(1, user.getName());
+				ps.setDate(2, new java.sql.Date(user.getBirthday().getTime()));
+				ps.setFloat(3, user.getMoney());
+				ps.executeUpdate();
+
+				ResultSet rs = ps.getGeneratedKeys();
+				if (rs.next())
+					user.setId(rs.getInt(1));
+				return null;
+			}
+		});
+		return 0;
+	}
+	
+	

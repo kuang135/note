@@ -1,0 +1,88 @@
+行转列
+
+场景1：销售明细表 -- 汇总，两行多列
+	date_time	date_sum  --->	6月	7月	8月	
+	2015/6/1	10		30	70	110
+	2015/6/2	20
+	2015/7/1	30
+	2015/7/2	40
+	2015/8/1	50
+	2015/8/2	60
+#1.先汇总，再CROSS JOIN笛卡尔乘积(1×1)
+SELECT * FROM (
+    SELECT SUM(sd.`date_sum`) AS '6月' FROM sale_detail sd  WHERE MONTH(sd.`date_time`)=6 GROUP BY MONTH(sd.`date_time`)
+) a CROSS JOIN(
+    SELECT SUM(sd.`date_sum`) AS '7月' FROM sale_detail sd  WHERE MONTH(sd.`date_time`)=7 GROUP BY MONTH(sd.`date_time`)
+) b CROSS JOIN(
+    SELECT SUM(sd.`date_sum`) AS '8月' FROM sale_detail sd  WHERE MONTH(sd.`date_time`)=8 GROUP BY MONTH(sd.`date_time`)
+) c
+
+#2.CASE WHEN THEN
+SELECT SUM(CASE WHEN MONTH(sd.`date_time`)=6 THEN sd.`date_sum` END) '6月',
+       SUM(CASE WHEN MONTH(sd.`date_time`)=7 THEN sd.`date_sum` END) '7月',
+       SUM(CASE WHEN MONTH(sd.`date_time`)=8 THEN sd.`date_sum` END) '8月' FROM sale_detail sd
+
+
+
+场景2：学生课程成绩 -- 分组，多行多列
+	name	course	score   ---->	姓名	数学	英语	语文		
+	张三	数学	70		张三	70	80	90
+	张三	英语	80		李四	90	80	70
+	张三	语文	90
+	李四	数学	90
+	李四	英语	80
+	李四	语文	70
+#CASE WHEN THEN
+SELECT scs.`name` '姓名',
+	MAX(CASE scs.`course` WHEN '数学' THEN scs.`score` ELSE 0 END) '数学',
+	MAX(CASE scs.`course` WHEN '英语' THEN scs.`score` ELSE 0 END) '英语',
+	MAX(CASE scs.`course` WHEN '语文' THEN scs.`score` ELSE 0 END) '语文'
+FROM student_course_score scs 
+GROUP BY scs.`name`
+
+--------------------------------------------------------------------------------------------
+
+列转行
+场景1：某列的数据用逗号隔开了，单列
+	id	user_id		role_id  ---->  user_id		role_id
+	1	11		1,2		11		1
+	2	22		2,3,4		11		2	
+						22		2
+						22		3
+						22		4
+
+#先建序列表，插入数据(1,2,3,4...)
+SELECT b.`userId` userId
+       ,REPLACE(SUBSTRING(SUBSTRING_INDEX(b.`roleId`,',',a.id),CHAR_LENGTH(SUBSTRING_INDEX(b.`roleId`,',',a.`id`-1))+1),',','') roleId
+FROM tb_sequence a CROSS JOIN (
+    SELECT sur.`user_id` userId,CONCAT(sur.`role_id`,',') roleId
+	   ,LENGTH(sur.`role_id`)-LENGTH(REPLACE(sur.`role_id`,',',''))+1 size 
+    FROM system_user_role sur
+) b ON a.`id` <= b.`size`
+
+场景2：学生课程成绩 -- 多列
+	name	math	english	chinese  ---->  name	course	score	
+	张三	70	 80	  90		张三	math	 70
+	李四	90	 80	  70		张三	english	 80
+						张三	chinese	 90
+						李四	math	 90
+						李四	english	 80
+						李四	chinese	 70
+#使用UNION
+SELECT scs.`name` student_name,'math' course,scs.`math` score FROM student_course_score scs
+UNION
+SELECT scs.`name` student_name,'english' course,scs.`english` score FROM student_course_score scs
+UNION
+SELECT scs.`name` student_name,'chinese' course,scs.`chinese` score FROM student_course_score scs
+
+#先建立序列号表
+SELECT a.`name` student_name
+,CASE WHEN b.id = 1 THEN 'math'
+     WHEN b.id = 2 THEN 'english'
+     WHEN b.id = 3 THEN 'chinese' END course
+,COALESCE(CASE WHEN b.`id` = 1 THEN a.`math` END
+,CASE WHEN b.`id` = 2 THEN a.`english` END
+,CASE WHEN b.`id` = 3 THEN a.`chinese` END) score
+FROM student_course_score a 
+CROSS JOIN tb_sequence b WHERE b.`id` <= 3
+ORDER BY a.`name`,b.`id`

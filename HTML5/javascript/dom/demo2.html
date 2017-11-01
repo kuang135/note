@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form>
+		男性：
+		<input type="radio" checked="checked" name="Sex"  id="sex1" value="male" />
+		<br />
+		女性：
+		<input type="radio" name="Sex" value="female" />
+	</form>
+
+	<script type="text/javascript">
+		
+		var attrs=document.getElementById("sex1").attributes;
+
+		for(att in attrs){
+
+			document.write(attrs[att].name+"<br/>");
+			document.write(attrs[att].value+"<br/>");
+			document.write("<hr/>");
+		}
+
+
+
+	</script>
+
+
+</body>
+</html>

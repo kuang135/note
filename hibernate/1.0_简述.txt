@@ -1,0 +1,58 @@
+hibernate 位于数据库和应用程序之间
+	1.应用程序操作Persistent Object(持久化对象),操作hibernate
+	2.Hibernate需要配置属性连接数据库 
+	3.Hibernate根据 hbm 映射,将对象操作转换为SQL语句,操作数据库
+
+快速入门:
+    1.数据库建表,编写实体类,并完成实体类到表的映射,一般在实体类所在的包创建 ClassName.hbm.xml
+	a.引入dtd约束
+	    <!DOCTYPE hibernate-mapping PUBLIC 
+	    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	b.配置类和表的映射
+	    <hibernate-mapping>
+		<class name="cn.itcast.domain.Customer" table="t_customers" >
+			<id name="id" column="c_id">
+			    <generator class="native" />
+			</id>
+			<property name="city" type="string" column="c_city"/>
+		</class>
+	    </hibernate-mapping>
+	    
+    2.配置hibernate.cfg.xml
+        a.引入dtd约束
+	    <!DOCTYPE hibernate-configuration PUBLIC
+	    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+	b.配置
+	    <hibernate-configuration>
+		<session-factory>
+		    <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		    <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:orcl</property>
+		    <property name="hibernate.connection.username">scott</property>
+		    <property name="hibernate.connection.password">tiger</property>
+		    <mapping resource="cn/itcast/domain/Customer.hbm.xml"/>
+		</session-factory>
+	    </hibernate-configuration>
+    
+    3.编写代码操作数据库
+        Configuration configuration = new Configuration().configure();//加载配置文件
+	SessionFactory sessionFactory = configuration.buildSessionFactory();//获取SessionFactory
+	Session session = sessionFactory.openSession();//获取连接
+	session.beginTransaction();//开启事务
+	session.save(new Customer(1,"kobe",36));//生成事务,保存到数据库
+	session.getTransaction().commit();//提交事务
+	session.close();//释放资源
+	sessionFactory.close();//释放资源
+
+hibernate3要导入的jar包
+	hibernate3.jar -- 核心jar包
+	antlr-2.7.7.jar -- 语言转换工具,将HQL转换为SQL
+	commons-collections-3.1.jar -- 增强Java对集合的处理能力
+	dom4j-1.6.1.jar -- XML解析器
+	javassist-3.12.0.GA.jar -- 生成代理,Hibernate用它在运行时扩展Java类
+	jta-1.1.jar -- 标准的JAVA事务(跨数据库)处理接口
+	slf4j-api-1.6.1.jar -- Simple Logging Facade for Java 简单日志门面
+	slf4j-log4j12-1.7.2.jar -- slf4j整合log4j
+	log4j-1.2.16.jar -- 实现
+	hibernate-jpa-2.0-api-1.0.1.Final.jar -- JPA的接口规范

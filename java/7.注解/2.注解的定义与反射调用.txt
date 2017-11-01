@@ -1,0 +1,40 @@
+注解就相当于在源程序中调用某个类，一个注解就是一个类
+
+注解类
+    @interface A{
+     }
+
+应用了"注解类"的类
+    @A
+    Class B{
+    }
+
+对"应用了注解类的类"进行反射操作的类
+    Class C{
+		public void main(String[] args){
+			if(B.class.isAnnotationPresent(A.class)){
+				A a=(A)B.class.getAnnotation(A.class);
+			}
+		}
+    }
+
+元注解，给注解用的注解
+    @Retention(RetentionPolicy.RUNTIME)
+	public @interface MyAnnotation {
+    }
+@Retention元注解有3种取值：
+    RetentionPolicy.SOURCE //注解保留到源文件,编译成class文件就没有了(编译前还有)
+    RetentionPolicy.CLASS  //默认,注解保留到class文件,加载进虚拟机就没有了
+    RetentionPolicy.RUNTIME  //注解保留到运行时(内存中的二进制)
+java源文件-->class文件-->内存中的字节码
+javac把源文件编译成class文件的时候可能去掉注解
+类加载器把class字节码加载到内存的时候也可能去掉注解
+Retention元注解就是用来声明该注解的声明周期在哪个阶段
+    @Override在SOURCE
+    @SuprressWarnings在SOURCE
+    @Deprecated在RUNTIME
+
+@Target元注解表示该注解作用的目标
+    @Target({ElementType.METHOD,ElementType.TYPE})
+    public @interface MyAnnotation {
+    }

@@ -1,0 +1,16 @@
+索引是用于加速数据存取的数据对象，合理使用索引可以大大降低i/o次数，提高数据访问性能。
+
+创建单列索引
+    create index 索引名 on 表名 (列名);
+创建复合索引
+    create index 索引名 on 表名 (列名1，列名2);
+
+使用原则：
+1.在大表上建立索引才有意义
+2.在where子句或是连接条件上经常应用的列上建立索引
+3.索引的层次不要超过4层
+
+显示表的所有索引，通过查询数据字典视图dba_indexes,user_indexes
+    select index_name,index_type from user_indexes where table_name='表名';
+显示索引列，通过查询数据字典视图user_ind_columns
+    select table_name,column_name from user_ind_columns where index_name='IND_ENAME';

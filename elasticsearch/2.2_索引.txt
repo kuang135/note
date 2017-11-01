@@ -1,0 +1,62 @@
+在Elasticsearch中存储数据的行为就叫做索引(indexing)，
+文档(document)归属于一种类型(type),而这些类型存在于索引(index)中
+
+Relational DB -> Databases -> Tables -> Rows 	  -> Columns
+Elasticsearch -> Indices   -> Types  -> Documents -> Fields
+
+
+添加：
+	PUT /{index}/{type}/{id}
+	{
+		"field": "value",
+		...
+	}
+	POST /{index}/{type}	自动生成id
+	{
+		"field": "value",
+		...
+	}
+	
+删除：
+	DELETE /{index}/{type}/{id}	标记为已删除，添加更多索引时再删除
+	DELETE /{index}
+	
+更新：
+	PUT /{index}/{type}/{id}	删除旧文档，索引新文档
+	{
+		"field": "value",
+		...
+	}
+	
+局部更新：
+	POST /{index}/{type}/{id}/_update	存在的标量字段被覆盖，新字段被添加
+	{
+		"doc" : {
+			"field": "value",
+			...
+		}
+	}
+	
+检索：
+	GET /{index}/{type}/{id}?pretty
+	GET /{index}/{type}/{id}?_source={field},...	指定字段
+	GET /website/blog/_mget		检索多个文档
+	{
+		"ids" : [ "2", "1" ]
+	}
+	GET /_mget		检索多个文档
+	{
+		"docs" : [
+			{
+				"_index" : "website",
+				"_type" : "blog",
+				"_id" : 2
+			},
+			{
+				"_index" : "website",
+				"_type" : "pageviews",
+				"_id" : 1,
+				"_source": "views"
+			}
+		]
+	}

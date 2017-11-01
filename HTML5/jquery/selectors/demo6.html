@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script  src="../jquery-3.1.0.min.js"></script>
+</head>
+<body>
+	<div>John Resig</div>
+	<div>George Martin</div>
+	<div>Malcom John Sinclair</div>
+	<div>J. Ohn</div>
+
+	<script>
+		$( "div:contains('John')" ).css( "text-decoration", "underline" );
+	</script>
+
+	<table border="1">
+		<tr><td>TD #0</td><td></td></tr>
+		<tr><td>TD #2</td><td></td></tr>
+		<tr><td></td><td>TD#5</td></tr>
+	</table>
+	
+	<script>
+		$( "td:empty" )
+		.text( "Was empty!" )
+		.css( "background", "rgb(255,220,200)" );
+	</script>
+
+	<div><p>Hello in a paragraph</p></div>
+	<div>Hello again! (with no paragraph)</div>
+	
+	<script>
+		$( "div:has(p)" ).addClass( "test" );
+	</script>
+
+	<table border="1">
+		<tr><td>Value 1</td><td></td></tr>
+		<tr><td>Value 2</td><td></td></tr>
+	</table>
+	
+	<script>
+		$( "td:parent" ).fadeTo( 1500, 0.3 );
+	</script>
+
+</body>
+</html>

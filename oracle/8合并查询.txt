@@ -1,0 +1,14 @@
+为了合并多个select语句的结果，可以使用集合操作符
+union,union all,intersect,minus
+速度比where and or快得多
+
+1.union取两个结果集的并集
+    select ename,sal,job from emp where sal>2500 union 
+	select ename,sal,job from emp where job='MANAGER';
+
+2.union all与union相似，但不取消重复行，不排序
+
+3.intersect取两个结合的交集
+
+4.minus取两个集合的差集，显示存在于第一个集合，但不存在于第二个集合的数据
+  前面的减后面的

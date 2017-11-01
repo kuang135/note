@@ -1,0 +1,59 @@
+流程实例相关（流程实例、执行对象、任务对象）
+	act_ru_execution: 正在执行的执行对象表
+	act_hi_procinst: 流程实例的历史表
+	act_ru_task: 正在执行的任务表（只有流程执行到userTask节点的时候，引擎才向该表插入数据）
+	act_hi_taskinst: 任务历史表（只有流程执行到userTask节点的时候，引擎才向该表插入数据）
+	act_hi_actinst: 活动的历史表（流程中所有走过的节点活动信息都会存放在这里）
+
+流程实例和执行对象
+	一个流程中,只有一个流程实例,流程实例ID也只有一个(act_ru_execution表的PROC_INST_ID_)
+	一个流程中,可以有多个执行对象,执行对象ID可以有多个(act_ru_execution的ID_)
+	流程对象: 表示一个路程从开始到结束的最大的流程分支．
+	执行对象: 流程按照流程定义的规则执行一次的过程.
+
+启动流程实例
+	String processDefinitionKey="helloworld";
+	RuntimeService runtimeService = processEngine.getRuntimeService();//与运行过程中有关的操作：执行对象，流程实例
+	ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey);//根据流程定义的key启动流程(按最新版本启动)
+	System.out.println("流程启动完成！：流程实例id："+processInstance.getProcessInstanceId());
+
+查询当前办理人的个人任务, act_ru_task
+	TaskService taskService = processEngine.getTaskService();//与正在执行的任务相关的sevice，操作任务节点(userTask节点)相关。
+	String  assignee = "明星";//任务办理人,task节点的assignee属性
+	TaskQuery taskQuery = taskService.createTaskQuery();//创建任务的查询对象
+	taskQuery.taskAssignee(assignee);//指定任务办理人
+	List<Task> list = taskQuery.list();//查询列表
+	if(null !=list && list.size()>0){ //遍历
+		for (Task task : list) {
+			System.out.println("任务ID："+task.getId());
+			System.out.println("任务名称："+task.getName());
+			System.out.println("任务办理人："+task.getAssignee());
+			System.out.println("任务创建时间："+task.getCreateTime());
+			System.out.println("任务办理经历的时间："+task.getDueDate());
+			System.out.println("流程执行对象ID："+task.getExecutionId());
+			System.out.println("流程实例ID："+task.getProcessInstanceId());
+			System.out.println("流程定义ID："+task.getProcessDefinitionId());
+		}
+	}
+
+完成办理人的个人任务(手动指定一个一个完成)
+	TaskService taskService = processEngine.getTaskService();
+	String taskId = "804";//正在执行的任务ID
+	taskService.complete(taskId);//使用任务ID完成任务
+
+查询流程状态(判断流程正在执行,还是结束)
+    1.从act_ru_execution查：如果没有对应的数据，就是流程结束。
+    2.从act_hi_procinst中查：查end时间
+	String processInstanceId="801";//流程实例ID
+	//从正在执行的执行对象表，获取流程实例对象
+	RuntimeService runtimeService = processEngine.getRuntimeService();//只要查询正在执行的东东，都使用runtimeService
+	//ExecutionQuery executionQuery = runtimeService.createExecutionQuery();//尽量不用执行对象查询，因为执行对象可能会有多个
+	ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+	processInstanceQuery.processInstanceId(processInstanceId);
+	ProcessInstance processInstance = processInstanceQuery.singleResult();
+	//判断是否有流程实例对象
+	if(processInstance!=null){
+		System.out.println("流程正在执行！");
+	}else{
+		System.out.println("流程已经结束！");
+	}

@@ -1,0 +1,98 @@
+关于struts2页面控制相关标签
+    <s:property> 用于输出指定值
+	value: 接收OGNL表达式, 默认输出ValueStack栈顶的值
+	default: 如果OGNL表达式，取不到值，default设置显示默认值
+	escape: 指定是否格式化HTML代码,false表示转义
+
+ -----------------------------------------------------------------------------------
+
+    <s:set> 用于将某个值放入指定范围。
+	var: 变量的名字,name,id和var表达的含义是一样的,name,id被var替代
+	scope：指定变量被放置的范围，该属性可以接受application、session、request、 page或action。
+		如果没有设置该属性，则默认放置在值栈的context中。
+	value：赋给变量的值.如果没有设置该属性,则将ValueStack栈顶的值赋给变量。
+	
+	<s:set value="#request.username"  var="xxx" />
+	<s:property value="xxx" /> 或 <s:property value=“#xxx" />
+
+-------------------------------------------------------------------------------------------
+ 
+    <s:iterator> 用于对集合和数组进行迭代
+	value：指定被迭代的集合，如果没有设置该属性，则使用ValueStack栈顶的集合。
+	var：引用变量的名称,在_root栈顶放一份,在_values中也放一份 
+	     当value是Collection时,放的是名为这个名称的对象
+	     当value是Map时,放的是名为这个名称的Entry对象(Entry有getKey和getValue方法)
+	begin,end,step
+	status：可选属性，该属性指定迭代时的IteratorStatus实例。该实例包含如下几个方法：
+		int getCount()，返回当前迭代了几个元素。
+		int getIndex()，返回当前迭代元素的索引。
+		boolean isEven()，返回当前被迭代元素的索引是否是偶数
+		boolean isOdd()，返回当前被迭代元素的索引是否是奇数
+		boolean isFirst()，返回当前被迭代元素是否是第一个元素。
+		boolean isLast()，返回当前被迭代元素是否是最后一个元素。
+
+	<s:iterator value="#userList" var="u">
+		<s:property value="username"/>
+		<s:property value="age"/>
+		<s:property value="#u.username"/>
+		<s:property value="#u.age"/>
+	</s:iterator>
+
+	<s:iterator value="#userMap" var="u">
+		<s:property value="key.username"/>
+		<s:property value="value"/>
+		<s:property value="#u.key.username"/>
+		<s:property value="#u.value"/>
+	</s:iterator>
+
+	//隔行变色
+	<style type="text/css" >
+	    .odd{ background-color: red;} 
+	    .even{ background-color:blue;}
+	</style>
+	<table border="1">  
+	    <s:iterator value="allList" var="person" status="st">
+		<tr class=<s:property value="#st.even?'even':'odd'"/>  >
+		    <td><s:property value="#person.name"/></td>
+		</tr>
+	    </s:iterator>  
+	</table>
+
+--------------------------------------------------------------
+    if/elseif/else  基本的流程控制.‘If’标签可单独使用也可以和‘Else If’标签和(或)一个多个‘Else’一起使用
+	<table border="1">  
+	    <s:iterator value="allList" var="person">
+		<tr>
+		    <td><s:property value="#person.name"/></td>
+		    <td><s:property value="#person.age"/></td>
+		    <td><s:if test="#person.age<24">少年</s:if>
+			<s:elseif test="#person.age<26">中年</s:elseif>
+			<s:else>老年</s:else>
+		    </td>
+		</tr>
+	    </s:iterator>  
+	</table>
+
+------------------------------------------------------------------------------------------
+    url 该标签用于创建url,可以通过"param"标签提供request参数. 
+	value: 如果不提供就用当前action,使用value后缀必须加.action
+	action: 用来生成url的action,如果没有则使用value
+	namespace: 命名空间
+	var: 引用变量的名称.
+    注意：当使用url时，应配合使用struts2的a标签
+
+    //使用action
+    <s:url action="ognlTagAction_test" namespace="/ognl" var="myurl">
+         <s:param name="name" value="%{'张老师'}"></s:param>
+         <s:param name="id" value="12"></s:param>
+    </s:url>
+    <s:a href="%{#url}" >xxxx</s:a><br>    
+    
+    //使用value<br>
+    <s:url value="ognlTagAction_test.action" namespace="/ognl" var="myurl">
+         <s:param name="id" value="12"></s:param>
+         <s:param name="cnname" value="%{'zhang'}"></s:param>
+    </s:url>
+    <s:a href="%{#myurl}" >xxxx</s:a><br>   
+
+

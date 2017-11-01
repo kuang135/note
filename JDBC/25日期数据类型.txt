@@ -1,0 +1,12 @@
+sql包里的Date继承与util包里的Date
+
+util.Date 即有日期又有时间
+sql.Date  只有日期没有时间
+
+业务逻辑层不跟sql打交道，用的是util.Date
+sql.Date与数据库的日期数据类型一一对应
+
+在DAO层要将Date数据类型进行转换
+	ps.setDate(3,new java.sql.Date(birthday.getTiem()));
+	birthday = new Date(rs.getDate("birthday").getTime());//没有格式
+	birthday = rs.getDate("birthday");//可以，子类赋给父类

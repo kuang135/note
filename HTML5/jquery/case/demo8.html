@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片都完整了</title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+	<script type="text/javascript">
+
+
+		var imgloadindex=0;
+		$(function(){
+			$("img").load(function(){
+				imgloadindex++;
+				var imgcount=$(this).parent("div").find("img").size();
+				if (imgloadindex==imgcount) {
+					$("p").html("请选择图片");
+				}
+
+			});
+		});
+	</script>
+
+</head>
+<body>
+
+	<div>
+		<img src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg" alt="W3C">
+		<img src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg" alt="W3C">
+		<img src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg" alt="W3C">
+		<img src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg" alt="W3C">
+		<img src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg55" alt="W3C">
+		<p></p>
+	</div>
+
+
+	
+</body>
+</html>

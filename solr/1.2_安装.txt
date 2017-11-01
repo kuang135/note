@@ -1,0 +1,10 @@
+windows：
+	1.解压solr-4.10.2.zip文件，得到solr-4.10.2目录
+	2.cmd进入example目录
+	3.执行命令 java –jar start.jar
+	4.内置了jetty，打开浏览器，输入地址：http://localhost:8983/solr/
+	5.插入数据，cmd进入example\exampledocs
+	  执行命令 java -jar post.jar solr.xml monitor.xml
+
+linux：
+	

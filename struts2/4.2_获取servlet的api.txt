@@ -1,0 +1,24 @@
+
+action获取servlet相关的api,获取request,response,session,parameters
+
+    1.实现接口,ServletContextAware,ServletRequestAware,ServletResponseAware
+
+    2.通过ServletActionContext的静态方法
+
+    3.ActionContext类,与容器相关，获取容器相关对象、信息
+
+    推荐使用ActionContext,与Servlet解耦
+
+com.opensymphony.xwork2.ActionContext的方法:
+	static ActionContext getContext();//通过ThreadLocal<T>的T get()方法拿到
+	Map<String, Object> getParameters(); //obj为String[]
+	Object get(String key); //request的getAttribute
+	put(String key, Object value); //request的setAttribute
+	Map<String, Object> getSession(); //存session的map
+	Map<String, Object> getApplication() //ServletContext
+	ValueStack getValueStack();
+
+org.apache.struts2.ServletActionContext的方法:
+	static HttpServletRequest getRequest()
+	static HttpServletResponse getResponse()
+	static ServletContext getServletContext() 

@@ -1,0 +1,30 @@
+Mybatis支持的拦截的接口有4个: 
+	Executor
+	StatementHandler
+	ParameterHandler
+	ResultSetHandler
+
+
+每一个拦截器都必须实现上面的三个方法
+	1.Object intercept(Invocation invocation)
+		实现拦截逻辑的地方，内部要通过invocation.proceed()显式地推进责任链前进，也就是调用下一个拦截器拦截目标方法。
+	2.Object plugin(Object target) 
+		当前这个拦截器生成对目标target的代理，实际是通过Plugin.wrap(target,this) 来完成的，把目标target和拦截器this传给了包装函数。
+	3.setProperties(Properties properties)
+		用于设置额外的参数，参数配置在拦截器的Properties节点里。
+
+加在类上的注解：指定拦截方法的签名 [type,method,args] (即对哪种对象的哪种方法进行拦截)，它在拦截前用于决断。
+
+
+
+举例	
+	返回值Map结果的Key转为驼峰式
+		http://git.oschina.net/free/Mybatis_Utils/tree/master/CameHumpMap
+	
+	性能拦截器，用于输出每条 SQL 语句及其执行时间
+		http://git.oschina.net/free/Mybatis_Utils/tree/master/Performance
+		
+注意插件配置的位置, environments之前
+	<plugins>
+		<plugin interceptor="com.demo.mybatis.java.interceptor.CameHumpInterceptor"/>
+	</plugins>

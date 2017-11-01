@@ -1,0 +1,12 @@
+使用？通配符可以引用各种参数化的类型，
+？通配符顶一顶变量主要用作引用，
+可以调用与参数化无关的方法，不能调用与参数化有关的方法。
+
+限定通配符的上边界：
+    Vector<? extends Number> x=new Vector<Integer>();//正确
+    Vector<? extends Number> x=new Vector<String>();//错误
+限定通配符的下边界：
+    Vector<? super Integer> x=new Vector<Number>();//正确
+    Vector<? extends Integer> x=new Vector<Byte>();//错误
+
+另外，限定通配符总是包括自己

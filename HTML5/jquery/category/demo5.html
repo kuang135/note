@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+	
+	<p class="remove">remove</p>
+	<p class="detach">Hello</p>
+
+	<button id="but1">remove</button>
+	<button id="but11">恢复remove元素</button>
+	<button id="but2">detach</button>
+	<button id="but22">恢复detach元素</button>
+	<button id="but3">empty</button>
+
+
+	<script type="text/javascript">
+		var p1,p2;
+
+		
+		$('#but1').click(function(){
+			$(".remove").data("test","hello");
+			p1=$(".remove").remove();
+		});
+
+
+		$('#but11').click(function(){
+			$("body").prepend(p1);
+			alert($(".remove").data("test"));
+		});
+
+
+		$('#but2').click(function(){
+			$(".detach").data("test","hello");
+			p2=$(".detach").detach();
+		});
+
+
+		$('#but22').click(function(){
+			$("body").prepend(p2);
+			alert($(".detach").data("test"));
+		});
+
+
+		$('#but3').click(function(){
+			$("p").empty();
+		});
+
+
+
+	</script>
+
+
+
+</body>
+</html>

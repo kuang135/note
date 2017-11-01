@@ -1,0 +1,44 @@
+聚合(aggregations)，在数据上生成复杂的分析统计，像SQL的group by，但功能更强大
+
+举例:
+	所有职员中最大的共同点（兴趣爱好）是什么
+		GET /megacorp/employee/_search
+		{
+		  "aggs": {
+			"all_interests": {
+			  "terms": { "field": "interests" }
+			}
+		  }
+		}
+
+	所有姓"Smith"的人最大的共同点（兴趣爱好）
+		GET /megacorp/employee/_search
+		{
+		  "query": {
+			"match": {
+			  "last_name": "smith"
+			}
+		  },
+		  "aggs": {
+			"all_interests": {
+			  "terms": {
+				"field": "interests"
+			  }
+			}
+		  }
+		}
+		
+	统计每种兴趣下职员的平均年龄
+		GET /megacorp/employee/_search
+		{
+			"aggs" : {
+				"all_interests" : {
+					"terms" : { "field" : "interests" },
+					"aggs" : {
+						"avg_age" : {
+							"avg" : { "field" : "age" }
+						}
+					}
+				}
+			}
+		}

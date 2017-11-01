@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<script>
+		function myFunction()
+		{
+			var node=document.createElement("LI");
+			var textnode=document.createTextNode("Water");
+			node.appendChild(textnode);
+			document.getElementById("myList").appendChild(node);
+
+			myFunction1();
+			myFunction2();
+		}
+
+
+		function myFunction1() {
+			var x = document.getElementById("myBtn").attributes.length;
+			document.getElementById("demo1").innerHTML = x;
+		}
+
+		function myFunction2()
+		{
+			var txt="";
+			var c=document.body.childNodes;
+			for (i=0; i<c.length; i++)
+			{
+				txt=txt + c[i].nodeName + "<br>";
+			};
+			var x=document.getElementById("demo2");  
+			x.innerHTML=txt;
+		}
+
+	</script>
+
+	<style type="text/css">
+		
+		.redf{
+			color: red;
+
+		}
+
+		.blueb{
+			background-color: blue;
+
+		}
+
+
+	</style>
+
+
+</head>
+<body>
+	<ul id="myList"><li>Coffee</li><li>Tea</li></ul>
+
+	<button id="myBtn" onclick="myFunction()">请点击按钮向列表中添加项目。</button>
+
+	<p id="demo1" class="redf blueb">相关信息。</p>
+	<p id="demo2">相关信息。</p>
+
+	<script type="text/javascript">
+		
+		document.write(document.getElementById('demo1').className+"<br/>");
+		document.write(document.getElementById("myList").firstChild.nodeName+"<br/>");
+		document.write(document.getElementById("myList").lastChild.nodeName+"<br/>");
+		document.write(document.getElementById("myBtn").getAttribute("onclick")+"<br/>");
+		document.write(document.getElementsByTagName("p")[1].id+"<br/>");
+		document.write(document.getElementsByTagName("p")[1].hasAttribute("class")+"<br/>");
+		document.write(document.getElementsByTagName("p")[1].hasAttributes()+"<br/>");
+		document.write(document.getElementById('myList').tagName+"<br/>");
+		document.write(document.getElementById('myList').textContent+"<br/>");
+		document.write(document.getElementById('myList').childNodes.item(0).textContent+"<br/>");
+
+	</script>
+
+
+</body>
+</html>

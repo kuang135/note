@@ -1,0 +1,38 @@
+1.配置Configuration
+	<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">  
+        <property name="templateLoaderPath" value="WEB-INF/templates/" />  
+        <property name="defaultEncoding" value="UTF-8" />
+        <property name="freemarkerSettings">
+		    <props>
+		      	<prop key="incompatible_improvements">2.3.23</prop>
+		      	<prop key="template_exception_handler">rethrow</prop>
+			</props>
+		</property> 
+    </bean>
+
+2.配置ViewResolver
+	<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">  
+        <property name="viewClass"  value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>  
+        <property name="suffix" value=".ftl" />  
+        <property name="contentType" value="text/html;charset=UTF-8" />  
+    </bean>
+	
+3.Controller中，IndexOfMethod，View同上
+	@RequestMapping(value="/springMvcDemo",method=RequestMethod.GET)
+	public ModelAndView springMvcDemo() {
+		ModelAndView mv = new ModelAndView("demo");
+		mv.addObject("message", "Hello, SpringMVC!");
+		return mv;
+	}
+	
+	@RequestMapping(value="/methodTest",method=RequestMethod.GET)
+	public ModelAndView methodTest() {
+		ModelAndView mv = new ModelAndView("method");
+		mv.addObject("indexOf", new IndexOfMethod());
+		return mv;
+	}
+	
+说明：FreeMarkerView中的doRender(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response)方法，
+	  会先把model和request中的数据重新组织成一个新的SimpleHash对象
+	  再做template.process(simpleHash, response.getWriter())
+	  所以，不需要像之前那样，自己设定一个数据模型的root

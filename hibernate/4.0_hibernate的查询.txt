@@ -1,0 +1,21 @@
+Hibernate的检索方式
+	1.OID检索方式: 按照对象的 OID 来检索对象
+		Student s1=(Student)session.get(Student.class, 2);
+		Student s2=(Student)session.load(Student.class, 5);
+
+	2.对象导航的检索方式: 根据已经加载的对象导航到其他对象
+		Order o1=(Order)session.get(Order.class, 1);
+		Customer c1 = o1.getCustomer();
+
+	3.HQL检索方式: 使用面向对象的 HQL 查询语言
+		Query hql = session.createQuery("from Student");
+		List list = hql.list();
+
+	4.QBC检索方式: 使用 QBC(Query By Criteria) API 来检索对象.
+		Criteria criteria = session.createCriteria(Student.class);
+		List list = criteria.list();
+	
+	5.本地SQL检索方式: 使用本地数据库的 SQL 查询语句
+		SQLQuery sql = session.createSQLQuery("select * from student");
+		sql.addEntity(Student.class);
+		List list = sql.list();			

@@ -1,0 +1,31 @@
+maven项目的核心是pom.xml
+
+maven项目的目录结构
+	app
+	 |---pom.xml
+	 |---src
+		  |---main
+				|---java
+				|---resources
+		  |---test
+				|---java
+				|---resources
+	
+由于历史原因，maven的核心插件之一compiler插件默认只支持编译java1.3
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+插件
+	surefire -- 执行测试
+	maven-shade-plugin -- 生成可执行jar文件

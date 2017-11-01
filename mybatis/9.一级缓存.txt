@@ -1,0 +1,30 @@
+一级缓存: mybatis的一级缓存的作用域是session,
+	  当openSession()后，如果执行相同的sql(相同语句和参数),Mybatis执行sql,而是从缓存中命中返回。
+
+一级缓存的原理：
+	mybatis执行查询时首先去缓存区命中,如果命中直接返回,没有命中则执行SQL,从数据库中查询。
+
+测试一级缓存的存在性:
+		User user1 = userMapper.selectUser(1);
+        System.out.println(user1);
+        User user2 = userMapper.selectUser(1);//不执行sql
+        System.out.println(user2);
+
+使用sqlSession.clearCache()强制查询,不缓存。
+
+如果获取session的时候是手动提交事务,那么在事务提交后,也不会缓存.
+		SqlSession sqlSession = sqlSessionFactory.openSession(false);//手动提交事务
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user1 = userMapper.selectUser(1);
+        System.out.println(user1);
+        sqlSession.commit();//手动提交事务,查询一下源代码,看该方法中有没有调用clearCache()???
+        User user2 = userMapper.selectUser(1);//执行sql
+        System.out.println(user2);
+
+在执行insert、update、delete时会刷新缓存,更新数据库.
+		User user1 = userMapper.selectUser(1);
+        System.out.println(user1);
+        user1.setNickname("老飞侠");
+        userMapper.updateUser(user1); //执行更新操作,刷新缓存,更新数据库
+        User user2 = userMapper.selectUser(1);//不执行sql
+        System.out.println(user2);

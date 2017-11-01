@@ -1,0 +1,36 @@
+注解的属性名就是注解类中的方法名
+注解的属性值就是注解类中该方法的返回值
+
+
+注解类
+    @Target({ElementType.METHOD,ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @interface A{
+		String color() default "blue";//可以指定属性的默认值
+		String value();//仅有value属性时,可以省略属性名,直接写属性值
+    }
+
+应用了"注解类"的类
+    @A(color="red",value="abc")
+    Class B{
+    }
+
+对"应用了注解类的类"进行反射操作的类(注解处理器)
+    Class C{
+		public void main(String[] args){
+			if(B.class.isAnnotationPresent(A.class)){
+				A a=(A)B.class.getAnnotation(A.class);
+			System.out.println(a.color());//"red"
+			System.out.println(a.value());//"abc"
+			}
+		}
+    }
+
+
+属性值可以是: 所有基本类型,String,Class,enum,Annotation,这些类型的数组.
+属性值要么有默认值,要么在使用的时候提供
+属性值为非基本类型时,不能为null
+
+Class,Field,Method等都有<T extends Annotation> getAnnotation(Class<T> annotationClass)的方法
+如果没有注解就返回null.
+

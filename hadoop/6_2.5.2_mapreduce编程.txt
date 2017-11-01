@@ -1,0 +1,118 @@
+1.搭建项目，导入jar包
+	share\hadoop\common
+	share\hadoop\common\lib
+	share\hadoop\hdfs
+	share\hadoop\mapreduce
+	share\hadoop\yarn
+	
+2.编写mapper
+	package com.demo.mapreduce;
+	import java.io.IOException;
+	import java.util.StringTokenizer;
+	import org.apache.hadoop.io.IntWritable;
+	import org.apache.hadoop.io.LongWritable;
+	import org.apache.hadoop.io.Text;
+	import org.apache.hadoop.mapreduce.Mapper;
+	/*
+	 * Mapper<Object, Object, Object, Object>
+	 * 	输入数据，固定
+	 * 		下标
+	 * 		内容
+	 * 	输出数据，不固定
+	 * 		单词
+	 * 		个数
+	 */	
+	public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritable>{
+		/*
+		 * 每次调用map方法会传入split中一行数据
+		 * 	key：这行数据在文件中的位置下标
+		 * 	value：这行数据的内容
+		 */
+		@Override
+		protected void map(LongWritable key, Text value,
+				Mapper<LongWritable, Text, Text, IntWritable>.Context context)
+				throws IOException, InterruptedException {
+			//一行数据
+			String line = value.toString();
+			//按空格切
+			StringTokenizer st = new StringTokenizer(line);
+			while(st.hasMoreElements()) {
+				String word = st.nextToken();
+				//map的输出
+				context.write(new Text(word), new IntWritable(1));
+				//MapReduce框架进行shuffling
+			}
+		}
+	}
+	
+3.编写reducer
+	package com.demo.mapreduce;
+	import java.io.IOException;
+	import org.apache.hadoop.io.IntWritable;
+	import org.apache.hadoop.io.Text;
+	import org.apache.hadoop.mapreduce.Reducer;
+	/*
+	 * Reducer<Object, Object, Object, Object>
+	 * 	输入数据，不固定
+	 * 		单词
+	 * 		个数
+	 * 	输出数据，固定
+	 * 		单词
+	 * 		个数
+	 */	
+	public class WordCountReducer extends Reducer<Text, IntWritable, Text, IntWritable>{
+		@Override
+		protected void reduce(Text key, Iterable<IntWritable> iterable,
+				Reducer<Text, IntWritable, Text, IntWritable>.Context context)
+				throws IOException, InterruptedException {
+			int sum = 0;
+			for (IntWritable i : iterable) {
+				sum = sum + i.get();
+			}
+			//输出
+			context.write(key, new IntWritable(sum));
+		}
+	}
+	
+4.编写main
+	package com.demo.mapreduce;
+	import org.apache.hadoop.conf.Configuration;
+	import org.apache.hadoop.fs.Path;
+	import org.apache.hadoop.io.IntWritable;
+	import org.apache.hadoop.io.Text;
+	import org.apache.hadoop.mapreduce.Job;
+	import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+	import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+	public class JobRun {
+		public static void main(String[] args) {
+			Configuration conf = new Configuration();
+			conf.set("mapred.job.tracker", "node1:9001");
+			try {
+				@SuppressWarnings("deprecation")
+				Job job = new Job(conf);
+				job.setJobName("WordCount");
+				job.setJarByClass(JobRun.class);
+				job.setMapperClass(WordCountMapper.class);
+				job.setReducerClass(WordCountReducer.class);
+				job.setMapOutputKeyClass(Text.class);
+				job.setMapOutputValueClass(IntWritable.class);
+				job.setNumReduceTasks(1);//设置reduce任务的个数，默认为1
+				FileInputFormat.addInputPath(job, new Path("/kuang/input/wc"));//输入数据所在的目录或者文件
+				FileOutputFormat.setOutputPath(job, new Path("/kuang/output/wc"));//mr执行之后输出数据的目录,目录必须存在
+				System.exit(job.waitForCompletion(true) ? 0 : 1);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+5.将项目export为wc.jar文件，传到node0
+
+6.启动hdfs,yar,创建目录,上传数据,查看计算结果
+	[root@node0 sbin]# ./start-dfs.sh
+	[root@node0 sbin]# ./start-yarn.sh
+	[root@node0 bin]# ./hdfs dfs -mkdir -p /kuang/input/wc
+	[root@node0 bin]# ./hdfs dfs -mkdir -p /kuang/output/wc
+	[root@node0 bin]# ./hdfs dfs -put /usr/local/kuang/wc_data /kuang/input/wc/
+	[root@node0 bin]# ./hadoop jar /usr/local/kuang/wc.jar com.demo.mapreduce.JobRun
+	[root@node0 bin]# ./hdfs dfs -cat /kuang/output/wc/part-r-00000

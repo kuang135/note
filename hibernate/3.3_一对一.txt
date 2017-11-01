@@ -1,0 +1,37 @@
+应用场景: 表字段过多
+	  表结构优化(字段过大,频繁修改)
+
+PO的编写
+	每一方都添加对方的引用,不需要new
+
+hbm.xml的配置(情景: 一个公司一个地址)
+	搞清楚谁引用了谁的主键(地址引用了公司的主键)
+	Company.hbm.xml中,<class/>标签下
+		<class name="cn.itcast.po.Company">
+		<id name="id">
+			<generator class="native"/>
+		</id>
+		<one-to-one name="address" class="cn.itcast.po.Address"/>
+		<property name="name"/>
+	</class>
+
+	Address.hbm.xml中,Company的外键作为Address的主键
+		<class name="cn.itcast.po.Address">
+		<id name="id">
+			<generator class="foreign">
+				<param name="property">company</param>
+			</generator>
+		</id>
+		<one-to-one name="company" class="cn.itcast.po.Company" constrained="true"/>
+		<property name="name"/>
+	</class>
+	
+
+操作:
+    保存: 可以通过配置cascade="save-update"来设置保存一方的同时保存另一方
+	Company c1=new Company("传智播客");
+	Address a1=new Address("上海闵行");
+	c1.setAddress(a1);
+	a1.setCompany(c1);
+	session.save(c1);
+      //session.save(a1);不配置级联必须双方都保存

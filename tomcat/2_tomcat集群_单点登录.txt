@@ -1,0 +1,26 @@
+ memcache中缓存一个HashMap<String, String>，key为userName，value为sessionId
+ 登录后，放入缓存
+ 登出后，移出缓存(value为null)
+ 建立一个Listener，监听session超时，设置value为value+"TIMEOUT"
+	session执行invalidate之后，还能获取sessionId
+
+ 加一个过滤器，实现如下功能
+	String id = session.getId();
+	String user = session.getAttribute("user");
+	//session超时后，不能获取其里面的数据，但是其sessionId还是保持不变，而且能获取
+	if(user == null) {
+		if(缓存中存在 id+"TIMEOU" 的值) {
+			session超时
+		｝else {
+			未登录
+		}
+	} else {
+		String sessionid = 根据用户从缓存中获取值
+		if(sessionid == null) {
+			用户未登录
+		} else if(sessionid.endsWith("TIMEOUT")) {
+			session超时
+		} esle if(!sessionid.equals(id)) {
+			用户在别处登录
+		}
+	}

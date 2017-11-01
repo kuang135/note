@@ -1,0 +1,88 @@
+导入dom4j的jar包
+
+      Node
+	|--DocumentType：xml的DOCTYPE声明
+	|--Entity：xml的entity
+	|--Attribute：xml属性
+	|--ProcessingInstruction：xml处理指令
+	|--Branch：
+	|    |--Document：xml文档
+	|    |--Element：xml元素
+	|--CharacterData
+		|--Text：xml文本节点
+		|--CDATA：xml中CDATA区域
+		|--Comment：xml注释
+
+1.根据xml文件，获取dom对象
+	SAXReader reader=new SAXReader();
+	Document dom=reader.read("users.xml");
+
+2.创建一个xml文件
+	Document document = DocumentHelper.createDocument();
+
+3.把文档写到文件中
+	OutputFormat format = OutputFormat.createPrettyPrint();
+	format.setEncoding("utf-8");
+	XMLWriter writer = new XMLWriter(new FileOutputStream("output.xml"),format);
+        writer.write( document );
+        writer.close();
+	
+4.获取
+    Node的方法：
+	String getName();
+	String getText();
+	Element getParent();
+    Branch的方法：
+	Element elementById(String id);
+    Document的方法：
+	Element getRootElement();
+    Element的方法：
+	Element element(String name); //获取第一个
+	List elements();
+	List elements(String name);
+	String elementText(String name)
+	List attributes();
+	Attribute attribute(String name);
+	String attributeValue(String name);
+
+    Attribute的方法：
+	String getValue();
+
+5.遍历
+     Element的方法：
+	Iterator elementIterator();
+	Iterator elementIterator(String name);
+
+6.增加
+    Branch的方法：
+	Element addElement(String tagName);
+    Document的方法：
+    Element的方法：
+	Element addAttribute(String name, String value) 
+    Attribute的方法：
+
+7.删除
+    Branch的方法：
+	boolean remove(Element element); //只能删除非中间的元素 
+    Document的方法：
+    Element的方法：
+    Attribute的方法：
+
+8.修改
+    Node的方法：
+	void setText(String text)
+    Document的方法：
+    Element的方法：
+	Element addAttribute(String name, String value); //密码属性已存在，其值会被替代
+    Attribute的方法：
+	void setValue(String value)
+
+9.XPath获取：
+    Node的方法：
+	List selectNodes(String xpathExpression);
+	boolean matches(String xpathExpression);
+	Node selectSingleNode(String xpathExpression);
+	String valueOf(String xpathExpression);
+
+
+	

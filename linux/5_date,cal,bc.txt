@@ -1,0 +1,24 @@
+date：显示日期与时间
+	date
+	date +%Y%m%d\ %H:%M:%S  --  \和空格表示转义的空格
+
+cal：显示日历
+	cal [month][year]
+	cal
+	cal 2015
+	cal 7 2015
+
+bc：简单好用的计算器
+	bc
+
+[Tab]：命令补齐
+       文件补齐
+
+[Ctrl]+c：中断目前程序
+
+[Ctrl]+d：键盘输入结束
+
+shutdown：关机
+reboot：重启
+halt：关机
+poweroff：关机

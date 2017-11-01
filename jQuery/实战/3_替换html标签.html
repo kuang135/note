@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="jquery-1.12.0.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('p').replaceWith(function(){
+				return $('<div/>').append($(this).contents())
+			});
+		});
+	</script>
+</head>
+<body>
+	<p>hello</p>
+	<p>world</p>
+</body>
+</html>

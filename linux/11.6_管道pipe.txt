@@ -1,0 +1,23 @@
+管道命令 | 仅能处理standard output，忽略standard error output
+每个管道后面接的第一个数据必定是 指令，并且这个指令能够接受来自前一个指令的数据成为standard input继续处理才行。
+
+截取命令：将一段数据经过分析后，取出想要的，通常是针对一行一行来分析。
+	cut，grep
+
+排序指令：sort，wc，uniq
+	wc [-lwm]
+	-l：仅列出行数
+	-w：仅列出字数(英文单词)
+	-m：仅列出字符数
+
+双向重定向：tee
+	standard input --> tee --> screen
+			    |--> file
+	tee会同时将数据流分送到文件和屏幕，而输出到屏幕的，就是stdout，可以让下个指令继续处理。
+	ls -l /home | tee ~/homefile | more
+
+字符转换命令：tr，col，join，paste，expand
+
+分割命令：split
+
+参数代换：xargs

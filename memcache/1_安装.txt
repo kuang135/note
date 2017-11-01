@@ -1,0 +1,37 @@
+1.lunix安装
+  下载memcache的tar包
+  解压，进入目录，安装，./configure && make && make install
+  如果有错误，可能是没安装libevent
+  下载，解压，进入目录，安装 ./configure && make && make install
+  wget http://www.monkey.org/~provos/libevent-1.4.12-stable.tar.gz 
+
+2.启动memcache服务
+  /usr/local/bin/memcached -d -m 10 -u root -l 192.168.1.104 -p 11211 -c 256 
+
+3.客户端连接，telnet 192.168.1.104 11211
+  如果没有安装telnet，先安装telnet
+  yum install telnet-server 安装telnet服务 
+  yum install telnet.* 安装telnet客户端
+
+4.操作
+  set key1 0 60 3
+  yao
+  STORED
+
+  get key1
+  VALUE key2 0 3
+  yao
+
+5.退出
+  quit
+  
+
+ -----------------------------------------------------------------------------------------
+ 
+ 1.windows安装
+   可以直接下载memcached.exe，直接打开就行
+   
+2.开启windows的telnet客户端
+
+3.连接 telnet 127.0.0.1 11211
+  就可以使用了

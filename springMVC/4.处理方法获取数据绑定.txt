@@ -1,0 +1,96 @@
+控制器处理方法上可以加的注解: 
+	@CookieValue,@PathVariable,@RequestParam,@RequestBody,@CookieValue
+
+
+1.获取servlet内置对象: 直接在方法中传入参数
+	@RequestMapping(value = "/test")
+	public ModelAndView getServletAPI(HttpServletRequest request,HttpServletResponse response,HttpSession session){}
+
+2.通过 @PathVariable可以绑定占位符参数到方法参数中
+	@RequestMapping("/user/{userId}/query")
+	public ModelAndView test(@PathVariable("userId") Long id){}
+	请求URL：http ://localhost/user/8/query
+
+3.通过 @RequestParam获取
+	value：参数名
+	required：是否必需，默认为true，表示请求参数中必须包含该参数，如果不包含抛出异常。
+	defaultValue：默认参数值，自动将required设置为false，如果参数中没有包含该参数则使用默认值。
+	示例：
+	    @RequestMapping(value = "/test")
+	    public ModelAndView test(@RequestParam(value = "id", required = false, defaultValue = "1") Long id) {}
+
+4. @CookieValue可以绑定cookie值，和 @RequestParam一样有三个参数
+	@RequestMapping(value = "/test")
+	public void test(@CookieValue("JSESSIONID") String jsessionid){}
+
+5. @RequestBody可以将请求的json字符串转化为POJO对象
+	@RequestMapping(value = "/register/json")
+	public ModelAndView registerUser(@RequestBody User user) {
+		logger.info("User对象为：{}", user);
+		return new ModelAndView("success");
+	}
+	该注解常用来处理Content-Type: 不是application/x-www-form-urlencoded编码的内容，例如application/json, application/xml等
+
+6.POJO对象绑定参数: SpringMVC会将请求过来的参数名和POJO实体中的属性名进行匹配，如果名称一致，将把值填充到对象中
+	@RequestMapping("/test")
+	public ModelAndView requestDataTest(User user){}
+	User中的属性:
+		private String name;//post乱码另外解决
+		private Double money;//基本类型自动转换
+		private Date birthday;//格式: 1988/01/31 或 01/31/1988
+		private String[] hobby;
+	表单:	
+		<input name="name" value="张三" type="text"/>
+		<input name="money" value="100" type="text"/>
+		<input name="birthday" value="1988/01/31" type="text"/>
+		<input name="hobby" value="java" type="text"/>
+		<input name="hobby" value="basketball" type="text"/>
+	对于日期格式,也可以使用 @DateTimeFormat注解:
+		@DateTimeFormat(pattern="yyyy-MM-dd")
+		private Date birthday;
+		需导入依赖
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.5</version>
+		</dependency>
+		
+
+7.Java的基本数据类型绑定: Spring对Java的基本数据类型的转换支持的非常多，
+  默认支持的数据类型在org.springframework.beans.PropertyEditorRegistrySupport中定义。
+
+8.集合List绑定: List的绑定需要将List对象包装到一个类中才能绑定。
+	页面取参数的形式: <input name="users[0].name" value="张三" type="text"/>
+			  <input name="users[1].money" value="100" type="text"/>
+			  <input name="users[2].birthday" value="2015/2/2" type="text"/>
+	@RequestMapping("/test")
+	public ModelAndView test(UserForm userForm) {}
+	UserForm对象中有个List<Users> users属性
+
+9.文件上传
+	添加依赖:
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+	定义文件上传解析器:
+		<!-- 定义文件上传解析器 -->
+		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+			<!-- 设定默认编码 -->
+			<property name="defaultEncoding" value="UTF-8"/>
+			<!-- 设定文件上传的最大值5MB，5*1024*1024 -->
+			<property name="maxUploadSize" value="5242880"/>
+		</bean>
+	编写controller:
+		@Controller
+		public class UploadController {
+		    @RequestMapping("/upload")
+		    public String upload(@RequestParam("inputFiletypeName") MultipartFile multipartFile) throws Exception {
+			    if(multipartFile !=null){
+				    multipartFile.transferTo(new File("d:\\tmp\\"+multipartFile.getOriginalFilename()));
+			    }
+			    return "redirect:success.html";
+		    }
+		}
+		

@@ -1,0 +1,17 @@
+
+serialize方法用于将表单元素的值，转为url使用的查询字符串。
+		$( "form" ).on( "submit", function( event ) {
+			event.preventDefault();
+			console.log( $( this ).serialize() );
+		});
+		// single=Single&multiple=Multiple&check=check2&radio=radio1
+
+serializeArray方法用于将表单元素的值转为数组。
+		$("form").submit(function (event){
+			console.log($(this).serializeArray());
+			event.preventDefault();
+		});
+		//	[
+		//		{name : 'field1', value : 123},
+		//		{name : 'field2', value : 'hello world'}
+		//	]

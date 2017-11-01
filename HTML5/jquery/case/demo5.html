@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自动修改破损图像</title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("img").on("error",function(){
+				$(this).attr('src', 'https://www.w3.org/2008/site/images/logo-w3c-mobile-lg');
+			});
+		});
+
+
+
+	</script>
+</head>
+<body>
+	<img src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg111" alt="W3C">
+</body>
+</html>

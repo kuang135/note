@@ -1,0 +1,44 @@
+显示和设置环境变量，控制输出的各种格式 set show 
+linesize，设置显示行的宽度，默认是80个字符
+    show linesize;
+    set linesize 90;
+pagesize，设置每页显示的行数目，默认是14
+    show pagesize;
+    set pagesize 16;
+其他环境参数的使用也是大同小异,
+如果希望永久保存相关设置，修改glogin.sql脚本。
+
+查看表的结构
+    desc emp;
+查看所有列
+    select * from emp;
+查看指定列
+    select empno,ename,job from emp;
+查看操作时间
+    set timing on;
+    set timing off;
+查看不重复行
+    select distinct job from emp;
+别名，计算字段
+    select ename "姓名",sal*12 as "年工资" from emp;
+处理null值
+    select ename,sal*13+nvl(comm,0)*13 as "年收入" from emp;
+where子句
+    select ename,hiredate from emp where hiredate>'01-1月-1982';
+like操作符,用escape关键字转义
+    %表示任意多个字符
+    _表示任意单个字符
+    select ename,sal from emp where ename like 'S%';
+    select ename,sal from emp where ename like '%\_%' escape '\';
+in操作符
+    select ename,sal from emp where empno in (7111,7112,7113,7844);
+is null操作符
+    select * from emp where mgr is null;
+not操作符
+    select * from emp where mgr is not null;
+逻辑操作符
+    select * from emp where (sal>500 or job='MANAGER') and ename like 'J%';
+order by子句
+    select * from emp order by deptno asc,sal desc;
+按别名排序
+    select ename,sal*12 "年薪" from emp order by "年薪";

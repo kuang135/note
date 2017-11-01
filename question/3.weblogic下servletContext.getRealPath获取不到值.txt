@@ -1,0 +1,4 @@
+weblogic下不要用　String path = servletContext.getRealPath("/WEB-INF");
+		返回的是 null
+要用	URL resource = servletContext.getResource("/WEB-INF");
+		String path = resource.getPath();

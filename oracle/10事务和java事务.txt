@@ -1,0 +1,31 @@
+事务用于保证数据的一致性，dml语句要么全部成功，要么全部失败
+当执行事务操作时，oracle会在被作用的表上加锁，防止其他用户更改表的结构
+当执行commit后，会确认事务的变化，结束事务，删除保存点，释放锁
+
+ddl自动提交事务
+dml手动提交事务
+
+设置保存点
+    savepoint a;
+取消部分事务
+    rollback to a;
+取消全部事务
+    rollback
+
+commit之后就不能再rollback了
+exit后会自动commit
+
+java中的事务
+	Class.forName("oracle.jdbc.driver.OracleDriver");
+	Connection con=DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:myOrcl1","scott","cat");
+	con.setAutoCommit(false);//设置不能默认提交
+	Statement sm=con.createStatement();
+	sm.executeUpdate("update emp set sal=sal-100 where ename='SCOTT'");
+	sm.executeUpdate("update emp set sal=sal+100 where ename='SMITH'");
+	con.commit();//提交事务
+	con.rollback();//回滚，写在catch中
+
+
+只读事务，只允许执行查询操作，不允许其他dml操作的事务
+只读事务，可以确保用户只能取得某时间点的数据
+    set transaction read only

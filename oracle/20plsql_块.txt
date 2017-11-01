@@ -1,0 +1,39 @@
+块block是pl/sql的基本程序单元，包括存储过程，函数，触发器，包
+块由3部分构成：定义部分，执行部分，例外处理部分
+
+declare
+/*定义部分(可选)：定义常量，变量，游标，例外，复杂数据类型*/
+begin
+/*执行部分(必须)：要执行的pl/sql语句和sql语句*/
+exception
+/*例外处理部分(可选)：处理运行的各种错误*/
+end;
+
+实例1
+    set serveroutput on; --打开输出选项
+    begin
+	dbms_output.put_line('hello');
+    end;
+相关说明：dbms_output是oracle提供的包，put_line是包中的一个过程
+
+实例2，查出来的结构都只有一条记录
+    declare
+	v_ename varchar2(5); --定义字符串变量
+	v_sal number(7,2);
+    begin
+	select ename,sal into v_ename,v_sal from emp where empno=&no;
+	dbms_output.put_line('雇员名:'||v_ename||' 工资:'||v_sal);
+    end;
+相关说明：& 表示要接收控制台输入的变量
+
+实例3，对可能的错误进行处理
+    declare
+	v_ename varchar2(5); --定义字符串变量
+	v_sal number(7,2);
+    begin
+	select ename,sal into v_ename,v_sal from emp where empno=&no;
+	dbms_output.put_line('雇员名:'||v_ename||' 工资:'||v_sal);
+    exception
+	when no_data_found then
+	dbms_output.put_line('编号输入有误！');
+    end;

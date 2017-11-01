@@ -1,0 +1,98 @@
+1.事件绑定的简便方法
+		$('a').click(function (e){
+			e.preventDefault(); //阻止浏览器对该事件的默认行为(浏览器跳转)
+			console.log($(this).text());
+		});
+		
+		$('a').click(); //触发事先绑定的的回调函数
+
+2.on方法，trigger方法，off方法
+	on方法是jQuery事件绑定的统一接口，上面的简便方法是on方法的简写
+		//一次为多个事件指定同样的回调函数
+		$('input[type="text"]').on('focus blur', function (){
+			console.log('focus or blur');
+		});
+		//当图片加载失败，使用error事件，替换另一张图片
+		$('img').on('error', function () {
+			  if(!$(this).hasClass('broken-image')) {
+				$(this).prop('src', 'img/broken.png').addClass('broken-image');
+			  }
+		});
+		//检查用户是否切换浏览器tab的例子。
+		$(document).on('visibilitychange', function (e) {
+			  if (e.target.visibilityState === "visible") {
+				console.log('Tab is now in view!');
+			  } else if (e.target.visibilityState === "hidden") {
+				console.log('Tab is now hidden!');
+			  }
+		});
+		//为当前元素的某一个子元素，添加回调函数。
+		$('ul').on('click', 'li', function (e){
+			console.log(this);
+		});
+		//这种绑定的回调函数，对于在绑定后生成的li元素依然有效
+		$(document).on('blur', 'input[name="password"]', function(e){
+				console.log($(e.currentTarget).val());
+			}
+		);
+		//允许向回调函数传入数据。
+		$("ul" ).on("click", {name: "张三"}, function (event){
+			console.log(event.data.name);
+		});
+		
+	trigger方法用于触发回调函数，它的参数就是事件的名称
+		$('li').trigger('click'); //与简便方法一样，trigger方法只触发回调函数
+	
+	off方法用于移除事件的回调函数
+		$('li').off('click'); //移除li元素所有的click事件回调函数
+	
+3.事件的名称空间
+	同一个事件有时绑定了多个回调函数，这时如果想移除其中的一个回调函数，可以采用“名称空间”的方式
+		$('li').on('click.logging', function (){ //click.logging属于click名称空间
+			console.log('click.logging callback removed');
+		});
+		$('li').off('click.logging');
+		
+4.事件切换
+	hover([over,]out) -- 模拟光标悬停事件,
+			当光标移动到元素上时，会触发指定的第一个函数,
+			当光标移出这个元素时，会触发指定的第二个函数. 
+				$('.btn').hover(function () {
+					$(this).addClass('hover');
+				}, function () {
+					$(this).removeClass('hover');
+				});
+	toggle([speed],[easing],[fn]) -- 模拟鼠标连续单击事件
+			第一次单击元素，触发指定的第一个函数，
+			当再一次单击同一个元素时，则触发指定的第二个函数，
+			如果有更多个函数，则依次触发，直到最后一个
+				//简化上面hover的代码
+				$('.btn').toggle(function () {
+					$(this).toggleClass('hover');
+				});
+5.event对象
+	当回调函数被触发后，它们的参数通常是一个事件对象event
+	event对象有以下属性：
+		type：事件类型，比如click。
+		which：触发该事件的鼠标按钮或键盘的键。
+		target：事件发生的初始对象。
+		data：传入事件对象的数据。
+		pageX：事件发生时，鼠标位置的水平坐标（相对于页面左上角）。
+		pageY：事件发生时，鼠标位置的垂直坐标（相对于页面左上角）。
+		clientX：事件发生时，鼠标位置的水平坐标（相对于窗口左上角）。
+		clientY：事件发生时，鼠标位置的垂直坐标（相对于窗口左上角）。
+	event对象有以下方法：
+		preventDefault：取消浏览器默认行为。
+		stopPropagation：阻止事件向上层元素传播。
+		stopImmediatePropagation：阻止该元素上其他相同的事件
+		
+6.一次性事件
+	one方法指定一次性的回调函数，即这个函数只能运行一次。这对提交表单很有用。
+		$("#button").one( "click", function() { return false; } );
+		//one方法本质上是回调函数运行一次，即解除对事件的监听。
+		document.getElementById("#button").addEventListener("click", handler);
+		function handler(e) {
+			e.target.removeEventListener(e.type, arguments.callee);
+			return false;
+		}
+		//如果有特殊需要，可以设定点击2次或3次之后取消监听

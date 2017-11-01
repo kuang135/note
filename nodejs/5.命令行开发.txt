@@ -1,0 +1,26 @@
+1.编写pswd.js和package.json
+			{
+				"name" : "pswd",
+				"version" : "0.0.1",
+				"description" : "a directive to manage account and password",
+				"preferGlobal" : "true",
+				"bin" : {
+					"pswd" : "pswd.js"
+				},
+				"author" : "kuang135",
+				"engines" : {
+					"node" : "*"
+				}
+			}
+	js中添加shebang #! /usr/bin/env node
+	
+2.到当前文件夹下运行 npm link
+  windows中如下
+	C:\Users\admin\AppData\Roaming\npm\pswd -> C:\Users\admin\AppData\Roaming\npm\node_modules\pswd\pswd.js
+	C:\Users\admin\AppData\Roaming\npm\node_modules\pswd -> E:\note\github\career-note\nodejs\code\pswd
+	
+3.cmd下直接敲命令 pswd
+
+4.删除
+  npm link的文件夹执行 npm remove -g
+  如果不成功，直接到目录中去删除

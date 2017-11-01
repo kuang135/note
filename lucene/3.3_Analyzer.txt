@@ -1,0 +1,10 @@
+
+
+Reader --> Tokennizer --> TokenFilter --> TokenFilter --> TokenFilter --> Tokens
+
+实现自己的分析器
+	1. extends Analyzer
+	2. 重写protected TokenStreamComponents createComponents(String fieldName);
+	3. TokenStreamComponents构造接受两个参数，Tokenizer 和 TokenFilter
+	4. Tokenizer 用于创建初始词汇单元序列，即分割
+	   TokenFilter 用于修改词汇单元，即过滤，可以是任意数量

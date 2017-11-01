@@ -1,0 +1,22 @@
+Bean的作用域:
+	singleton 单例,在整个spring IoC 容器只存在唯一对象 
+	prototype 多例,每次进行getBean 创建新的对象 
+	request   创建Bean,放入request范围 request.setAttribute 
+	session   创建Bean,放入session范围 session.setAttribute 
+	globalSession 全局会话,分布式多个系统,共享同一个会话 （了解 ）
+
+xml中的配置:
+	<!-- scope默认值 singleton -->
+	<bean id="bean" class="cn.itcast.bean.Bean" scope="prototype"/> 
+
+单例Bean: 在ApplicationContext对象(容器对象)初始化时进行创建,默认
+多例Bean: 在getBean时创建返回 
+
+-------------------------------------------------------------------------------
+
+在<bean>中可以配置两个属性：init-method 指定初始化的方法, destroy-method 指定销毁方法
+	<bean id="foo" class="...Foo" init-method="init" destroy-method="destroy"/>
+
+web容器中会自动调用销毁,但是main函数或测试用例需要手动调用
+	classPathXmlApplicationContext.close();
+

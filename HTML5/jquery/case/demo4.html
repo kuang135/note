@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>敏感词=*</title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+	<p>我爱党爱国爱人民，不爱敏感词,不文明用语,还有不文明用语</p>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var e = $('p');
+			e.html(e.html().replace(/敏感词/ig, "*"));
+			e.html(e.html().replace(/不文明用语/ig, "*"));
+			e.html(e.html().replace(/不文明用语/ig, "*"));
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+function Person(name) {this.name=name;}
+function Student(name, className) {
+	this.className = className;
+	Person.call(this, name);
+}
+var bosn = new Student('bosh', 'netw');
+bosn;	//Student {className: "netw", name: "bosh"}
+
+Person.prototype.init = function(){console.log('person');};
+Student.prototype.init = function() {
+	console.log('b');
+	Person.prototype.init.apply(this,arguments);
+	console.log('a');
+};
+bosh.init();

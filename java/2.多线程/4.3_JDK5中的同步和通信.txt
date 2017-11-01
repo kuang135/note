@@ -1,0 +1,108 @@
+Lock接口：可以手动释放锁，代替synchronized
+    void lock();
+    void unlock();
+    Condition newCondition(); 
+Condition接口：代替Object的监视器方法(wait,notify,notifyAll)
+	多个condition可以实现多个线程间有目的的通讯
+    void await();
+    void signal();
+    void signalAll();
+	
+---------------------------------------------------------------------
+	
+//一件事情，线程1做1次，线程2做2次，线程3做3次，如此反复10次
+public class ConditionDemo {
+	public static void main(String[] args) {
+		final Business business = new Business();
+		new Thread(new Runnable(){
+			public void run() {
+				for (int i = 0; i < 10; i++) {
+					business.sub1();
+				}
+			}
+		}).start();
+		new Thread(new Runnable(){
+			public void run() {
+				for (int i = 0; i < 10; i++) {
+					business.sub2();
+				}
+			}
+		}).start();
+		new Thread(new Runnable(){
+			public void run() {
+				for (int i = 0; i < 10; i++) {
+					business.sub3();
+				}
+			}
+		}).start();
+	}
+}
+
+class Business {
+	final Lock lock = new ReentrantLock();
+	final Condition condition1 = lock.newCondition();
+	final Condition condition2 = lock.newCondition();
+	final Condition condition3 = lock.newCondition();
+	int task = 1;
+	
+	public void sub1() {
+		lock.lock();
+		try {
+			while (task != 1) {
+				try {
+					condition1.await();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			for (int i = 1; i <= 1; i++) {
+				System.out.println(Thread.currentThread().getName() + " 完成了 " + i + " 次");
+			}
+			task = 2;
+			condition2.signal();
+		} finally {
+			lock.unlock();
+		}
+	}
+	
+	public void sub2() {
+		lock.lock();
+		try {
+			while (task != 2) {
+				try {
+					condition2.await();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			for (int i = 1; i <= 2; i++) {
+				System.out.println(Thread.currentThread().getName() + " 完成了 " + i + " 次");
+			}
+			task = 3;
+			condition3.signal();
+		} finally {
+			lock.unlock();
+		}
+	}
+	
+	public void sub3() {
+		lock.lock();
+		try {
+			while (task != 3) {
+				try {
+					condition3.await();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			for (int i = 1; i <= 3; i++) {
+				System.out.println(Thread.currentThread().getName() + " 完成了 " + i + " 次");
+			}
+			System.out.println("");
+			task = 1;
+			condition1.signal();
+		} finally {
+			lock.unlock();
+		}
+	}
+}

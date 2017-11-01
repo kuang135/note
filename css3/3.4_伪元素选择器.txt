@@ -1,0 +1,32 @@
+伪元素前置两个冒号(::)，伪类前置一个冒号(:)。
+
+1.::first-line 块级首行
+	::first-line {
+		color: red;
+	}
+	解释：块级元素比如<p>、<div>等的首行文本被选定
+
+2.::first-letter 块级首字母
+	::first-letter {
+		color: red;
+	}
+	解释：块级元素的首行字母。
+
+3.::before 文本前插入
+	a::before {
+		content: '点击-';
+	}
+	解释：在文本前插入内容。
+	
+4.::after 文本后插入
+	a::before {
+		content: '-请进';
+	}
+	解释：在文本后插入内容。
+	
+
+5.::selection
+	::selection {
+		color: red;
+	}
+	解释：当选择文字时触发选择。CSS3 版本下的选择器。

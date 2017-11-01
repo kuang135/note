@@ -1,0 +1,50 @@
+
+流程: 请求 → web容器 → StrutsPrepareAndExcuteFilter → action
+简单原理: 1.在web.xml中注册前端控制器
+	  2.前端控制器读取struts.xml后进行请求分发
+	  3.action的execute方法返回字符串,控制跳转页面视图
+
+快速入门:
+    1.web.xml中配置StrutsPrepareAndExcuteFilter
+		<filter>
+		    <filter-name>struts2</filter-name>
+		    <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+		</filter>
+		<filter-mapping>
+		    <filter-name>struts2</filter-name>
+		    <url-pattern>/*</url-pattern>
+		</filter-mapping>
+
+    2.配置struts.xml
+	a.引入dtd约束
+		<!DOCTYPE struts PUBLIC
+		"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+		"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+	b.设置跳转页面视图,就是execute()方法返回的字符串,返回值"success"
+		<struts>
+		    <package name="hello" namespace="/" extends="struts-default">
+			<action name="hello" class="cn.itcast.action.HelloAction">
+			    <result type="dispatcher" name="success">/index.jsp</result>			
+			</action>
+		    </package>
+		</struts>
+
+    3.写相应的cn.itcast.action.HelloAction类,继承ActionSupport
+      在String execute()方法中处理请求,return "success";
+
+要导入的jar包:
+	asm-3.3.jar -- asm-*用于字节码操作类库(.class文件)
+	asm-commons-3.3.jar
+	asm-tree-3.3.jar
+	commons-fileupload-1.3.jar -- 文件上传,依赖 commons-io
+	commons-io-2.0.1.jar
+	commons-lang3-3.1.jar -- 对字符串,数据操作公共方法 
+	commons-logging-1.1.3.jar  -- Java通用日志接口,依赖日志实现log4j
+	log4j-1.2.17.jar
+	freemarker-2.3.19.jar -- 模板引擎(struts2标签库,依赖freemarker)
+	javassist-3.11.0.GA.jar -- 生成代理 
+	ognl-3.0.6.jar -- 表达式语言(比EL强大很多倍)
+	struts2-core-2.3.15.3.jar -- 核心jar包
+	xwork-core-2.3.15.3.jar  -- struts2和webwork依赖命令模式框架 
+	

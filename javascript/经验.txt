@@ -1,0 +1,7 @@
+1.为了让html显示流程，将javascript引用放在<body>元素中页面内容的后面。
+
+2.多个变量申明，用逗号隔开
+
+3.变量转换成boolean类型: !!(a)
+
+4.转换成number类型: +(a),+(new Date())

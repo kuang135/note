@@ -1,0 +1,40 @@
+
+分组: 与 SQL 一样, HQL 利用 GROUP BY 关键字对数据分组,用 HAVING 关键字对分组数据设定约束条件.
+
+使用投影调用分组函
+    HQL的count返回的是Long
+	//单个
+	Query hql = session.createQuery("select count(c) from Customer c");
+	Long count = (Long)hql.uniqueResult();
+	//多个
+	Query hql = session.createQuery("select avg(o.money),sum(o.money),max(o.money),min(o.money) from Order o");
+	Object[] values = (Object[]) hql.uniqueResult();//Object[]中元素的类型为属性类型
+	for (Object value : values) {
+		System.out.println((Double)value);
+	}
+
+    SQL的count返回的是BigDecimal
+	//单个
+	SQLQuery sql = session.createSQLQuery("select count(1) from t_customer");
+	BigInteger count = (BigInteger)sql.uniqueResult();
+	//多个
+	SQLQuery sql = session.createSQLQuery("select avg(o_money),sum(o_money),max(o_money),min(o_money) from t_order");
+	Object[] values = (Object[]) sql.uniqueResult();//Object[]中元素的类型为字段类型
+	for (Object value : values) {
+		System.out.println((Double)value);
+	}
+
+    QBC的count返回的是Long
+	Criteria criteria = session.createCriteria(Customer.class);
+	criteria.setProjection(Projections.rowCount());
+	//criteria.setProjection(Projections.avg("money"));//返回的类型与money属性类型一致
+	//criteria.setProjection(Projections.sum("money"));
+	//criteria.setProjection(Projections.max("money"));
+	//criteria.setProjection(Projections.min("money"));
+	Long count = (Long)criteria.uniqueResult();
+
+
+分组: group by ... having ...
+    HQL和SQL都只是语句中有变化
+
+    QBC?????

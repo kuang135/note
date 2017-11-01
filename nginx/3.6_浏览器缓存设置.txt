@@ -1,0 +1,9 @@
+Óï·¨£ºexpires [time|epoch|max|off]
+¾ÙÀý£º
+	location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$ {
+			expires 30d;
+		}
+		
+		location ~ .*\.(js|css)?$ {
+			expires 1h;
+	}

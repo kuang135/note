@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>prev demo</title>
+  <style>
+    div {
+      width: 40px;
+      height: 40px;
+      margin: 10px;
+      float: left;
+      border: 2px blue solid;
+      padding: 2px;
+    }
+    span {
+      font-size: 14px;
+    }
+    p {
+      clear: left;
+      margin: 10px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+ 
+  <div></div>
+  <div></div>
+  <div><span>has child</span></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div id="start"></div>
+  <div></div>
+  <p><button>Go to Prev</button></p>
+  
+  <script>
+    var $curr = $( "#start" );
+    $curr.css( "background", "#f99" );
+    $( "button" ).click(function() {
+      $curr = $curr.prev();
+      $( "div" ).css( "background", "" );
+      $curr.css( "background", "#f99" );
+    });
+  </script>
+  
+</body>
+</html>

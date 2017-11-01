@@ -1,0 +1,41 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../config/ehcache.xsd">
+    <diskStore path="c:/hibernatecache"/>
+    
+    <defaultCache
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"
+            />
+         
+    <cache name="cn.itcast.domain.Order"
+            maxElementsInMemory="10"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"
+            />        
+</ehcache>
+
+<!--
+	maxElementsInMemory 最大内存缓存元素数量 
+	eternal 是否为永久的 ，一般为false
+	timeToIdleSeconds设置对象空闲最长时间,以秒为单位, 超过这个时间,对象过期
+	timeToLiveSeconds 设置对象最大存活，缓存时间到了，对象过期 
+	overflowToDisk 内存溢出时，是否将数据输出到硬盘 
+	maxElementsOnDisk 硬盘允许最大元素数量
+	diskPersistent当jvm结束时是否持久化对象 
+	diskExpiryThreadIntervalSeconds指定专门用于清除过期对象的监听线程的轮询时间 
+	memoryStoreEvictionPolicy当内存缓存达到最大，有新的element加入的时候， 移除缓存中element的策略.
+							默认是LRU（最近最少使用），可选的有LFU（最不常使用）和FIFO（先进先出） 
+    cache元素，允许对特点元素配置缓存策略，相比defaultCache 多了一个name属性，在hibernate中，name就是缓存类或集合全名
+-->

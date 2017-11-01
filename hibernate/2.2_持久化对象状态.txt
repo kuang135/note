@@ -1,0 +1,22 @@
+
+为什么区分: 为了区分对象与一级缓存的关系,如果对象在一级缓存中,就是持久态,反之就是剩下的两种状态。
+	    对象处于不同的状态有不同的方法
+
+三种状态：
+    transient(瞬时): 不在一级缓存中,数据库中没有对应记录,OID可能有,也可能没有
+    persistent(持久)：在一级缓存中,数据库存在对应记录,具有OID
+    detached(托管)：不在一级缓存中,数据库存在对应记录,具有OID
+
+状态转换:
+    瞬时
+	获得: new直接获得 
+	→ 持久: save,saveOrUpdate
+	→ 托管: 设置OID,数据库存在对应记录 
+  持久
+	获得: 通过查询数据库直接获得(get,load,find) 
+	→ 瞬时: delete 
+	→ 托管: close关闭Session,evict,clear清除Session中对象的引用 
+    托管
+	获得: 无法直接获得 
+	→ 瞬时: 移除对象OID 
+	→ 持久: update,saveOrUpdate,lock

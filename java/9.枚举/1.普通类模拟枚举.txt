@@ -1,0 +1,48 @@
+//定义一个新的类型，该类型定义的变量指向的值必须是规定的那么几个
+
+public class Weekday{
+    private Weekday(){}
+
+    public final static Weekday SUN=new Weekday();
+    public final static Weekday MON=new Weekday();
+
+    public Weekday nextDay(){
+	if(this==SUN){
+	    return MON;
+	}else{
+	    return SUN;
+	}
+    }
+
+    public String toString(){
+	return this==SUN?"SUN":"MON";
+    }
+}
+
+//用的时候只能是Weekday.SUN或Weekday.MON
+
+用抽象类方法将nextDay中大量的if else语句转移成一个个独立的类 
+
+public abstract class Weekday{
+    private Weekday(){}
+
+    public final static Weekday SUN=new Weekday(){ //表示定义了一个Weekday的子类
+	@override
+	public Weekday nextDay(){		   //并且用这个子类创建了一个对象
+	    return MON;
+	}
+    };
+    public final static Weekday MON=new Weekday(
+	@override
+	public Weekday nextDay(){
+	    return SUN;
+	}
+    );
+
+    public abstract  Weekday nextDay();
+
+    public String toString(){
+	return this==SUN?"SUN":"MON";
+    }
+}
+

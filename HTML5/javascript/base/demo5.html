@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+  <p id="demo"></p>
+  
+  <script type="text/javascript">
+   
+   var x;
+   var d=new Date().getDay();
+   switch (d)
+   {
+    case 0:
+    x="周日";
+    break;
+    case 1:
+    x="周一";
+    break;
+    case 2:
+    x="周二";
+    break;
+    case 3:
+    x="周三";
+    break;
+    case 4:
+    x="周四";
+    break;
+    case 5:
+    x="周五";
+    break;
+    case 6:
+    x="周六";
+    break;
+  }
+  document.getElementById("demo").innerHTML=x;
+
+
+</script>
+
+</body>
+</html>

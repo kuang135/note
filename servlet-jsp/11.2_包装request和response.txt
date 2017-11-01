@@ -1,0 +1,14 @@
+javax.servlet.ServletRequestWrapper
+	|
+	+javax.servlet.http.HttpServletRequestWrapper
+
+
+
+
+
+javax.servlet.ServletResponseWrapper
+	|
+	+javax.servlet.http.HttpServletResponseWrapper
+
+
+装饰设计模式

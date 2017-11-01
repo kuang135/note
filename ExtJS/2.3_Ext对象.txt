@@ -1,0 +1,17 @@
+Ext单例对象
+	var extObj = Ext.get('id'); //根据id获取ext对象
+	var domObj = txtObj.dom.value; //ext对象转为dom对象
+	var component = Ext.getCmp('id'); //根据id获取组件
+	
+组件对象
+	组件中放置组件：items属性
+		items:[{
+			xtype:'panel', //别名
+			width:'50%',
+			height:100 ,
+			html:'我是面板'
+		}]
+	里外组件相互获取信息
+		1)组件的 up 和 down 方法，表示向上或者向下查找，参数为组件的xtype或者是选择器
+		2)var component = Ext.getCmp('id');
+		3)组件的 ownerCt 属性获取外组件

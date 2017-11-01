@@ -1,0 +1,20 @@
+解决: 进行测试时,将类的创建交给Srping
+
+原理: 更改JUnit的Runner(运行器),默认使用TestClassRunner
+      改用Spring的运行器,SpringJUnit4ClassRunner extends BlockJUnit4ClassRunner
+
+步骤: 1.导入 spring-test-3.2.0.RELEASE.jar
+
+      2.编写测试类
+	@RunWith(SpringJUnit4ClassRunner.class)
+	@ContextConfiguration(locations={"classpath:applicationContext.xml"})
+	public class UserServiceTest {
+	    @Resource(name="userService")
+	    private UserService userService;
+	    @Test
+	    public void loginTest(){
+		userService.login();
+	    }
+	}
+
+注意: 测试集成中不需要配置 <context:annotation-config>,可以直接 @Autowired

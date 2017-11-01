@@ -1,0 +1,79 @@
+构建的物理表示方式是文件，maven通过仓库来统一管理这些文件
+
+仓库的布局
+	仓库路径大致为：groupId/artifactId/version/artifactId-version.packaging
+	
+仓库的分类
+	maven仓库
+		|------本地仓库 
+		|------远程仓库
+				  |------中央仓库(默认的远程仓库)
+				  |------私服(代理广域网上的远程仓库)
+				  |------其他公共库
+
+本定仓库，settings.xml
+	<settings>
+		<localRepository>D:\repository</localRepository>
+	</settings>
+
+远程仓库的配置
+	<project>
+		<repositories>
+			<repository>
+				<id>aliyun-repos</id> <!-- 仓库的id，唯一，中央参考的id为central -->
+				<name>aliyun Repository</name>
+				<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+				<releases>
+					<enabled>true</enabled> <!-- 开启发布版本的下载 -->
+				</releases>
+				<snapshots>
+					<enabled>false</enabled> <!-- 关闭快照版本的下载 -->
+				</snapshots>
+			</repository>			
+		</repositories>
+	</project>
+	
+镜像
+	如果仓库X可以提供仓库Y存储的所有内容，那么认为X是Y的一个镜像
+	私服是所有仓库的镜像
+	<settings>
+		<mirrors>
+			<mirror> <!-- 配置了mirror就不用配置pom中的repositories了 -->
+				<id>nexus</id> <!-- 仓库的id -->
+				<name>Nexus</name>
+				<url>http://localhost:8081/nexus/content/groups/public/</url>
+				<mirrorOf>*</mirrorOf>
+			</mirror>
+		</mirrors>
+	</settings>
+	
+远程仓库的认证
+	有时候出于安全方面的考考，需提供认真信息才能访问远程仓库
+	<settings>
+		<server>
+			<id>nexus-release</id> <!-- 远程仓库的id -->
+			<username>admin</username>
+			<password>password</password>
+		</server>
+		<server>
+			<id>nexus-snapshots</id> <!-- 远程仓库的id -->
+			<username>admin</username>
+			<password>password</password>
+		</server>
+	</settings>
+	
+部署至远程仓库
+	<project>
+		<distributionManagement>
+			<repository>
+				<id>nexus-releases</id> <!-- 远程仓库的id -->
+				<name>Nexus Release Repository</name>
+				<url>http://localhost:8081/nexus/content/repositories/releases</url>
+			</repository>
+			<snapshotRepository>
+				<id>nexus-snapshots</id> <!-- 远程仓库的id -->
+				<name>Nexus Snapshots Repository</name>
+				<url>http://localhost:8081/nexus/content/repositories/snapshots</url>
+			</snapshotRepository>
+		</distributionManagement>
+	</project>

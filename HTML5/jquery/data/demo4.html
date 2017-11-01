@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div {
+			margin: 3px;
+			width: 40px;
+			height: 40px;
+			position: absolute;
+			left: 0px;
+			top: 30px;
+			background: green;
+			display: none;
+		}
+		div.newcolor {
+			background: blue;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+	<button id="start">Start</button>
+	<button id="stop">Stop</button>
+	<div></div>
+
+	<script>
+		$( "#start" ).click(function() {
+			$( "div" )
+			.show( "slow" )
+			.animate({ left: "+=200" }, 5000 )
+			.queue(function() { "fx1",
+				$( this ).addClass( "newcolor" ).dequeue();
+			})
+			.animate({ left: '-=200' }, 1500 )
+			.queue(function() { "fx1",
+				$( this ).removeClass( "newcolor" ).dequeue();
+			})
+			.slideUp();
+		});
+		$( "#stop" ).click(function() {
+			$( "div" )
+			.queue( "fx1", [] )
+			.stop();
+		});
+	</script>
+
+</body>
+</html>

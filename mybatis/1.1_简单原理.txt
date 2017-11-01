@@ -1,0 +1,50 @@
+SqlSessionFactoryBuilder：每一个MyBatis的应用程序的入口，通过XML配置文件创建Configuration对象（当然也可以在程序中自行创建），
+			  然后通过build方法创建SqlSessionFactory对象。
+
+SqlSessionFactory：由SqlSessionFactoryBuilder创建，主要功能是创建SqlSession对象
+
+SqlSession：一个数据库连接
+    1.直接操作数据库
+	默认的实现类是DefaultSqlSession，有两个重要的属性Configuration和Executor，
+	Configuration从配置文件中获取sql语句，产生一个MappedStatement对象，
+	Executor(SimpleExecutor)对MappedStatement和参数等做处理，
+	通过StatementHandler(PreparedStatementHandler)去调用jdbc操作数据库。
+
+    2.通过Mapper操作数据库
+	DefaultSqlSession的getMapper方法中，通过Configuration对象的MapperRegistry属性，
+	产生一个MpperProxy对象，这个对象是根据xml配置和接口产生的，
+	MpperProxy的invoke方法中，通过MapperMethod来访问Mybatis的SqlSession对象。
+
+
+Configuration
+是Mybatis的总管，Mybatis的所有配置信息都存放在这里,还提供了设置这些配置信息的方法。
+Configuration可以从配置文件里获取属性值，也可以通过程序直接设置。
+Configuration会创建Executor，StatementHandler，PameterHandler，ResultSetHandler，这四个对象在创建的时候，都会被InterceptorChain拦截。
+
+
+Executor
+Executor对象在创建Configuration对象的时候创建，并且缓存在Configuration对象里。
+Executor对象的主要功能是调用StatementHandler访问数据库，并将查询结果存入缓存中（如果配置了缓存的话）。
+
+ 
+
+StatementHandler(PreparedStatementHandler)
+StatementHandler是真正访问数据库的地方，并调用ResultSetHandler处理查询结果。
+
+ParameterHandlder
+处理预编译的sql语句中？和参数的对应关系等
+
+ResultSetHandler(FastResultSetHandler)
+处理查询结果。
+
+TypeHandler
+决断TypeHandler使用的是结果参数的属性类型
+
+BoundSql
+和sql语句绑定，通过String getSql();方法拿到绑定的sql语句
+
+MappedStatement
+代码mapper.xml中的一句sql语句，id属性为mapper标签的"namespace.id"
+
+RowBounds
+处理逻辑分页

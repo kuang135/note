@@ -1,0 +1,30 @@
+导入	
+	import VueRouter from 'vue-router'
+	import Apple from '@/components/Apple'
+	Vue.use(VueRouter)
+	
+映射
+	let router = new VueRouter(
+		{
+			mode: 'history', //url内没有hash
+			routes: [ //映射表
+				{path: '/', redirect: {name: 'apple', params:{color: 'red'}}}, //重定向
+				{path: '/apple/:color', name: 'apple', component: Apple, children: []} //命名路由，嵌套路由
+			]
+		}
+	)
+	
+	<router-view></router-view> //组件在哪里显示，name属性命名试图
+	<router-link :to="{name: 'apple', params: {color: 'red'}}">Apple</router-link>
+	new Vue({
+		el: '#app',
+		router: router
+	})
+	
+子组件中获取参数
+	this.$route.params
+	
+编程式导航
+	router.beforeEach()
+	router.push()
+	

@@ -1,0 +1,44 @@
+5种基本数据类型：Undefined，Null，Boolean，Number，String
+1种复杂数据类型：Object，包括Function, Array, Date
+
+typeof操作符：可以操作变量，也可以操作数值字面量
+	"undefined" -- 值未定义或未声明
+	"boolean" -- 值是布尔值
+	"string" -- 值是字符串
+	"number" -- 值是数值
+	"object" -- 值是对象或null
+	"function" -- 值是函数
+
+instanceof操作符：检测引用类型是什么类型的对象，检测基本类型的值时，始终返回false
+	左边是对象，右边是构造器，判断构造器的prototype属性是否出现在对象的原型链上
+	[] instanceof Array  -- true
+	[] instanceof Object -- true
+	不同环境(window,iframe)之间，不能用instanceof
+
+Undefined：只有一个值，undefined
+	声明变量后未赋值
+
+Null：只有一个值，null
+	一个空对象的指针
+	null == undefined; -- true
+
+Boolean：两个字母值，true和false
+	将值转换为Boolean值，Boolean()函数
+	或 !!(value);
+
+Number：表示整数和浮点数值，NaN与任何值都不相等，包括NaN本身
+	将值转换为Number，Number()，parseInt()，parseFloat()
+	
+变量声明：隐式声名变量总是被创建为全局变量
+
+String：表示由零或多个16位Unicode字符组成的字符序列
+	将值转换为字符串，String()
+
+Object：表示一组数据和功能的集合，重要的属性和方法
+	hasOwnProperty(propertyName) -- 用于检查属性在当前对象中是否存在(而不是在实例的原型中)， propertyName为字符串
+	propertyIsEnumerable(propertyName) -- 用于检查给定的属性是否能用for-in来枚举，propertyName为字符串
+	
+function：每个函数都是Function的实例，函数也可以作为值来使用
+
+
+Boolean()，Number()，parseInt()，parseFloat()是全局方法

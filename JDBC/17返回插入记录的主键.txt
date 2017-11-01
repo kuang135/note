@@ -1,0 +1,13 @@
+
+返回插入记录的主键：
+	String sql = "insert into user(name,age,) values ('scott', 20) ";
+	ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+	ps.executeUpdate();
+	ResultSet rs = ps.getGeneratedKeys();
+	int id = 0;
+	if (rs.next())
+		id = rs.getInt(1);
+	return id;
+
+应用：插入一个user，插入之前有姓名和年龄，
+      插入后给id赋值，根据id来判断是否保存这个user

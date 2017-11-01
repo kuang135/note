@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<script type="text/javascript">
+
+		function timeupdate(e){
+			var e=window.event;
+			var t=e.target.currentTime;
+
+			var seconds=t%60;
+			var minutes=parseInt(t/60%60);
+			var hours=parseInt(t/3600%24);
+
+			document.getElementsByTagName("p")[0].innerHTML=t;
+			document.getElementsByTagName("p")[1].innerHTML=hours+":"+minutes+":"+seconds;
+
+		}
+
+
+		function saveplaycurrenttime(){
+			var lastcurrenttime=document.getElementsByTagName("audio")[0].currentTime;
+			localStorage.lastcurrenttime=lastcurrenttime;
+			localStorage.currentSrc=document.getElementsByTagName("audio")[0].currentSrc;
+		}
+
+		function onload(){
+			var currentSrc=document.getElementsByTagName("audio")[0].currentSrc;
+			var lastcurrenttime=localStorage.lastcurrenttime;
+			if (currentSrc==localStorage.currentSrc &&  lastcurrenttime) {
+				document.getElementsByTagName("audio")[0].currentTime=lastcurrenttime;
+			}
+			else{
+				localStorage.lastcurrenttime=0;
+				localStorage.currentSrc="";
+			}
+		}
+
+
+	</script>
+
+
+</head>
+<body onunload="saveplaycurrenttime()" onload="onload()">
+
+	<figure>
+		<figcaption>开学礼</figcaption>
+		<audio  controls ontimeupdate="timeupdate()">
+			<source src="开学礼.m4a"/>
+			<b>  Your browser is old.</b>
+		</audio>
+		<figcaption>李克勤</figcaption>
+	</figure>
+	<p></p>
+	<p></p>
+</body>
+</html>

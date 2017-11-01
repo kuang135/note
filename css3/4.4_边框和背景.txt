@@ -1,0 +1,60 @@
+声明边框
+	border-width 设置边框的宽度，可选
+	border-style 设置边框的样式，必选
+				 none 没有边框
+				 dashed 破折线边框
+				 dotted 圆点线边框
+				 double 双线边框
+				 groove 槽线边框
+				 inset 使元素内容具有内嵌效果的边框
+				 outset 使元素内容具有外凸效果的边框
+				 ridge 脊线边框
+				 solid 实线边框
+	border-color 设置边框的颜色，可选
+	
+边框样式
+	border 	设置四条边的边框
+			<宽度> <样式> <颜色>
+	border-top 		只设置上边框
+	border-bottom 	只设置下边框
+	border-left 	只设置左边框
+	border-right 	只设置右边框
+
+			
+圆角边框
+	border-radius 	数四条边角
+					长度值或百分比
+	border-top-left-radius 		左上边角
+	border-top-right-radius 	右上边角
+	border-bottom-left-radius 	左下边角
+	border-bottom-right-radius 	右下边角
+
+	
+CSS3提供了一个新的属性集合，可以嵌入图片形式的边框。
+	border-image-source	引入背景图片地址
+	border-image-slice 	切割引入背景图片
+	border-image-width 	边框图片的宽度
+	border-image-repeat 边框背景图片的排列方式
+	border-image-outset 边框背景向外扩张
+	border-image 		上面五个属性的简写方式
+		
+
+	
+背景
+	background-color 	背景的颜色
+						颜色设置背景颜色为指定色
+						transparent 设置背景颜色为透明色
+	background-image 	背景的图片
+						none 取消背景图片的设置
+						url 通过URL 设置背景图片
+	background-repeat 	背景图片的样式
+						repeat-x 水平方向平铺图像
+						repeat-y 垂直方向平铺图像
+						repeat 水平和垂直方向同时平铺图像
+						no-repeat 禁止平铺图像
+	background-size 	背景图像的尺寸
+	background-position 背景图像的位置
+	background-attachment 	背景图片的滚动
+	background-clip 		背景图片的裁剪
+	background-origin 		背景图片起始点
+	background 			背景图片简写方式

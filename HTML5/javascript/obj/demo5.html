@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var arr = new Array(6);
+		arr[0] = "George";
+		arr[1] = "John";
+		arr[2] = "Thomas";
+		arr[3] = "leo";
+		arr[4] = "jasmine";
+		arr[5] = "lily";
+		document.write(arr);
+		document.write("<hr/>");
+		document.write(arr.join());
+		document.write("<hr/>");
+		document.write(arr.pop());
+		document.write("<hr/>");
+		document.write(arr.push("James") + "<br />");
+		document.write(arr);
+		document.write("<hr/>");
+		document.write(arr.reverse());
+		document.write(arr);
+		document.write("<hr/>");
+		document.write(arr.shift());
+		document.write(arr);
+		document.write("<hr/>");
+		document.write(arr.sort());
+		document.write(arr);
+		document.write("<hr/>");
+		arr.splice(2,0,"William");
+		document.write(arr);
+		document.write("<hr/>");
+		document.write(arr.unshift("William111"));
+		document.write("<hr/>");
+		document.write(arr);
+		document.write("<hr/>");
+
+
+		var a=10,b=7;
+
+		a= [b, b=a][0];
+
+		document.write(a+","+b);
+		document.write("<hr/>");
+
+
+
+
+
+	</script>
+</body>
+</html>

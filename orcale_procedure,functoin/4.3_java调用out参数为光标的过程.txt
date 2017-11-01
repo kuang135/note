@@ -1,0 +1,26 @@
+使用 CallableStatement 对象调用
+访问存储过程时，必须带上包的名字
+
+      --在java程序中调用有返回值过程
+	Class.forName("oracle.jdbc.driver.OracleDriver");
+	Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:myOrcl1","scott","tiger");
+	CallableStatement call = conn.prepareCall("{call MYPACKAGE.queryEmpList(?,?)}");
+	//对于in参数，赋值
+	call.setInt(1, 10);
+	//对于out参数，声明
+	call.registerOutParameter(2, OracleTypes.CURSOR);
+	//执行调用
+	call.execute();
+	//取出结果
+	ResultSet = (OracleCallableStatement)call.getCursor(2);
+	while (rs.next()) {
+	    //仅取出员工号，姓名，薪水和职位
+	    int empno = rs.getInt("empno");
+	    String name = rs.getString("ename");
+	    double salary = rs.getDouble("sal");
+	    String job = rs.getString("empjob");
+	    System.out.println(empno+"\t"+name+"\t"+salary+"\t"+job);
+	}
+	rs.close();
+	call.close();
+	conn.close();

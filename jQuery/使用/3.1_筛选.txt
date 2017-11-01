@@ -1,0 +1,47 @@
+1.filter方法，not方法，has方法, is方法
+	filter方法用于过滤结果集，它可以接受多种类型的参数，只返回与参数一致的结果
+		$('li').filter('.item'); // 返回符合CSS选择器的结果
+		$("li").filter(function(index) { // 返回函数返回值为true的结果
+			return index % 2 === 1;
+		})
+		$("li").filter(document.getElementById("unique"));// 返回符合特定DOM对象的结果
+		$("li").filter($("#unique")); // 返回符合特定jQuery实例的结果
+	not方法的用法与filter方法完全一致，但是返回相反的结果，即过滤掉匹配项。
+		$('li').not('.item')
+	has方法与filter方法作用相同，但是只过滤出子元素符合条件的元素
+		$("li").has("ul")
+	is方法用来检测匹配元素集合，如果其中至少有一个元素符合这个给定的表达式就返回true
+
+2.find方法，closest方法
+		$('div').find('li'); //返回当前元素的所有符合条件的下级元素
+		$('li').closest('div'); //返回当前元素，以及当前元素的所有上级元素之中，第一个符合条件的元素
+		
+3.parent方法，parents方法，children方法
+		$("p").parent(); //返回当前元素的父元素
+		$("p").parent(".selected");
+		$("p").parents(); //返回当前元素的所有上级元素（直到html元素）
+		$("p").parents("div");
+		$("div").children(); //选中元素的所有子元素
+		$("div").children(".selected");
+		
+4.first方法，last方法
+		$("li").first(); //返回结果集的第一个成员
+		$("li").last(); //返回结果集的第一个成员
+		
+5.next方法，prev方法，nextAll方法，prevAll方法
+		$("li").first().next(); //紧邻的下一个同级元素
+		$("li").last().prev(); //紧邻的上一个同级元素
+		$("li").first().next('.item'); //选择符合该参数的同级元素
+		$("li").last().prev('.item');
+				
+6.siblings方法，nextAll方法，prevAll方法
+		$('li').first().siblings(); //返回当前元素的所有同级元素
+		$('li').first().siblings('.item');
+		$('li').first().nextAll(); //返回当前元素其后的所有同级元素
+		$('li').last().prevAll(); //返回当前元素前面的所有同级元素
+				
+7.add方法，addBack方法，end方法
+		$('li').add('p'); //用于为结果集添加元素
+		$('li').parent().addBack(); //将当前元素加回原始的结果集
+		$('li').first().end(); //返回原始的结果集
+		

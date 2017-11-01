@@ -1,0 +1,1 @@
+var url = encodeURI('www.rmpt.com?outCome=ษ๓บหอจนý');

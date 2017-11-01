@@ -1,0 +1,42 @@
+1.append方法，appendTo方法
+	内部插入，结尾处，参数：String | Element | jQuery
+		$node.append($newNode);
+		$newNode.appendTo($node);
+	
+2.prepend方法，prependTo方法
+	内部插入，开始处，参数：String | Element | jQuery
+		$node.prepend($newNode)
+		$newNode.prependTo($node)
+	
+3.after方法，insertAfter方法
+	外部插入，结尾处，参数：String | Element | jQuery
+		$node.after($newNode)
+		$newNode.insertAfter($node)
+
+4.before方法，insertBefore方法
+	外部插入，开始处，参数：String | Element | jQuery
+		$node.before($newNode)
+		$newNode.insertBefore($node)
+		
+5.remove方法，detach方法
+	remove方法移除并返回一个元素，取消该元素上所有绑定的事件，数据等
+		$node.remove([expr])
+	detach方法也是移除并返回一个元素，但是不取消该元素上所有绑定的事件，数据等
+	
+6.empty方法
+	删除node的所有子元素,包括文本
+		$node.empty()
+	
+7.wrap方法，wrapAll方法，unwrap方法，wrapInner方法
+	wrap方法将参数中的元素变成当前元素的父元素
+	wrapAll方法为结果集的所有元素，添加一个共同的父元素
+	unwrap方法移除当前元素的父元素
+	wrapInner方法为当前元素的所有子元素，添加一个父元素
+	
+8.replaceWith方法，replaceAll方法
+	replaceWith方法用参数中的元素，替换并返回当前元素，取消当前元素的所有事件的绑定
+	replaceAll
+	
+9.clone方法
+	克隆当前元素，对于那些有id属性的节点，clone方法会连id属性一起克隆。
+	所以，要把克隆的节点插入文档的时候，务必要修改或移除id属性。

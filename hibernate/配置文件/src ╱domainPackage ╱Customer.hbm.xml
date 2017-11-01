@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	
+    <!-- 将Customer类与t_customer数据表完成映射
+		 name -- 完整类名
+		 table -- 表名
+		 catalog -- 数据库名,mysql使用 
+		 schema -- 名称空间,用户名,oracle使用 -->
+	<class name="cn.itcast.domain.Customer" table="t_customer" >
+		 
+	   <!-- 配置主键映射
+	        name -- 类中属性名
+			column -- 表中列名,如果和属性名一致,可以省略
+			type -- hibernate类型,自动转换为java类型和数据库类型,可选 -->
+		<id name="id" column="c_id">
+			<!-- 配置主键生成策略
+				 increment -- 由hibernate生成下一个主键的值,与数据库底层无关
+				 identity -- 在数据库生成主键自增策略,需要数据库支持主键自增(mysql)
+				 sequence -- 有序列生成主键,需要数据库支持序列(oracle)
+				 native -- 根据数据库底层,自动决定使用identify还是sequence
+				 assigned -- 委派主键,手动设置
+				 uuid -- 字符串类型	-->
+			<generator class="assigned" />
+		</id>
+
+		<!-- 配置其它字段的映射
+			 name -- 类中属性名
+			 column -- 表中列名,如果和属性名一致,可以省略
+			 type -- hibernate类型,自动转换为java类型和数据库类型,可选 -->
+		<property name="name" column="c_name" />
+		<property name="age" column="c_age"/>
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+寄生组合式继承
+	function inherit(subClass, superClass) {
+		subClass.prototype = Object.create(superClass.prototype);
+		subClass.prototype.constuctor = subClass;
+	}
+	inherit(Student, Person);
+	
+Student.prototype = Object.create(Person.prototype);
+	Object.create() 创建一个空对象，该对象的原型指向Person.prototype
+	在访问Student.prototype的时候可以向上查找到Person.prototype 
+	同时给Student.prototype扩展的时候，不会影响到Person.prototype,如果 Student.prototype = Person.prototype 就会影响到
+Student.prototype.construnctor = Student;
+	每个原型都有一个constructor属性，指向其本身，所以要这样设置下，如果这里不设置就指向了Person
+
+es5之前没有Object.create(proto)
+用以下方法模拟一个
+	if (!Object.create) {
+		Object.create = function(proto){
+			function F(){};
+			F.prototype = proto;
+			return new F;
+		};
+	}
+
+--------------------------------------------
+
+js中的原型也是对象，所以也可以动态改变
+修改Student.prototype的属性，会影响已创建和新创建的实例
+修改Student.prototype，不会影响已创建的实例，会影响新创建的实例
+
+[] instanceof Array
+左边是对象，右边是构造器，判断构造器的prototype属性是否出现在对象的原型链上
+不同环境(window,iframe)之间，不能用instanceof

@@ -1,0 +1,65 @@
+编写一个过程，可以输入表名，每页显示记录数，当前页，返回总记录数，总页数和结果集
+
+--建立一个包,定义一个游标类型
+  create or replace package page_package as
+  type page_cursor_type is ref cursor;
+  end page_package;
+
+--建立存储过程
+  create or replace procedure page_pro
+  (tableName in varchar2,--表名
+   pageSize in number,--每页记录数
+   pageNow in number,--当前页
+   rowTotal out number,--总记录数
+   pageTotal out number,--总页数
+   page_cursor out page_package.page_cursor_type --结果集
+   ) is
+   v_sql varchar2(1000); --定义字符串
+   v_begin number:=(pageNow-1)*pageSize+1; --定义两个整数
+   v_end number:=pageNow*pageSize;
+  begin
+      v_sql:='select * from (select t1.*,rownum rn from (select * from '||tableName||
+	     ') t1 where rownum<='||v_end||
+	     ') where rn>='||v_begin;
+      open page_cursor for v_sql;
+      v_sql:='select count(*) from'||tableName; --组织一个sql语句
+      execute immediate v_sql into rowTotal; --执行sql语句，并把返回的的值赋给rowTotal;
+      if mod(rowTotal,pageSize)=0 then
+      pageTotal:=rowTotal/pageSize; --计算总页数
+      else
+      pageTotal:=rowTotal/pageSize+1;
+      end if;
+   --   close page_cursor;
+  end;
+
+--调用存储过程(测试失败)
+  declare
+    rowNum emp.empno%type;
+    pageNum emp.empno%type;
+    my_cursor page_package.page_cursor_type;
+  begin
+    scott.page_pro('emp',5,1,rowNum,pageNum,my_cursor);
+    dbms_output.put_line('总记录数:'||rowNum||' 总页数:'||pageNum);
+  end;
+
+--在java程序中调用(没有测试)
+  Class.forName("oracle.jdbc.driver.OracleDriver");
+  Connection con=DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:myOrcl1","scott","cat");
+  CallableStatement cs=con.prepareCall("{call page_pro(?,?,?,?,?,?)}");
+  cs.setString(1,"emp");
+  cs.setInt(2,5);
+  cs.setInt(3,1);
+  cs.registerOutParameter(4,oracle.jdbc.OracleTypes.INTEGER);
+  cs.registerOutParameter(5,oracle.jdbc.OracleTypes.INTEGER);
+  cs.registerOutParameter(6,oracle.jdbc.OracleTypes.CURSOR);
+  cs.execute();
+  int rowTotal=cs.getInt(4);
+  int pageTotal=cs.getInt(5);
+  System.out.println("rowTotal:"+rowTotal+"--pageTotal:"+pageTotal);
+  ResultSet rs=(ResultSet)cs.getObject(2);
+  while(rs.next()){
+    System.out.println(rs.getInt(1)+rs.getString(2)+rs.getString(3)+rs.getInt(4));
+  }
+  rs.close();
+  cs.close();
+  con.close();

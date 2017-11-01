@@ -1,0 +1,5 @@
+验证，jquery.validate : http://jqueryvalidation.org
+国际化，jQuery.i18n.properties : https://github.com/jquery-i18n-properties/jquery-i18n-properties
+cookie，jquery.cookie : http://plugins.jquery.com/cookie/
+二维码，jquery.qrcode : https://github.com/jeromeetienne/jquery-qrcode
+文件上传，jquery.ajaxfileupload ：

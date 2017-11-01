@@ -1,0 +1,8 @@
+将$隔离
+1.	$(function(){
+		$.noConflict(); //在导入jQuery之后，在导入另一个导致冲突的库之前
+	});
+	
+2.	(function($){ //闭包
+		console.log($);
+	})(jQuery);

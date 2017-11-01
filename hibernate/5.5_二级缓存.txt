@@ -1,0 +1,90 @@
+二级缓存: SessionFactory(线程安全)级别的缓存,应用级别的缓存,
+	  实现多个会话之间共享数据,也就是多用户共享数据.
+二级缓存是独立于Hibernate的软件部件，属于第三方的产品，多个厂商和组织都提供有缓存产品，例如，EHCache和OSCache等等.
+
+二级缓存的生命周期: SessionFactory的生命周期,但是并不是放在SessionFactory中.
+
+二级缓存的数据结构 
+	类级别: 一个Map,key为OID,value为对象的散装数据(类中属性值).
+	集合级别: 存放的是对象的OID,如果想要获取真正的实体对象,还要到类级别的二级缓存中获取
+	所以,集合级别的缓存依赖于类级别的缓存
+
+hibernate本身没有二级缓存的实现,必须依赖第三方缓存框架来实现二级缓存
+	EhCache，OpenSymphony ，JBossCache，SwarmCache
+
+适合放入二级缓存的数据:
+	1.实时性不高
+	2.允许并发问题
+	3.不经常修改
+
+二级缓存的并发访问策略: transactional,read-write,nonstrict-read-write,read-only (有的供应商支持,有的不支持)
+
+一级缓存自动同步到二级缓存: 一级缓存的数据被更新后,二级缓存中的对应的数据也会被更新
+
+-----------------------------------------------------------------------------------------------------
+
+配置二级缓
+    1.导入ehcache需要的包(ehcache,backport-util-concurrent,commons-loggion)
+    2.在src下建立并配置ehcache.xml,如果没有默认找ehcache包下的ehcache-failsafe.xml
+    3.在hibernate.cfg.xml中配置开启二级缓存
+	<property name="hibernate.cache.use_second_level_cache">true</property>
+    4.配置二级缓存供应商
+	<property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+    5.配置对哪些数据进行缓存,配置之后,操作这些类或集合,就会先从缓存中读取
+	方式1),在hibernate.cfg.xml中配,放在maping下面
+		<!-- 配置类级别的二级缓存 -->
+		<class-cache class="cn.itcast.po.Customer" usage="read-write"/>
+		<class-cache class="cn.itcast.po.Order" usage="read-write"/>
+		<!-- 配置集合级别的二级缓存 -->
+		<collection-cache  collection="cn.itcast.po.Customer.orders" usage="read-write"/>
+
+	方式2),在hbm.xml中配
+		<!-- 配置类级别的二级缓存 -->
+		<class name="cn.itcast.po.Order">
+			<cache usage="read-write"/>
+		</class>
+		<!-- 配置集合级别的二级缓存 -->
+		<set name="orders">
+			<cache usage="read-write"/>
+		</set>
+
+代码测试二级缓存的存在性
+
+	Configuration configuration = new Configuration();//加载配置文件和映射文件
+	configuration.configure();//默认加载classpath下hibernate.cfg.xml
+	SessionFactory sf = configuration.buildSessionFactory();
+	Session s = sf.openSession();
+	Transaction tr = s.beginTransaction();
+	Customer c1 = (Customer)s.get(Customer.class, 1);//有sql语句
+	Customer c2 = (Customer)s.get(Customer.class, 1);//没有sql语句(一级缓存)
+	tr.commit();
+	s.close();//session关闭,一级缓存没有
+	s = sf.openSession();
+	tr = s.beginTransaction();
+	Customer c3 = (Customer)s.get(Customer.class, 1);//当二级缓存开启,没有sql语句
+	tr.commit();
+	s.close();
+
+---------------------------------------------------------------------------------------------------------
+
+二级缓存有4个内部结构： 类缓存区域、集合缓存区域、更新时间戳区域、查询缓存区域 
+    1.class cache region(类缓存区域)
+	一个Map,key为OID,value为对象属性的值
+	因为保存的是散装数据,对象属性的值,所以每次获取的对象的地址都不同
+	因为key是OID,所以只有在用OID查询的时候,二级缓存才能使用
+		get,load 可读,可写 
+		Query的uniqueResult,list 不能读取二级缓存,但可以写入 
+		Query的iterate 发出查询id的sql,数据可以读取二级缓存
+
+    2.collection cache region(集合缓存区域)
+	存储的只有OID,先到该区域拿OID,再根据OID去类缓存区域拿对象数据
+
+    3.更新时间戳缓存区域
+	存放最新的更新时间,防止用户通过update语句,直接更新数据表
+	当使用二级缓存查询时,自动比较缓存时间和数据最后更新时间,如果更新时间 > 缓存时间，缓存数据不是最新的，需要重新查询！
+
+
+
+
+
+    

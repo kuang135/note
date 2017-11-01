@@ -1,0 +1,13 @@
+window安装后,IDLE更改当前工作目录
+	>>> import os
+	>>> os.getcwd()
+	'C:\\Windows\\system32'
+	>>> os.chdir('D:\\nester')
+	>>> os.getcwd()
+	'D:\\nester'
+	
+IDLE运行.py文件
+	file -> open -> F5
+	
+CMD运行.py文件
+	C:\Users\user>d:\python\Python35\python d:\nester\test.py

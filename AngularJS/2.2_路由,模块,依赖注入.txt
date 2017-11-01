@@ -1,0 +1,45 @@
+模块化：一切都是从模块开始
+	<div ng-app="myApp" ng-controller="myCtrl">
+		{{ firstName + " " + lastName }}
+	</div>
+
+	<script>
+		var app = angular.module("myApp", []);
+		app.controller("myCtrl", function($scope) {
+			$scope.firstName = "John";
+			$scope.lastName = "Doe";
+		});
+	</script>
+
+ngRoute：视图之间的路由
+	AngularJS 路由 就通过 # + 标记 区分不同的逻辑页面并将不同的页面绑定到对应的控制器上
+	因为 # 号之后的内容在向服务端请求时会被浏览器忽略掉
+		<html>
+			<head>
+				<meta charset="utf-8">
+			</head>
+			<body ng-app='routingDemoApp'>
+				<ul>
+					<li><a href="#/">首页</a></li>
+					<li><a href="#/computers">电脑</a></li>
+					<li><a href="#/printers">打印机</a></li>
+					<li><a href="#/blabla">其他</a></li>
+				</ul>   
+				<div ng-view></div>
+				<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+				<script src="http://apps.bdimg.com/libs/angular-route/1.3.13/angular-route.js"></script>
+				<script>
+					angular.module('routingDemoApp',['ngRoute'])
+					.config(['$routeProvider', function($routeProvider){
+						$routeProvider
+						.when('/',{template:'这是首页页面'})
+						.when('/computers',{template:'这是电脑分类页面'})
+						.when('/printers',{template:'这是打印机页面'})
+						.otherwise({redirectTo:'/'});
+					}]);
+				</script>
+			</body>
+		</html>
+
+依赖注入：模块之间的互相依赖
+	var routingDemoApp = angular.module('routingDemoApp',['ngRoute']);//这里依赖ngRoute

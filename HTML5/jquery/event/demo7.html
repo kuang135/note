@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script type="text/javascript">
+
+		$(function(){
+			$(":button").toggle(function(){
+				$("body").css("background-color","green");
+			},
+			function(){
+				$("body").css("background-color","red");
+			},
+			function(){
+				$("body").css("background-color","yellow");
+			});
+		});
+
+
+	</script>
+</head>
+<body>
+	<button>请点击这里，来切换不同的背景颜色</button>
+</body>
+</html>

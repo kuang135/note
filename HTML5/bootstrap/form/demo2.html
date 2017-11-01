@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Document</title>
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	
+</head>
+<body>
+	<p class="lead">一定要添加<strong>label </strong>标签</p>
+	<form class="form-inline">
+		<div class="form-group">
+			<label for="exampleInputName2">Name</label>
+			<input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+		</div>
+		<div class="form-group">
+			<label for="exampleInputEmail2">Email</label>
+			<input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+		</div>
+		<button type="submit" class="btn btn-default">Send invitation</button>
+	</form>
+
+	<p class="lead">如果实在不想显示label，你可以通过为 label 设置<strong>.sr-only </strong>类将其隐藏</p>
+	<form class="form-inline">
+		<div class="form-group">
+			<label class="sr-only" for="exampleInputEmail3">Email address</label>
+			<input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+		</div>
+		<div class="form-group">
+			<label class="sr-only" for="exampleInputPassword3">Password</label>
+			<input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+		</div>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox"> Remember me
+			</label>
+		</div>
+		<button type="submit" class="btn btn-default">Sign in</button>
+	</form>
+
+	
+</body>
+</html>

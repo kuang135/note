@@ -1,0 +1,71 @@
+1.什么是SOAP
+	简单对象访问协议(Simple Object Access Protocol),一种基于xml的消息通信格式,	
+	
+2.解决什么问题
+	可使应用程序在 HTTP 之上进行信息交换.
+
+3.怎么解决
+	通过 HTTP 发 XML 消息,所以 SOAP = HTTP + XML
+
+4.SOAP的几个特点
+	独立于平台
+	独立于语言
+	基于 XML
+	允许绕过防火墙(因为基于HTTP,防火墙根据协议和端口来堵塞访问,默认HTTP都是开放的)
+
+5.SOAP的版本
+	soap1.1
+		jdk支持soap1.1
+	soap1.2,w3c的标准
+		jdk不支持soap1.2,引入jaxws-ri
+	服务端1.1,客户端只能是1.1
+	服务端1.2,客户端可以是1.1,1.2(用jaxws-ri无法演示服务端1.2,客户端1,1)
+	
+6.java代码使用soap1.2
+    服务端导入jaxws-ri-2.2.8.zip中的jar包,底层使用了这些jar包中的类,我们的代码并没有使用.
+    服务端发布
+	在要发布的类上加两个注解
+	@WebService 
+	@BindingType(value=javax.xml.ws.soap.SOAPBinding.SOAP12HTTP_BINDING) 
+		-- javax.jws.WebService
+		-- javax.xml.ws.BindingType
+		-- javax.jws.soap.SOAPBinding
+    客户端使用没有变化,不需要导入jaxws,会自动识别
+
+7.SOAP的语法
+    一条 SOAP 消息就是一个普通的 XML 文档，包含下列元素：	
+	必需的 Envelope 元素，可把此 XML 文档标识为一条 SOAP 消息
+	可选的 Header 元素，包含头部信息
+	必需的 Body 元素，包含所有的调用和响应信息
+	可选的 Fault 元素，提供有关在处理此消息所发生错误的信息
+    一些重要的语法规则：
+	SOAP 消息必须用 XML 来编码
+	SOAP 消息必须使用 SOAP Envelope 命名空间
+	SOAP 消息必须使用 SOAP Encoding 命名空间
+	SOAP 消息不能包含 DTD 引用
+	SOAP 消息不能包含 XML 处理指令
+    SOAP 消息的基本结构
+	<?xml version="1.0"?>
+	<soap:Envelope xmlns:soap="http://www.w3.org/2001/12/soap-envelope"  
+		soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding">
+	    <soap:Header>
+		...
+	    </soap:Header>
+	    <soap:Body>
+		...
+		<soap:Fault>
+		    ...
+		</soap:Fault>
+	    </soap:Body>
+	</soap:Envelope>
+
+8.SOAP1.1和1.2的异同
+    相同之处
+	soap1.1和soap1.2都是使用post方法
+	都包括Envelope和body
+    内容类型context-type不同
+	soap1.1使用text/xml
+	soap1.2使用application/soap+xml
+    命名空间Envelope xmlns
+	soap1.1使用http://schemas.xmlsoap.org/soap/envelope/
+	soap1.2使用http://www.w3.org/2001/12/soap-envelope

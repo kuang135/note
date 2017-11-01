@@ -1,0 +1,41 @@
+1.基本类型
+	整型，int
+		10//3 #3,取整
+		10%3  #1,取余
+	 
+	浮点型，float
+		10/3 #3.3333333333333335
+	 
+	字符串，str
+		ASCII编码，1个字节
+		Unicode编码，通常2个字节(如果要用到非常偏僻的字符，就需要4个字节)
+		UTF-8编码，"可变长编码"，把一个Unicode字符根据不同的数字大小编码成1-6个字节，
+								 常用的英文字母被编码成1个字节，汉字通常是3个字节，
+								 只有很生僻的字符才会被编码成4-6个字节。
+	 
+	布尔值，bool
+		True，False
+		可以用 and，or，not运算
+
+	空值，NoneType
+		None
+		
+	列表，list
+		
+	元祖，tuple
+
+	字典，dict
+
+	set
+
+2.类型检查
+	type('') == str  #True -- 返回对应的Class类型
+	isinstance('',str) #True -- 适合多态
+	
+3.类型转换
+	int()
+	float()
+	str()
+	list()
+	dict()
+	set()

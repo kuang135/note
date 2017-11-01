@@ -1,0 +1,19 @@
+Redis默认支持16个数据库
+Redis的多个数据库之间不是完全隔离的，FLUSHALL命令会清空所有数据库的数据
+
+测试连接：PING
+
+更换数据库：SELECT 1
+
+获取符合规则的键名列表：KEYS *，？，[]，\x
+
+判断一个键是否存在：EXISTS key_name
+存在返回1，不存在返回0
+
+删除键：DEL key_name
+可以删除一个或多个键，返回值是删除的键的个数
+
+获得键值的数据类型：TYPE key_name
+返回值可能是string（字符串）、hash（散列类型）、list（列表类型）、set（集合类型）、zset（有序集合类型）
+
+帮助命令：HELP keys，HELP del

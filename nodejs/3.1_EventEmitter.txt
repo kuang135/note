@@ -1,0 +1,60 @@
+1.events
+	{
+		[Function: EventEmitter]
+		EventEmitter: [Circular],
+		usingDomains: true,
+		defaultMaxListeners: 10,
+		init: [Function],
+		listenerCount: [Function] 
+	}
+
+
+2.events模块通过EventEmitter属性，提供了一个构造函数	
+	events.EventEmitter.prototype
+		EventEmitter {
+		  domain: undefined,
+		  _events: undefined,
+		  _maxListeners: undefined,
+		  setMaxListeners: [Function: setMaxListeners],
+		  getMaxListeners: [Function: getMaxListeners],
+		  emit: [Function: emit],
+		  addListener: [Function: addListener],
+		  on: [Function: addListener],
+		  once: [Function: once],
+		  removeListener: [Function: removeListener],
+		  removeAllListeners: [Function: removeAllListeners],
+		  listeners: [Function: listeners],
+		  listenerCount: [Function: listenerCount] }
+
+3.EventEmitter实例的方法
+	emitter.on(eventName, listener) -- 绑定事件，可以绑定多个
+	emitter.emit(eventName[, arg1][, arg2][, ...]) -- 触发事件
+		var EventEmitter = require('events').EventEmitter;
+		var ee = EventEmitter();
+		ee.on('someEvent', function(arg1, arg2) {
+		  console.log('event has occured...' + arg1 + arg2);
+		});
+		function f() {
+		  console.log('start');
+		  ee.emit('someEvent', '参数1', '参数2');
+		  console.log('end');
+		}
+		f();
+		
+4.大多数时候我们不会直接使用 EventEmitter，而是在对象中继承它，fs、net、http等
+	var EventEmitter = require('events').EventEmitter;
+	function Dog(name) {
+		this.name = name;
+	}
+	//继承
+	Dog.prototype = Object.create(EventEmitter.prototype);
+	Dog.prototype.constructor = Dog;
+
+	var wc = new Dog('旺财');
+	wc.on('bark', function(){
+		console.log(this.name + '：汪汪');
+	});
+	//1秒后旺财叫
+	setTimeout(function(){
+		wc.emit('bark');
+	}, 1000);

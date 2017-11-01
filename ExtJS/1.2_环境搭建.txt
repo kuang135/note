@@ -1,0 +1,16 @@
+需要的导入的css和js：
+	<!-- 样式文件 -->
+	<link rel="styleSheet" type="text/css" href="js/ext/resources/css/ext-all.css" />
+	<!-- 核心文件,如果是正式环境，用ext-all.js代替 -->
+	<script type="text/javascript" charset="utf-8" src="js/ext/ext-all-debug.js"></script>
+	<!-- 国际化文件 -->
+	<script type="text/javascript" charset="utf-8" src="js/ext/ext-lang-zh_CN.js"></script>
+	
+	
+Hello World代码：
+	Ext.onReady(function(){
+		Ext.MessageBox.alert('提示信息!','hello world!');
+	});
+	
+	
+如果要看示例，导入examples文件夹

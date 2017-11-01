@@ -1,0 +1,118 @@
+分词插件IK
+插件安装
+analysis-ik安装没那么方便，不能用命令安装，相对比较麻烦。
+
+   1. 下载https://github.com/medcl/elasticsearch-analysis-ik
+
+	2. 解压进入目录执行"mvn clean package"，生成target目录。
+
+   3. 解压后将config/ik目录复制到你的elasticsearch主目录的config目录下（如果是rpm安装方式，则复制到/etc/esticsearch目录）.
+
+   4. 编辑config/elasticsearch.yml(rpm安装，编辑/etc/elasticsearch/elasticsearch.yml)，在文件末尾添加下面内容（不能有tab键，只许空格）
+
+index:
+  analysis:                   
+    analyzer:      
+      ik:
+          alias: [ik_analyzer]
+          type: org.elasticsearch.index.analysis.IkAnalyzerProvider
+      ik_max_word:
+          type: ik
+          use_smart: false
+      ik_smart:
+          type: ik
+          use_smart: true
+index.analysis.analyzer.default.type: ik
+   5. 在elasticsearch主目录plugins目录（没有就自己新建这个目录）下新建analysis-ik目录，复制解压打包生成的文件elasticsearch-analysis-ik-1.2.9.jar（位于target目录下）到新建的analysis-ik目录下。
+
+   6. 将target/releases下的所有jar包复制到elasticsearch主目录下的lib目录下。
+
+测试
+
+新建索引名为test的索引 "curl -XPUT http://localhost:9200/test"
+
+给索引创建mapping
+curl -XPOST http://localhost:9200/test/test/_mapping -d'
+{
+    "test": {
+        "properties": {
+            "content": {
+                "type" : "string",
+                "boost" : 8.0,
+                "term_vector" : "with_positions_offsets",
+                "analyzer" : "ik",
+                "include_in_all" : true
+            }
+        }
+    }
+}'
+测试命令
+
+curl 'http://localhost:9200/test/_analyze?analyzer=ik&pretty=true' -d '
+{
+"text":"这是我的第一个elasticsearch集群"
+}'
+测试结果
+{
+  "tokens" : [ {
+    "token" : "text",
+    "start_offset" : 4,
+    "end_offset" : 8,
+    "type" : "ENGLISH",
+    "position" : 1
+  }, {
+    "token" : "这是",
+    "start_offset" : 11,
+    "end_offset" : 13,
+    "type" : "CN_WORD",
+    "position" : 2
+  }, {
+    "token" : "我",
+    "start_offset" : 13,
+    "end_offset" : 14,
+    "type" : "CN_CHAR",
+    "position" : 3
+  }, {
+    "token" : "第一个",
+    "start_offset" : 15,
+    "end_offset" : 18,
+    "type" : "CN_WORD",
+    "position" : 4
+  }, {
+    "token" : "第一",
+    "start_offset" : 15,
+    "end_offset" : 17,
+    "type" : "CN_WORD",
+    "position" : 5
+  }, {
+    "token" : "一个",
+    "start_offset" : 16,
+    "end_offset" : 18,
+    "type" : "CN_WORD",
+    "position" : 6
+  }, {
+    "token" : "一",
+    "start_offset" : 16,
+    "end_offset" : 17,
+    "type" : "TYPE_CNUM",
+    "position" : 7
+  }, {
+    "token" : "个",
+    "start_offset" : 17,
+    "end_offset" : 18,
+    "type" : "COUNT",
+    "position" : 8
+  }, {
+    "token" : "elasticsearch",
+    "start_offset" : 18,
+    "end_offset" : 31,
+    "type" : "ENGLISH",
+    "position" : 9
+  }, {
+    "token" : "集群",
+    "start_offset" : 31,
+    "end_offset" : 33,
+    "type" : "CN_WORD",
+    "position" : 10
+  } ]
+}

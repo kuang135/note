@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		p:first-child {font-weight: bold;}
+		li:first-child {text-transform:uppercase;}
+		strong > i:first-child {
+			font-weight:bold;color: red;
+		} 
+		div>p:first-child i {
+			color:blue;
+		} 
+	</style>
+</head>
+<body>
+	<div>
+		<p>p是父元素的第一个子元素</p>
+		<ul>
+			<li>Intert Key</li>
+			<li>Turn key <strong>clockwise</strong></li>
+			<li>Push accelerator</li>
+		</ul>
+		<p>Do <em>not</em> push the brake at the same time as the accelerator.</p>
+	</div>
+
+
+	<strong>stong <i>的第一个i 元素</i>. some <i>的第二个i 元素</i>.</strong>
+	<br>
+	<strong>stong <i>的第一个i 元素</i>. some <i>的第二个i 元素</i>.</strong>
+
+
+	<div>
+		<p>some <i>text</i>. some <i>text</i>.</p>
+		<p>some <i>text</i>. some <i>text</i>.</p>
+	</div>
+
+
+</body>
+</html>

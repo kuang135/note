@@ -1,0 +1,34 @@
+语法：
+    create [or replace] PROCEDURE 过程名(参数列表)
+    as -- 相当于plsql的declare
+    begin
+    end;
+    /
+
+调用存储过程:
+    1.exec 过程名();
+    2.在另外的plsql中调用
+	begin
+	    过程名();
+	end;
+	/
+
+举例：
+    创建
+	create or replace procedure sayhelloworld
+	as
+	begin
+	  dbms_output.put_line('Hello World');
+	end;
+	/
+	
+    调用1
+	exec sayhelloworld();
+
+    调用2
+	declare
+	begin
+	  sayhelloworld();
+	  sayhelloworld();
+	end;
+	/

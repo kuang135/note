@@ -1,0 +1,53 @@
+聚合
+	为了一次构建多个项目模块
+	<project>
+		<modelVersion>4.0.0</modelVersion>
+		<groupId>com.kuang135.myapp</groupId>
+		<artifactId>myapp-aggregator</artifactId>
+		<version>1.0.0</version>
+		<packaging>pom</packaging> <!-- 必须为pom -->
+		
+		<!-- 父子目录结构 -->
+		<modules>
+			<module>myapp-email</module>
+			<module>myapp-persist</module>
+		</modules>
+		
+		<!-- 平行目录结构 -->
+		<modules>
+			<module>../myapp-email</module>
+			<module>../myapp-persist</module>
+		</modules>
+	</project>
+	
+继承
+	为了实现"一处声明，多处使用"
+	<project>
+		<modelVersion>4.0.0</modelVersion>
+		<groupId>com.kuang135.myapp</groupId>
+		<artifactId>myapp-parent</artifactId>
+		<version>1.0.0</version>
+		<packaging>pom</packaging> <!-- 必须为pom -->
+		<!-- 依赖管理，插件管理，用于继承 -->
+		<dependencyManagement>
+			...
+		</dependencyManagement>
+		<build>
+			<pluginManagement>
+				...
+			</pluginManagement>
+		</build>
+	</project>
+	
+	<!-- 平行目录结构 -->
+	<project>
+		<parent>
+			<groupId>com.kuang135.myapp</groupId>
+			<artifactId>myapp-parent</artifactId>
+			<version>1.0.0</version>
+			<relativePath>../myapp-parent/pom.xml</relativePath> <!-- 默认父子目录结构 ../pom.xml -->
+		</parent>
+		<artifactId>myapp-email</artifactId>
+	</project>
+
+实际项目中，往往一个pom既是聚合pom，又是父pom，采用父子目录结构

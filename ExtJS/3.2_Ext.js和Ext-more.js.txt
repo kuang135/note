@@ -1,0 +1,14 @@
+Ext.js方法详解：
+	apply
+	applyIf
+	extend
+	typeOf
+	iterate
+	isEmpty、isIterable、isFunction、isArray...
+
+Ext-more.js方法详解
+	getBody
+	getHead
+	getDoc
+	getScrollBarWidth
+	destroy

@@ -1,0 +1,27 @@
+如果用命令行运行，就要配置环境变量
+配置完 %MAVEN_HOME%\lib 后，命令行运行 mvn -v
+
+1.maven项目的目录结构
+	Hello
+	 - src
+	 - - main
+	 - - - java
+	 - - - resources
+	 - - test
+	 - - - java
+	 - - - resources
+	 - pom.xml
+
+
+2.自动建立目录骨架，archetype插件
+  1)mvn archetype:generate  (需先进入工程目录)
+	随后会要求输入groupId,artifactId,version,package
+  2)mvn archetype:generate -DgroupId=com.imooc.mvntest 
+    -DartifactId=mvntest -Dversion=1.0.0SNAPHOT 
+    -Dpackage=com.imooc.mvntest
+	一下子就设置完
+	
+3.eclipse更新往往会出现进程卡死的现象
+	1)eclipse新建maven项目，关闭eclipse
+	2)记事本修改pom.xml
+	3)cmd进入项目目录，mvn clean install 命令下载jar包

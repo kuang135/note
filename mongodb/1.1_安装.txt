@@ -1,0 +1,18 @@
+1.windows安装
+	下载msi安装后，新建d:\mongodb\data\db目录
+	cmd进入bin目录下，运行 mongod --dbpath D:\mongodb\data\db
+	http://localhost:27017访问测试是否启动成功
+	
+	或者新建d:\mongodb\data\db和D:\mongodb\log\mongo.log和D:\mongodb\mongo.config
+	在config中写
+		dbpath=D:\mongodb\data\db
+		logpath=D:\mongodb\log\mongo.log  
+	管理运行cmd，进入bin，运行 mongod --config D:\mongodb\mongo.config 
+	
+2.windows连接本地
+	按上述步骤启动后
+	进入bin mongo
+		show dbs -- 显示数据库列表
+		db -- 示当前数据库或集合
+		use local -- 连接到指定数据库
+			特殊作用的数据库：admin，local，config

@@ -1,0 +1,36 @@
+IoC: Inverse of Control,控制反转
+
+IoC: 将代码中自己创建对象的权限,交给了spring容器(产生工厂),解除了耦合
+     工厂读取配置文件(接口名=实现类全名),利用反射(class.forName),生成目标类
+
+	1.配置applicationContext.xml
+		<!-- 配置接口和实现类的关系 -->
+		<bean id="userService" class="cn.itcast.service.impl.UserServiceImpl"></bean>	
+	2.IoC容器实例化UserServiceImpl
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		UserService userService = (UserService)applicationContext.getBean("userService");//内部反射实现
+
+-----------------------------------------------------------------------------------------------------------------
+
+IoC容器: Bean关系的集合,叫做Ioc容器(Context组件)
+	 ApplicationContext是Context的顶级父类,继承了BeanFactory,说明Spring容器中运行的主体对象是Bean
+
+org.springframework.beans.factory.BeanFactory
+	|
+	+--org.springframework.context.ApplicationContext
+
+获取ApplicationContext的两种方式: 
+	new ClassPathXmlApplicationContext("applicationContext.xml"); 主要加载src/applicationContext.xml 
+	new FileSystemXmlApplicationContext("applicationContext.xml"); 主要加载 WEB-INF/applicationContext.xml 
+
+BeanFactory和ApplicationContext的区别:
+    BeanFactory: 默认在getBean时才初始化Bean
+    ApplicationContext: 默认在工厂创建时初始化所有单例Bean
+    ApplicationContext提供了更多功能
+	国际化处理
+	事件传递
+	Bean自动装配
+	各种不同应用层的Context实现
+
+
+	

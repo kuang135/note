@@ -1,0 +1,16 @@
+
+tomcat调用Servlet的init(ServletConfig config)时，会传一个ServletConfig对象
+
+ServletConfig：封装了关于某一个servlet的启动配置信息，是一个接口
+	在web.xml的<servlet></servlet>标签中配置启动信息
+	<init-param>
+		<param-name>company</param-name>
+		<param-value>itcast</param-value>
+	</init-param> 
+应用：结合<servlet></servlet>的<load-on-startup></load-on-startup>读取配置信息
+方法：
+    String getInitParameter(String name)
+    Enumeration<String> getInitParameterNames()
+    ServletContext getServletContext()
+    String getServletName()
+	

@@ -1,0 +1,48 @@
+应用: ajax验证,action返回json数据
+
+原理: JSONResult中有一个重要的属性private String root;代表json数据
+      execute(ActionInvocation invocation)方法会从值栈中去拿root的值调用response写给浏览器
+      我们要做的就是在action的方法中把root的值放入值栈
+      另外还有两个重要的属性,用来设置排除或包含
+      private List<Pattern> includeProperties; //设置要转为json的属性
+      private List<Pattern> excludeProperties; //设置不需要转为json的属性
+
+源码:
+    1.execute(ActionInvocation invocation)中
+	Object rootObject;
+            rootObject = readRootObject(invocation);
+            writeToResponse(response, createJSONString(request, rootObject), enableGzip(request));
+        } catch (IOException exception) 
+    
+    2.protected Object readRootObject(ActionInvocation invocation)中return findRootObject(invocation);
+	protected Object findRootObject(ActionInvocation invocation) {
+		Object rootObject;
+		if (this.root != null) { //判断有没有配置名为root的param
+		    ValueStack stack = invocation.getStack();
+		    rootObject = stack.findValue(root);//从值栈中取
+		} else {
+		    rootObject = invocation.getStack().peek(); // 没有配置root,就去拿栈顶的数据返回
+		}
+		return rootObject;
+	}
+
+步骤: 
+    1.引入struts2-json-plugin-2.3.20.jar
+    2.配置struts.xml
+	<package name="my" namespace="/" extends="json-default">
+		<action name="json" class="cn.itcast.action.JsonAction">
+			<result type="json">
+				<param name="root">jsonData</param> <!-- ognl表达式,表示从值栈中取得jsonData -->
+				<param name="includeProperties">\[\d+\]\.userName</param> <!-- 返回的是List,只将List中对象的userName属性转为json -->
+				<param name="includeProperties">userName</param> <!-- 返回的是对象,只将对象的userName属性转为json -->
+			</result>
+		</action>
+	</package>
+      struts2-json-plugin-2.3.20.jar下的struts-plugin.xml中json-default已经extends="struts-default"了
+    3.编写action
+      方法中将jsonData放入_root -- ActionContext.getContext().getValueStack().set("jsonData",data);
+      或action,添加属性jsonData,和get,set方法 -- this.setJsonData(data);
+      或模型驱动类,添加属性jsonData,和get,set方法 -- user.setJsonData(data);
+      或_values() -- ActionContext.getContext().put("jsonData",data);
+
+      如果不配<param name="root">,直接将要转为json的对象放在栈顶即可 -- ActionContext.getContext().getValueStack().push(data);

@@ -1,0 +1,27 @@
+FactoryBean实例化Bean
+	    工厂
+		public class Bean4FactoryBean implements FactoryBean<Bean4> {
+		    @Override
+		    public Bean4 getObject() throws Exception {
+				return new Bean4();
+		    }
+		    ... ...
+		}
+	    配置
+		<!-- 工厂Bean,自动调用getObject,不需要配方法 -->
+		<bean id="bean4" class="cn.itcast.bean.Bean4FactoryBean" />
+	    实例化
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		Bean4 bean4 = (Bean4)applicationContext.getBean("bean4");
+
+
+BeanFactory与FactoryBean的区别? 
+	BeanFactory: 可以获取各种对象的工厂
+	FactoryBean: 可以获取某一种对象的工厂
+
+org.springframework.beans.factory.FactoryBean<T>
+	T getObject();
+	Class<?> getObjectType();
+	boolean isSingleton();
+
+IoC容器发现配置Bean的class是FactoryBean,就自动调用getObject方法返回,所以不需要配方法

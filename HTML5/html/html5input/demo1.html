@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form  id="f1">
+		Month: <input type="month"  placeholder=month/><br>
+		Week: <input type="week"   placeholder=week/><br>
+		Time: <input type="time"  placeholder=time/><br>
+		Date and time: <input type="datetime"  /><br>
+		Date and time: <input type="datetime-local"  required/><br>
+		E-mail: <input type="email"  /><br>
+		zip code: <input type="text" name="country_code" pattern="[1-9]{1}[0-9]{5}" required placeholder="注意邮政编码的格式"><br>
+		w3c Homepage: <input type="url" autocomplete readonly value="http://www.w3c.org" /><br>
+		Homepage: <input type="url" autocomplete placeholder="要http://www.homepage.com的格式哦"/><br>
+		Points: <input type="number"  min="1" max="10" required  placeholder=最小1最大10/><br>
+		Points:<input type="number"  min="0" max="10" step="3" value="6" required/><br>
+		Color:<input type="color"  /><br>
+		Search:<input type="search"  /><br>
+		Range<input type="range" value="50" /><br>
+		<input type="text" list="mydata" placeholder="热门电影排行" /><br>
+		<datalist id="mydata">
+			<option label="Top1" value="让子弹飞"/>
+			<option label="Top2" value="非诚勿扰2"/>
+			<option label="Top3" value="大笑江湖"/>
+			<option label="Top4" value="赵氏孤儿"/>
+			<option label="Top5" value="初恋这件小事"/>
+		</datalist>
+		<br/>
+		<input type="submit" name="" value="sumit"/>
+	</form>
+
+
+	Homepage: <input type="url" form="f1" /><br/>
+
+</body>
+</html>

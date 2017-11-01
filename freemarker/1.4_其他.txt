@@ -1,0 +1,2 @@
+变量，范围
+	当调用 Template.process 方法时，它会在方法内部创建一个 Environment 对象，在 process 返回之前一直使用

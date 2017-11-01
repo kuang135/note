@@ -1,0 +1,24 @@
+public enum Weekday {
+
+	SUN,MON,TUE,WED,THI,FRI,SAT
+}
+
+
+Weekday wd5=Weekday.FRI;
+String name=wd5.name();
+int ordinal=wd5.ordinal();
+Weekday wd6=Weekday.valueOf("SUN");
+Weekday[] wds=Weekday.values();//得到一个数组，再对其遍历
+
+枚举只有一个成员时，就可以作为一种单例的实现方式。
+枚举的构造方式必须是私有的
+
+
+
+java.lang.Enum<E>的方法
+	Class<E> getDeclaringClass();
+	String name();//返回枚举的名称
+	int ordinal();//返回枚举在声明中的位置,从0开始
+	String toString();//返回枚举的名称
+	static Enum<T> valueOf(Class<T> enumType, String name);//将字符串转成枚举
+	static Enum<E>[] values();//返回该枚举的一个数组

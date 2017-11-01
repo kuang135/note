@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		
+		document.write(window.name);
+		document.write("<hr/>");
+		document.write("hash: " + window.location.hash+"<br/>");
+		document.write("host: " + window.location.host+"<br/>");
+		document.write("hashname: " + window.location.hostname+"<br/>");
+		document.write("href: " + window.location.href+"<br/>");
+		document.write("pathname: " + window.location.pathname+"<br/>");
+		document.write("port: " + window.location.port+"<br/>");
+		document.write("protocol: " + window.location.protocol+"<br/>");
+		document.write("search: " + window.location.search+"<br/>");
+		document.write("<hr/>");
+
+		var int=self.setInterval("clock()",50)
+		function clock()
+		{
+			var t=new Date()
+			document.getElementById("clock").value=t
+		}
+
+
+	</script>
+
+
+	<input type="button" onclick="alert('hello')" value="Display alert box" />
+
+	<input type="button" onclick="alert(confirm('hello'))" value="Display alert box" />
+
+
+	<input type="button" onclick="alert(prompt	('hello','hi'))" value="Display alert box" />
+
+
+	<input type="text" id="clock" size="35" />
+	<button onclick="int=window.clearInterval(int)">Stop interval</button>
+
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+
+		div{
+			margin:30px;
+			width:200px;
+			height:100px;
+			background-color:yellow;
+
+		}
+
+
+
+		#div1
+		{
+
+			/* Rotate div */
+			transform:rotate(9deg);
+			-ms-transform:rotate(9deg); /* Internet Explorer */
+			-moz-transform:rotate(9deg); /* Firefox */
+			-webkit-transform:rotate(9deg); /* Safari 和 Chrome */
+			-o-transform:rotate(9deg); /* Opera */
+		}
+
+		#div2
+		{
+			transform:translate(50px,100px);
+			-ms-transform:translate(50px,100px); /* IE 9 */
+			-moz-transform:translate(50px,100px); /* Firefox */
+			-webkit-transform:translate(50px,100px); /* Safari and Chrome */
+			-o-transform:translate(50px,100px); /* Opera */
+		}
+
+
+		#div3
+		{
+			transform:rotate(30deg);
+			-ms-transform:rotate(30deg); /* IE 9 */
+			-moz-transform:rotate(30deg); /* Firefox */
+			-webkit-transform:rotate(30deg); /* Safari and Chrome */
+			-o-transform:rotate(30deg); /* Opera */
+		}
+
+		#div4
+		{
+			margin:100px;
+			transform:scale(2,4);
+			-ms-transform:scale(2,4); /* IE 9 */
+			-moz-transform:scale(2,4); /* Firefox */
+			-webkit-transform:scale(2,4); /* Safari and Chrome */
+			-o-transform:scale(2,4); /* Opera */
+		}
+
+		#div5
+		{
+			transform:skew(30deg,20deg);
+			-ms-transform:skew(30deg,20deg); /* IE 9 */
+			-moz-transform:skew(30deg,20deg); /* Firefox */
+			-webkit-transform:skew(30deg,20deg); /* Safari and Chrome */
+			-o-transform:skew(30deg,20deg); /* Opera */
+		}
+
+		#div6
+		{
+			transform:matrix(0.866,0.5,-0.5,0.866,0,0);
+			-ms-transform:matrix(0.866,0.5,-0.5,0.866,0,0);		/* IE 9 */
+			-moz-transform:matrix(0.866,0.5,-0.5,0.866,0,0);	/* Firefox */
+			-webkit-transform:matrix(0.866,0.5,-0.5,0.866,0,0);	/* Safari and Chrome */
+			-o-transform:matrix(0.866,0.5,-0.5,0.866,0,0);		/* Opera */
+		}
+
+	</style>
+
+
+</head>
+<body>
+	<div id="div1">div1 rotate()</div>
+
+	<div id="div2">div2 translate() </div>
+
+	<div id="div3">div3 rotate()</div>
+	
+
+	<div id="div4">div4 scale()</div>
+
+	<div id="div5">div5 skew() 方法</div>
+
+	<div id="div6">div6 matrix() </div>
+
+</body>
+</html>

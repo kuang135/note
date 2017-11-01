@@ -1,0 +1,3 @@
+<#assign h = {"name":"mouse", "price":50}>
+<#assign keys = h?keys>
+<#list keys as key>${key} = ${h[key]}; </#list> -- name = mouse; price = 50;

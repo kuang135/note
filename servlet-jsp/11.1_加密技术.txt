@@ -1,0 +1,29 @@
+1.支持加密,也支持解密:
+      Base64编码
+      Rsa加密(公钥,私钥)
+
+2.只支持加密,不支持解密
+      Md5加密
+
+JDK中提供了一个类来获得md5加密算法的实例对象: 
+    java.security.MessageDigest
+	static MessageDigest getInstance(String algorithm);
+	byte[] digest(byte[] input);
+
+举例:
+	public static String md5(String plainText){
+	    byte[] secretBytes=null;
+	    try {
+			secretBytes= MessageDigest.getInstance("md5").digest(plainText.getBytes());
+	    } catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException("没有md5这个算法！");
+	    }
+	    //要将字节数组转换为16进制的字符串
+	    char[] hex="0123456789ABCDEF".toCharArray();
+	    StringBuilder sb=new StringBuilder("");
+	    for(byte b:secretBytes){
+			sb.append(hex[(b&0xf0)>>4]);//高4位转为16进制
+			sb.append(hex[(b&0x0f)]);//低4位转为16进制
+	    }
+	    return sb.toString();
+	}

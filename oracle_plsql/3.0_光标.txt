@@ -1,0 +1,9 @@
+光标(游标)：就是代表一个结果集(ResultSet)
+
+关闭的属性：
+    %found  --fetch语句在光标中取到值为true，否则为false
+    %notfound --与found相反
+    %isopen --判断光标是否打开
+    %rowcount --影响的行数，如果总共100条，目前为止取走了10条，那么rowcount就为10
+
+光标的限制：默认情况下，orcale数据库只允许在同一个会话中，打开300个光标

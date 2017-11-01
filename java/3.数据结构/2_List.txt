@@ -1,0 +1,37 @@
+ArrayList: 一个动态扩容的数组
+	默认容量
+		private static final int DEFAULT_CAPACITY = 10;
+	维护的数组
+		private transient Object[] elementData;
+	扩容算法，当arrayList的size 大于 elementData.length的时候就会扩容
+		DEFAULT_CAPACITY = DEFAULT_CAPACITY + (DEFAULT_CAPACITY >> 1);
+	内部类：
+		Itr -- 往后迭代
+		ListItr -- 往前往后迭代
+		SubList -- 访问外部类(ListArray)的数据，改变会相互影响
+		
+LinkedList：一个双向链表
+	内部类：
+		Node<E> -- 维护的数据
+		ListItr -- 往前往后迭代
+		DescendingIterator -- 往前迭代
+		
+集合运算
+	交集：
+		List<Object> list = new ArrayList<Object>(Arrays.asList(new Object[listA.size()]));
+		Collections.copy(list, listA);
+		list.retainAll(listB);
+	并集：
+		List<Object> list = new ArrayList<Object>(Arrays.asList(new Object[listA.size()]));
+		Collections.copy(list, listA);
+		list.removeAll(listB);
+		list.addAll(listB);
+	差集 = 并集 - 交集
+		List<Object> list = new ArrayList<Object>(Arrays.asList(new Object[listA.size()]));
+		Collections.copy(list, listA);
+		list.removeAll(listB);
+		list.addAll(listB);
+		List<Object> _list = new ArrayList<Object>(Arrays.asList(new Object[listA.size()]));
+		Collections.copy(_list, listA);
+		_list.retainAll(listB);
+		list.removeAll(_list);

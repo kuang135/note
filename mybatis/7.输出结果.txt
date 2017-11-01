@@ -1,0 +1,31 @@
+输出类型有三种：简单类型,Pojo,HashMap
+
+1.简单类型,直接用resultType=""指定
+
+2.HashMap,用resultType="HashMap"指定,mybatis会自动将结果集封装到HashMap中,
+	  key是列名,value是相应的数据
+
+3.Pojo,用resultType="cn.itcast.domain.User"指定,pojo对象中的属性名必须和表中的列名一致,
+       如果不一致,sql语句中可以使用别名(别名和pojo的属性名一致)来完成映射.
+       
+       如果不使用别名,可以用resultMap属性来完成映射
+	<resultMap type="cn.itcast.domain.User" id="userResult" autoMapping="true">
+		<id property="id" column="id"/> <!-- 映射id -->
+		<result property="userName" column="name"/> <!-- 映射不一致的属性名和列名,一致的为autoMapping -->
+	</resultMap>
+	<select id="getUser" resultMap="userResult">
+		select * from user where id = #{userId}
+	</select>
+
+4.返回插入数据的主键
+	id必须为自增
+	<insert id="addStudent" useGeneratedKeys="true" keyProperty="id" parameterType="cn.missxu.pojo.Student">
+		INSERT INTO mx_student(number,name,sexcode,birthday) 
+		VALUES(#{number},#{name},#{sexcode},#{birthday})
+	</insert>
+
+
+对于pojo和HashMap,UserMapper中定义的方法返回的结果为List<User>或List<HashMap<String,Object>>时,
+UserMapper.xml中配置的返回结果仍是resultType="cn.itcast.domain.User"或resultType="HashMap",
+mybatis会将结果集封装到pojo或hashmap,再放入集合中.
+

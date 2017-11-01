@@ -1,0 +1,27 @@
+ArrayList,Map迭代的时候修改，会抛ConcurrentModificationException异常
+
+Collections有静态方法返回同步操作的代理对象
+	public static <T> List<T> synchronizedList(List<T> list);
+	public static <K,V> Map<K,V> synchronizedMap(Map<K,V> m);
+
+CopyOnWriteArrayList
+ConcurrentHashMap
+
+
+	public static void main(String[] args) {
+		//遍历的时候删除会抛ConcurrentModificationException异常
+		//List<String> list = new ArrayList<String>();
+		List<String> list = new CopyOnWriteArrayList<String>();
+		list.add("a");
+		list.add("b");
+		list.add("c");
+		list.add("e");
+		for (String s : list) {
+			if ("b".equals(s)) {
+				list.remove(s);
+			}
+		}
+		for (String s : list) {
+			System.out.println(s);
+		}
+	}

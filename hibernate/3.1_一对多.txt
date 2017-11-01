@@ -1,0 +1,64 @@
+PO的编写
+	一方添加多方集合的引用,需要new
+	多方添加一方的引用,不需要new
+
+hbm.xml的配置(情景: 一个客户有多个订单)
+	多(Order).hbm.xml中,<class/>标签下
+		<many-to-one name="customer" class="cn.itcast.domain.Customer" column="fk_customer_id"/>
+	name: 引用的一方的属性名
+	class: 引用的一方的属性的类型
+	column: 多方表中外键的名称
+
+	一(Customer).hbm.xml中,<class/>标签下
+		<set name="orders" cascade="save-update"> <!-- 属性是什么类型的集合就用什么标签 -->
+		    <key column="fk_customer_id"/>
+		    <one-to-many class="cn.itcast.domain.Order"/>
+		</set>
+	<set name>：引用的多方集合的属性名称
+	<set cascade>: 配置级联
+	<set order-by>: 查询时的排序,例如 order-by="progressTime asc"(progressTime是某个类的属性)
+	<key column>：多方表中外键的名称
+	<one-to-many class>：引用的多方集合中元素的类型
+
+级联操作: 一对多,级联配置在一方
+    保存:
+	如果没有配置,必须同时保存,否则报TransientObjectException异常,因为hibernate不允许持久态对象引用瞬时态对象
+		Customer c1=new Customer("WestBrook","OKC");
+		Order o1=new Order(100d,"上海");
+		c1.getOrders().add(o1);
+		o1.setCustomer(c1);
+		session.save(c1);
+		session.save(o1);
+	在一方集合标签中配置 cascade="save-update",保存一方的同时会保存其引用的多方集合中的多方元素
+		Customer c2=new Customer("WestBrook","OKC");
+		Order o2=new Order(100d,"上海");
+		c2.getOrders().add(o2);
+		o2.setCustomer(c2);//不写也行
+		session.save(c2);
+
+    删除:
+	如果没有配置级联删除,那么在删除一方前,自动产生解除双方关系的sql语句,多方的外键改为null,然后删除一方,多方仍旧存在
+		Customer c1=(Customer)session.get(Customer.class, 1);
+		session.delete(c1);
+	在一方集合标签中配置cascade="delete",删除一方的同时会删除其引用的多方集合中的多方元素
+		Customer c2=(Customer)session.get(Customer.class, 2);
+		session.delete(c2);
+	注意: 删除托管态对象不会有级联效果,删除持久态对象才会有级联效果 
+
+
+    孤儿删除:
+	在一方集合标签中配置cascade="delete-orphan",删除引用的多方集合中的多方元素,一方不会被删除
+		Customer c1 = (Customer)session.get(Customer.class, 1);
+		c1.getOrders().clear();
+
+    双向维护
+	如果更改一方中对多方的引用,产生更新多方外键字段的sql
+	如果更改多方中对一方的引用,产生更新多方中全字段的sql
+		Customer c1 = (Customer)session.get(Customer.class, 1);
+		Order o1=(Order)session.get(Order.class, 3);
+		c1.getOrders().add(o1);//产生更新多方外键字段的sql
+		o1.setCustomer(c1);//产生更新多方全字段的sql
+	双向维护会产生重复作用的sql语句
+	解决: 1.只更改任意一方的引用
+	      2.配置一方集合标签的属性的inverse=true,来放弃其对外键的维护权利,不会产生更新多方外键字段的sql
+	注意: 一对多模型中，多方不允许放弃外键维护

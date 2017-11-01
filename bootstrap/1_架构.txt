@@ -1,0 +1,33 @@
+3.3.4: http://v3.bootcss.com/
+
+bootstrap/
+©¿©§©§ css/
+©¶ ©¿©§©§ bootstrap.css
+©¶ ©¿©§©§ bootstrap.css.map
+©¶ ©¿©§©§ bootstrap.min.css
+©¶ ©¿©§©§ bootstrap-theme.css
+©¶ ©¿©§©§ bootstrap-theme.css.map
+©¶ ©∏©§©§ bootstrap-theme.min.css
+©¿©§©§ js/
+©¶ ©¿©§©§ bootstrap.js
+©¶ ©∏©§©§ bootstrap.min.js
+©∏©§©§ fonts/
+©¿©§©§ glyphicons-halflings-regular.eot
+©¿©§©§ glyphicons-halflings-regular.svg
+©¿©§©§ glyphicons-halflings-regular.ttf
+©¿©§©§ glyphicons-halflings-regular.woff
+©∏©§©§ glyphicons-halflings-regular.woff2
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="UTF-8">
+		<title>BootstrapΩÈ…‹</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+	</head>
+	<body>
+		<button class="btn btn-info">Bootstrap</button>
+		<script src="js/jquery.min.js"></script><!-- ∑≈»Îjquery -->
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>

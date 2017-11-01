@@ -1,0 +1,29 @@
+请求转发：一个web资源收到客户端请求后，通知服务器去访问另外一个web资源，让另一个web资源来响应这个请求，这称之为请求转发
+
+因为通知服务器去访问另一个web资源(当前web工程)，所有请求只发生了一次，并且浏览器地址栏不会变。
+现象：
+    1.请求只发生一次
+    2.浏览器地址栏不变
+
+ServletRequest的方法：
+	RequestDispatcher getRequestDispatcher(String path);
+RequestDispatcher的方法：
+	void forward(ServletRequest request, ServletResponse response);
+		将请求继续往下传,在这个过程中,传递的参数一致都是可以访问的
+	void include(ServletRequest request, ServletResponse response);
+		将另一个servlet中的输出内容包含进来
+	
+
+应用：服务器可以把一个request转发给另一个web资源，那么就可以通过request传递信息.
+      如果另一web资源是jsp，那么就可以在jsp页面上展现这些信息了。
+场景：登录失败时，将错误信息存在request域中，转发给jsp页面去显示。
+ServletRequest是一个域对象：
+	void setAttribute(String name, Object o);
+	Object getAttribute(String name);
+	void removeAttribute(String name);
+	Enumeration<String> getAttributeNames();
+
+细节：
+    1.在一次请求中，不能同时调用getWriter()和getOutputStream()，即使在两个servlet中
+    2.在一个servlet中，forward之后不能再forward，最好在forward后加return;
+	

@@ -1,0 +1,18 @@
+聚合和继承
+	聚合主要为了快速构建项目
+	继承主要为了消除重复
+
+聚合,如果想一次构建多个项目模块，那我们就需要对多个项目模块进行聚合
+	<modules>
+		<module>../othermavenproject</module>
+	</modules>
+
+  继承,为了消除重复，我们把很多相同的配置提取出来
+	优点：使用继承的主要目的是为了统一管理每个使用jar包的版本。由父项目中统一定义版本，其他子模块定义即可。
+	缺点：父项目和子项目，都需要执行install才能部署到本地仓库中，太麻烦.
+	<parent>
+  		<groupId></groupId>
+		<artifactId></artifactId>
+		<version></version>
+	</parent>
+	

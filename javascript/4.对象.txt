@@ -1,0 +1,63 @@
+创建Object的方式：
+	new操作符后跟构造函数，var obj = new Object();
+	对象字面量表示法，var obj = {};
+
+访问对象属性
+	点表示法
+	方括号表示法，可以通过变量来访问属性
+
+构造
+    new+构造函数，如果在构造函数中没有指定返回对象，那么就返回this	
+		function Person(){return {arms:2,legs:2}}
+		new Person(); // Object {arms: 2, legs: 2} 
+
+		function Student(){this.arms=2;this.legs=2;}
+		new Student(); // Student {arms: 2, legs: 2}
+
+原型
+    构造器的prototype属性，指向对象实例的原型
+	对象实例原型的constructor属性，指向其构造器。
+		function Person(name){this.name = name;}
+		Person.prototype; //Person {}
+		Person.prototype.constructor; //function Person(name){this.name = name;}
+	对象实例的内部隐藏属性__proto__，指向其原型
+		
+Object的每个实例都有以下属性和方法
+	constructor -- var p = new Person();p.constructor;//function Person(name){this.name = name;}
+	hasOwnProperty(propertyName) -- p.hasOwnProperty('name');//true
+	isPrototypeOf(object) -- Person.prototype.isPrototypeOf(p);//true
+	propertyIsEnumerable(propertyName) -- p.propertyIsEnumerable('name');//true
+	toLocalString()
+	toString()
+	valueOf()
+
+Object的静态方法
+	Object.create(objProto) -- 创建一个空对象，该对象的原型指向objProto
+	Object.defineProperty(obj,propertyName,descriptor) -- 属性所在的对象，属性的名字，描述符对象
+	Object.defineProperties(x,y) -- 通过描述符一次性定义多个属性
+	Object.getOwnPropertyDescriptor(person,'name') -- 获取给定属性的描述符
+	
+描述符对象(descriptor)的属性
+	configurable：为false，表示不能从对象中删除属性，默认true
+	enumerable：为false，表示不能通过for-in枚举属性，默认true
+	writable：为false，表示不能修改属性的值，默认true
+	value：包含属性的数据，默认undefined
+		var person = {};
+		Object.defineProperty(person, 'name', {configurable: false,enumerable: false, writable: false, value: 'kuang'});
+		delete person.name; //false
+		person.name = 'kkkk';
+		for(var property in person) {
+			console.log(property + ': ' + person[property]);
+		}
+		person.name; //"kuang"
+		
+	delete 只能删除实例上的属性，不能删除原型上的属性
+	
+单体对象
+	简单单体：
+		var Ext = Ext || {};	
+	闭包单体:
+		var Ext = (function(){
+			return {};
+		})();
+	

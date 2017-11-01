@@ -1,0 +1,49 @@
+form 标签用来呈现 HTML 语言中的表单元素, 数据自动回显
+	class属性 叫 cssClass， style属性 叫 cssStyle
+	<s:form action="" method="post" namespace="/"></s:form>
+
+textfield 标签将被呈现为一个输入文本字段
+
+password 标签将被呈现为一个口令字段
+
+hidden 标签将被呈现为一个不可见字段. 
+
+submit 标签将呈现为一个提交按钮. 根据其 type 属性的值. 这个标签可以提供 3 种呈现效果:
+	input: <input type=“submit” value=“提交”…/>
+	button: <input type=“button” value=“确定” …/>
+	image: <input type=“image” value=“图片” src=“XX.jpg” …/>
+
+reset 标签将呈现为一个重置按钮. 根据其 type 属性的值. 这个标签可以提供 2 种呈现效果:
+	input: <input type=“reset” value=“重置”…/>
+	button: <input type=“button” value=“重置按键” …/>
+
+label 标签将呈现一个 HTML 行标元素:
+
+textarea 标签将呈现为一个 HTML 文本域元素
+
+checkboxlist 标签将呈现一组多选框.被映射到一个字符串数组或是一个基本类型的数组. 
+若它提供的多选框一个也没有被选中, 相应的属性将被赋值为一个空数组而不是空值.
+	如果集合为list
+	<s:checkboxlist name="list" list="{'Java','.Net','RoR','PHP'}" value="{'Java','.Net'}"/>
+	如果集合为MAP
+	<s:checkboxlist name="map" list="#{1:'瑜珈用品',2:'户外用品',3:'球类',4:'自行车'}" listKey="key" listValue="value" value="{1,2,3}"/>
+	如果集合里存放的是javabean
+	<s:checkboxlist name="beans" list="#request.persons" listKey="id" listValue="name"/>
+	id和name为Person的属性
+
+radio 标签将呈现为一组单选按钮, 单选按钮的个数与程序员通过该标签的 list 属性提供的选项的个数相同.
+一般地, 使用 radio 标签实现 “多选一”, 对于 “真/假” 则该使用 checkbox 标签.
+	如果集合里存放的是javabean(id和name为Person的属性)
+	<s:radio name="beans" list="#request.persons" listKey="personid" listValue="name"/>
+	如果集合为MAP
+	<s:radio name="map" list="#{1:'瑜珈用品',2:'户外用品',3:'球类',4:'自行车'}" listKey="key" listValue="value“ value="1"/>
+	如果集合为list
+	<s:radio name="list" list="{'Java','.Net'}" value="'Java'"/>
+
+select 标签将呈现一个select 元素
+	如果集合为list,那么listKey和listValue都是list中的元素,value可以设置默认值
+	<s:select name="list" list="{'Java','.Net'}" value="'Java'" headerKey="" headerValue="请选择"/>
+	如果集合里存放的是javabean(id和name为Person的属性)
+	<s:select name="beans" list="#request.persons" listKey="personid" listValue="name"/>
+	如果集合为MAP
+	<s:select name="map" list="#{1:'瑜珈用品',2:'户外用品',3:'球类',4:'自行车'}" listKey="key" listValue="value" value="1"/>

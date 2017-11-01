@@ -1,0 +1,25 @@
+在oracle中，数据完整性可以使用约束，触发器，应用程序(过程和函数)三种方式来实现。
+
+约束包括：not null，unique，primary key，foreign key，check五种
+
+创建，列级定义
+    create table customer(custId char(8) primary key,
+    name varchar2(50) not null,
+    email varchar2(50) unique,
+    sex char(2) default '男' check (sex in ('男','女')),
+    cardId char(18) references card(cardId));
+表级定义
+    create table meployee(emp_id number(4),name varchar2(15),dept_id number(2)),
+    constraint pk_employee primary key (emp_id),
+    constraint fk_department foreign key (dept_id) references department(dept_id);
+
+维护alter table goods modify goodsName not null;
+    alter table goods add constraint uniquename unique(goodsId);
+    alter table goods add constraint checkname check (address in ('杭州','嘉兴','湖州'));
+
+删除alter table table_name drop constraint constraint_name;
+    alter talbe table_name drop primary key cascade;
+
+通过查询数据字典视图user_constraints，可以显示当前用户所有的约束信息
+通过查询数据字典视图user_cons_columns,可以显示约束所对应的列表信息
+

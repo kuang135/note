@@ -1,0 +1,46 @@
+CSS3 提供了多列布局属性columns
+	columns 	集成column-width 和column-count 两个属性
+	column-width 定义每列列宽度
+				 auto 默认值，自适应。
+				 长度值设置列宽。
+	column-count 定义分分列列数
+				 auto 默认值，表示就1 列。
+				 数值设置列数。
+	column-gap 	定义列间距
+				auto 默认值，表示就1 列。
+				数值设置列数
+	column-rule 定义列边框
+				<宽度> <样式> <颜色>的边框简写形式。
+				column-rule-width 单独设置边框宽度。
+				column-rule-style 单独设置边框的样式。
+				column-rule-color 单独设置边框的颜色。
+	column-span 定义多列布局中子元素跨列效果，firefox 不支持
+				none 默认值，表示不跨列。
+				all 表示跨列。
+	column-fill 控制每列的列高效果，主流浏览器不支持
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		div {
+			-webkit-columns: 150px 4;
+			-moz-columns: 150px 4;
+			columns: border-box;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h4>title1</h4>
+		<p>text text text text text text text text text text text text text text text text text text text</p>
+		<h4>title2</h4>
+		<p>text text text text text text text text text text text text text text text text text text text</p>
+		<h4>title3</h4>
+		<p>text text text text text text text text text text text text text text text text text text text</p>
+		<h4>title4</h4>
+		<p>text text text text text text text text text text text text text text text text text text text</p>
+	</div>
+</body>
+</html>

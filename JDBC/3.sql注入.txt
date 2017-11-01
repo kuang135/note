@@ -1,0 +1,15 @@
+什么是sql注入: 
+	通过拼接sql语句的方式更改sql语句的含义.
+
+具体说明:
+	String sql="select * from user where name="+name+"and password="+password+"";
+	用户名: kobe or '1'='1'     密码: 123
+	sql=select * from user where name=kobe or '1'='1' and password=123";
+	先执行and,再执行or,只要name=kobe为真就能登录成功
+
+解决方法:
+	使用PreparedStatement
+	String sql = "select id, name from user where name=?";
+	ps = conn.prepareStatement(sql);
+	ps.setString(1, "SCOTT");
+	rs = ps.executeQuery();

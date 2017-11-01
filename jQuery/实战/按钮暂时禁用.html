@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>按钮暂时禁用</title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+	<button>hi</button>
+	<script type="text/javascript">
+
+		$(function(){
+			$("button").on("click",function(){
+				$(this).attr({"disabled":"disabled"});
+				setTimeout(function() {
+					$('button').removeAttr("disabled");
+				}, 5000);
+			});
+
+		});
+	</script>
+</body>
+</html>

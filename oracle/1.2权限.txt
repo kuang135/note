@@ -1,0 +1,37 @@
+oracle的精华：对用户的管理，对权限的控制
+
+权限：系统权限，用户对数据库的相关授权，100多种
+      对象权限，用户对其他用户的数据对象操作的权限，select, update, insert, alter, index, delete, all等
+	        数据对象：用户创建的表，视图，存储过程，触发器，函数，包，库等等
+
+常用系统权限：
+    create session 连接数据库    create public synonym 建同义词
+    create table   建表          create procedure      建过程，函数，包 
+    create view    建视图        create cluster        建簇
+    create trigger 建触发器  
+常用对象权限：
+    alter, delete, select, insert, update, index, references, execute
+
+创建的新用户没有任何权限(包括登录)，需要为其指定相应的权限：
+    grant connect to weicool;(connet是角色)
+    grant select on emp to weicool;(scott给weicol授权)
+    grant update on emp(sal) to weicool;(weicool只能修改emp的sal)
+    grant all on emp to weicool;
+    select * from scott.emp;(weicool的方案里面没有emp表)
+权限废除
+    revoke select on emp from weicool;
+
+权限传递：希望weicool可以把这个权限授给的用户
+系统权限：grant connect to weicool with admin option; 
+	  取消授权时不级联
+对象权限：grant select on emp to weicool with grant option; 
+	  取消授权时级联
+	 
+
+查看当前用户的权限
+    select * from session_privs;
+查看所有系统权限
+    select * from system_privilege_map order by name;	
+
+
+

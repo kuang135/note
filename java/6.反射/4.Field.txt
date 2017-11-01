@@ -1,0 +1,27 @@
+Field类代表某个类中的一个成员变量
+
+将任意一个对象中String类型的成员的值中的'b'改为'a'：
+	public void changeB(Object obj) throws Exception{
+
+		//获取这个对象中的所有字段,包括私用
+		Field[] fields=obj.getClass().getDeclaredFields();
+
+		//遍历这个字段数组
+		for(Field field:fields){
+
+			//判断字段的类型是否为String类型
+			if(field.getType()==(String.class)){
+
+				//如果是，就拿到该对象这个字段的值
+				String oldValue=(String)field.get(obj);
+
+				System.out.println(oldValue);
+
+				//把这个值里面的b全替换成a
+				String newValue=oldValue.replace('b', 'a');
+
+				//将该对象的这个字段的值重新设为newValue；
+				field.setAccessible(true);
+				field.set(obj, newValue);
+			}
+		}

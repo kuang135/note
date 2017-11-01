@@ -1,0 +1,34 @@
+com.opensymphony.xwork2.util.ValueStack
+	|
+	+com.opensymphony.xwork2.ognl.OgnlValueStack
+
+OgnlValueStack中有两个重要的属性:
+	com.opensymphony.xwork2.util.CompoundRoot extends ArrayList
+	ognl.OgnlContext
+	
+
+什么是值栈: 值栈是struts2一个数据结构,贯穿整个Action实例生命周期(request生命周期), 
+            一次请求对应一个Action实例,一个Action实例对应一个ValueStack实例.
+	    Struts2把ValueStack对象保存在名为"struts.valueStack"的请求属性中,request中
+
+主要作用: 值栈保存了Action和其它常用web对象的引用，通过值栈，间接操作这些对象 
+
+
+获取值栈对象的两种方式: 
+    ValueStack valueStack1 = (ValueStack) ServletActionContext.getRequest().getAttribute("struts.valueStack");
+    ValueStack valueStack2 = ActionContext.getContext().getValueStack();
+    
+
+ValueStack的方法:
+	push(Object o);  //在root栈的顶部
+	set(String key, Object o); //将数据存入一个Map,再将Map push到root栈顶
+	String findString(String expr)
+	Object findValue(ognl表达式) -- 先搜索root栈对象属性，再搜索map的key
+	Map<String, Object> getContext();
+	CompoundRoot getRoot();
+
+OgnlContext的方法:
+	通过ActionContext.getContext()拿到OgnlContext
+	Object put(Object key, Object value);
+	void putAll(Map t);
+	Object remove(Object key);

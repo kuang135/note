@@ -1,0 +1,49 @@
+Spring是分层的JavaSE/EE full-stack(一站式) 轻量级开源框架,以IoC和AOP为内核.
+
+Spring的好处
+	1.方便解耦，简化开发
+	2.AOP编程的支持
+	3.声明式事务的支持
+	4.方便程序的测试
+	5.方便集成各种优秀框架
+	6.降低JavaEE API的使用难度
+
+Spring的思想
+	IoC: 将代码中自己创建对象的权限,交给了spring容器(产生工厂),解除了耦合
+	     工厂读取配置文件(接口名=实现类全名),利用反射(class.forName),生成目标类
+
+	DI:  工厂在创建Bean对象时,动态地将依赖对象(属性)注入到Bean组件
+
+	AOP: 面向切面编程,基于动态代理
+
+
+核心开发jar包(xml和annotation开发都可以)
+	spring-beans-3.2.0.RELEASE.jar
+	spring-context-3.2.0.RELEASE.jar
+	spring-core-3.2.0.RELEASE.jar
+	spring-expression-3.2.0.RELEASE.jar
+	commons-logging-1.1.1.jar
+	log4j-1.2.16.jar
+
+
+配置文件引入bean名称空间(xml)
+    <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+    </beans>
+
+配置文件引入context名称空间(annotation)
+    <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd">
+    </beans>
+
+
+其它开发也要到入相应的名称空间,查看docs\spring-framework-reference\html\xsd-config.html

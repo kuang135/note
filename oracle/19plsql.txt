@@ -1,0 +1,26 @@
+过程，函数，触发器是pl/sql编写的
+过程，函数，触发器是oracle的数据对象
+过程，函数可以在java程序中调用
+
+创建存储过程
+    create or replace procedure sp_pro1 is
+    begin
+	insert into student(studentid,studentname,sex) values(4,'杜兰特','男');
+    end;
+
+replace：如果该存储过程已存在就替换
+show error：查看错误信息
+
+调用该过程
+    1.exec 过程名(参数1，参数2...);
+    2.call 过程名(参数1，参数2...);
+
+注释：
+    单行注释 --、
+    多行注释 /*...*/
+命名规范：
+    变量，建议用 v_ 作前缀
+    常量，建议用 c_ 作前缀
+    游标，建议用 _cursor 作后缀
+    例外，建议用 e_ 作前缀  
+

@@ -1,0 +1,40 @@
+1.attr方法，prop方法
+	attr方法读取的是网页上该属性的值，而prop方法读取的是DOM元素的该属性的值
+		$('textarea').attr(name); // 读取属性值
+		$('textarea').attr(name, val); //写入属性值
+		$('input[type="checkbox"]').prop('checked');//h5的checked可以没有值，radio,checkbox用prop
+		
+2.removeAttr方法，removeProp方法
+		$('a').removeAttr("title"); //移除某个HTML属性
+		$("a").prop("oldValue", 1234).removeProp('oldValue'); //移除某个DOM属性
+
+3.addClass方法，removeClass方法，toggleClass方法
+		$('li').addClass('special'); //添加一个类
+		$('li').removeClass('special'); //移除一个类
+		$('li').toggleClass('special'); //折叠一个类（如果无就添加，如果有就移除）
+		
+4.css方法
+		$('h1').css('fontSize'); //作为取值器
+		$('li').css('padding-left', '20px'); //作为赋值器
+		// 或者
+		$('li').css({'padding-left': '20px'});	
+		
+5.html方法，text方法
+		<p><em>Hello World!</em></p>
+		$('p').html(); //<em>Hello World!</em> 
+		$('p').text(); //Hello World! 
+		$('p').html('<strong>你好</strong>'); //<p><strong>你好</strong></p>
+		$('p').text('你好'); //<p>你好</p>
+	html方法和text方法还可以接受一个函数作为参数
+		$('li').html(function (index, code){
+			return (index + ': ' + code);		
+		});
+		// <li>Hello</li>
+		// <li>World</li>
+		// 变为
+		// <li>0: Hello</li>
+		// <li>1: World</li>
+		
+6.val方法
+		$('input[type="text"]').val(); //取值
+		$('input[type="text"]').val('new value'); //赋值

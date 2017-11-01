@@ -1,0 +1,34 @@
+
+NamedParameterJdbcTemplate内部包含了一个JdbcTemplate，
+所有JdbcTemplate能做的他都能做，另外还增加了参数可以命名的功能。
+	public Object queryForObject(String sql, Map paramMap, RowMapper rowMapper)
+	public Object queryForObject(String sql, SqlParameterSource paramSource, RowMapper rowMapper)
+		SqlParameterSource的两个主要实现MapSqlParameterSource和BeanPropertySqlParameterSource
+	public int update(String sql, SqlParameterSource paramSource, KeyHolder generatedKeyHolder) 保存数据获得主键
+
+JdbcTemplate在用的时候Object[]参数的顺序必须和sql语句中的?一一对应，
+为了更好的可读性，将?用名字替代，就可以用spring提供的NamedParameterJdbcTemplate
+
+//用数据源构造
+	NamedParameterJdbcTemplate named = new NamedParameterJdbcTemplate(dataSource);
+//sql语句中用 :name 替换 ?
+	String sql = "select id, name, money, birthday  from user where name= :n";
+//将参数放入一个Map
+	Map params = new HashMap();
+	params.put("n", user.getName());
+	Object u = named.queryForObject(sql, params, new BeanPropertyRowMapper(User.class));
+
+//或者这样子，sql中冒号后面的名字必须和类的属性名一样
+	String sql = "select id, name, money, birthday  from user where name= :name";
+	SqlParameterSource ps = new BeanPropertySqlParameterSource(user); //通过反射来实现的
+	Object u = named.queryForObject(sql, ps, new BeanPropertyRowMapper(User.class));
+
+//添加记录，KeyHolder用来存值
+	String sql = "insert into user(name,birthday, money) values (:name,:birthday,:money) ";
+	SqlParameterSource ps = new BeanPropertySqlParameterSource(user);
+	KeyHolder keyHolder = new GeneratedKeyHolder();
+	named.update(sql, ps, keyHolder);
+	int id = keyHolder.getKey().intValue();//拿到插入的数据的主键
+	user.setId(id);
+		
+	Map map = keyHolder.getKeys();//联合主键，key是列名，value是列值

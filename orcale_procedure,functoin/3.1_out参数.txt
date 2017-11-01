@@ -1,0 +1,29 @@
+过程和函数都可以通过out指定一个或多个输出参数。
+可以利用out参数，在过程和函数中实现返回多个值。
+
+原则：如果只有一个返回值，用存储函数；否则，就用存储过程。
+如果out参数太多，就使用光标
+
+--查询某个员工的姓名，月薪和职位
+create or replace procedure queryempinfo(eno in number,
+                                         pename out varchar2,
+                                         psal out number,
+                                         pjob out varchar2)
+as
+begin
+  select ename,sal,empjob into pename,psal,pjob from emp where empno = eno;
+end;
+/
+
+--测试运行
+set serveroutput on
+DECLARE
+  PENAME VARCHAR2(200);
+  PSAL NUMBER;
+  PJOB VARCHAR2(200);
+BEGIN
+  QUERYEMPINFO(1001,PENAME,PSAL,PJOB); 
+DBMS_OUTPUT.PUT_LINE('PENAME = ' || PENAME);
+DBMS_OUTPUT.PUT_LINE('PSAL = ' || PSAL);
+DBMS_OUTPUT.PUT_LINE('PJOB = ' || PJOB);
+END;

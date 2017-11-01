@@ -1,0 +1,56 @@
+两条主指令：log_format 和 access_log
+作用：用来指定日志文件的存放路径，格式和缓存大小
+配置位置：http{...} 和 server{...}
+
+-----------------------------------------------------------
+
+语法：log_format name format [format ...]
+	name 表示定义个格式名称
+	format 标识定义的格式样式
+
+log_format有一个默认的，无须设置的combined日志格式设置
+	
+log_format  mylogformat  '$remote_addr - $remote_user [$time_local] "$request" '
+                  '$status $body_bytes_sent "$http_referer" '
+                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+$http_x_forwarded_for
+	如果nginx作为web服务器，请求经过反向代理后到达，那么$remote_addr获取的就是反向代理服务器的ip。
+	反向代理服务器在转发请求的http头信息中增加 X-Forwarded-For信息，用以记录原来的ip和原来请求的服务器地址。
+$remote_addr：记录IP地址
+$remote_user：记录客户端用户名称
+$time_local：记录访问时间与时区
+$request：记录请求URL与HTTP协议
+$status：记录请求状态
+$body_bytes_sent：记录发送给客户端的文件的主体内容大小
+$http_referer：记录从哪个页面连接访问过来
+$http_user_agent：记录客户端浏览器的相关信息
+
+------------------------------------------------------------
+
+语法：access_log path [format [buffer=size | off]]
+	path 表示文件的存放路径
+	format 表示使用log_format指令设置的日志格式的名称
+	buffer=size 表示内存缓冲区的大小，比如buffer=32K
+
+不想记录日志
+	access_log off;
+使用默认的combined格式的日志记录
+	access_log logs/filename.log;
+	access_log logs/filename.log combined;
+使用自定义格式的日志记录
+	access_log  logs/access.log  mylogformat;
+	
+1.8.0版本，access_log指令的日志文件路径中可以包含变量
+	 access_log  logs/$server_name.log mylogformat;
+如果日志文件路径中有变量，将存在一些限制：
+	nginx进程设置的用户和组必须有对该路径创建文件的权限。
+	缓存将不会被使用
+	对于每一天日志记录，日志文件将先打开，再写入，然后马上关闭，
+		所以必须使用open_log_file_cache指令来提高性能，默认是关闭的
+		
+---------------------------------------------------------------
+
+日志文件的切割
+	通过shell
+

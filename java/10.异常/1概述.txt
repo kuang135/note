@@ -1,0 +1,21 @@
+Throwable：异常的顶层父类，超类
+    |
+    |--Error：错误，如果程序出现Error问题，就让程序员自己修改
+    |
+    |--Exception：异常，程序中一些不足以导致程序崩溃的问题，开发中可以合理回避，或者提前给出处理方案
+	  |
+	  |--RuntimeException：程序中的问题不需要报告给程序的使用者，一旦发生，直接暴露，让程序停止运行
+	  |		       这类异常编译时编译器不会检测，也不会告诉调用者
+	  |--编译时异常：程序中有问题，自己不能处理就把问题报告给程序的使用者
+
+常见RuntimeException:
+    ArithmeticException,ClassCastException,
+    IllegalArgumentException,IndexOutOfBoundsException
+    NoSuchElementException,NullPointerException
+
+
+异常的处理：
+	1.在方法上使用throws声明出去
+	2.在方法中使用try-catch-finally捕获
+			 
+    

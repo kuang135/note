@@ -1,0 +1,44 @@
+通过FieldType类去设置类型
+	索引(IndexOptions)：是否根据该字段进行搜索，比如商品的图片地址不需要索引
+	存储(Field.Store)：是否在返回的结果中显示该字段
+	分词(setTokenized)：是否用该字段的部分内容进行搜索，比如商品的ID不需要分词
+	等等
+
+IndexOptions
+	NONE -- 不索引
+	DOCS -- 索引文档
+	DOCS_AND_FREQS -- 索引文档和term的在文档中的频率
+ 	DOCS_AND_FREQS_AND_POSITIONS -- 索引文档和term在文档中的频率，位置
+	DOCS_AND_FREQS_AND_POSITIONS_AND_OFFSETS -- 索引文档和term在文档中的频率，位置，偏移	
+ 	
+Field.Store
+	YES -- 存在字段的值，用于搜索命中之后的显示
+	NO	-- 不存储字段的值，比如只想获取某个文件的名称，那么庞大的文件内容就可以不存储
+ 
+StringField: 索引文档，不分词，是否存储可设置
+	setOmitNorms(true); -- 不会在索引中存储 norms 信息，norms信息记录了索引中的 index-time boost 信息
+	setIndexOptions(IndexOptions.DOCS);
+	setTokenized(false);
+
+TextField：索引文档,term频率,位置，分词，是否存储可设置
+	setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS);
+	setTokenized(true);
+	构造参数为 Reader，TokenStream 时不存储
+
+LongField：索引文档，分词，是否存储可设置
+	setTokenized(true);
+	setOmitNorms(true);
+ 	setIndexOptions(IndexOptions.DOCS);
+	setNumericType(FieldType.NumericType.LONG);
+	
+举例
+	Document doc1 = new Document();
+	doc1.add(new StringField("id", "id111", Field.Store.YES));
+	doc1.add(new LongField("lastModified", new Date().getTime(), Field.Store.YES));
+	doc1.add(new TextField("content", "good good study", Field.Store.YES));
+        
+	Document doc2 = new Document();
+	doc2.add(new StringField("id", "id222", Field.Store.YES));
+	doc2.add(new LongField("lastModified", new Date().getTime(), Field.Store.NO));//返回为null
+	BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(Paths.get("data\\data1.txt")), StandardCharsets.UTF_8));
+    doc2.add(new TextField("content", reader));//返回为null

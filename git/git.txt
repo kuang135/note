@@ -1,0 +1,40 @@
+git config --list
+git config --global user.name "kuang135"
+git config --global user.email "490543013@qq.com"
+
+git init 工作目录中创建新仓库
+git add test.txt 添加到暂存区
+git status 检查当前状态
+git diff 比较工作目录中的文件和暂存区快照的差异
+git diff --cached(staged) 比较暂存区文件和上次提交时的快照的差异
+
+git commit 提交更新
+git commit -m "message"
+git commit -a 将已跟踪的文件暂存并提交，跳过 git add
+
+git rm test.txt 从暂存区移除,并从工作目录中删除
+git rm -f test.txt 删除之前修改过并且已经放到暂存区域的文件
+git rm --cached test.txt 从暂存区移除，仍保留在工作目录
+
+git mv file_from file_to 重命名
+
+git log 列出所有更新
+git log -p -2 展开显示每次提交的内容差异，仅显示最近两次更新
+git --state 仅显示简要的曾改行数统计
+
+git commit --amend 重新提交
+git reset HEAD test.txt 取消暂存
+git checkout --text.txt 取消文件修改
+
+git remote 列出每个远程仓库的简短名
+git remote -v 显示对应的克隆地址
+git remote add [shortname] [url] 添加新的远程仓库
+git remote show [remote-name] 查看某个远程仓库的详细信息
+git remote rename [old-name] [new-name] 修改远程仓库的本地简称
+git remote rm [remote-name] 移除某个远程仓库
+
+
+git fetch [remote-name] 从远程仓库抓取数据到本地，并不自动合并到当前工作分支
+git pull 抓取数据，然后将远端分支合并到本地仓库的当前分支
+git push [remote-name] [branch-name] 将本地仓库中的数据推送到远程仓库
+git push origin master 如果在推送前有人推送了更新，那么先把他们的更新抓取到本地，合并到自己的项目中，然后才可以再次推送

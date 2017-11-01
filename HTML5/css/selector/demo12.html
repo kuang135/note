@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		input:focus
+		{
+			background-color:yellow;
+		}
+
+		input:checked+span
+		{
+
+			background-color:blue;
+			color: red；
+		}
+
+		input[type="text"]:enabled{border:1px solid #090;background:#fff;color:#000;}
+		input[type="text"]:disabled{border:1px solid #ccc;background:#eee;color:#ccc;}
+
+	</style>
+</head>
+<body>
+	<form >
+		First name: <input type="text" name="fname" /><br />
+		Last name: <input type="text" name="lname" /><br />
+		
+		<input type="checkbox" name="Bike"><span>我喜欢自行车：</span>
+		<br />
+		
+		<input type="checkbox" name="Car"><span>我喜欢汽车：</span>
+
+		<ul>
+			<li><input type="text" value="可用状态" /></li>
+			<li><input type="text" value="可用状态" /></li>
+			<li><input type="text" value="禁用状态" disabled="disabled" /></li>
+			<li><input type="text" value="禁用状态" disabled="disabled" /></li>
+		</ul>
+
+
+	</form>
+</body>
+</html>

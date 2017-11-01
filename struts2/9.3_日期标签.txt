@@ -1,0 +1,16 @@
+date标签 用于格式化输入一个日期，还可以计算指定日期和当前时刻之间的时差
+
+属性：
+    format： 可选，如指定该属性，将根据该属性指定的格式来格式化日期
+    nice： 可选，值为true或者false，用于指定是否输出指定日期和当前时刻的时差。默认是false，即不输出
+    name： 必填，指定要格式化的日期
+    var： 可选，如果指定了改属性，则该事件对象将被放到ValueStack中，改属性也可以用id来代替，推荐使用var！
+
+
+在td中显示
+	<s:date name="onDutyDate" format="yyyy-MM-dd"/>
+
+在input中回显
+	<s:date name="onDutyDate" format="yyyy-MM-dd" var="dutyTime"/>
+	<s:textfield  name="onDutyDate" value="%{dutyTime}" onclick="WdatePicker()"/>
+						

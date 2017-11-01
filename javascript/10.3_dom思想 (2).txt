@@ -1,0 +1,25 @@
+document：getElementById("id");
+	  getElementsByName("name");
+	  getElementsByTagName("table");
+	  createElement("table");
+	  createTextNode("text");
+
+document对象的集合
+	all[] 提供对文档中所有 HTML 元素的访问.
+	anchors[] 返回对文档中所有 Anchor 对象的引用. 
+	forms[] 返回对文档中所有 Form 对象引用.
+	images[] 返回对文档中所有 Image 对象引用.
+
+	document　　　　　　　　　　　　　　// Html 的容器对象.
+	document.documentElement　　　　　　//html 对象
+	document.body　　　　　　　　　　　　// body 对象
+	
+table：insertRow(index)
+       deleteRow(index)
+
+tr：insertCell(index)
+    deleteCell(index)
+
+很多对象都有innerHTML和innerText
+
+selelct：selectedIndex属性，onchang事件

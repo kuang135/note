@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script  src="../jquery-3.1.0.min.js"></script>
+
+	<script type="text/javascript">
+		
+		$(function(){
+
+			$("#b1").click(function(){
+				$("[name]").val(".◕‿◕.");
+			});
+
+			$("#b2").click(function(){
+				$("[name=man-news]").val(".◕‿◕.");
+			});
+
+
+			$("#b3").click(function(){
+				$("[name^=man]").val(".◕‿◕.");
+			});
+
+
+			$("#b4").click(function(){
+				$("[name*=ew]").val(".◕‿◕.");
+			});
+
+
+			$("#b5").click(function(){
+				$("[name~=man]").val(".◕‿◕.");
+			});
+
+			$("#b6").click(function(){
+				$("[name$=man]").val(".◕‿◕.");
+			});
+
+
+			$("#b7").click(function(){
+				$("[name!=man]").val(".◕‿◕.");
+			});
+
+			$("#b8").click(function(){
+				$("[name!=man]").val(".◕‿◕.");
+			});
+
+
+
+		});
+
+
+
+	</script>
+
+</head>
+<body>
+	<input name="man-news">
+	<input name="milkman">
+	<input name="letterman2">
+	<input name="newmilk">
+	<input name="milk man">
+
+	<button id="b1">[name]</button>
+	<button id="b2">[name=”value”]</button>
+	<button id="b3">[name^=”value”]</button>
+	<button id="b4">[name*=”value”]</button>
+	<button id="b5">[name~=”value”]</button>
+	<button id="b6">[name$=”value”]</button>
+	<button id="b7">[name!=”value”]</button>
+	<button id="b8">[name|=”value”]</button>
+
+</body>
+</html>

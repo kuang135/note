@@ -1,0 +1,22 @@
+! -- 逻辑非，返回一个布尔值，先Boolean()再取反
+	!!(value)等于Boolean()
+
+&& -- 逻辑与，短路操作
+
+|| -- 逻辑或，短路操作
+	避免为变量赋null或undefined
+	var myObject = preferredObject || backupObject
+
+== != === !===
+	全等和不全等，仅比较而不转换
+	相等和不相等，先转换载比较
+		有一个是Boolean，先转换为数值
+		一个是String，一个是Number，先将String转换为Number
+		一个是Object，一个不是，调用Object的valueOf()，将得到的基本类型值按上面的规则进行比较
+		都是Object，比较是不是同一个对象
+		null和undefined是相等的
+		比较前，不能将null和undefined转换成其他任何值
+		NaN与任何值都不相等，包括NaN本身，NaN!=NaN为true
+
+条件操作符
+	variable = boolean_expression ? true_value : false_value

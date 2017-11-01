@@ -1,0 +1,45 @@
+当一个对象被当作参数传递到一个方法后，此方法可改变这个对象的属性，并可返回变化后的结果，那么这里到底是值传递还是引用传递? 
+
+是值传递。
+Java 编程语言只有值传递参数。
+当一个对象实例作为一个参数被传递到方法中时，参数的值就是对该对象的引用。
+对象的内容可以在被调用的方法中改变，但对象的引用是永远不会改变的。
+
+public class Person {
+	private String name;
+	private int age;
+	public Person(String name, int age) {
+		super();
+		this.name = name;
+		this.age = age;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	@Override
+	public String toString() {
+		return "Person [name=" + name + ", age=" + age + "]";
+	}
+}
+
+public class Demo {
+	public static void main(String[] args) {
+		Person person = new Person("yao", 16);
+		changeReferece(person);
+		System.out.println(person);//Person [name=yao, age=16]
+		changeValue(person);
+		System.out.println(person);//Person [name=kuang, age=28]
+	}
+	public static void changeReferece(Person person) {
+		Person newP =new Person("kk", 26);
+		person = newP;
+	}
+	public static void changeValue(Person person) {
+		person.setName("kuang");
+		person.setAge(28);
+	}
+}
+

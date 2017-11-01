@@ -1,0 +1,19 @@
+
+	 * xpath技术：
+	 * 	这个技术的出现主要是帮助我们在解析xml文件的时候可以快速的定位的xml中某个标签上
+	 * 	
+	 * 在xpath技术中，以/ 开始 是从根标签开始找   /aaa  代表aaa是根标签
+	 *              以// 开始 不管当前标签的位置  只要符合都可以被选中  //aaa 整个dom树中的aaa标签选被选中
+	 *              [] 过滤添加   //aaa[1] 第一个aaa标签	  /aaa//bbb[1]
+	 *              [@]  选择属性  //aaa[@id] 有id属性的aaa标签全部被选中
+	 *              [@id='u001'] //aaa[@id='u001'] 所有aaa标签中id值为u001的标签被选中
+	 *              [@name='zhangsan']  //user[@name='zhangsan']
+	 *              [@name=fn:upper-case('"+变量+"') and @password=fn:upper-case('"+变量+"')]
+	 *              
+	 *  当我们引用了第三方的jar包，在运行程序的过程中出现了报错，报的是类没有找到异常，
+	 *  这时说明当前的这个第三方jar还要依赖于其他的第三方jar包
+	 *  java.lang.NoClassDefFoundError: org/jaxen/JaxenException
+	 *  org/jaxen/JaxenException 根据保错的信息，一般第二个单词或者第三个单词是当前需要引入的第三方jar包的名称
+
+
+	xpath要导入jaxen-1.1-beta-6.jar

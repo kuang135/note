@@ -1,0 +1,7 @@
+XmlBeanFactory是一个可以读取以XML文件方式定义的BeanDefinition的IoC容器.
+
+Resource是Spring用来封装IO操作的类.
+
+ApplicationContext是一个高级形态意义的IoC容器.
+
+IoC容器的初始化包括BeanDefinition的Resource定位,载入和注册这三个基本的过程.

@@ -1,0 +1,11 @@
+jps
+
+jps -l 输出应用程序main class的完整package名 或者 应用程序的jar文件完整路径名
+
+jps -v 输出传递给JVM的参数
+
+jps -q 只显示pid
+
+jps -m 输出传递给main 方法的参数
+
+jps -mlv 10.134.68.173 

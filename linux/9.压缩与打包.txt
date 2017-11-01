@@ -1,0 +1,32 @@
+常用压缩指令：
+	compress
+	gzip,zcat
+	bzip2,bzcat
+
+压缩文件扩展名：
+	*.Z	  -- compress压缩
+	*.gz	  -- gzip压缩
+	*.bz2	  -- bzip2压缩
+	*.tar	  -- tar打包，没有压缩
+	*.tar.gz  -- tar打包，并用gzip压缩
+	*.tat.bz2 -- tar打包，并用bzip2压缩
+
+tar常用命令：用bz2压缩的话，将z换为j
+	压缩：tar -zcv -f filename.tar.gz 要被压缩的文件或目录的名称
+	查询：tar -ztv -f filename.tar.gz
+	解压缩：tar -zxv -f filename.tar.gz -C 欲解压缩的目录
+	
+.zip压缩
+	unzip filename.zip
+	zip filename.zip files		将files压缩到filename.zip
+	
+总结：
+	*.tar 用 tar –xvf 解压 
+	*.gz 用 gzip -d或者gunzip 解压 
+	*.tar.gz和*.tgz 用 tar –xzf 解压 
+	*.bz2 用 bzip2 -d或者用bunzip2 解压 
+	*.tar.bz2用tar –xjf 解压 
+	*.Z 用 uncompress 解压 
+	*.tar.Z 用tar –xZf 解压 
+	*.rar 用 unrar e解压 
+	*.zip 用 unzip 解压

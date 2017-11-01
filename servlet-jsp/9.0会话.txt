@@ -1,0 +1,85 @@
+会话：用户开一个浏览器，点击多个超链接，访问服务器多个web资源，然后关闭浏览器，整个过程称之为一个会话。
+
+作用：保存浏览器访问web资源的数据
+
+域对象：
+      ServletRequest：数据在一次请求中共享
+      ServletContext：数据在一个web应用中共享
+      Session：一个web应用中数据在一个浏览器中共享(浏览器关了再开也是一个)
+
+两种技术：
+	1.cookie，客户端技术
+	2.session，服务器端技术
+
+cookie：程序把每个用户的数据以cookie的形式写给用户各自的浏览器。
+	当用户使用浏览器再去访问服务器中的web资源时，就会带着各自的数据去。
+	这样，web资源处理的就是用户各自的数据了。
+	服务器根据domain来区分,是不是自己写的cookie,二级域名的服务器可以访问到domain为顶级域名写的cookie
+		二级域名的服务器访问不到domain为另一个二级域名服务器写的cookie.
+
+	一个cookie，对应一组name和value，name唯一
+
+      1.创建
+	Cookie cookie=new Cookie(String name,String value);
+      2.获取
+	Cookie[] request.getCookies();
+      3.回写
+	response.addCookie(Cookie cookie);
+      4.设置
+	getName()//获取name
+	getValue(),setValue()//获取设置value
+	getMaxAge(),setMaxAge()//有效期(秒)，默认情况下，cookie有效期是浏览器进程(会话级别)
+	getPath(),setPath()//有效路径，默认为web应用，表示访问某个web应用下的任何资源都会带这个cookie过去
+		setPath("/")，/表示主机名，表示访问某台主机下的任何资源都会带这个cookie过去
+	getDomain(),setDomain()//manage.taotao.com上的request可以获取域名www.taotao.com的cookie,
+				 不能获取域名为sso.taotao.com的cookie
+      5.删除
+	回写同名cookie，设置有效期为0，有效路径与之前的cookie一致
+
+注意: cookie的value不能是中文，放进去前必须先编码
+		后台用URLEncoder.encode(newUser.getUserName(), "utf-8")进行编码
+		后台用URLDecoder.decode(userName,"utf-8")进行解码
+		页面用js的decodeURI("${cookie.userNameCookie.value}")进行解码
+
+---------------------------------------------------------------------------------
+		
+session：在访问一个web应用下的资源时，服务器可以为每一个用户的浏览器创建一个其独享的session对象，
+	 由于session为用户浏览器独享，所以用户在访问同一个web应用下的资源时，可以把各自的数据放在各自的session中，
+	 当用户再去访问该web应用中其它资源时，其它资源再从用户各自的session中取出数据为用户服务。
+	
+   原理：基于cookie，session的jsessionid是通过cookie技术写给浏览器的，这个cookie的name就是JSESSIONID。
+	 服务器通过session的jsessionid来识别session对象
+
+   有效期：浏览器关闭session失效是因为cookie的默认有效期是一个浏览器进程，
+	   创建一个同名cookie，设置其值为session的id,设置有效期，并回写，
+	   就算浏览器关闭，重新打开后session还是有效。
+
+   销毁：和浏览器关闭没有任何关系，浏览器关闭后，服务器端还存在这个session对象。
+	 默认情况下，一个session对象连续半个小时没有被访问，那么这个session对象就会被销毁。
+	 可以在web.xml的web-app标签下配置某个web应用下的session的有效期
+		<session-config>
+			<session-timeout>60</session-timeout>
+		</session-config>
+	  还可以通过方法来设置
+   
+   序列化：session没有到有效期，服务器正常关闭了，那么session对象会序列化到硬盘上(apache-tomcat\work\Catalina)
+	   服务器重启后，会将序列化在硬盘上的session文件重新读取进来。
+
+   api:
+	1.创建和获取
+	  request.getSession();//服务器判断有没有为当前浏览器创建过session，没有就先创建一个，有就直接获取
+	  String getId();//获取jsessionid的值
+	  Object getAttribute(String name);
+	  Enumeration<String> getAttributeNames();
+	  ServletContext getServletContext();
+	2.设置
+	  setAttribute(String name, Object value);
+	  setMaxInactiveInterval(int interval);//设置某个session的有效期
+	  removeAttribute(String name);
+	  invalidate();//立马销毁某个session对象
+
+浏览器禁用cookie，怎么样去找到session？
+	通过url重写的方式，在url地址后拼接jsessionid
+		http://localhost:8080/my_day12/session2;jsessionid=saghfuio2h13rh3
+		response.encodeURL("/my_day12/session2");
+	因为一个网站下连接太多，所有这项技术没有实际意义，一般网站会提示用户不要禁用cookie。

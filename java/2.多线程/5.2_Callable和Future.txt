@@ -1,0 +1,46 @@
+//类似于回掉
+//单个任务
+public static void main(String[] args) {
+	ExecutorService pool = Executors.newSingleThreadExecutor();
+	Future<String> future = pool.submit(new Callable<String>(){
+		@Override
+		public String call() throws Exception {
+			Thread.sleep(2000);
+			return Thread.currentThread().getName() + " 返回的结果: hello";
+		}
+	});
+	System.out.println(Thread.currentThread().getName() + " 正则等待结果...");
+	try {
+		System.out.println(future.get(5, TimeUnit.SECONDS));
+		pool.shutdown();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+}
+
+//多个任务
+public static void main(String[] args) {
+	ExecutorService pool = Executors.newFixedThreadPool(5);
+	CompletionService<Object> completionService = new ExecutorCompletionService<>(pool);
+	for(int i = 1; i <= 10; i++) {
+		final int task = i;
+		completionService.submit(new Callable<Object>() {
+			@Override
+			public Object call() throws Exception {
+				Thread.sleep(new Random().nextInt(5000));
+				return Thread.currentThread().getName() + " 执行任务  " + task + " 的结果";
+			}
+		});
+	}
+	System.out.println(Thread.currentThread().getName() + " 在等待结果...");
+	for(int i = 1; i <= 10; i++) {
+		try {
+			System.out.println(completionService.take().get());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	System.out.println("拿到全部结果，线程池关闭");
+	pool.shutdown();
+}
+

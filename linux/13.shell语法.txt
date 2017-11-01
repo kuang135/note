@@ -1,0 +1,77 @@
+$? -- 获取程序返回值(成功为0，错误为其他)
+exit 0 -- 离开script并且回传一个0给系统
+exit 1 -- 发生错误后退出script
+
+script的执行方式差异（source script，sh script，./script）
+	sh script -- 子程序中执行
+	source script -- 父程序中执行
+
+
+判断
+    test
+	test -z string -- 判断字符串是否为0，若string为空字符串，则为true
+	test -n string -- 判断字符串是否不为0，若string为空字符串，则为false
+    [  ] -- 两端必须有空格
+	[ -z "$SERVER_NAME"] -- $SERVER_NAME为空，true
+	[ -n "$PIDS" ] -- PIDS不为空，true
+	[ "$HOME" == "$MAIL" ] -- 注意空格
+
+条件判断式
+	if[ 条件判断式 ];then
+		条件成立时候，执行的指令;
+	fi
+	
+	if[ 条件判断式 ];then
+		条件成立时，执行的指令;
+	else
+		条件不成立时，执行的指令;
+	fi
+
+	if[ 条件判断式1 ];then
+		条件1成立时，执行的指令;
+	elif[ 条件判断式2 ];then
+		条件2成立时，执行的指令;
+	else
+		条件1和条件2均不成立，执行的指令;
+	fi
+
+
+	case $变量名称 in 
+	"第一个变量内容")
+		执行的命令
+		;;
+	"第二个变量内容")
+		执行的命令
+		;;
+	*)
+		不包含第一个和第二个变量内容，执行命令
+		;;
+	esac
+
+循环
+	while [ condition ]
+	do
+		执行的命令
+	done
+
+	until [ condition ]
+	do
+		执行的命令
+	done
+
+	for 变量名称 in con1 con2 con3 ...
+	do
+		执行的命令
+	done
+
+	for (( 初始值; 限制值; 执行步长 ))
+	do
+		执行的命令
+	done
+
+函数
+	function 函数名称(){
+		执行的命令
+	}
+	函数也拥有内置变量，与shell script类似，
+	函数名为$0，后续的变量也是以$1,$2...来代替。

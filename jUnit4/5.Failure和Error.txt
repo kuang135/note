@@ -1,0 +1,7 @@
+
+Failure是指测试失败
+
+Error是指测试程序本身出错
+
+只有保证没有error的情况下，
+才能谈有没有failure

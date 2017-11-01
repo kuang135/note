@@ -1,0 +1,57 @@
+包用于在逻辑上组合过程和函数，由包规范和包体组成
+包规范只包含了过程和函数的说明，但是没有过程和函数的实现代码
+
+包是一种将过程、函数和数据结构捆绑在一起的容器；
+包由两个部分组成：外部可视包规范，包括函数头，过程头，和外部可视数据结构；
+另一部分是包主体(package body),包主体包含了所有被捆绑的过程和函数的声明、执行、异常处理部分。
+
+创建Oracle包必须首先创建包规范，创建Oracle包规范的语法如下：
+
+CREATE [OR REPLACE] PACKAGE package_name  
+{AS|IS}  
+public_variable_declarations |  
+public_type_declarations |  
+public_exception_declarations |  
+public_cursor_declarations |  
+function_declarations |  
+procedure_specifications  
+END [package_name]  
+创建包主体使用CREATE PACKAGE BODY语句：
+
+CREATE [OR REPLACE] PACKAGE BODY package_name  
+{AS|IS}  
+private_variable_declarations |  
+private_type_declarations |  
+private_exception_declarations |  
+private_cursor_declarations |  
+function_declarations |  
+procedure_specifications  
+END [package_name]  
+
+
+
+创建包
+    create package my_package1 is
+	--声明该包有一个过程 update_sal
+	procedure update_sal(name varchar2,newsal number);
+	--声明该包有一个函数 annual_income
+	function annual_income(name varchar2) return number;
+    end;
+
+建立包体
+    create or replace package body my_package1 is
+    procedure update_sal(name varchar2,newsal number) is
+    begin
+	update emp set sal=newsal where ename=name;
+    end;
+    function annual_income(name varchar2) return number is annual_salary number;
+    begin
+	select sal*12+nvl(comm,0) into annual_salary from emp where ename=name;
+        return annual_salary;
+    end;
+    end;
+
+调用包的过程或函数：
+在调用包的过程或函数时，需加包名，必要的话还要加方案名
+    call my_package1.update_sal('SCOTT',1500);
+

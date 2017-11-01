@@ -1,0 +1,82 @@
+jsp就是一个servlet，支持html和java，主要用于页面显示
+
+访问流程：
+	jsp页面被访问时，会被翻译成一个servlet对应的java类文件，然后被编译成.class文件，
+	然后由虚拟机加载这个.class文件，执行其中的方法。
+.java和.class文件在tomcat的work目录下，生成的java类继承自HttpJspBase，HttpJspBase继承HttpServlet,实现HttpJspPage
+
+翻译规律：
+	Hello.jsp ---- hello_jsp.java
+	1.jsp -------- _1_jsp.java
+
+jsp的语法：
+	1.jsp声明
+	  用<%!	  %>来声明变量或方法，被翻译为对应的servlet的成员变量或成员方法
+	  在jsp页面中最先执行
+	2.jsp脚本表达式
+	  用<%=   %>输出数据到浏览器，被翻译到对应的servlet的service方法中的out对象的print方法中
+	  out中的数据先写到response获取的PrintWriter中，再由PrintWriter写入响应体
+		Hello, <%= “Itcast,”%> , <% response.getWriter().print(“Good,”); %>
+		Good,Hello,Itcast,
+	3.jsp的java代码片段
+	  用<%	  %>来写任何java代码片段，被翻译到对应的servlet的service方法中
+	  多个<%  %>写的java代码片段，会在对应的servlet的service方法中被组合起来
+	  可以使用jsp的内置对象，
+
+
+内置对象：
+	1.request-------HttpServletRequest
+	2.response------HttpServletResponse
+	3.sesstion------HttpSession
+	4.application---ServletContext
+	5.config--------ServletConfig
+	6.out-----------JspWriter
+	7.page----------this(HttpServlet)，在jsp中也是域对象
+	8.pageContext---PageContext：操作任何一个域对象中的数据
+	9.exception-----Throwable
+  注意：可以通过pageContext获取其他8个对象，实际开发中只要传递pageContext就行，方便开发框架
+	out中的数据先写到response获取的PrintWriter中，再由PrintWriter写入响应体
+	exception在page指令中设置isErrorPage="true"才能用
+
+
+jsp中的域对象：page，request，session，application
+
+
+支持EL表达式：
+	EL表达式用于在jsp页面中取数据
+	语法：${requestAttributeName}
+
+-------------------------------------------------------------------------------------------	
+
+jsp的继承体系；
+    javax.servlet.jsp.JspContext（类）
+	|
+	+javax.servlet.jsp.PageContext
+
+	JspContext
+		Object findAttribute(String name);//从小到大去找
+		Object getAttribute(String name);//page中找
+		setAttribute(String name, Object value);
+		setAttribute(String name, Object value, int scope);
+		removeAttribute(String name);
+		removeAttribute(String name, int scope);
+	PageContext
+		Object getPage();
+		ServletRequest getRequest();
+		ServletResponse getResponse();
+		ServletConfig getServletConfig();
+		ServletContext getServletContext();
+		HttpSession getSession();
+
+
+    javax.servlet.Servlet
+	|
+	+javax.servlet.jsp.JspPage
+		|
+		+javax.servlet.jsp.HttpJspPage（接口）
+    
+	JspPage
+		void jspInit();
+		void jspDestroy();
+	HttpJspPage
+		void _jspService(HttpServletRequest request,HttpServletResponse response)

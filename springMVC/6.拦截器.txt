@@ -1,0 +1,42 @@
+struts2的拦截器是递归调用
+springMVC没有用递归,用的是for循环
+
+拦截器接口HandlerInterceptor有3个方法
+	//前置方法
+	boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+	    throws Exception;
+	//后置方法
+	void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
+			throws Exception;
+	//完成方法
+	void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+			throws Exception;
+
+
+如果前置方法返回false,执行完成方法后返回.
+如果前置方法返回true,执行处理器的处理方法,执行后置方法,渲染视图,执行完成方法后返回.
+
+自定义拦截器的配置
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="cn.itcast.springmvc.interceptor.MyHandlerInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	
+	
+拦截ajax请求
+	1.拦截器中拦截，添加头信息
+		response.setHeader("sessionstatus", "timeout"); 
+	
+	2.通过jquery设置全局的ajax完成事件
+		$.ajaxSetup({
+			complete : function(XMLHttpRequest, textStatus) {
+				var sessionstatus = XMLHttpRequest.getResponseHeader('sessionstatus'); // 通过XMLHttpRequest取得响应头，sessionstatus，
+				if (sessionstatus === 'timeout') {
+					// 如果超时就处理 ，指定要跳转的页面
+					window.location.href = '/index.html';
+				}
+			}
+		});

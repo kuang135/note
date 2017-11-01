@@ -1,0 +1,26 @@
+linux安装
+pip install mysql-connector-python --allow-external mysql-connector-python
+
+windows安装
+版本要对应
+
+
+	import mysql.connector
+
+	config = {
+			'user': 'visual2014',
+			'password': 'fccs#visualdata',
+			'host': '10.10.200.39',
+			'port': 3306,
+			'database': 'visual_data'}
+
+	conn = mysql.connector.connect(**config)
+	cursor = conn.cursor()
+	sql = 'SELECT user_name, user_password FROM visual_user'
+	cursor.execute(sql)
+	result_set = cursor.fetchall()
+	if result_set:
+		for row in result_set:
+			print('name: %s -- password: %s ' % (row[0], row[1]))
+	cursor.close()
+	conn.close()

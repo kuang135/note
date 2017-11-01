@@ -1,0 +1,30 @@
+jackson中重要的类：
+	JsonFactory
+	JsonParser
+	JavaType
+	ObjectMapper
+	JsonNode
+
+1.ObjectMapper的方法
+	Object转JSON
+		String writeValueAsString(Object value);
+	JSON转Object
+		JsonNode readTree(String content);
+		T readValue(String content, Class<T> valueType);
+		T readValue(String content, JavaType valueType);
+	获取TypeFactory，以便构造JavaType
+		TypeFactory getTypeFactory();
+
+2.JsonNode的方法
+	JsonNode get(int index);
+	JsonNode get(String fieldName);
+
+3.TypeFactory的方法
+	JavaType constructType(Type type);
+	CollectionType constructCollectionType(Class<? extends Collection> collectionClass, Class<?> elementClass);
+	CollectionType constructCollectionType(Class<? extends Collection> collectionClass, JavaType elementType)
+	MapType constructMapType(Class<? extends Map> mapClass, Class<?> keyClass, Class<?> valueClass);
+	MapType constructMapType(Class<? extends Map> mapClass, JavaType keyType, JavaType valueType)
+	
+jackson的官网 https://github.com/FasterXML/jackson
+	

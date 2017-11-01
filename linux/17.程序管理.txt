@@ -1,0 +1,45 @@
+ps：将某个时间点的程序运行情况截取下来
+	ps aux -- 系统所有程序
+	ps -ef | grep 'elasticsearch'
+	
+top：持续侦测程序运行的状态
+	top -d 5  --  每5秒更新一次top
+	top -b -n 2 > /tmp/top.txt  --  将top的信息进行2次，结果输出到文件中
+	top -d 2 -p `echo $$`  -- 持续观察bash进程
+	
+	top -u esdev -- esdev用户的进程内存使用情况
+		PID：进程的ID
+	　　USER：进程所有者
+	　　PR：进程的优先级别，越小越优先被执行
+	　　NInice：值
+	　　VIRT：进程占用的虚拟内存
+	　　RES：进程占用的物理内存
+	　　SHR：进程使用的共享内存
+	　　S：进程的状态。S表示休眠，R表示正在运行，Z表示僵死状态，N表示该进程优先值为负数
+	　　%CPU：进程占用CPU的使用率
+	　　%MEM：进程使用的物理内存和总内存的百分比
+	　　TIME+：该进程启动后占用的总的CPU时间，即占用CPU使用时间的累加值。
+	　　COMMAND：进程启动命令名称
+	
+pstree：进程树
+
+free：观察内存使用情况
+
+netstat：追踪网络或插槽文件、
+	netstat -anp | grep '3306'
+	
+pmap
+	pmap -d pid		根据进程查看进程相关信息占用的内存情况
+	
+查看cpu信息： cat /proc/cpuinfo 
+	cpu物理个数: cat /proc/cpuinfo | grep 'physical id' | sort | uniq | wc -l
+	cpu逻辑个数：cat /proc/cpuinfo | grep 'processor' | wc -l
+	cpu核心数: 	 cat /proc/cpuinfo | grep 'cores' | uniq
+	
+查看硬盘: df -h
+
+查看内核/操作系统/CPU信息
+	uname -a  
+	
+查看操作系统版本
+	head -n 1 /etc/issue

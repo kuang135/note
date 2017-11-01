@@ -1,0 +1,26 @@
+二级缓存: mybatis的二级缓存的作用域是一个mapper的namespace,
+	  同一个namespace中查询sql可以从缓存中命中。
+	  二级缓存是可以跨session的。
+
+使用二级缓存：
+	在mapper.xml文件中加入 <cache /> 
+	返回类型pojo实现序列化
+
+二级缓存总开关
+	在mybatis-config.xml中有缓存的全局控制器(cacheEnabled),默认开启.
+	<setting name="cacheEnabled" value="false"/> <!-- 关闭所有namespace的二级缓存 -->
+
+代码测试二级缓存的存在性:
+		SqlSession sqlSession1 = sqlSessionFactory.openSession(true);
+        UserMapper userMapper1 = sqlSession1.getMapper(UserMapper.class);
+        User user1 = userMapper1.selectUser(1);
+        System.out.println(user1);
+        sqlSession1.close();//关闭session
+        
+        SqlSession sqlSession2 = sqlSessionFactory.openSession(true);
+        UserMapper userMapper2 = sqlSession2.getMapper(UserMapper.class);
+        User user2 = userMapper2.selectUser(1);//不执行sql
+        System.out.println(user2);
+
+在<cache />标签中还有其他一些参数，如下：
+	<cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"/>

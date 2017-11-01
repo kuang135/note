@@ -1,0 +1,64 @@
+投影查询: 查询结果仅包含实体的部分属性.
+
+HQL: 
+    1.通过select关键字
+	查询n列,list()返回ArrayList<Object[n]>
+		Query query = session.createQuery("select name,city from Customer");
+		List list = query.list();//ArrayList<Object[2]>
+	
+	查询1列,list()返回ArrayList<Object>
+		Query query = session.createQuery("select name from Customer");
+		List list = query.list();//ArrayList<Object>
+    
+    2.将投影查询的结果封装到对象中,可以在持久化类中定义一个对象的构造器来包装投影查询返回的记录,
+      但是这个对象没有对象导航能力,没有对另一方对象的引用
+		Query query = session.createQuery("select new cn.itcast.domain.Customer(c.name,c.city) from Customer c");
+		List list = query.list();//ArrayList<Customer>
+
+QBC: 
+    1.通过criteria的setProjection(Projection projection),返回ArrayList<Object[2]>
+		Criteria criteria = session.createCriteria(Customer.class);
+		ProjectionList projections = Projections.projectionList();//ProjectionList实现了Projection
+		projections.add(Property.forName("name"));
+		projections.add(Property.forName("city"));
+		criteria.setProjection(projections);
+		List list = criteria.list();//ArrayList<Object[2]>
+
+    2.将QBC投影结果封装到对象中,修改结果集转化器
+      默认结果集策略为RootEntityResultTransformer,返回数组最后一个元素
+		Criteria criteria = session.createCriteria(Customer.class);
+		ProjectionList projections = Projections.projectionList();
+		projections.add(Property.forName("name").as("name"));//设置别名
+		projections.add(Property.forName("city").as("city"));
+		criteria.setProjection(projections);
+		criteria.setResultTransformer(new AliasToBeanResultTransformer(Customer.class));
+		List list = criteria.list();
+
+SQL: 
+	查询n列,list()返回ArrayList<Object[n]>
+		Query query = session.createSQLQuery("select name,city from customer");
+		List list = query.list();//ArrayList<Object[2]>
+	
+	查询1列,list()返回ArrayList<Object>
+		Query query = session.createSQLQuery("select name from customer");
+		List list = query.list();//ArrayList<Object>
+
+
+投影查询往往涉及到多表查询,为了提高效率,多表查询一般都用sql的方式,查询出结果后再封装到对象中.
+注意: 使用sql语句查询，如果投影的部分出现一个表的同一个字段，而且名称相同，查询的结果，后一次的值和前一次的值是一致的
+举例: String sql = " SELECT o.userID,o.logonName,o.userName,a.ddlName,o.contactTel,o.onDutyDate,b.ddlName FROM elec_user o " +
+		   " INNER JOIN elec_systemddl a ON o.sexID = a.ddlCode AND a.keyword = '性别' " +
+		   " INNER JOIN elec_systemddl b ON o.postID = b.ddlCode AND b.keyword = '职位' ";
+	这里hibernate就会认为a.ddlName和 b.ddlName是一致的
+解决方案一: 使用标量查询,Query query = session.createSQLQuery(finalSql)
+				 .addScalar("o.userID").addScalar("o.logonName")
+				 .addScalar("o.userName").addScalar("a.ddlName")
+				 .addScalar("o.contactTel").addScalar("o.onDutyDate")
+				 .addScalar("b.ddlName");
+
+解决方案二: 不使用标量查询,在sql语句中使用别名(3.6版本)
+	String sql = " SELECT o.userID,o.logonName,o.userName,a.ddlName as 'an',o.contactTel,o.onDutyDate,b.ddlName as 'bn' FROM elec_user o " +
+		   " INNER JOIN elec_systemddl a ON o.sexID = a.ddlCode AND a.keyword = '性别' " +
+		   " INNER JOIN elec_systemddl b ON o.postID = b.ddlCode AND b.keyword = '职位' ";
+
+

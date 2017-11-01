@@ -1,0 +1,30 @@
+
+servlet的生命周期
+	加载：ClassLoader
+	实例化：构造函数执行
+	初始化：init(ServletConfig config)
+	响应请求：service(ServletRequest req, ServletResponse res)
+	响应请求：service(ServletRequest req, ServletResponse res)
+		...... 
+	退出服务：destroy()
+    总结：
+	第一次访问时创建一个servlet，后续的访问，始终都是同一个实例
+	一个生命周期只new一个对象，只初始化一次
+	tomcat每次响应请求的时候，都会开启一个新的线程去调用service()方法，所以servlet里尽量不要设置成员变量
+
+
+
+一个继承了HttpServlet的类的响应请求过程，该类覆盖了父类的doGet()和doPost()
+	初始化：调用的是GenericServlet中的init(ServletConfig config)，
+		在方法中又调用GenericServlet中的init()，
+		所以在该类中可以覆盖GenericServlet的init()方法让服务器去执行自己的内容，
+		这也在提示我们不要去覆盖init(ServletConfig config)，因为这是生命周期的方法，总会被调用
+	响应请求：先调用HttpServlet的service(ServletRequest req, ServletResponse res)，
+		  将req和res向下转型，并调用HttpServlet的service(HttpServletRequest req, HttpServletResponse resp)，
+		  在方法中将参数传递到调用本类中的
+		  doGet(HttpServletRequest req, HttpServletResponse resp)或者doPost(HttpServletRequest req, HttpServletResponse resp)，并调用
+	
+	
+	tomcat的新线程在调用servlet的service方法时，怎么处理参数的？？
+	参考ServletRequest和ServletResponse 对象
+

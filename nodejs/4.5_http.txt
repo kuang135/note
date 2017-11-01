@@ -1,0 +1,125 @@
+HTTP服务器
+1.http.Server 是HTTP服务器对象
+		var http = require('http');
+		http.createServer(function(req, res){
+			for (var i = 0; i < arguments.length; i++ ) {
+				console.log(arguments[i].constructor.toString());//IncomingMessage, ServerResponse
+			}
+			res.writeHead(200, {'Content-Type': 'text/html'}); //写入响应头
+			res.write('<head><meta charset="utf-8"/></head>'); //写入相应体
+			res.write('<h1>hellow node</h1>');
+			res.end('<p>你好 node</p>'); //结束并发送
+		}).listen(8080); //启动服务器并监听8080端口
+		console.log('HTTP is listenin port of 8080');
+		
+	http.Server的事件
+		request：客户端请求到来时触发
+		connection：TCP连接建立时触发
+		close：服务器关闭时触发
+			var http = require('http');
+			var server = new http.Server();
+			server.on('request', function(req, res){
+				for (var i = 0; i < arguments.length; i++ ) {
+					console.log(arguments[i].constructor.toString());//IncomingMessage, ServerResponse
+				}
+				res.writeHead(200, {'Content-Type': 'text/html'});
+				res.write('<head><meta charset="utf-8"/></head>');
+				res.write('<h1>hellow node</h1>');
+				res.end('<p>你好 node</p>');
+			});
+			server.listen(8080);
+			console.log('HTTP is listenin port of 8080');
+		
+2.http.IncomingMessage 是HTTP请求的信息
+	http.IncomingMessage的事件
+		data：请求体数据到来时触发
+		end：请求体数据传输完成时触发
+		close：用户当前请求结束时触发，不同于end，如果用户强制终止
+
+	2.1)获取GET请求内容
+			var http = require('http');
+			var url = require('url');
+			var util = require('util');
+			http.createServer(function(req, res) { // http://127.0.0.1:8080/user?name=byvoid&email=byvoid@byvoid.com
+				var urlObj = url.parse(req.url);
+				console.log(req.url); // 	/user?name=byvoid&email=byvoid@byvoid.com
+									  // 	/favicon.ico
+				res.end(util.inspect(urlObj, {showHidden: true, depth: null}));
+			}).listen(8080);
+
+	2.2)获取POST请求内容
+			var http = require('http');
+			var querystring = require('querystring');
+			var util = require('util');
+			http.createServer(function(req, res) {
+				var post = '';
+				req.on('data', function(chunk){ // 接受到请求体的数据
+					console.log('数据到来: ' + chunk);
+					post += chunk;
+				});
+				req.on('end', function(){
+					post = querystring.parse(post);
+					res.end(util.inspect(post));
+				});
+			}).listen(8080);
+	
+3.http.ServerResponse 是返回给客户端的信息
+	http.ServerResponse 三个重要的成员函数
+		response.writeHead(statusCode, [headers])：向请求的客户端发送响应头，一个请求内最多只能调用一次
+		response.write(data, [encoding])：向请求的客户端发送响应内容。data 是一个 Buffer 或字符串，表示要发送的内容
+		response.end([data], [encoding])：如果不调用该函数，客户端将永远处于等待状态	
+
+--------------------------------------------------------------------------------------------------
+HTTP客户端
+	HTTP 模块提供 http.request 和 http.get，作为客户端向 HTTP服务器发起请求
+		http.request(options, callback)：发起 HTTP 请求
+				var http = require('http');
+				var querystring = require('querystring');
+				var contents = querystring.stringify({
+						name: 'byvoid',
+						email: 'byvoid@byvoid.com',
+						address: 'Zijing 2#, Tsinghua University',
+					});
+				var options = {
+						host: 'www.byvoid.com',
+						path: '/application/node/post.php',
+						method: 'POST',
+							headers: {
+							'Content-Type': 'application/x-www-form-urlencoded',
+							'Content-Length' : contents.length
+						}
+					};
+				var req = http.request(options, function(res) {
+						console.log(res.constructor.toString()); //IncomingMessage
+						res.setEncoding('utf8');
+						res.on('data', function (data) {
+							console.log(data);
+						});
+					});
+				console.log(req); //ClientRequest
+				req.write(contents);
+				req.end(); //必须被调用,表示已经完成HTTP请求
+		
+		http.get(options, callback)：发起 GET 请求
+				var http = require('http');
+				http.get({host: 'www.baidu.com'}, function(res){
+					console.log(res); //IncomingMessage
+					res.setEncoding('utf8');
+					res.on('data', function(data){
+						console.log(data);
+					});
+				});
+				
+				var http = require('http');
+				var req = http.get({host: 'www.baidu.com'});
+				console.log(req); //ClientRequest
+				req.on('response', function(res){
+					console.log(res); //IncomingMessage
+					res.setEncoding('utf8');
+					res.on('data', function (data) {
+						console.log(data);
+					});
+				});
+		
+	http.ClientRequest：是由 http.request 或 http.get 返回产生的对象，表示一个已经产生而且正在进行中的 HTTP 请求
+	

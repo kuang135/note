@@ -1,0 +1,16 @@
+SimpleJdbcTemplate内部包含了一个NamedParameterJdbcTemplate
+所以NamedParameterJdbcTemplate能做的事情SimpleJdbcTemplate都能干
+SimpleJdbcTemplate相对于NamedParameterJdbcTemplate主要增加了JDK5.0的泛型和可变长度参数支持。
+	public <T> List<T> query(String sql, ParameterizedRowMapper<T> rm, Object... args)
+	public <T> T queryForObject(String sql, ParameterizedRowMapper<T> rm, SqlParameterSource args)
+	public <T> List<T> query(String sql, ParameterizedRowMapper<T> rm, SqlParameterSource args)
+	getJdbcOperations返回的是JdbcOperations(实现JdbcTemplate)
+	getNamedParameterJdbcOperations返回的是NamedParameterJdbcOperations(实现是NamedParameterJdbcTemplate)
+
+SimpleJdbcTemplate simple = new SimpleJdbcTemplate(dataSource);
+String sql = "select id, name, money, birthday  from user where name=? and money > ?";
+User user = simple.queryForObject(sql, //泛型
+		ParameterizedBeanPropertyRowMapper.newInstance(User.class), //行映射器
+		name, 100f);  //参数可变
+
+用泛型，可以将类型作为参数

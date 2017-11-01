@@ -1,0 +1,74 @@
+流程定义关联业务：
+	将业务封装到一个bean中，
+	画图的到时候，用bean的名称作为流程定义的key，
+	程序中通过业务bean的名称(流程定义的key)来获取流程定义
+
+
+流程实例关联业务：
+	1.使用流程变量设置字符串，Bean.Id的形式
+	  下一个任务中获取这个字符串，就得到当前的业务了
+	2.使用正在执行对象表中(act_ru_execution)的一个字段BUSINESS_KEY	
+			//启动流程实例的时候设置BUSINESS_KEY
+			ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(String processDefinitionKey, String businessKey);
+			//通过任务id获取BUSINESS_KEY
+			Task task = taskService.createTaskQuery()
+						.taskId(taskId)
+						.singleResult();
+			String processInstanceId = task.getProcessInstanceId();
+			ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+							.processInstanceId(processInstanceId)
+							.singleResult();
+			String business_key = processInstance.getBusinessKey();
+	
+
+当前任务关联url
+	画流程图的时候，给task指定form key，
+	根据taskId就能获取这个值，然后重定向到这个url
+		TaskFormData formData = formService.getTaskFormData(taskId);
+		String url = formData.getFormKey();
+		url += "?taskId=" + taskId;
+
+	
+下一个任务办理人关联业务：
+	将每一个任务的办理人规定好，例如张三的领导是李四，李四的领导是王五，这样张三提交任务，
+	就可以查询出张三的领导是李四，通过类的方式设置下一个任务的办理人
+	
+
+连线关联业务：
+	将连线变量的value设置为连线的名称，
+	获取当前活动完成之后所有连线的名称，将连线的名称作为页面button的value，
+	用户点了哪个button，就走了哪条连线。
+			List<String> list = new ArrayList<String>();
+			Task task = taskService.createTaskQuery()
+						.taskId(taskId)
+						.singleResult();
+			String processInstanceId = task.getProcessInstanceId();
+			ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+						.processInstanceId(processInstanceId)
+						.singleResult();
+			//获取当前活动的id			
+			String activityId = processInstance.getActivityId();
+			
+			String processDefinitionId = task.getProcessDefinitionId();
+			ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) repositoryService.getProcessDefinition(processDefinitionId);
+			//获取当前的活动
+			ActivityImpl activityImpl = processDefinitionEntity.findActivity(activityId);
+			//获取当前活动完成之后连线的名称
+			List<PvmTransition> pvmList = activityImpl.getOutgoingTransitions();
+			if(pvmList != null && pvmList.size() > 0) {
+				for(PvmTransition pvm:pvmList){
+					String name = (String) pvm.getProperty("name");
+					if(StringUtils.isNotBlank(name)){
+						list.add(name);
+					}
+				}
+			}
+			return list;
+	
+
+多条连线关联不同任务办理人：
+	一般都是驳回给流程的提交者，可以从流程实例的BUSINESS_KEY中获取
+	批准给下一个任务，就可以从表中获取当前办理人的上级
+	
+	最好想办法将下一个任务的的办理人和连线关联起来放到页面上，
+		用户点按钮的同时，选择了连线，也选择了下一任务的办理人

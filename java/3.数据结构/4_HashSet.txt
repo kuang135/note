@@ -1,0 +1,1 @@
+HashSet: 内部维护了一个HashMap<E,Object>

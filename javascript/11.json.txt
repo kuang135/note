@@ -1,0 +1,4 @@
+
+JSON.stringify()将对象变成字符串形式
+
+JSON.parse()将字符串还原成对象

@@ -1,0 +1,25 @@
+function Person(name) {
+	this.name = name;
+	this.sayName = function() {
+		console.log(this.name);
+	};
+}
+
+var p1 = new Person('西布');
+var p2 = new Person('杜兰特');
+console.log(p1.sayName === p2.sayName); //false
+
+function Person(name) {
+	this.name = name;
+}
+Person.prototype.sayName = function() {
+	console.log(this.name);
+}
+
+var p1 = new Person('西布');
+var p2 = new Person('杜兰特');
+console.log(p1.sayName === p2.sayName); //true
+
+----------------------------------------------------------
+
+原型实现继承

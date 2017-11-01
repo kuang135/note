@@ -1,0 +1,39 @@
+1.安装环境 
+	yum install gcc 
+	yum install zlib-devel 
+	yum install make
+2.下载python版本 
+	wget http://www.python.org/ftp/python/3.4.0/Python-3.4.0.tgz
+3.解压缩、编译和安装 
+	tar -zxvf Python-3.4.0.tgz 
+	cd Python-3.4.0 
+	./configure –prefix=/opt/python3 
+	make all 
+	make install 
+	清除之前编译的可执行文件及配置文件。 
+	make clean 
+	清除所有生成的文件 
+	make distclean
+4.查看安装的新版本信息 
+	/opt/python3/bin/python3 -V 
+	Python 3.4.0 
+	由此看出编译安装的新版本python生效了
+	做个软连接到当前用户的bin目录 
+	ln -s /opt/python3/bin/python3 /usr/bin/python3
+	升级安装好新版本python以后，默认依然是python2.6 
+	将文件头部的#!/usr/bin/python修改为 #!/opt/python3/bin/python3 即可。
+5.运行实例
+	#!/opt/python3/bin/python3
+	def test():
+		print('hello python3')
+
+	test()
+
+	在test.py目录运行 python3 test.py
+	
+	
+
+
+如果退格有乱码，执行下面操作后重新执行上面操作
+yum list
+yum install readline-devel -y

@@ -1,0 +1,13 @@
+1.指定python路径
+	Preferences -> Browse Packages... -> Python -> Python.sublime-build
+		{
+			"cmd": ["python", "-u", "$file"],
+			"path": "D:\\python\\Python34",
+			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+			"selector": "source.python",
+			"encoding": "cp936"
+		}
+	path指定python的安装目录，encoding指定编码
+	
+2.运行当前文件
+	Ctrl + B

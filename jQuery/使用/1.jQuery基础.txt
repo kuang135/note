@@ -1,0 +1,46 @@
+1.jQuery对象
+	是一个全局对象，可以简写为美元符号$
+
+2.jQuery构造函数
+	jQuery对象本质上是一个构造函数,主要作用是返回jQuery对象的实例，不是DOM对象
+	jQuery构造函数可以多种参数，返回不同的值
+		（1）CSS选择器作为参数
+		（2）DOM对象作为参数，返回jQuery实例
+				$(document.body)
+				$([document.body, document.head])
+		（3）HTML字符串作为参数，返回jQuery实例
+				$('<li class="greet">test</li>')
+				$( '<li>', {html: 'test', 'class': 'greet'}); //由于class是javaScript的保留字，所以只能放在引号中
+		（4）第二个参数，返回jQuery实例
+				$('li', someElement); //只寻找属于someElement对象下属的li元素,someElement可以是jQuery对象的实例，也可以是DOM对象
+
+3.jQuery构造函数返回的结果集
+	jQuery选择器返回的是一个类似数组的对象
+		$('li')[0] -- DOM对象
+		$('li').get(0) -- DOM对象
+		$('li').eq(0) -- jQuery实例
+	jQuery默认对当前结果集进行循环处理
+		$(".class").each(function(index,element){
+			 $(element).addClass("highlight");
+		});
+		等同于
+		$(".class").addClass("highlight");
+		
+4.链式操作
+	jQuery大部分方法返回的都是jQuery对象，可以链式操作
+		$('li').click(function (){
+			$(this).addClass('clicked');
+		})
+		.find('span')
+		.attr( 'title', 'Hover over me' );
+		
+5.$(document).ready(fn)
+	页面解析完成（即下载完</html>标签）以后，在所有外部资源（图片、脚本等）完成加载之前，该函数就会立刻运行
+	简写：$(fn);
+	
+6.$.noConflict方法
+		<script src="other_lib.js"></script>
+		<script src="jquery.js"></script>
+		<script>$.noConflict();</script>
+		在加载jQuery之后，立即调用该方法，会使得美元符号还给前面一个函数库。
+		这意味着，其后再调用jQuery，只能写成jQuery.methond的形式，而不能用$.method了。

@@ -1,0 +1,26 @@
+主键生成策略
+	 increment -- 由hibernate生成下一个主键的值,与数据库底层无关
+		      带走+1,查询最大的基础上增1
+	 identity -- 在数据库生成主键自增策略,需要数据库支持主键自增(mysql)
+		     +1带走
+	 sequence -- 由序列生成主键,需要数据库支持序列(oracle),可以通过<param>标签配置指定的序列
+		     在oracle中成HIBERNATE_SEQUENCE,公共的序列(单表不连续),
+	 native -- 根据数据库底层,自动决定使用identify还是sequence,类型为数字
+	 assigned -- 委派主键,手动设置,使用于自然主键
+	 uuid -- 32位字符串,夸数据库时通用
+
+主键的生成策略不同,hibernate发送sql语句的时间也不同
+
+hbm.xml中配置: 
+	<id name="id" column="c_id">
+	    <generator class="native"/>
+	</id>
+    联合主键
+	<composite-id>
+           <key-property name="id" type="string">
+               <column name="id"/>
+           </key-property>
+           <key-property name="pid" type="string">
+               <column name="pid"/>
+           </key-property>
+        </composite-id>	

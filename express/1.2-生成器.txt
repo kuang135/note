@@ -1,0 +1,5 @@
+npm install express-generator -g
+express myapp
+
+cd myapp
+npm install

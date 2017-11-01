@@ -1,0 +1,14 @@
+webpack构建
+	npm install -g vue-cli
+	vue init webpack my-project
+	cd my-project
+	npm install
+	npm run dev -- 在localhost启动测试服务器
+	npm run build -- 生成上线目录
+	
+webpack-simple构建
+	npm install -g vue-cli
+	vue init webpack-simple my-project
+	cd my-project
+	npm install
+	npm run dev

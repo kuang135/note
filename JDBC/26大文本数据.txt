@@ -1,0 +1,35 @@
+大文本数据
+mysql：TEXT最大长度为64K的变长文本,其他还有LONGTEXT,MEDIUMTEXT,TINYTEXT
+sql包：Clob类
+
+存：ps.setCharacterStream(index, reader, length);
+    ps.setString(index, string);
+取：Reader reader = rs.getClob(index).getCharacterStream();
+    Reader reader = rs.getCharacterStream(index);
+    String s=rs.getString(index);
+
+
+增：	String sql = "insert into clob_test(big_text) values (?) ";
+	ps = conn.prepareStatement(sql);
+	File file = new File("src/cn/itcast/jdbc/JdbcUtils.java");
+	Reader reader = new BufferedReader(new FileReader(file));
+	ps.setCharacterStream(1, reader, (int) file.length());
+	// ps.setString(1, x);看内存能不能装得下 
+	int i = ps.executeUpdate();
+	reader.close();	
+
+查：	while (rs.next()) {
+		Clob clob = rs.getClob(1);
+		Reader reader = clob.getCharacterStream();
+		//Reader reader = rs.getCharacterStream(1);
+		//String s=rs.getString(1);
+		File file = new File("JdbUtils_bak.java");
+		Writer writer = new BufferedWriter(new FileWriter(file));
+		char[] buff = new char[1024];
+		for (int i = 0; (i = reader.read(buff)) > 0;) {
+			writer.write(buff, 0, i);
+		}
+		writer.close();
+		reader.close();
+	}
+

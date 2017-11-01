@@ -1,0 +1,32 @@
+大二进制数据
+mysql：BLOB(64K),MEDIUMBLOB,LONGBLOB,TINYBLOG
+sql包：Blob类
+
+存：ps.setBinaryStream(index,inputStream,length);
+取：InputStream in = rs.getBinaryStream(index);
+    InputStream in = rs.getBlob(index).getBinaryStream();
+
+增：	String sql = "insert into blob_test(big_bit) values (?) ";
+	ps = conn.prepareStatement(sql);
+	File file = new File("IMG_0002.jpg");
+	InputStream in = new BufferedInputStream(new FileInputStream(file));
+	ps.setBinaryStream(1, in, (int) file.length());
+	int i = ps.executeUpdate();
+	in.close();
+
+查：	while (rs.next()) {
+		// Blob blob = rs.getBlob(1);
+		// InputStream in = blob.getBinaryStream();
+		InputStream in = rs.getBinaryStream("big_bit");
+		File file = new File("IMG_0002_bak.jpg");
+		OutputStream out = new BufferedOutputStream(
+		byte[] buff = new byte[1024];
+		for (int i = 0; (i = in.read(buff)) > 0;) {
+			out.write(buff, 0, i);
+		}
+		out.close();
+		in.close();
+	}
+
+
+		

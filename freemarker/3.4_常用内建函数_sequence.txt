@@ -1,0 +1,76 @@
+序列
+	size, first, last, reverse
+
+	seq_contains, seq_index_of, seq_last_index_of
+
+	sort, sort_by
+		<#assign ls = ["whale", "Barbara", "zeppelin", "aardvark", "beetroot"]?sort>
+		<#list ls as i>${i} </#list> -- aardvark Barbara beetroot whale zeppelin
+
+	chunk
+		<#assign seq = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']>
+		<#list seq?chunk(4) as row>
+		  <#list row as cell>${cell} </#list>
+		</#list>
+			a b c d 
+			e f g h 
+			i j 
+		
+	join
+		<#assign colors = ["red", "green", "blue"]>
+		${colors?join(", ")} -- red, green, blue
+		
+循环变量中
+	index
+		<#list ['a', 'b', 'c'] as i>
+			${i?index}: ${i}
+		</#list>
+			0: a
+			1: b
+			2: c
+	
+	counter
+		<#list ['a', 'b', 'c'] as i>
+			${i?counter}: ${i}
+		</#list>
+			1: a
+			2: b
+			3: c
+			
+	has_next
+		<#list ['a', 'b', 'c'] as i>${i}<#if i?has_next>,</#if></#list> -- a,b,c
+		
+	#sep
+		<#list ['a', 'b', 'c'] as v>${v}<#sep>,</#list> -- a,b,c
+		
+	item_cycle
+		<#list ['a', 'b', 'c', 'd', 'e', 'f', 'g'] as i>
+			tr class="${i?item_cycle('row1', 'row2', 'row3')}">${i}</tr>
+		</#list>
+			<tr class="row1">a</tr>
+			<tr class="row2">b</tr>
+			<tr class="row3">c</tr>
+			<tr class="row1">d</tr>
+			<tr class="row2">e</tr>
+			<tr class="row3">f</tr>
+			<tr class="row1">g</tr>
+	
+	item_parity
+		<#list ['a', 'b', 'c', 'd'] as i>
+			<tr class="${i?item_parity}Row">${i}</tr>
+		</#list>
+			<tr class="oddRow">a</tr>
+			<tr class="evenRow">b</tr>
+			<tr class="oddRow">c</tr>
+			<tr class="evenRow">d</tr>
+		
+	is_even_item, is_odd_item
+		<#list ['a', 'b', 'c', 'd'] as i>${i?is_even_item?c} </#list> -- false true false true
+		<#list ['a', 'b', 'c', 'd'] as i>${i?is_odd_item?c} </#list> -- true false true false
+	
+	is_first, is_last
+		<#list ['a', 'b', 'c'] as i>${i?is_first?c} </#list> -- true false false
+		<#list ['a', 'b', 'c'] as i>${i?is_last?c} </#list> -- false false tru
+	
+	
+

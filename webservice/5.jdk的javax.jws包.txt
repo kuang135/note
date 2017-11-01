@@ -1,0 +1,20 @@
+javax.jws中的注解
+	WebService -- 用在类上
+		name -- <portType name=""> -- 生成的类名
+		serviceName -- <service name=""> -- 服务视图的类名
+		portName -- <service>下<port name="" ...>
+		targetNamespace -- 文档声明中的 targetNamespace=""
+
+	WebMethod -- 用在方法上 
+		operationName -- <portType>下<operation name=""> -- 类中的方法名
+
+	WebParam -- 用在方法参数上
+		name -- name -- <types>下<element name="">
+
+	WebResult -- 用在方法返回值上
+		name -- <types>下<element name="">
+
+引入注解: 客户端调用wsdl生成的接口访问服务端
+	  服务端用注解更改wsdl中的信息,从而隐藏服务端原来的信息
+
+	  服务端修改内容,只要注解没变,就不会影响客户端的使用

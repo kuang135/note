@@ -1,0 +1,28 @@
+IntroSpector-->JavaBean-->特殊的Java类
+
+属性名是根据get和set方法来的
+另外，如果第二个字母是小写的，则把第一个字母变成小写
+    gettime-->time
+    setTime-->time
+    getCPU-->CPU
+    getPId-->Pid(未实验)
+
+JavaBean又称之为值对象(Value Object，VO)
+
+用内省的方式来读取和设置某个JavaBean的属性
+不直接调用JavaBean的get和set方法
+在写代码的时候还不知道get和set方法的具体名称
+	Person person=new Person(26,"kuang");
+	String propertyName="name";
+	PropertyDescriptor pt=new PropertyDescriptor(propertyName,person.getClass());
+	Method methodGetName=pt.getReadMethod();
+	Object retVal=methodGetName.invoke(person);
+	System.out.println(retVal);
+
+	String propertyAge="age";
+	PropertyDescriptor ptAge=new PropertyDescriptor(propertyAge,person.getClass());
+	Method methodSetAge=ptAge.getWriteMethod();
+	methodSetAge.invoke(person, 27);
+	Method methodGetAge=ptAge.getReadMethod();
+	Object resVal=methodGetAge.invoke(person);
+	System.out.println(resVal);

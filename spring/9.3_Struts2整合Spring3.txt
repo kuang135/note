@@ -1,0 +1,43 @@
+导入 struts2-spring-plugin-2.3.20.jar
+
+
+方式一: Action由struts2管理,自动装配Service
+
+装配原理: struts2-spring-plugin-2.3.20.jar包中有个struts-plugin.xml,
+	  该配置对struts2的com.opensymphony.xwork2.ObjectFactory进行了修改,采用了org.apache.struts2.spring.StrutsSpringObjectFactory
+		<constant name="struts.objectFactory" value="spring"/>
+	  defaul.properties中默认的设置是当使用SpringObjectFactory时,按 name 进行自动装配
+		struts.objectFactory.spring.autoWire = name
+
+步骤: 配置文件不变 
+	1. Service中
+	   @Service("bookService")
+	   public class BookService{}
+	
+	2. Action中
+	   private BookService bookService;//名字一致
+	   public void setBookService(BookService bookService) {
+		this.bookService = bookService;
+	   }
+
+---------------------------------------------------------------------------------------------------------------
+
+方式二: Action成为Spring管理一个Bean对象,可以对Action进行AOP
+
+管理原理: Spring容器初始化的时候读取applicationContext.xml,创建Action对象,并将属性Service注入
+	  Struts2在响应请求的时候,根据struts.xml配置的位类名获得Spring创建的Action对象
+
+步骤: 代码同上
+	1. <action name="book_*" class="bookAction" method="{1}"> <!-- 配置伪类名 -->
+   		<result name="success" type="redirect">/add.jsp</result>
+   	   </action>
+	
+	2. <bean id="bookAction" class="cn.itcast.action.BookAction" scope="prototype">
+		<property name="bookService" ref="bookService"/>
+	   </bean>
+
+
+必须注意： 
+	Struts2创建Action 和Spring 创建Action 有何区别 ？
+		Struts2管理的Action是 prototype
+		Spring管理的Action默认是singleton,必须配置为 prototype 

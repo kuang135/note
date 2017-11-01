@@ -1,0 +1,77 @@
+
+语法: $("选择器")
+
+1.基本选择器: 
+    #id -- id选择器
+    .class -- 类选择器
+    element -- 标签选择器
+    * -- 匹配所有元素,多用于结合上下文来搜索
+    selector1,selector2,selectN -- 将每一个选择器匹配到的元素合并后一起返回
+
+2.层次选择器
+    ancestor descendant -- 后代元素
+    parent>child -- 子元素
+    prev+next -- 下一个兄弟元素
+    prev~siblings -- 之后所有的兄弟元素
+
+3.基本过滤选择器 
+    :first -- 第一个元素 
+    :last -- 最后一个元素 
+    :not(selector) -- 去除所有与给定选择器匹配的元素 $("input:not(:checked)") 
+    :even -- 偶数索引元素,从0开始计数
+    :odd -- 奇数索引元素,从0开始计数
+    :eq(index) -- 索引为index的元素 
+    :gt(index) -- 索引大于index的元素 
+    :lt(index) -- 索引小于index的元素
+    :header -- 所有的标题元素  如：h1, h2, h3
+    :animated -- 匹配所有正在执行动画效果的元素
+
+4.内容过滤选择器 -- 通过元素的子元素和文本内容来选取元素
+    :contains(text) -- 元素包含文本text
+    :empty -- 元素没有子元素或文本节点
+    :has(selector) -- 元素内含有选择器所匹配的元素
+    :parent -- 元素有子元素或文本节点
+
+5.属性过滤选择器 -- 通过元素的属性来选取元素
+    [attribute] -- 元素有此属性
+    [attribute=value] -- 元素有该值的属性
+    [attribute!=value] -- 元素没有该值的属性
+    [attribute^=value] -- 元素有以value开头的属性
+    [attribute$=value] -- 元素有以value结尾的属性
+    [attribute*=value] -- 元素的属性值含有value
+    [selector1][selector2][selectorN] -- 元素的属性同时满足这些条件
+
+6.子元素过滤选择器 -- 对元素中的子元素进行选取 
+    :nth-child(index/even/odd) -- 索引为N(从1开始)或奇或偶的子元素
+    :first-child -- 第一个子元素
+    :last-child -- 最后一个子元素
+    :only-child -- 唯一的子元素,父元素没有其他子元素
+
+7.表单过滤选择器 -- 对表单元素进行选取
+    :input 
+    :text 
+    :password 
+    :radio 
+    :checkbox 
+    :submit 
+    :image 
+    :reset 
+    :button 
+    :file 
+    :hidden
+
+8.表单对象属性过滤器 -- 通过表单元素的属性来选取表单元素
+    :enabled -- 可用元素
+    :disabled -- 不可用元素
+    :checked -- 被选中的元素,checkbox,radio
+    :selected -- 选中的option元素
+	
+注意: 
+	获取radio,checkbox,select的值的时候要用each(callback)遍历
+		$("input[name='gender']:checked").each(function(){alert($(this).val());});
+		$("input[name='hobby']:checked").each(function(){alert($(this).val());});
+		$("select[name=city] option:selected").each(function(){alert($(this).val());});
+    设置radio,checkbox,select的时候,val(arr)的参数是String类型的arr
+		$("input[name='gender']").val(["male"]);
+		$("input[name='hobby']").val(["coding","swimming","dancing"]);
+		$("#city").val(["sh"]);

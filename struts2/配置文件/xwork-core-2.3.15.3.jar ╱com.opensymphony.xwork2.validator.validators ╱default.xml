@@ -1,0 +1,35 @@
+<!-- 配置好了校验器的name和对应的class -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+        "-//Apache Struts//XWork Validator Definition 1.0//EN"
+        "http://struts.apache.org/dtds/xwork-validator-definition-1.0.dtd">
+
+<!-- START SNIPPET: validators-default -->
+<validators>
+	<!-- 不能为空 -->
+    <validator name="required" class="com.opensymphony.xwork2.validator.validators.RequiredFieldValidator"/>
+    <!-- 不能为空,并且为字符串,默认情况下去前后空格 -->
+	<validator name="requiredstring" class="com.opensymphony.xwork2.validator.validators.RequiredStringValidator"/>
+    <!-- 整数值必须在指定范围内，min指定最小值，max指定最大值 -->
+	<validator name="int" class="com.opensymphony.xwork2.validator.validators.IntRangeFieldValidator"/>
+    <validator name="long" class="com.opensymphony.xwork2.validator.validators.LongRangeFieldValidator"/>
+    <validator name="short" class="com.opensymphony.xwork2.validator.validators.ShortRangeFieldValidator"/>
+    <validator name="double" class="com.opensymphony.xwork2.validator.validators.DoubleRangeFieldValidator"/>
+    <!-- 日期值必须在指定范围内,min指定最小值,max指定最大值 -->
+	<validator name="date" class="com.opensymphony.xwork2.validator.validators.DateRangeFieldValidator"/>
+    <validator name="expression" class="com.opensymphony.xwork2.validator.validators.ExpressionValidator"/>
+    <validator name="fieldexpression" class="com.opensymphony.xwork2.validator.validators.FieldExpressionValidator"/>
+    <!-- 邮件地址校验器 -->
+	<validator name="email" class="com.opensymphony.xwork2.validator.validators.EmailValidator"/>
+    <!-- 网址校验器 -->
+	<validator name="url" class="com.opensymphony.xwork2.validator.validators.URLValidator"/>
+    <validator name="visitor" class="com.opensymphony.xwork2.validator.validators.VisitorFieldValidator"/>
+    <validator name="conversion" class="com.opensymphony.xwork2.validator.validators.ConversionErrorFieldValidator"/>
+    <!-- 字符串长度,minLength参数指定最小长度，maxLength参数指定最大长度
+		 trim参数指定校验field之前是否去除字符串前后的空格 -->
+	<validator name="stringlength" class="com.opensymphony.xwork2.validator.validators.StringLengthFieldValidator"/>
+    <validator name="regex" class="com.opensymphony.xwork2.validator.validators.RegexFieldValidator"/>
+    <validator name="conditionalvisitor" class="com.opensymphony.xwork2.validator.validators.ConditionalVisitorFieldValidator"/>
+</validators>
+<!--  END SNIPPET: validators-default -->

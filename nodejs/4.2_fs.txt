@@ -1,0 +1,49 @@
+module.filename：开发期间，该行代码所在的文件
+__filename：始终等于 module.filename
+__dirname：开发期间，该行代码所在的目录
+
+var fs = require('fs');
+
+//是否存在
+fs.exists('./helloDir', function(exists) {
+  console.log(exists ? 'it\'s there' : 'no passwd!');
+});
+
+//创建目录
+fs.mkdir('./helloDir', 0777, function(err){
+	if (err) throw err;
+});
+
+//创建文件
+fs.writeFile('./helloDir/message.txt', '你好 node.js', 'utf8', function(err){
+	if (err) throw err;
+	console.log('写入文件成功');
+});
+
+//如果没有指定文件编码，返回的是原始的缓存二进制数据
+fs.readFile('./helloDir/message.txt','utf8' ,function (err, data) {
+  if (err) throw err;
+  console.log(data);
+});
+
+fs.stat('./helloDir', function(err, stats){
+	if(err) throw err;
+	console.log(stats);
+	console.log(stats.isDirectory());
+	console.log(stats.isFile());
+});
+
+//createReadStream方法往往用于打开大型的文本文件，创建一个读取操作的数据流。
+//读取操作的缓存装不下，只能分成几次发送，每次发送会触发一个data事件，发送结束会触发end事件。
+var input = fs.createReadStream('./helloDir/big.txt');
+input.on('data', function(data){
+	console.log('读取数据：' + data);
+});
+input.on('end', function(){
+	console.log('读取数据结束！');
+});
+
+//createWriteStream方法创建一个写入数据流对象，该对象的write方法用于写入数据，end方法用于结束写入操作。
+var out = fs.createWriteStream('./helloDir/big.txt', { encoding: "utf8" });
+out.write('大\r\n大\r\n的\r\n文\r\n件');
+out.end();

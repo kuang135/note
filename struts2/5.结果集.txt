@@ -1,0 +1,36 @@
+结果集的作用: 控制跳转页面视图
+
+结果集的配置
+    1.局部结果集: 写在action里面
+	<action name="hello" class="action.HelloAction">
+	    <result type="dispatcher" name="success">/index.jsp</result>			
+	</action>
+
+    2.全局结果集: 写在action外面,package里面
+	<global-results>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </global-results>
+
+结果集的类型
+    struts-default.xml中有这样的定义
+    <package name="struts-default" abstract="true">
+        <result-types>
+	    <!-- 转发到action -->
+            <result-type name="chain" class="com.opensymphony.xwork2.ActionChainResult"/>
+	    <!-- 转发,不能往action走 -->
+            <result-type name="dispatcher" class="org.apache.struts2.dispatcher.ServletDispatcherResult" default="true"/>
+            <result-type name="freemarker" class="org.apache.struts2.views.freemarker.FreemarkerResult"/>
+            <result-type name="httpheader" class="org.apache.struts2.dispatcher.HttpHeaderResult"/>
+            <!-- 重定向到jsp,不能往action走 -->
+	    <result-type name="redirect" class="org.apache.struts2.dispatcher.ServletRedirectResult"/>
+            <!-- 重定向到action -->
+	    <result-type name="redirectAction" class="org.apache.struts2.dispatcher.ServletActionRedirectResult"/>
+            <!-- 下载 -->
+	    <result-type name="stream" class="org.apache.struts2.dispatcher.StreamResult"/>
+            <result-type name="velocity" class="org.apache.struts2.dispatcher.VelocityResult"/>
+            <result-type name="xslt" class="org.apache.struts2.views.xslt.XSLTResult"/>
+            <result-type name="plainText" class="org.apache.struts2.dispatcher.PlainTextResult" />
+            <result-type name="postback" class="org.apache.struts2.dispatcher.PostbackResult" />
+        </result-types>
+	...
+    </package>

@@ -1,0 +1,35 @@
+选择数据库：
+1.项目的规模，负载量，用户多大
+2.成本
+3.安全性 
+
+
+Enterprise Manager Database Control URL - (myOrcl1) :
+http://WWW-7B84D2E7CF6:1158/em
+用 户 名：system     sys
+口    令：myOrcl1    myOrcl1
+链接身份：normal     sysoper/sysdba
+
+数据库配置文件已经安装到 D:\oracle\product\10.2.0,同时其他选定的安装组件也已经安装到 D:\oracle\product\10.2.0\db_1。
+iSQL*Plus URL 为:
+http://WWW-7B84D2E7CF6:5560/isqlplus
+
+iSQL*Plus DBA URL 为:
+http://WWW-7B84D2E7CF6:5560/isqlplus/dba
+
+
+oracle安装会自动的生成sys用户和system用户
+1.sys是超级用户，具有最高权限，具有sysdba角色，有create database的权限
+2.system用户是管理操作员，具有sysoper角色，没有create database的权限
+3.一般，对数据库维护，使用system用户就可以
+
+安装之后sql/plus登录
+用户名：system
+口  令：myOrcl1
+链接标示符：myOrcl1
+
+用户名：scott	
+口  令：cat
+链接标示符：myOrcl1
+
+

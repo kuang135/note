@@ -1,0 +1,22 @@
+
+导入jar包
+
+struts2: 解压apps目录下的struts2-blank.war,导入全部的jar包(13个或12个,版本不同,个数有差异)
+	 lib目录下的struts2-json-plugin-2.3.20.jar
+		    struts2-spring-plugin-2.3.20.jar
+		    struts2-convention-plugin-2.3.15.3.jar
+
+hibernate: 目录下的hibernate3.jar
+	   lib/required目录下的所有jar包(6个)
+	   lib/jpa目录想的jar包(1个)
+	   导入slf4j-log4j.jar,log4j.jar(2个)
+	
+spring: libs目录下bean,context,core,expression,aop,aspects,jdbc,tx,orm,web,test(共11个)
+	aop两个依赖aopalliance和aspectj.weaver(2个)
+	日子common-loggins和log4j(2个)
+
+数据库连接池: c3p0(1个)
+
+数据库驱动: 1个
+
+去掉重复的包

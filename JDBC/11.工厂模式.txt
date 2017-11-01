@@ -1,0 +1,30 @@
+UserDao userDao=new UserDaoImpl();
+为了让调用UserDao的类不依赖于具体的类，
+没有import ...UserDaoImpl
+
+在配置文件中告诉UserDao，他的实现类是什么，
+通过工厂读取配置文件，根据配置信息来构造UserDao的实现
+
+
+//这是一个简单工厂
+public class DaoFactory {
+
+	private static DaoFactory instance = new DaoFactory();
+
+	private DaoFactory(){ }
+
+	public static DaoFactory getInstance() {
+		return instance;
+	}
+
+	public <T> T getDao(Class<T> dao){
+		String daoName = dao.getSimpleName();
+		String daoImplName=ResourceBundle.getBundle("dao-cnfig").getString(daoName);
+		return (T)Class.forName(daoImplName).newInstance();
+	}
+}
+
+在dao-config.properties文件中配置
+	UserDao=cn.itcast.dao.impl.UserDaoImpl
+
+使用: UserDao userDao = DaoFactory.getInstance().getDao(UserDao.class);

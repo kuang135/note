@@ -1,0 +1,43 @@
+数据库的元数据信息：连接数据的时候,关于数据库定义,表定义,结果集的一些信息
+
+
+1.连接的元数据
+    DatabaseMetaData
+	DatabaseMetaData dbmd = connection.getMetaData();
+	获取数据库的一些信息: 数据库的名称,用户名,驱动名等
+	Connection currentConnection=dbmd.getConnection();
+
+2.参数的元数据
+    ParameterMetaData 
+	ParameterMetaData pmd = preparedStatement.getParameterMetaData();
+	获取参数的一些信息: 参数的个数
+	int getParameterCount();//参数的个数
+	int getParameterType(int param);//获取指定参数的 SQL 类型
+
+3.结果集的元数据
+    ResultSetMetaData
+	ResultSetMetaData rsm=resultSet.getMetaData();
+	获取结果解的一些信息: 列的个数,列的类型,列的名字,列的别名等
+	列的个数：getColumnCount()
+	列的类型：getColumnClassName(i)
+	列的名字：getColumnName(i)
+	列的别名：getColumnLabel(i)
+
+把查询出的记录放入Map<列名,对应值>
+	ResultSetMetaData rsmd = rs.getMetaData();
+	int count = rsmd.getColumnCount();
+	String[] colNames = new String[count];//列名字符串数组
+	for (int i = 1; i <= count; i++) {
+		colNames[i - 1] = rsmd.getColumnLabel(i);
+	}
+	List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
+	while (rs.next()) {
+		Map<String, Object> data = new HashMap<String, Object>();//一条记录一个Map
+		for (int i = 0; i < colNames.length; i++) {
+			data.put(colNames[i], rs.getObject(colNames[i]));
+			//{id=1,name=kobe,sex=man,age=35}
+		}
+		datas.add(data);
+	}
+应用：如果把Map改为User,那么就是hibernate中的O/R Mapping了
+      类的属性和表的列一一对应，用反射技术实现

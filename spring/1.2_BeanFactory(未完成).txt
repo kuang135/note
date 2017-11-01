@@ -1,0 +1,1 @@
+BeanFactory定义了IoC容器的基本功能规范

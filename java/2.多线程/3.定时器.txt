@@ -1,0 +1,18 @@
+1.JDK5以前
+	new Timer().schedule(
+		new TimerTask(){
+			@Override
+			public void run() {
+				System.out.println(Thread.currentThread().getName());
+			}
+		}, 2000, 2000);
+		
+2.JDK5
+	ScheduledExecutorService threadPool = Executors.newScheduledThreadPool(3);
+	threadPool.scheduleAtFixedRate(
+		new Runnable(){
+			@Override
+			public void run() {
+				System.out.println(Thread.currentThread().getName());
+			}
+		}, 2, 2, TimeUnit.SECONDS);

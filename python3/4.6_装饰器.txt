@@ -1,0 +1,22 @@
+函数也是对象，__name__属性，为函数的名字
+
+装饰器(Decorator)，在代码运行期间动态增加功能
+本质上，decorator就是一个返回函数的高阶函数
+
+	def now():
+		print('2015-12-02')
+	现增强now函数，在调用前后写日志
+	def log(func):
+		def wrapper(*args, **kw):
+			print('call %s():' % func.__name__)
+			return func(*args, **kw)
+		return wrapper
+		
+	@log
+	def now():
+		print('2015-12-02')
+		
+	>>> now()
+	call now():
+	2015-3-25
+		

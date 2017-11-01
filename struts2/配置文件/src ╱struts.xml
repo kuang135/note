@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<!-- constant标签,更改default.properties中的配置信息 -->
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.action.extension" value="action,do,," />
+    
+    <!-- 配置不同的action,extends表示包之间可以相互依赖,default-struts.xml中有一个名字为struts-default的包,引入就表示可以使用该包中定义的东西 -->
+	<!-- package用来管理action,一个package下的action名字不能相同 -->
+	<!-- name表示给包起一个名字,不能重复,想使用只要extends就行 -->
+   	<!-- 名称空间namespace,有多个包的情况下,可以用namespace来区分对不同包中相同的action的访问 -->
+    <package name="default" namespace="/" extends="struts-default">
+
+		<!-- 注册拦截器位于包首位置 -->
+		<interceptors>
+			<!-- 给自定义的拦截器起一个名字 -->	
+			<interceptor name="myItcpt" class="cn.itcast.interceptor.MyInterceptor" />
+			<!-- 自定义一个拦截器栈 -->
+			<interceptor-stack name="myStack">
+				<!-- 给栈添加自定义的拦截器 -->
+				<interceptor-ref name="myItcpt" />
+				<!-- 给栈添加struts2默认的拦截器栈 -->
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+	    </interceptors>
+        <!-- 引用自定义拦截器,当前包内所有的action都要拦截 -->
+<!--    <default-interceptor-ref name="myStack"></default-interceptor-ref>	-->
+         
+
+
+         <default-action-ref name="index" />
+        
+		<!-- 全局结果集 -->
+        <global-results>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </global-results>
+        
+		<!-- 配置异常信息显示的结果集 -->
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error"/>
+        </global-exception-mappings> 
+        
+        <action name="index" class="test1.actions.FirstAction" >
+			<!-- 引用自定义拦截器,只拦截当前action -->
+			<interceptor-ref name="myStack"></interceptor-ref>
+        	<!-- 结果集类型,默认为转发 -->
+			<result type="dispatcher" name="success">/index.jsp</result>
+        </action>
+        
+        <!-- 配置信息过多的时候,根据不同的业务配置多个.xml文件分离出来,通过inclue整合 -->
+        <include file="struts_login.xml"/>
+    </package>
+
+
+    <!-- Add packages here -->
+
+</struts>

@@ -1,0 +1,31 @@
+空搜索
+	GET /_search
+	
+根据索引，类型和id搜索
+	GET /megacorp/employee/1
+
+简单搜索：
+	GET /megacorp/employee/_search
+	
+多索引和多类别搜索
+	/gb,us/user,tweet/_search
+	在索引gb和us的类型为user和tweet中搜索
+
+分页
+	size: 果数，默认10
+	from: 跳过开始的结果数，默认0
+	GET /_search?size=5&from=10
+	
+查询字符串(query string)搜索：
+	GET /megacorp/employee/_search?q=last_name:Smith	
+
+查询字符串
+	查询所有类型为tweet并在tweet字段中包含elasticsearch字符的文档：
+		GET /_all/tweet/_search?q=tweet:elasticsearch
+	查找name字段中包含"john"和tweet字段包含"mary"的结果。实际的查询只需要：
+		+name:john +tweet:mary
+		
+_all字段
+	返回包含"mary"字符的所有文档的简单搜索：
+	GET /_search?q=mary
+

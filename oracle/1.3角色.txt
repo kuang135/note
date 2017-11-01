@@ -1,0 +1,30 @@
+角色：权限的批量授权
+
+预定义角色：dba，resource，connect
+    dba: 拥有全部特权，是系统最高权限，只有DBA才可以创建数据库结构。
+    resorce: 只可以创建数据对象，不可以创建数据库结构。
+    connect: alter session,create cluster,create database link,create session,create table等
+    对于普通用户：授予connect, resource权限。
+    对于dba管理用户：授予connect，resource, dba权限。
+自定义角色：一般用dba来建立，或具有create role的系统权限
+    create role 角色名 not identified;
+    create role 角色名 identified by 口令;
+
+角色授权：系统权限的unlimited tablespace和对象权限的with grant option不能授予角色
+    grant create session to 角色名 with admin option; 
+    grant select on emp to 角色名;(一般谁的表谁来授权) 
+    grant insert,update,delete on scott.emp to 角色名;(system授权)
+分配用户给某个用户：具有grant any role的系统权限
+    grant 角色名 to weicool;
+
+删除角色：dba或者drop any role系统权限
+    drop role 角色名
+
+显示所有角色
+    select * from dba_roles;
+显示角色具有的系统权限
+    select privilege,admin,_option from role_sys_privs where role='角色名';
+显示角色具有的对象权限
+    通过查询数据字典视图dba_role_privs可以查看角色具有的对象权限或是列权限
+显示用户具有的角色，及默认角色
+    select granted_role,default_role from dba_role_privs where grantee='用户名';

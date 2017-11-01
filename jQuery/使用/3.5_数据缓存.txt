@@ -1,0 +1,8 @@
+1.data([key],[value])
+	$("body").data("foo", 52); //储存数据
+	$("body").data("foo"); //读取数据
+	
+2.removeDate([name|list])
+
+
+3.$.data(element,[key],[value])

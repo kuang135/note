@@ -1,0 +1,10 @@
+链式调用
+
+function ClassManager() {}
+ClassManager.prototype.addClass = function(str) {
+	console.log('Class:' + str + ' added.');
+	return this; //prototype下的this总是指向ClassManager的实例
+}
+
+var manager = new ClassManager();
+manager.addClass('classA').addClass('classB').addClass('classC');

@@ -1,0 +1,32 @@
+AOP(Aspect Oriented Programing): 面向切面编程
+
+AOP的应用:
+	1.性能监视(方法的运行时间)
+	2.事务管理
+	3.安全检查(权限)
+	4.缓存优化(第一次访问,查询数据,放入缓存,第二次以后访问,从缓存返回)
+	5.记录日志
+	6.数据库读写分离 http://www.cnblogs.com/surge/p/3582248.html
+
+AOP相关术语:
+	JoinPoint 连接点: 可以被拦截的方法
+	Pointcut 切入点: 配置的被拦截的方法
+	Advice 通知: 对目标进行增强的代码(多指方法)
+	Introduction 引介: 特殊的Advice,增强目标类,添加新的属性或方法
+	Target : 被代代理的目标
+	Proxy : 代理对象
+	Weaving 织入: 将Advice应用到Target上产生Proxy的过程
+	Aspect 切面: Advice和PoitCut的结合(允许多个通知,多个切入点)
+
+AOP原理: 动态代理
+    jdk的动态代理: 根据一个类的接口生成代理类
+	Object Proxy.newProxyInstance(ClassLoader loader,Class<?>[] interfaces,InvocationHandler h);
+	jvm在运行这段代码时,会根据这3个参数生成代理类,该类具有目标类接口中的所有方法.
+	可以在InvocationHandler的invoke方法中对目标类的方法进行处理.
+
+    cglib的动态代理: 可以动态生成一个类的子类，作为该类的代理类
+	Object Enhancer.create(Class type, Callback callback);
+	可以在MethodInterceptor的intercept方法中对目标类的方法进行处理.
+
+    注意: 如果目标类有接口,使用jdk,如果没有接口,就使用cglib
+	  设置<aop:config>的proxy-target-class属性为true,均使用cglib

@@ -1,0 +1,7 @@
+常用的构建命令
+	mvn compile：编译，将java类编译成class文件（要先进入工程目录）
+	mvn test：运行test目录下的测试用例，在target目录下生成测试报告
+	mvn package：打包，target目录下jar包或war包
+
+	mvn clean：删除target下的class文件和测试报告
+	mvn install：将jar包安装到本地仓库中，同时会在target目录下将项目打包

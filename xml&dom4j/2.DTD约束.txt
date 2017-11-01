@@ -1,0 +1,28 @@
+原因：xml的标签由自己定义，所有必须定义约束
+
+方式：DTD，Schema(代替前者)
+
+DTD：文档类型定义
+     xml文件中有多少个标签，dtd文件中就有多少个ELEMENT
+     <!ELEMENT books (book+)>	表示books下有多个book
+     <!ELEMENT book (name,author,price)>
+     <!ELEMENT name (#PCDATA)>
+     <!ELEMENT author (#PCDATA)>
+     <!ELEMENT price (#PCDATA)>
+
+引入外部dtd：<!DOCTYPE 根元素 SYSTEM "文件名">
+	DOCTYPE：文件类型
+	根元素：当前xml文件的根标签
+	SYSTEM：表示要引入一个系统上的dtd文件
+	文件名：dtd文件的路径
+    在声明下写 <!DOCTYPE books SYSTEM "books.dtd">
+
+	
+xml引入dtd文件：
+	1.在xml中嵌入：参考文档
+	2.引入外部定义的dtd：<!DOCTYPE 根节点标签 SYSTEM "DTD文件URL">
+	引入公共的dtd：<!DOCTYPE 文档根节点 PUBLIC "DTD文件名" "DTD文件URL">
+
+ELEMENT标签：<!ELEMENT 元素名称 类别> 或 <!ELEMENT 元素名称 (元素内容)>
+ATTLIST标签：<!ATTLIST 元素名称 属性名称 属性类型 默认值>
+ENTITY标签：<!ENTITY 实体名称 "实体的值">

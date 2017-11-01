@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="jquery-1.12.0.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('input.nospace').keydown(function(e){
+				if(e.keyCode === 32) {
+					return false;
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<input class="nospace" type="text"></input>
+</body>
+</html>

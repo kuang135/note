@@ -1,0 +1,52 @@
+
+延迟加载: dao层调用HibernateTemplate的load方法后,如果Session关闭,
+	  service层和web层调用的时候就不能获得数据了.
+
+解决方案: 1.配置成为立即加载 lazy=false 
+	  2.在业务层,session关闭前,通过Hibernate.initialize() 手动对延迟对象初始化 
+	  3.使用 OpenSessionInView 将session开放到表现层
+	  
+
+OpenSessionInViewFilter: 在执行表现层方法前,开启Session,在表现层方法执行后,关闭Session.
+			 服务器三层都可以使用同一个Session.
+
+web.xml中配置:
+	<filter>
+		<filter-name>OpenSessionInViewFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>OpenSessionInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+注意: 必须在struts2 Filter之前配置才能有效
+
+-----------------------------------------------------------------------------------------------
+
+Spring对Session的管理
+	在继承了HibernateDaoSupport的类中做如下实验(ssh整合,配置了OpenSessionInView):
+	    @Override
+	    public void save(T entity) {
+		System.out.println("session1: "+this.getSession().hashCode());
+		System.out.println("session2: "+this.getSession(false).hashCode());
+		System.out.println("session3: "+this.getSession(true).hashCode());
+		System.out.println("session4: "+this.getSessionFactory().openSession().hashCode());
+		System.out.println("session5: "+this.getSessionFactory().getCurrentSession().hashCode());
+		System.out.println("sessionFactory1: "+this.getSessionFactory().hashCode());
+		System.out.println("sessionFactory2: "+this.getHibernateTemplate().getSessionFactory().hashCode());
+		this.getHibernateTemplate().save(entity);
+	    }
+
+	    现象: (每次操作都不同) 
+	    	session1: 8454362
+		session2: 8454362
+		session3: 8454362
+		session4: 23011555
+		session5: 8454362
+		sessionFactory1: 13628648
+		sessionFactory2: 13628648
+	
+	结论: Spring已经将Session与当前线程绑定,保留到了表现层才将Session关闭.
+	      第二次访问(操作)时,又是新的Session.

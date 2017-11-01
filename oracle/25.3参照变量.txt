@@ -1,0 +1,24 @@
+参照变量：用于存放数值指针的变量，有游标变量(ref cursor)和对象类型变量(ref obj_type)两种.
+
+用pl/sql编写一个块，可以输入部门号，并显示该部门所有员工的姓名和工资
+    declare
+	--定义游标类型 
+	type emp_cursor_type is ref cursor;
+	--定义游标变量
+	my_cursor emp_cursor_type;
+	--定义变量，用于接收
+	v_ename emp.ename%type;
+	v_sal emp.sal%type;
+    begin
+	--把my_cursor和一个select结合
+	open my_cursor for select ename,sal from emp where deptno=&no;
+	--循环取出ename，sal
+	loop
+	    fetch my_cursor into v_ename,v_sal;
+	    --判断是否满足退出循环的条件
+	    exit when my_cursor%notfound;
+	    dbms_output.put_line('名字：'||v_ename||' 工资：'||v_sal);
+	end loop;
+    --关闭游标
+    close my_cursor;
+    end;

@@ -1,0 +1,19 @@
+前端控制器: org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter
+
+原理: 前端控制器是一个filter,在web.xml中配置
+	
+作用: 读取struts.xml文件,根据配置信息进行请求分发
+
+方法: void init(FilterConfig filterConfig)
+      void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+      void destroy()
+
+StrutsPrepareAndExcuteFilter在初始化的时候会加载很多配置文件,顺序为:
+	init_DefaultProperties(); // [1]
+		default.properties
+	init_TraditionalXmlConfigurations(); // [2]
+		struts-default.xml,struts-plugin.xml,struts.xml
+	init_LegacyStrutsProperties(); // [3]
+	init_CustomConfigurationProviders(); // [5]
+	init_FilterInitParameters() ; // [6]
+	init_AliasStandardObjects() ; // [7]

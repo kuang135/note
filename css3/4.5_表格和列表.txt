@@ -1,0 +1,38 @@
+表格
+	border-collapse 相邻单元格的边框样式
+					separate 默认值，单元格边框独立
+					collapse 单元格相邻边框被合并
+	border-spacing 	相邻单元格边框的间距
+					长度值
+	caption-side 	表格标题的位置
+					top 默认值，标题在上方
+					bottom 标题在下方
+	empty-cells 	空单元格是否显示边框
+					show 默认值，显示边框
+					hide 不显示边框
+	table-layout 	指定表格的布局样式
+					auto 默认值，内容过长时，拉伸整个单元格
+					fixed 内容过长时，不拉伸整个单元格
+	
+列表
+	list-style-type 	列表中的标记类型
+						none 没有标记
+						disc 实心圆
+						circle 空心圆
+						square 实心方块
+						decimal 阿拉伯数字
+						lower-roman 小写罗马数字
+						upper-roman 大写罗马数字
+						lower-alpha 小写英文字母
+						upper-roman 大写英文字母
+	list-style-image 	图像作为列表标记
+						none 不使用图像
+						url 通过url 使用图像
+	list-style-position 排列的相对位置
+						outside 默认值，标记位于内容框外部
+						inside 标记位于内容框内部
+	list-style 			列表的简写形式
+	
+其他功能
+	在<table>中<td>单元格，可以使用text-align 属性水平对齐，
+	但是垂直对齐就无法操作了，CSS 提供了vertical-align 属性用于垂直对齐

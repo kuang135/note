@@ -1,0 +1,25 @@
+字符串类型是Redis中最基本的数据类型，它能存储任何形式的字符串，包括二进制数据。
+可以存储JSON化的对象、字节数组等。一个字符串类型键允许存储的数据最大容量是512MB。
+
+设值：SET name kuang
+
+取值：GET name
+当键不存在时返回空结果
+
+递增数字：INCR num
+增加制定的整数：INCRBY num 2
+当存储的字符串是整数，INCR让当前键值递增，并返回递增后的值
+
+
+减少数字：DECR num
+减少指定的整数：DECRBY num 2
+
+向尾部追加值：APPEND key value
+键不存在就相当于 SET key value，返回值是追加后字符串的总长度
+
+获取字符串长度：STRLEN key
+键不存在则返回0
+
+同时设置多个键值：MSET key value [key value …]
+同时获取多个键值：MGET key [key …]
+

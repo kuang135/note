@@ -1,0 +1,19 @@
+监听器: 实现了特定的接口,监听另一个java对象的方法调用和属性改变.
+	当被监听对象放生上述事件后,监听器中的方法立即执行.
+
+
+事件源: 有一个添加监听器的方法,在调用需要被监听的方法里面调用监听器里相应的监听方法
+
+监听器: 一个接口,提供的监听方法要把事件对象传递过来
+
+事件: 封装事件源,提供获得事件源的方法
+
+提供了8个事件监听器,
+	ServletContextListener
+	HttpSessionListener
+	ServletRequestListener
+	ServletContextAttributeListener
+	HttpSessionAttributeListener
+	ServletRequestAttributeListener
+	HttpSessionBindingListener
+	HttpSessionActivationListener

@@ -1,0 +1,50 @@
+java.sql中的接口:
+    Driver -- 数据库厂商的驱动程序类必须实现的接口
+    Connection -- 与特定数据库的连接(会话)
+    Statement -- 用于执行静态 SQL 语句并返回它所生成结果的对象
+    PreparedStatement -- 表示预编译的 SQL 语句的对象
+    ResultSet -- 表示数据库结果集的数据表，通常通过执行查询语句生成
+		 内部维护了一个"指针",默认指在第一行记录之前
+
+
+java.sql中的类:
+    DriverManager -- 管理一组 JDBC 驱动程序的基本服务
+
+
+DriverManager的方法:
+	static void registerDriver(Driver driver);
+	static Connection getConnection(String url, String user, String password);
+
+Connection的方法:
+	Statement createStatement();
+	PreparedStatement prepareStatement(String sql);
+
+Statement的方法:
+	Boolean execute(String sql);
+	ResultSet executeQuery(String sql);
+	int executeUpdate(String sql);//返回受影响的行数
+	void addBatch(String sql);//添加批处理语句
+	int[] executeBatch();//批处理
+
+PreparedStatement的方法:
+	Boolean execute();
+	ResultSet executeQuery();
+	int executeUpdate();
+	void setObject(int parameterIndex, Object x);
+	void addBatch();//添加到批处理命令中
+	...
+
+ResultSet的方法:
+	boolean next();
+	boolean previous();
+	Object getObject(int columnIndex);
+	Object getObject(String columnLabel);
+	...
+
+-------------------------------------------------------------
+
+javax.sql中的接口:
+    DataSource -- 连接池
+
+DataSource的方法:
+	Connection getConnection();

@@ -1,0 +1,62 @@
+1.查询所有
+	List list1=session.createQuery("from Student").list();
+	List list2=session.createCriteria(Student.class).list();
+	List list3=session.createSQLQuery("select * from student").addEntity(Student.class).list();
+
+2.通过as设置别名
+	List list1=session.createQuery("select s from Student s").list();
+	List list2=session.createCriteria(Student.class, "s").list();
+	List list3=session.createSQLQuery("select s.* from student s").addEntity(Student.class).list();
+		
+3.多态查询: 将所有匹配子类对应表数据查询出来
+	List list=session.createQuery("from java.lang.Object").list();
+
+4.查询结果排序
+	List list1=session.createQuery("from Student order by id desc").list();
+	List list2=session.createCriteria(Student.class, "s").addOrder(org.hibernate.criterion.Order.desc("id")).list();
+	List list3=session.createSQLQuery("select * from student order by id desc").addEntity(Student.class).list();	
+
+5.分页查询
+	int pageStart=(pageNow-1)*pageSize;
+	int pageEnd=pageSize;
+	//hql
+	Query hql = session.createQuery("from Student");
+	hql.setFirstResult(pageStart);
+	hql.setMaxResults(pageEnd);
+	List list1 = hql.list();
+	//criteria
+	Criteria criteria = session.createCriteria(Student.class);
+	criteria.setFirstResult(pageStart);
+	criteria.setMaxResults(pageEnd);
+	List list2 = criteria.list();
+	//sql
+	SQLQuery sql = session.createSQLQuery("select * from student");
+	sql.setFirstResult(pageStart);
+	sql.setMaxResults(pageEnd);
+	List list3=sql.addEntity(Student.class).list();
+
+6.查询单一对象: 当查询结果多于1条时,uniqueResult()会抛NonUniqueResultException异常
+	Student s1=(Student)session.createQuery("from Student s where s.id=2").uniqueResult();
+	Student s2=(Student)session.createSQLQuery("select * from student where id=2").addEntity(Student.class).uniqueResult();
+	count怎么写???????????
+
+7.参数条件查询
+	//hql
+	Query hql = session.createQuery("from Student where id=?");
+	hql.setParameter(0, 2);//多个参数就设置多个
+	Student s1 = (Student)hql.uniqueResult();//不确定返回是一个就用list()
+	//sql
+	SQLQuery sql = session.createSQLQuery("select * from student where id=?");
+	sql.setParameter(0, 1);//多个参数就设置多个
+	sql.addEntity(Student.class);
+	Student s2 = (Student)sql.uniqueResult();//不确定返回是一个就用list()
+	//criteria单参数
+	Criteria criteria = session.createCriteria(Student.class);
+	criteria.add(Restrictions.eq("id", 2));
+	Student s1 = (Student)criteria.uniqueResult();
+	//criteria多参数
+	Criteria criteria = session.createCriteria(Customer.class);
+	SimpleExpression eq1 = Restrictions.eq("name", "tmac");
+	SimpleExpression eq2 = Restrictions.eq("city", "houston");
+	criteria.add(Restrictions.or(eq1, eq2));
+	List list = criteria.list();

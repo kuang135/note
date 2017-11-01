@@ -1,0 +1,21 @@
+API所在目录：ext-4.2.1883/docs/index.html
+	
+View the Examples -> API Documentation
+	
+红色：单例 Singleton
+蓝色：类 Class
+黄色：包 Package
+齿轮：组件 Component
+
+Configs：配置
+Properties：属性
+Methods：方法(STA表示静态)
+Events: 事件
+
+xtype：组件的别名
+ALTERNATE NAMES: 别名 
+HIERARCHY: 层次结构 
+INHERITED MIXINS: 混入的类 
+REQUIRES: 该组件需要使用的类
+SUBCLASSES：子类
+FILES：涉及到的文件

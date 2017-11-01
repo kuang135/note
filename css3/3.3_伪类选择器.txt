@@ -1,0 +1,140 @@
+结构性伪类选择器: 能够根据元素在文档中的位置选择元素
+1.根元素选择器
+	:root {
+		border: 1px solid red;
+	}
+	解释：匹配文档中的根元素，基本不怎么用，因为总是返回<html>元素。
+
+2.子元素选择器
+	ul > li:first-child {
+		color: red;
+	}
+	解释：选择第一个子元素。
+	ul > li:last-child {
+		color: red;
+	}
+	解释：选择最后一个子元素。
+	ul > li:only-child {
+		color: red;
+	}
+	解释：选择只有一个子元素的那个子元素。
+	div > p:only-of-type {
+		color: red;
+	}
+	解释：选择只有一个指定类型的子元素的那个子元素。
+
+3.:nth-child(n)系列
+	ul > li:nth-child(2) {
+		color: red;
+	}
+	解释：选择子元素的第二个元素。
+	ul > li:nth-last-child(2) {
+		color: red;
+	}
+	解释：选择子元素倒数第二个元素。
+	div > p:nth-of-type(2) {
+		color: red;
+	};
+	解释：选择特定子元素的第二个元素。
+	div > p:nth-last-of-type(2) {
+		color: red;
+	};
+	解释：选择特定子元素的倒数第二个元素。
+
+	
+UI 伪类选择器: 根据元素的状态匹配元素,用在表单中
+1.:enabled
+	:enabled {
+		border: 1px solid red;
+	}
+	解释：选择启用状态的元素。
+
+2.:disabled
+	:disabled {
+		border: 1px solid red;
+	}
+	解释：选择禁用状态的元素。
+
+3.:checked
+	:checked {
+		display: none;
+	}
+	解释：选择勾选的input 元素。
+
+4.:default
+	:default {
+		display: none;
+	}
+	解释：从一组类似的元素中选择默认元素。比如input 被勾选的即默认的。
+
+5.:valid 和:invalid
+	input:valid {
+		border: 1px solid blue;
+	}
+	input:invalid {
+		border: 1px solid green;
+	}
+	解释：输入验证合法与不合法显示时选择的元素。
+
+6.:required 和:optional
+	input:required {
+		border: 1px solid blue;
+	}
+	input:optional {
+		border: 1px solid green;
+	}
+	解释：根据是否具有required 属性选择元素。
+
+动态伪类选择器: 根据条件的改变匹配元素,用在超连接和文本框
+1.:link 和visited
+	a:link {
+		color: red;
+	}
+	a:visited {
+		color: orange;
+	}
+	解释：:link 表示未访问过的超链接，:visited 表示已访问过的超链接。
+
+2.:hover
+	a:hover {
+		color: blue;
+	}
+	解释：表示鼠标悬停在超链接上。
+
+3.:active
+	a:active {
+		color: green;
+	}
+	解释：表示鼠标按下激活超链接时。
+
+4.:focus
+	input:focus {
+		border: 1px solid red;
+	}
+	解释：表示获得焦点时。
+
+
+其他伪类选择器
+1.:not
+	a:not([href*="baidu"]) {
+		color: red;
+	}
+	解释：否定选择器，反选。
+
+2.:empty
+	:empty {
+		display: none;
+	}
+	解释：匹配没有任何内容的元素。
+
+3.:lang
+	:lang(en) {
+	color: red;
+	}
+	解释：选择包含lang 属性，属性值前缀为en 的元素。和属性选择器匹配结果一致。
+
+4.:target
+	:target {
+		color: red;
+	}
+	解释：定位到锚点时，选择此元素。

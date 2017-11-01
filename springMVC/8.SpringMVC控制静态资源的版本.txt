@@ -1,0 +1,26 @@
+原理：在js和css的src后面加上一个参数，每次更改了版本就修改这个值就行了
+      为了方便统一修改这个值，这个值为一个变量，由后台赋值、
+
+步骤：
+1.写一个类实现ServletContextAware，获取SerlvetContext，放入版本号信息
+	public class StaticResourcePathExposer implements ServletContextAware {
+		private ServletContext servletContext;
+		@Override
+		public void setServletContext(ServletContext servletContext) {
+			this.servletContext = servletContext;
+		}
+		public ServletContext getServletContext() {
+			return this.servletContext;
+		}
+		public void init() {
+			String version = "1.2";
+			getServletContext().setAttribute("staticResourceVersion", version);
+		}
+	}
+
+2.初始话bean
+	<bean id="staticResourcePathExposer" class="cn.bll.mobile.common.StaticResourcePathExposer" init-method="init"/>
+
+3.js，css的应用地址中加入版本信息
+	<link  rel="stylesheet" href="<%=path%>/css/global.css?version=${staticResourceVersion}" />
+	<script type="text/javascript" src="<%=path%>/js/register.js?version=${staticResourceVersion}"></script>

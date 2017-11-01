@@ -1,0 +1,42 @@
+注解开发的步骤:
+	1.在applicationContext.xml的头文件中引入context的命名空间
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/context 
+				    http://www.springframework.org/schema/context/spring-context.xsd"
+	
+	2.<!-- 使 @Resource @Autowired 注解生效 -->
+	  <context:annotation-config/>
+	  注意：<context:componet-scan> 包括 <context:annotation-config> 功能
+
+
+注解注入: 可以在setter方法上注入，将对象注入给set方法的形参
+	  也可以直接在属性成员上注入(这时可以不写set方法)
+
+简单类型注入
+    @Value("kobe")
+    private String name;
+
+对象类型注入
+     1. @Value 结合 spEL
+	    @Value("#{userDao}")
+	    private UserDao userDao;
+     
+     2. @Autowired 结合 @Qualifier
+	    @Autowired  -- 默认按类型注入,类型相同时按属性名或set方法名去寻找Bean
+	    private UserDao userDao
+
+	    @Autowired
+	    @Qualifier("userDao1")
+	    private UserDao userDao;
+
+     3. @Resouce (JSR-250标准)
+	    @Resource(name="userDao1")
+	    private UserDao userDao;
+     
+     4. @Inject 结合 @Named (JSR-330标准),需导入 javax.inject-1.jar
+	    @Inject  -- 按类型注入
+	    private UserDao userDao;
+
+	    @Inject
+	    @Named("userDao1")
+	    private UserDao userDao;

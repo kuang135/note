@@ -1,0 +1,15 @@
+Constructor类代表某个类中的一个构造方法
+
+得到某个类的所有构造方法:
+	Constructor[] csts=Class.forName("java.lang.String").getConstructors();
+
+得到某一个构造方法：(未使用泛型)
+	Constructor cst=String.class.getConstructors(StringBuffer.class);//String构造器的参数类型
+
+创建实例对象：
+	String str=new String(new StringBuffer("abc");
+	String str=(String)cst.newInstance(new StringBuffer("abc"));
+
+class-->constructor-->object
+隐藏中间步奏，调用无参构造方法，Class.newInstance()方法：
+	String str=(String)Class.forName("java.lang.String").newInstance();

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div {
+			background: white;
+		}
+		.red {
+			background: red;
+		}
+		.green {
+			background: green;
+		}
+
+		.yellow{
+			background: yellow;
+		}
+
+	</style>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+	<div class="red sdsd">This div should be white</div>
+	<div class="red">This div will be green because it now has the "green" and "red" classes.
+		It would be red if the addClass function failed.</div>
+		<div>This div should be white</div>
+		<p>There are zero green divs</p>
+
+		<script>
+			$( "div" ).addClass(function( index, currentClass ) {
+				var addedClass;
+				if (  currentClass === "red") {
+					addedClass = "green";
+				}
+				else if($(this).hasClass("red")){
+					$(this).removeClass(currentClass);
+					addedClass = "green";
+				}
+				else{
+					addedClass = "yellow";
+				}
+
+				return addedClass;
+			});
+		</script>
+	</body>
+	</html>

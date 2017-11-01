@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Document</title>
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<style type="text/css">
+		
+		div[class^=col]{
+			background-color: red;	
+			border: 1px solid rgba(86,61,124,.2);
+		}
+
+	</style>
+</head>
+<body>
+	<div class="container">
+		<!-- Stack the columns on mobile by making one full-width and the other half-width -->
+		<div class="row">
+			<div class="col-xs-12 visible-xs-block">.col-xs-12 .col-md-8</div>
+			<div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+		</div>
+
+		<!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
+		<div class="row visible-xs-block">
+			<div class="col-xs-6 col-md-4">visible.col-xs-6 .col-md-4</div>
+			<div class="col-xs-3 col-md-4">visible.col-xs-3 .col-md-4</div>
+			<div class="col-xs-3 col-md-4">visible.col-xs-3 .col-md-4</div>
+		</div>
+
+		<!-- Columns are always 50% wide, on mobile and desktop -->
+		<div class="row">
+			<div class="col-xs-6">.col-xs-6</div>
+			<div class="col-xs-6">.col-xs-6</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+
+配置,跟配置文件相关
+org.hibernate.cfg.Configuration
+	Configuration configure();//读取配置文件,可以指定具体文件,默认为classpath下的hibernate.cfg.xml
+	SessionFactory	buildSessionFactory();//根据当前的配置信息生成 SessionFactory对象
+
+
+会话工厂(连接池,配置信息,映射hbm信息,预定义SQL语句),线程安全,还负责维护hibernate的二级缓存
+	消耗资源，一般情况下一个应用只初始化一个,单例或静态
+org.hibernate.SessionFactory(接口)
+	Session	getCurrentSession();//获得与线程绑定的Session,提交事务时自动关闭Session
+	Session	openSession();//随机创建一个Session
+
+
+会话,相当于Connection,线程不安全
+org.hibernate.Session(接口)
+	void delete(Object object);//根据id删除
+	Object merge(Object object);
+	Serializable save(Object object);//增加数据
+	void saveOrUpdate(Object object);//增加或修改
+	void update(Object object);//根据id修改所有字段
+
+	Object get(Class clazz, Serializable id);//根据id查询,立即加载数据
+	Object load(Class theClass, Serializable id);//根据id查询,延迟加载数据,返回代理对象(目标类的子类)
+	Query createQuery(String queryString);//hql查询
+	SQLQuery createSQLQuery(String queryString);//sql查询
+	Criteria createCriteria(Class persistentClass);//条件查询
+	Criteria createCriteria(String entityName);
+
+	Transaction beginTransaction();
+	Transaction getTransaction();
+	Connection connection();
+	void flush();
+
+事务,如果没有开启,每个Session的操作,都相当于一个独立的事务
+org.hibernate Transaction(接口)
+	void begin();
+	void rollback();//只回滚,不关闭
+	void commit();
+
+
+hql查询
+org.hibernate Query(接口)
+	List list();
+	Query setParameter(String name, Object val);
+
+
+sql查询
+org.hibernate SQLQuery(接口) extends Query
+	SQLQuery addEntity(Class entityClass);//结果绑定
+	List list();//父类的方法,没有结果绑定的话,返回的是数组
+
+
+条件查询
+org.hibernate Criteria(接口)
+	Criteria add(Criterion criterion);//加条件
+	List list();
+	Object uniqueResult();
+
+给Criteria加条件,解决拼接SQL的问题
+org.hibernate.criterion.Restrictions(类)
+	static Criterion ilike(String propertyName, Object value);
+
+

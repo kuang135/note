@@ -1,0 +1,11 @@
+	
+	<task:annotation-driven />
+	<context:component-scan base-package="com.ceair.mumop" />
+
+	<!--定义bean，每年1月1日凌晨计算例行审核项目-->
+	<bean id="TaskAuditProject" class="com.ceair.mumop.application.task.impl.TaskAuditProjectApplicationImpl"></bean>
+	
+	<!--声明定时的方法-->
+	<task:scheduled-tasks>
+		<task:scheduled ref="TaskAuditProject" method="calculateAuditDate" cron="0 0 0 1 1 ?" />
+	</task:scheduled-tasks>

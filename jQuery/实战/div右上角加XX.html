@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+		.mk_main{ width:100%;height:auto; overflow:hidden; float:left; font-family:"Microsoft YaHei";}
+		.mk_blockm{width:328px; height:82px; float:left; position:relative;}
+		.mk_blockm .mk_del{width:27px; height:27px;position:absolute; right:6px; top:4px;display:none;}
+		.mk_block{width:318px; height:72px; loat:left;background:url(kz_bg.png) no-repeat left top; margin-top:10px;}
+		.mk_block a{ color:#fff;}
+		.mk_block a .mk_title{ width:298px; height:20px; float:left; text-align:right; padding-right:20px; padding-top:12px; font-size:16px;}
+		.mk_block a .mk_en{ width:298px; height:20px; float:left; text-align:right; padding-right:20px; padding-top:2px;}
+		.mk_block2 a{ color:#fff;}
+		.mk_block2{width:318px; height:72px; float:left;background:url(kz_bg.png) no-repeat left top; margin-top:10px;}
+		.mk_block2 a .mk_tbj{width:318px; height:72px; float:left;}
+		.mk_block2 a .mk_tbj .mk_tbjl{width:50px; height:59px; float:left; text-align:center; padding-top:13px;}
+		.mk_block2 a .mk_tbj .mk_tbjr{width:266px; height:72px; float:right;}
+		.mk_block2 a .mk_title{ width:246px; height:20px; float:left; text-align:right; padding-right:20px; padding-top:12px; font-size:16px;}
+		.mk_block2 a .mk_en{ width:246px; height:20px; float:left; text-align:right; padding-right:20px; padding-top:2px;}
+		.mk_block2 a .mk_add{ width:318px; height:34px; float:left; text-align:center; padding-top:16px;}
+	</style>
+</head>
+<body>
+<div class="mk_main">
+	<div class="mk_blockm" id="open1" 
+		onmouseout="document.getElementById('open2').style.display='none';console.log('out');" 
+		onmouseover ="document.getElementById('open2').style.display='block';console.log('over');">
+		<div class="mk_block">
+			<a href="#">
+				<div class="mk_title">规章查询</div>
+				<div class="mk_en">Regulation Search</div>
+			</a>
+		</div>
+		<div class="mk_del" id="open2"><a href="javascript:alert('delete');"><img src="icon_d.png"/></a></div>
+    </div>
+
+
+
+	<div class="mk_blockm" id="open11"
+			onmouseout="document.getElementById('open3').style.display='none';console.log('out');"
+			onmouseover="document.getElementById('open3').style.display='block';console.log('over');">
+		<div class="mk_block2">
+			<a href="#">
+				<div class="mk_tbj">
+					<div class="mk_tbjl">
+							<img src="mkicon.png"/>
+					</div>
+					<div class="mk_tbjr">
+						<div class="mk_title">编号</div>
+						<div class="mk_en">名称</div>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="mk_del" id="open3"><a href="javascript:alert('delete');"><img src="icon_d.png"/></a></div>
+	</div>
+</div>
+</body>
+</html>

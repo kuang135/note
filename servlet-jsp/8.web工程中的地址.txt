@@ -1,0 +1,17 @@
+写地址最好以/开头
+
+给浏览器用：/表示网站
+	response.sendRedirect("/mywebapp/main.jsp");
+	<a href="/mywebapp/main.jsp">超链接</a>
+	<form action="/mywebapp/main.jsp"></form>
+	cookie.setPath("/");
+
+给服务器用：/表示当前web应用
+	request.getRequestDispatcher("/register.jsp").forward(request,response);
+	getServletContext().getRealPath("/register.jsp");
+
+
+
+获取url上的资源用/
+
+获取硬盘上的资源c:\\

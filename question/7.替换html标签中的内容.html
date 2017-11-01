@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document111</title>
+</head>
+<body>
+	<li class="indent5" id="clauseLi7yVCv799X5ytDQPjoSt" dataid="7yVCv799X5ytDQPjoSt">
+<img class="oldtip" data="<p></p><p>1)CCAR-145部和相关规章发生修订使上述手册符合性受到影响时；</p><p>2)局方评审发现并通知的任何不符合之处时；</p><p>3)东航技术对管理制度和工作程序的评审结果；</p><p>4)东航技术发生的任何变化影响到上述手册的内容时；</p><p>5)东航技术自我质量审核发现或通过其他渠道发现的上述手册的任 何缺陷或不足时；</p><p>6) 促进或改进本单位管理的任何其他正当理由或建议。</p>" src="/mumop/resource/images/mumop/icon_g.png">
+<p></p>
+<p>1)CCAR-145部和相关规章发生修订使上述<font style="background-color: #FFFF00">手册</font>符合性受到影响时；</p>
+<p>2)局方评审发现并通知的任何不符合之处时；</p>
+<p>3)东航技术对管理制度和工作程序的评审结果；</p>
+<p>4)东航技术发生的任何变化影响到上述<font style="background-color: #FFFF00">手册</font>的内容时；</p>
+<p>5)东航技术自我质量审核发现或通过其他渠道发现的上述<font style="background-color: #FFFF00">手册</font>的任 何缺陷或不足时；</p>
+<p>6) 促进或改进本单位管理的任何其他正当理由或建议。</p>
+<input type="hidden" name="remark" id="remark" value="">
+</li>
+	<script>
+		var html = '<li class="indent5" id="clauseLi7yVCv799X5ytDQPjoSt" dataid="7yVCv799X5ytDQPjoSt">' +
+	'<img class="oldtip" data="<p></p><p>1)CCAR-145部和相关规章发生修订使上述手册符合性受到影响时；</p><p>2)局方评审发现并通知的任何不符合之处时；</p><p>3)东航技术对管理制度和工作程序的评审结果；</p><p>4)东航技术发生的任何变化影响到上述手册的内容时；</p><p>5)东航技术自我质量审核发现或通过其他渠道发现的上述手册的任 何缺陷或不足时；</p><p>6) 促进或改进本单位管理的任何其他正当理由或建议。</p>" src="/mumop/resource/images/mumop/icon_g.png">' +
+	'<p></p><p>1)CCAR-145部和相关规章发生修订使上述手册符合性受到影响时；</p>' +
+	'<p>2)局方评审发现并通知的任何不符合之处时；</p>' +
+	'<p>3)东航技术对管理制度和工作程序的评审结果；</p>' +
+	'<p>4)东航技术发生的任何变化影响到上述手册的内容时；</p>' +
+	'<p>5)东航技术自我质量审核发现或通过其他渠道发现的上述手册的任 何缺陷或不足时；</p>' +
+	'<p>6) 促进或改进本单位管理的任何其他正当理由或建议。</p>' +
+	'<input type="hidden" name="remark" id="remark" value="">' +
+'</li>';
+var arry = [];
+html = html.replace(/<(?!img)\/?[^>]*>/g,function (a){arry.push(a);return '<>';}); 
+console.log(html); 
+html = html.replace(/手册/gi,'<font style="background-color: #FFFF00">手册</font>');  
+var i=0;  
+html = html.replace(/<>/gi,function (){return arry[i++];});  
+console.log(html); 
+
+
+	</script>
+	
+</body>
+</html>

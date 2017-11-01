@@ -1,0 +1,71 @@
+sql片段: 使用<sql id=”” />标签定义SQL片段，在需要的地方通过<include refid=""/>引用.
+	<sql id="userColumns">id,user_name,password,name,age,sex,birthday,created,updated</sql>
+	<select id="queryUserByID" parameterType="long" resultMap="userResultMap">
+		SELECT <include refid="userColumns"/> FROM tb_user WHERE id = ${id}
+	</select>
+
+动态sql: mybatis提供了OGNL表达式动态生成sql的功能.
+	 标签中的参数,是Mapper方法中传入参数Param注解的属性值,或pojo的属性(get方法),或HashMap的key
+动态sql有:
+	if
+	choose,when,otherwise -- 类似于if elseif
+	trim,where,set -- where元素会在语句前插入"WHERE",如果以"AND"或"OR"开头,就不插入.(where语句)
+			  set元素会在语句前插入"SET",也会消除任意无关的逗号.(update语句)
+			  也可以使用trim元素来自定义.
+	foreach --  通常用于IN条件中的
+
+标签可以相互嵌套
+	<if test=""></if>
+	<choose>
+	    <when test=""></when>
+	    <otherwise></otherwise>
+	</choose>
+	<trim prefix="" prefixOverrides="" suffix="" suffixOverrides=""></trim>
+	<where></where>
+	<set></set>
+	<foreach collection="" item="" index="" close="" open="" separator=""></foreach>
+	<bind/>
+
+---------------------------------------------------------------------------------------------------
+
+标签示例
+	<!-- 批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.List">
+	    delete from tb_user where id in
+		<foreach collection="list" item="item" open="(" separator="," close=")">
+		    #{item}	
+		</foreach>
+	</delete>
+
+	<!-- mysql批量添加 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+	    insert into tb_user(username,password) values
+		<foreach collection="list" item="item" separator=",">
+		    (#{item.usernmae},#{item.password})	
+		</foreach>
+	</insert>
+	<!-- oracle批量添加 -->
+	<insert id="addScoreLatitudeList" parameterType="java.util.List">
+		INSERT INTO T_OT_SCORE_LAT
+		    ( ID, COMPANY_ID, SCORE_LAT, SCORE_PCT )
+	    <foreach collection="list" item="item" index="index" separator="union all" > 
+		    (select  
+				sys_guid(), 
+				#{item.companyId,jdbcType=VARCHAR}, 
+				#{item.scoreLat,jdbcType=VARCHAR}, 
+				#{item.scorePct,jdbcType=VARCHAR}
+		     from dual)
+		</foreach>
+	</insert>
+
+	<!-- 用trim实现where -->
+	<trim prefix="WHERE" prefixOverrides="AND |OR ">
+	    ... 
+	</trim>
+
+	<!-- 用trim实现set -->
+	<trim prefix="SET" suffixOverrides=",">
+	    ...
+	</trim>
+
+

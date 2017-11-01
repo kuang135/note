@@ -1,0 +1,53 @@
+PO的编写
+	每一方都添加对方集合的引用,并且new出
+
+hbm.xml的配置(情景: 学生和课程的关系)
+	多(Student).hbm.xml中,<class/>标签下
+		<set name="courses" table="student_course">
+		    <key column="fk_student_id"/>
+		    <Many-to-many class="cn.itcast.domain.Courser" column="fk_course_id"/>
+		</set>
+
+	多(Course).hbm.xml中,<class/>标签下
+		<set name="students" table="student_course">
+		    <key column="fk_course_id"/>
+		    <Many-to-many class="cn.itcast.domain.Student" column="fk_student_id"/>
+		</set>
+
+	<set name>: 引用的另一方集合的属性名称
+	<set table>: 配置中间表的名称
+	<key column>：当前表主键在中间表的外键名
+	<Many-to-many class>：引用的另一方集合中元素的类型
+	<Many-to-many column>: 对方表主键在中间表的外键名
+
+操作: 双方平等,一般不需要级联,尤其cascade=delete
+    建立关系: 
+	多对多,每建立一次关系,产生insert语句,操作中间表
+		Student s1=new Student("丁丁");
+		session.save(s1);
+		Course c1=new Course("数学");
+		session.save(c1);		
+		s1.getCourses().add(c1);//没建立一次关系就产生一条insert语句
+	      //c1.getStudents().add(s1);//建立两次关系就抛出ConstraintViolationException异常
+	在被动的一方中配置inverse=true,放弃其对外键的维护
+
+    解除关系:
+	解除关系,就会删除中间表中的记录
+		Student s1 = (Student)session.get(Student.class,2);
+		Course c1=(Course)session.get(Course.class, 2);
+		s1.getCourses().remove(c1);//解除关系
+	引用的对方集合为空时,就解除所有关系
+		Student s1 = (Student)session.get(Student.class,2);
+		s1.getCourses().clear();
+	如何修改中间表的数据关系,先解除关系,再建立关系
+		Student s1 = (Student)session.get(Student.class,3);
+		Course c1=(Course)session.get(Course.class, 2);//3号学生不选2号课,该选1号课
+		Course c2=(Course)session.get(Course.class, 1);
+		s1.getCourses().remove(c1);//先解除关系
+		s1.getCourses().add(c2);//再建立关系
+	删除任意一方,其在中间表中的数据关系也会被删除
+		Student s1 = (Student)session.get(Student.class,3);
+		session.delete(s1);//先在中间表中删除其相关记录,再在表中删除该数据
+
+	
+

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.mybatis.mapper.UserMapper">
+
+	<!-- 开启二级缓存  -->
+	<cache/>
+
+	<!-- 公用sql提取 -->
+	<sql id="userColumns">id,user_name,password,name,age,sex,birthday,created,updated</sql>
+
+	<!-- 
+		type: java对象类型
+		id：在同一个命名空间下不重复即可
+	 -->
+	<resultMap type="User" id="userResultMap" autoMapping="false">
+		<!-- 
+			property: java对象中的属性
+			column: 数据库表字段
+		 -->
+		<id property="id" column="id"/>
+		<result property="userName" column="user_name"/>
+	</resultMap>
+	
+	<select id="queryUserByUserName" resultMap="userResultMap">
+		SELECT <include refid="userColumns"/> FROM tb_user WHERE user_name = '${userName}'
+	</select>
+	
+	<!-- <select id="queryUserByUserName" resultType="user">
+		SELECT * FROM tb_user WHERE user_name = #{v}
+	</select> -->
+	
+	<select id="queryByTabkeName" resultType="HashMap">
+		SELECT * FROM ${value}
+	</select>
+	
+	<insert id="saveUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		INSERT INTO tb_user (
+			<include refid="userColumns"/>
+		)
+		VALUES
+			(
+				NULL,
+				#{userName},
+				#{password},
+				#{name},
+				#{age},
+				#{sex},
+				#{birthday},
+				NOW(),
+				NOW()
+			);
+	</insert>
+	
+	<update id="updateUser" parameterType="cn.itcast.mybatis.pojo.User">
+		UPDATE tb_user
+		SET
+		 password = #{password},
+		 name = #{name},
+		 age = #{age},
+		 sex = #{sex},
+		 birthday = #{birthday},
+		 updated = NOW()
+		WHERE
+			id = #{id};
+	</update>
+	
+	<delete id="deleteUserById" parameterType="Long">
+		DELETE FROM tb_user WHERE id = #{id}
+	</delete>
+	
+	<select id="queryUserByUserNameAndPassword" resultType="User">
+		SELECT <include refid="userColumns"/> FROM tb_user WHERE user_name = #{userName} AND password = #{password}
+	</select>
+	
+	<select id="queryUserCount" resultType="Integer">
+		SELECT COUNT(1) FROM tb_user
+	</select>
+	
+	<select id="queryUserLikeName" resultType="User">
+		SELECT * FROM tb_user WHERE sex = 1 
+		<if test="name != null and name !=''">
+			AND name like '%${name}%'
+		</if>
+	</select>
+	
+	<!-- <select id="queryUserLikeName" resultType="User">
+		SELECT * FROM tb_user WHERE sex = 1 
+		<if test="name != null and name !=''">
+			AND name like #{name}
+		</if>
+	</select> -->
+	
+	<select id="queryUserLikeNameOrAge" resultType="User">
+		SELECT * FROM tb_user WHERE sex = 1 
+		<choose>
+			<when test="name != null and name !=''">
+				AND name like '%${name}%'
+			</when>
+			<when test="age !=null and age != ''">
+				AND age > #{age} 
+			</when>
+			<otherwise>
+				AND created is not null
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="queryAllUserLikeName" resultType="User">
+		SELECT * FROM tb_user 
+		<where>
+			<if test="name != null and name !=''">
+				 AND name like '%${name}%'
+			</if>
+		</where>
+	</select>
+	
+	<select id="queryUserByIds" resultType="User">
+		SELECT * FROM tb_user WHERE id IN 
+		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</select>
+	
+</mapper>

@@ -1,0 +1,30 @@
+基于ip
+
+基于域名
+
+http {
+	server {
+		# 监听的IP和端口，可以不写IP
+		listen 80;
+		# 主机名称,可以基于ip
+		server_name www.myfccs.com 127.0.0.1;	
+		location / {
+			# 默认首页文件，顺序从左到右
+			index index.html index.htm;
+			# HTML网页文件存放的目录
+			root D:\ProgramFiles\apache-tomcat\apache-tomcat-7.0.65\webapps\ROOT;
+		}
+	}
+	
+	#如果是jsp，可以这么配
+	server {
+		listen 80;
+		server_name www.myfccs.com 127.0.0.1;	
+		location / {
+			index index.jsp;
+			# 重写
+			rewrite ^/$ http://$host:8080/index.jsp redirect;
+		}
+	}
+
+}

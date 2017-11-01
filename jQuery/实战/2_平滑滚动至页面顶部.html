@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="jquery-1.12.0.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('a[href="#top"]').click(function(){
+				$('html,body').animate({scrollTop: 0}, 'slow');
+				return false;
+			});
+		});
+	</script>
+</head>
+<body>
+	<div style="height:1200px;background-color: pink"></div>
+	<a href="#top">top</a>
+</body>
+</html>

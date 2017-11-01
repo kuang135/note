@@ -1,0 +1,55 @@
+oracle的逻辑结构包括表空间，段，区和块。
+
+从物理上讲，数据库数据存放在数据文件中；
+从逻辑上讲，数据库存放在表空间中，表空间由一个或多个数据文件组成。
+
+表空间可以达到的作用：
+1.控制数据库占用的磁盘空间
+2.dba可以将不同数据类型部署到不同的位置，这样有利于提高i/o性能，同时利于备份和恢复等管理操作
+
+
+建立表空间，一般由特权用户或dba来执行
+    create tablespace
+建立数据表空间sp001，并为其建立名为data01.dbf的数据文件，区的大小为128k
+    create tablespace sp001 datafile 'd:\data001.dbf' size 20m uniform size 128k;
+使用数据表空间
+    create table mytable(deptno number(4),dname varchar2(14)) tablespace sp001;
+改变表空间的状态，建立表空间时，处于联机(online)状态
+    使表空间脱机
+        alter tablespace 表空间名 offline;
+    使表空间联机
+        alter tablespace 表空间名 online;
+    只读表空间
+        alter tablespace 表空间名 read only;
+    使表空间可读写
+        alter tablespace 表空间名 read write;
+
+
+删除表空间，一般由特权用户或dba来执行
+    drop tablespace '表空间名' including contents and datafiles;
+扩展表空间
+    增加数据文件
+	alter tablespace sp001 add datafile 'd:sp001.dbf' size 20m;
+    增加数据文件的大小
+	alter tablespace sp001 'd:sp001.dbf' resize 40m;
+    设置文件的自动增长
+	alter tablespace sp001 'd:sp001.dbf' autoextend on next 10m maxsize 500m;
+
+
+查询表空间包括的表
+    select * from all_talbes where tablespace_name='表空间名';
+查询表属于哪个表空间
+    select tablespace_name,table_name from user_tables where table_name='EMP';
+
+
+移动数据文件
+1.确定数据文件所在的表空间
+    select tablespace_name from dba_data_files where file_name='d;sp001.dbf';
+2.使表空间脱机
+    alter tablespace sp01 offline;
+3.使用命令移动数据文件到指定的目标位置
+    host move d:\sp01.dbf c:\sp01.dbf
+4.移动数据文件
+    alter tablespace sp01 rename datafile 'd:\sp01.dbf' to 'c:\sp01.dbf';
+5.使表空间联机
+    alter tablespace sp01 online;

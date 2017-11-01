@@ -1,0 +1,74 @@
+EL表达式：Expression Language，主要用于取域对象中的值
+
+作用：获取数据
+      执行运算
+      获取web开发常用对象
+      调用java方法
+
+语法：${标识符}----会被翻译成java代码
+
+获取数据的原理：EL表达式语句在执行时，会调用pageContext.findAttribute方法，
+      以标识符为关键字，分别从page、request、session、application四个域中查找相应的对象，
+      找到则返回相应对象，找不到则返回””，不是null。
+      直接调用pageContext.findAttribute(),如果取不到就为null。
+
+----------------------------------------------------------------
+
+获取普通数据
+	${userName}
+获取JavaBean中的数据，JavaBean必须带有get方法
+	${user.name}
+获取JavaBean中复杂对象的数据
+	${user.address.city}
+获取Collection的数据
+	${userList[1].name}
+获取Map的数据
+	${map['aa.bb']}---map.put("aa.bb","111");
+	${map.aa}------map.put("aa","111");
+	${map}---拿到的是entry
+[]和.获取对象的区别：
+	[]--是通用的，主要用于获取数组或集合中的对象
+	.---不是通用的，主要用于获取对象的属性值
+获取数组中的数据
+	&{userArr[1].name}
+获取当前工程的名称
+	${pageContext.request.contextPath}
+
+-----------------------------------------------------------
+
+关键字：not,empty,instanceof,null...
+
+执行运算：比较运算，算术运算，逻辑运算
+	${empty user ? "对不起，用户名不存在" : user.name}
+
+------------------------------------------------------------
+
+获取web开发常用对象(11个)
+	pageContext
+		${pageContext.request.contextPath}
+	pageScope,requestScope,sessionScope,applicationScope
+		表示只从某个域中取查找，找不到就不显示
+	param：一个封装了所有请求参数的map对象，主要用于取出单个值,request.getParamater("userName")
+		${param.userName}
+	paramValues：一个key是参数名，value是String[]的map对象，用于取出多个值,request.getParameterValues("hobby");
+		&{paramValues.hobby[2]}
+	cookie：一个key是cookie的name,value是Cookie对象的Map对象，通常会用来实现记住用户名和密码的回显
+		${cookie.JESSIONID.value}
+	header：一个保存了所有http请求头字段的Map对象
+	headerValues：同上，返回string[]数组
+	initParam：一个保存了所有web应用初始化参数的map对象
+
+-------------------------------------------------------------
+
+调用java方法，自定EL函数
+	1.定义一个java类，需要的方法必须为static
+	2.建一个tld文件，用于描述java类和jsp中el函数的对应关系
+	  新建的时候命名好uri和shortname
+	  必须放在WEB-INF中，不能放在lib和classes中
+	  <function>
+		 <name>endsWith</name>
+		 <function-class>org.apache.taglibs.standard.functions.Functions</function-class>
+		 <function-signature>boolean endsWith(java.lang.String, java.lang.String)</function-signature>
+	  </function>
+	3.在jsp中用taglib指令导入,uri和prefix(shortname)
+	4.使用${shortname:endsWith(...)}

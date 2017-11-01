@@ -1,0 +1,47 @@
+
+1.我们在xml中配的视图解析器是InternalResourceViewResolver,
+  会从ModelAndView中拿到逻辑视图名,将其解析为JstlView.
+
+2.在处理方法上加 @ResponseBody,SpringMVC就不会做页面跳转,
+  而是将处理方法的返回结果转化为某一种视图输出,默认转化方式为json,
+  如果在对象的属性上加 @JsonIgnore,那么转化的时候就会忽略该属性.
+	public class User {
+	    private String name;
+	    @JsonIgnore	//该属性不转化为json
+	    private String password;
+	}
+	@RequestMapping("/user")
+	@ResponseBody	//返回json格式的响应
+	public List<User> jsonTest(){...}
+	
+3.Excel视图(视图支持)
+	1).自定义视图继承AbstractExcelView,实现其抽象方法,在方法中将ModelAndView中的模型数据放到HSSFWorkbook中.
+		public class UserExcelView extends AbstractExcelView {
+		    @Override
+		    protected void buildExcelDocument(Map<String, Object> model, HSSFWorkbook workbook,
+				HttpServletRequest request, HttpServletResponse response) throws Exception {
+			List<User> userList = (List<User>) model.get("userList");//取出模型数据
+			HSSFSheet sheet = workbook.createSheet("会员列表");
+			...
+			response.setHeader("Content-Disposition", "attachment;filename="+new String("学生信息模板.xls".getBytes(), "ISO-8859-1"));
+		    }	
+		}
+
+	2).将自定义的视图配到spring的配置文件中,取一个名字,比如"excelView"
+		<bean name="excelView" class="cn.itcast.usermanage.view.UserExcelView" />
+
+	3).在spring配置文件中配置名字视图解析器BeanNameViewResolver,将逻辑视图名,解析为一样名字的视图对象
+		<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+			<property name="order" value="1"/>
+		</bean>
+
+	4).编写处理方法,方法中将模型数据放入ModelAndView,并设置逻辑视图名为在spring配置文件中配置的视图名"excelView"
+		@RequestMapping(value = "/export")
+		public ModelAndView export(){
+			ModelAndView mv = new ModelAndView();
+			List<User> users = this.userService.queryAll();
+			mv.setViewName("excelView");
+			mv.addObject("userList", users);//放入模型数据
+			return mv;
+		}
+	

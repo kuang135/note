@@ -1,0 +1,15 @@
+//无参数构造方法
+public enum Weekday {
+
+	SUN,MON,TUE,WED,THI,FRI,SAT;
+	private Weekday(){}
+	
+}
+
+//带参数构造方法
+public enum Weekday {
+
+	SUN(0),MON(1),TUE(2),WED(3),THI(4),FRI(5),SAT(6);
+	private Weekday(int day){}
+	
+}

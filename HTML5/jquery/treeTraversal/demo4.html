@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>parent demo</title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+
+	<div><p>Hello</p></div>
+	<div class="selected">hi<p>Hello Again</p></div>
+
+	<div>div,
+		<span>span, </span>
+		<b>b </b>
+	</div>
+
+	<p>p,
+		<span  class="selected">span,
+			<em>em </em>
+		</span>
+	</p>
+
+	<div  class="selected">div,
+		<strong>strong,
+			<span>span, </span>
+			<em  class="selected">em,
+				<b>b, </b>
+			</em>
+		</strong>
+		<b>b </b>
+	</div>
+
+
+
+	<script>
+		$( "*" ).parent( ".selected" ).css( "background", "yellow" );
+
+	</script>
+
+</body>
+</html>

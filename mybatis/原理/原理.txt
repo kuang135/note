@@ -1,0 +1,20 @@
+通过SQL语句的key值去获取对应的SQL语句
+
+将SQL的配置信息加载成为一个个MappedStatement对象
+
+SqlSession            作为MyBatis工作的主要顶层API，表示和数据库交互的会话，完成必要数据库增删改查功能
+Executor              MyBatis执行器，是MyBatis 调度的核心，负责SQL语句的生成和查询缓存的维护
+StatementHandler   封装了JDBC Statement操作，负责对JDBC statement 的操作，如设置参数、将Statement结果集转换成List集合。
+ParameterHandler   负责对用户传递的参数转换成JDBC Statement 所需要的参数，
+ResultSetHandler    负责将JDBC返回的ResultSet结果集对象转换成List类型的集合；
+TypeHandler          负责java数据类型和jdbc数据类型之间的映射和转换
+MappedStatement   MappedStatement维护了一条<select|update|delete|insert>节点的封装， 
+SqlSource            负责根据用户传递的parameterObject，动态地生成SQL语句，将信息封装到BoundSql对象中，并返回
+BoundSql             表示动态生成的SQL语句以及相应的参数信息
+Configuration        MyBatis所有的配置信息都维持在Configuration对象之中。
+
+MyBatis在初始化的时候，会将MyBatis的配置信息全部加载到内存中，使用org.apache.ibatis.session.Configuration实例来维护。
+使用者可以使用sqlSession.getConfiguration()方法来获取。MyBatis的配置文件中配置信息的组织格式和内存中对象的组织格式几乎完全对应的。
+
+加载到内存中会生成一个对应的MappedStatement对象，然后会以key="com.louis.mybatis.dao.EmployeesMapper.selectByMinSalary" ，
+value为MappedStatement对象的形式维护到Configuration的一个Map中。当以后需要使用的时候，只需要通过Id值来获取就可以了。

@@ -1,0 +1,22 @@
+maven是一个构建工具，是声明式的，项目构建过程和过程各个阶段所需的工作都由插件实现。
+
+配置完 %MAVEN_HOME%\lib 后，命令行运行 mvn -v
+
+当前用户目录
+	C:\Users\Administrator\.m2
+全局配置
+	%MAVEN_HOME%\conf\settings.xml
+	
+HTTP代理(settings.xml)
+	<proxies>
+		<proxy>    
+			<id>myProxy</id>    
+			<active>true</active> <!-- 激活该代理 -->
+			<protocol>http</protocol>    
+			<host>proxy.host.net</host>
+			<port>80</port>
+			<username>proxyuser</username>
+			<password>proxypass</password>  
+			<nonProxyHosts>127.0.0.1|localhost</nonProxyHosts> <!-- 不需要代理的主机 -->
+		</proxy>
+	</proxies>

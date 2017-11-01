@@ -1,0 +1,50 @@
+对象的构建：
+	单例：声明一个空对象 {}，然后添加属性和方法，比如 Ext 对象
+			var KK = {};
+			KK.name = 'kk';
+			KK.sayName = function (){console.log('my name is ' + this.name);};
+			KK.sayName();
+		  Ext的写法
+			var Ext = Ext || {};
+			(function() {
+				Ext.apply = function(object, config, defaults) {
+					if (object && config && typeof config === 'object') {
+						var i;
+						for (i in config) {
+							object[i] = config[i];
+						}
+					return object;
+				};
+				Ext.apply(Ext, {
+					name: Ext.sandboxName || 'Ext',
+					emptyString: new String(),
+					applyIf: function(object, config) {...},
+					iterate: function(object, fn, scope) {...}
+				});
+			})();
+			
+			
+	多例：声明一个构造函数，然后往其prototype属性上添加属性和方法，比如 jQuery
+		  如果把所有属性方法都声明在构造函数中，就会无形的增大很多开销
+			function kQuery(){};
+			kQuery.prototype.name = 'kuang';
+			kQuery.prototype.sayName = function() {
+				console.log('my name is ' + this.name);
+			};
+			var kk = new kQuery();
+			kk.sayName();
+		  jQuery的写法
+			(function(){
+				var kquery = function(selector, context) {
+					return new kquery.fn.init(selector, context);
+				}
+				kquery.fn = kquery.prototype = {
+						init: function(selector, context) {
+							var arr = [];
+							arr[0] = document.getElementById(selector);
+							return arr;
+						},
+						constructor: kquery
+				}
+				window.kquery = kquery;
+			})();

@@ -1,0 +1,18 @@
+完整的项目构建过程包括：
+	清理，编译，测试，打包，集成测试，验证，部署
+
+maven中定义了3套各自独立的生命周期：
+	clean 清理项目
+	    pre-clean 执行清理前的工作
+	    clean 清理上一次构建生成的所有文件
+	    post-clean 执行清理后的文件
+	default 构建项目：构建的核心部分
+	    compile，test，package，install
+	site 生成项目站点
+	    pre-site 在生成项目站点前要完成的工作
+	    site 生成项目的站点文档
+	    post-site 在生成项目站点后要完成的工作
+	    site-deploy 发布生成的站点到服务器上
+		
+运行任何一个阶段的时候，它前面的所有阶段都会被运行，
+这也就是为什么我们运行mvn install 的时候，代码会被编译，测试，打包。

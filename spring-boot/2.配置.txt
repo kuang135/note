@@ -1,0 +1,31 @@
+@Value
+@Component
+@ConfigurationProperties
+
+@Controller
+@RestController = @Controller + @ResponseBody
+@RequestMapping
+	获取参数
+@PathVariable 
+@RequestParam
+@GetMapping = @RequestMapping(method = {RequestMethod.GET})
+@PostMapping = @RequestMapping(method = {RequestMethod.POST})
+
+表单验证
+@Valid BindingResult
+@Min
+
+AOP
+@Aspect
+@Pointcut
+@Before("excution(...)")
+@After
+@AfterReturning
+JoinPoint
+	RequestContextHolder
+	
+异常处理
+@ControllerAdvice
+@ExceptionHandler
+@ResponseBody
+	

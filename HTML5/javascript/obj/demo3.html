@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+	<script type="text/javascript">
+		
+		document.write("hello javascript.length="+"hello javascript".length);
+		document.write("<hr/>");
+		document.write("hello javascript.charAt(5)="+"hello javascript".charAt(7));
+		document.write("<hr/>");
+		document.write("hello javascript.charCodeAt(5)="+"hello javascript".charCodeAt(7));
+		document.write("<hr/>");
+		document.write("hello javascript.indexOf(j)="+"hello javascript".indexOf("j"));
+		document.write("<hr/>");
+		document.write("hello javascript.indexOf(j,4)="+"hello javascript".indexOf("j",4));
+		document.write("<hr/>");
+		document.write("hello javascript.match(java)="+"hello javascript".match("java"));
+		document.write("<hr/>");
+		document.write("hello javascript.match(javv)="+"hello javascript".match("javv"));
+		document.write("<hr/>");
+		document.write("hello javascript.replace(/a/,A)="+"hello javascript".replace(/a/,"A"));
+		document.write("<hr/>");
+		document.write("hello javascript.replace(/a/g,A)="+"hello javascript".replace(/a/g,"A"));
+		document.write("<hr/>");
+		document.write("hello javascript.search(/java/)="+"hello javascript".search(/java/));
+		document.write("<hr/>");
+		document.write("hello javascript.substring(3,7)="+"hello javascript".substring(3,7));
+		document.write("<hr/>");
+		document.write("hello javascript.toLocaleLowerCase()="+"hello javascript".toLocaleLowerCase());
+		document.write("<hr/>");
+		document.write("hello javascript.toUpperCase()="+"hello javascript".toUpperCase());
+		document.write("<hr/>");
+
+
+
+		document.write("hello.concat(java,script)="+"hello".concat("java","script"));
+		document.write("<hr/>");
+
+
+		String.prototype.trim = function(){return this.replace(/^\s+|\s+$/g, "")};
+		document.write("he  llo  .trim()="+"hi,"+"  he llo   ".trim()+"!");
+		document.write("<hr/>");
+
+
+	</script>
+
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+设置生存时间：EXPIRE key seconds
+
+查看生存时间：TTL key
+
+清除生存时间：PERSIST key
+重新设置值也会清除生存时间
+
+生存时间设置单位为：毫秒
+PEXPIRE key milliseconds

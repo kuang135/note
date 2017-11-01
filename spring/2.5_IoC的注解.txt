@@ -1,0 +1,24 @@
+注解开发的步骤:
+	1.在applicationContext.xml的头文件中引入context的命名空间
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/context 
+				    http://www.springframework.org/schema/context/spring-context.xsd"
+	
+	2.<!-- spring注解处理器要扫描的包 -->
+	  <context:component-scan base-package="cn.itcast"/>
+
+
+主要注解
+    定义Bean
+		@Component -- value属性指定bean的名字 
+	    @Repository -- 标注DAO实现类
+	    @Service -- 标注Service实现类
+	    @Controller -- 标注Controller实现类
+	    这三个注解上用了@Component注解,让标注类本身的用途清晰,Spring在后续版本会对其增强
+
+    生命周期
+		@PostConstruct -- 初始化
+		@PreDestroy  -- 销毁
+    
+    作用域
+		@Scope -- 默认singleton 

@@ -1,0 +1,39 @@
+Spring事务管理高层抽象主要包括3个接口
+    
+    1.PlatformTransactionManager -- 平台相关的事务管理器
+		void commit(TransactionStatus status); 提交事务
+		TransactionStatus getTransaction(TransactionDefinition definition); 获取事务状态
+		void rollback(TransactionStatus status); 事务回滚
+
+    2.TransactionDefinition -- 事务管理的定义信息(隔离、传播、超时、只读)
+			    -- 对应在配置文件中,进行事务管理相关的配置信息
+		int getIsolationLevel(); 获取事务的隔离级别
+		int getPropagationBehavior(); 获取事务的传播行为
+		int getTimeout(); 获取超时时间
+		boolean isReadOnly(); 是否只读	
+	
+    3.TransactionStatus -- 事务管理的具体运行状态
+		void flush(); 刷出
+		boolean hasSavepoint(); 是否有保存点
+		boolean isCompleted(); 事务是否完成
+		boolean isNewTransaction(); 是否为新的事务
+		void setRollbackOnly(); 务设置为回滚
+
+Spring事务管理: 使用PlatformTransactionManager 进行事务管理.
+      如何管理: 根据TransactionDefinition 定义信息来进行管理 ， 
+		在事务管理过程中通过TransactionStatus 查看事务的状态.
+	
+不同平台的事务管理:
+	SpringJDBC或iBatis -- org.springframework.jdbc.datasource.DataSourceTransactionManager
+	Hibernate3.0 -- org.springframework.orm.hibernate3.HibernateTransactionManager
+
+Spring事务管理的配置: 隔离级别,传播行为,超时时间,是否只读.
+	事务的隔离级别:DEFAULT,READ_UNCOMMITED,READ_COMMITTED,REPEATABLE_READ,SERIALIZABLE
+	事务传播行为: 解决问题是，两个被事务管理方法互相调用，当一个方法出错时，另一个方法是否回滚
+		      REQUIRED（默认值）、SUPPORTS、MANDATORY ： 同一个事务（删除用户,删除订单）
+		      REQUIRES_NEW、NOT_SUPPORTED、NEVER ： 处于不同的事务 （ATM取款,打印凭条）
+		      NESTED 嵌套事务：只对DataSourceTransactionManager有效,在同一个事务设置保存点,回滚到保存点,根据业务进行事务提交或者回滚
+
+Spring支持两种方式事务管理
+	编程式的事务管理
+	使用XML配置声明式事务

@@ -1,0 +1,29 @@
+注册组件
+	局部
+		components: {MyComponent: {template: ''}}
+	全局
+		Vue.component('MyComponent', {template: ''});
+		
+		
+引入
+	标签 --  驼峰转减号
+		<my-component></my-component>
+	is -- 动态组件
+		<div :is="param"></div>
+		
+通信
+	父 -> 子
+		props: ['number'] //大小写不敏感
+		slot 插槽,传递html
+		
+		
+	子 -> 父
+		$emit
+			template: '<button @click=childEvent>emit</button>',
+			methods: {
+				childEvent: function() {
+					this.$emit('param-event', 'hello');
+				}
+			}
+			
+			<child @param-event="parentEvent"></child>

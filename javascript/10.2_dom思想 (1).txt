@@ -1,0 +1,36 @@
+1.获取对象
+	var obj=document.getElementById("idname");
+	var objs=document.getElementsByTagName("tagname");
+	var objs=document.getElementsByName("name");
+	var obj=obj.parentNode;
+	var objs=obj.childNodes;
+	var preNode=obj.previousSibling;//上一个兄弟节点
+	var nextNode=obj.nextSibling;//下一个兄弟节点
+	var obj=obj.firstChild;
+	var obj=obj.lastChild;
+注意：标签之间存在空行时，会出现一个空白的文本节点，在获取节点时一定要注意。
+
+
+2.创建对象，设置属性
+	var obj=document.createElement("tagname");
+	obj.setAttribute("name","value");
+
+3.对对象进行操作
+	obj.appendChild(aobj);
+	obj.removeChild(aobj);
+	obj.replaceChild(newChild,oldChild);
+	obj.cloneNode(true);//深度克隆,包含其子节点
+
+4.动态给事件添加事件
+	a.onclick=function(){
+		alert("弹");
+	}
+
+DOM编程：
+1.定义界面：html
+2.定义静态样式：css
+3.动态和用户交互:
+    a.明确事件源
+    b.明确事件将事件注册到事件源上
+    c.通过javascript函数对事件进行处理
+    d.在处理过程中需要明确被处理的区域

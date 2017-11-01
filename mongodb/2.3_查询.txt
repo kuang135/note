@@ -1,0 +1,47 @@
+查询数据库中集合
+	show collections
+	db.getCollectionNames();
+	db.getCollectionInfos();
+
+查询集合中的数据
+	db.COLLECTION_NAME.find()
+	db.COLLECTION_NAME.find().pretty()
+	db.COLLECTION_NAME.findOne()
+	
+MongoDB 与 RDBMS Where 语句比较
+	等于 {<key>:<value>}	
+		db.COLLECTION_NAME.find({"by":"菜鸟教程"})
+		where by = '菜鸟教程'
+	小于 {<key>:{$lt:<value>}}	
+		db.COLLECTION_NAME.find({"likes":{$lt:50}})
+		where likes < 50
+	小于或等于 {<key>:{$lte:<value>}}	
+		db.COLLECTION_NAME.find({"likes":{$lte:50}})	
+		where likes <= 50
+	大于 {<key>:{$gt:<value>}}	
+		db.COLLECTION_NAME.find({"likes":{$gt:50}})	
+		where likes > 50
+	大于或等于 {<key>:{$gte:<value>}}	
+		db.COLLECTION_NAME.find({"likes":{$gte:50}})	
+		where likes >= 50
+	不等于 {<key>:{$ne:<value>}}	
+		db.COLLECTION_NAME.find({"likes":{$ne:50}})
+		where likes != 50
+		
+AND 条件
+	db.COLLECTION_NAME.find({key1:value1, key2:value2})
+	
+OR 条件
+	db.COLLECTION_NAME.find({$or: [{key1: value1}, {key2:value2}]})
+	
+$type 类型
+	db.COLLECTION_NAME.find({KEY : {$type : 2}}) -- 2表示String
+	
+limit 限制
+	db.COLLECTION_NAME.find().limit(NUMBER)
+	
+skip 跳过
+	db.COLLECTION_NAME.find().limit(NUMBER).skip(NUMBER)
+	
+sort 排序，默认按文档的升序
+	db.COLLECTION_NAME.find().sort({KEY:1}) -- 1升序，-1降序

@@ -1,0 +1,52 @@
+org.apache.commons.dbutils.AbstractQueryRunner
+	|
+	+org.apache.commons.dbutils.QueryRunner
+
+1.自动管理事务
+	QueryRunner(DataSource ds);//构造
+	int update(String sql, Object... params);
+	<T> T query(String sql, ResultSetHandler<T> rsh, Object... params);
+2.手动管理事务
+	QueryRunner();//构造
+	int update(Connection conn, String sql, Object... params);
+	<T> T query(Connection conn, String sql, ResultSetHandler<T> rsh, Object... params);
+
+------------------------------------------------------------------------------------------
+
+org.apache.commons.dbutils.DbUtils
+    提供了一些用于释放资源和管理事务的方法, 对异常也做了处理. 
+	void static commitAndCloseQuietly(Connection conn);
+	void static rollbackAndCloseQuietly(Connection conn);
+	void boolean loadDriver(String driverClassName;
+
+--------------------------------------------------------------------------------------------
+
+org.apache.commons.dbutils.ResultSetHandler<T>
+
+实现类:
+    ArrayHandler：把结果集中的第一行数据转成对象数组.
+
+    ArrayListHandler：把结果集中的每一行数据都转成一个数组，再存放到List中.
+
+    BeanHandler：将结果集中的第一行数据封装到一个对应的JavaBean实例中.
+	BeanHandler(Class<T> type)//构造
+
+    BeanListHandler：将结果集中的每一行数据都封装到一个对应的JavaBean实例中，存放到List里.
+	BeanListHandler(Class<T> type) 
+
+    ColumnListHandler：将结果集中某一列的数据存放到List中.
+	ColumnListHandler(String columnName)
+	ColumnListHandler(int columnIndex)
+
+    KeyedHandler(name)：将结果集中的每一行数据都封装到一个Map<列名,列值>里，再把这些map再存到一个map里，其key为指定的key.
+	KeyedHandler(String columnName)
+	KeyedHandler(int columnIndex)
+
+    MapHandler：将结果集中的第一行数据封装到一个Map里，key是列名，value就是对应的值.
+
+    MapListHandler：将结果集中的每一行数据都封装到一个Map里，然后再存放到List.
+
+    ScalarHandler: 用于做单值查询的情况.
+	ScalarHandler()
+	ScalarHandler(String columnName)
+	ScalarHandler(int columnIndex)

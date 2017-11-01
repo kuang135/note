@@ -1,0 +1,23 @@
+条件分支语句
+    if--then--end if
+    if--then--else--end if
+    if--then--elsif--then--else--end if
+编写一个过程，可以输入一个雇员名，如果该雇员的工作低于2000，就给该雇员的工作增加10%
+create or replace procedure k_pro1(kName varchar2) is
+v_sal emp.sal%type;
+begin
+  select sal into v_sal from emp where ename=kName;
+  if v_sal<2000 then
+    update emp set sal=sal*1.1 where ename=kName;
+  end if;
+end;
+
+exec k_pro1('SCOTT');
+
+循环语句
+    loop--exit when--end loop
+    while--loop--end loop
+    for--loop--end loop
+
+顺序控制语句：goto，null
+    null语句不会执行任何操作，可以提高pl/sql的可读性

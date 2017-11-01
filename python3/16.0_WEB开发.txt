@@ -1,0 +1,41 @@
+在Web应用中，服务器把网页传给浏览器，实际上就是把网页的HTML代码发送给浏览器，让浏览器显示出来。
+而浏览器和服务器之间的传输协议是HTTP.
+
+一个Web应用的本质就是：
+	1.浏览器发送一个HTTP请求；
+	2.服务器收到请求，生成一个HTML文档；
+	3.服务器把HTML文档作为HTTP响应的Body发送给浏览器；
+	4.浏览器收到HTTP响应，从HTTP Body取出HTML文档并显示。
+	
+接受HTTP请求、解析HTTP请求、发送HTTP响应这些底层代码由专门的服务器软件实现，
+我们用Python专注于生成HTML文档，这就需要一个统一的接口，就是WSGI：Web Server Gateway Interface。
+Python内置了一个WSGI服务器，这个模块叫wsgiref
+
+1.编写hello.py，编写一个符合WSGI标准的HTTP处理函数
+	def application(environ, start_response):
+		start_response('200 OK', [('Content-Type', 'text/html')])
+		return [b'<h1>Hello, web!</h1>']
+		
+2.编写server.py，WSGI服务器来调用处理函数
+	# 从wsgiref模块导入:
+	from wsgiref.simple_server import make_server
+	# 导入我们自己编写的application函数:
+	from hello import application
+
+	# 创建一个服务器，IP地址为空，端口是8000，处理函数是application:
+	httpd = make_server('', 8000, application)
+	print('Serving HTTP on port 8000...')
+	# 开始监听HTTP请求:
+	httpd.serve_forever()
+	
+3.运行
+	linux -- python3 server.py
+	windows -- d:\python\Python35\python d:python\my\server.py
+	
+4.访问
+	http://192.168.1.85:8000/
+	http://localhost:8000/
+	
+无论多么复杂的Web应用程序，入口都是一个WSGI处理函数。
+HTTP请求的所有输入信息都可以通过environ获得，HTTP响应的输出都可以通过start_response()加上函数返回值作为Body。
+	

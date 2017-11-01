@@ -1,0 +1,87 @@
+流程定义,流程部署
+	act_ru_deployment: 流程部署对象表
+	act_ru_procdef: 流程定义表
+	act_ge_bytearray: 资源文件表(.bpmn和.png)
+	act_ge_property: 主键生成策略表(生成下一个部署ID的值),使用activiti的版本等信息
+
+流程定义:
+    通过插件画图创建(BPMN文件和流程图)
+
+流程部署:
+    1.通过文件名部署
+	RepositoryService repositoryService = processEngine.getRepositoryService();//与流程部署和流程定义相关的api
+	DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();//得到部署builder对象
+	deploymentBuilder.name("HelloWorld流程");//指定部署的名字
+	deploymentBuilder.addClasspathResource("diagrams/HelloWorld.bpmn");//加载流程定义的资源-一次只能加载一个
+	deploymentBuilder.addClasspathResource("diagrams/HelloWorld.png");//加载流程定义的资源-一次只能加载一个
+	Deployment deployment = deploymentBuilder.deploy();//发布的动作,会将数据保存在数据库中。	
+
+    2.通过zip文件流部署
+	//将HelloWorld.bpmn和HelloWorld.png压缩为zip文件放入classpath下
+	//加载类路径下的流程定义文件的zip文件流
+	InputStream in = this.getClass().getClassLoader().getResourceAsStream("diagrams/HelloWorld.zip");
+	ZipInputStream zipInputStream=new ZipInputStream(in);
+	//流程刚开始都由仓库管理：流程的原材料管理
+	RepositoryService repositoryService = processEngine.getRepositoryService();//与流程部署和流程定义相关的api
+	DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();//得到部署对象
+	deploymentBuilder.name("HelloWorld流程test流程部署zip");//指定部署的名字-
+	deploymentBuilder.addZipInputStream(zipInputStream);//传入zip流
+	Deployment deployment = deploymentBuilder.deploy();//发布的动作。--会将数据保存在数据库中
+
+流程部署信息查询, act_re_deployment 表
+	RepositoryService repositoryService = processEngine.getRepositoryService();//流程如果还没有运行,只有RepositoryService可以操作
+	DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();//部署查询对象
+	List<Deployment> list = deploymentQuery.list();//列表显示
+	if(list!=null && list.size()>0){
+		for (Deployment dm : list) {
+			System.out.println("部署id："+dm.getId()); 
+			System.out.println("部署名称："+dm.getName()); 
+			System.out.println("部署时间："+dm.getDeploymentTime());
+			System.out.println("******************************");
+		}
+	}
+
+
+流程定义信息查询, act_re_procdef 表
+	RepositoryService repositoryService = processEngine.getRepositoryService();
+	ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();//创建流程定义查询对象,通过这个对象查询对应表的数据
+	List<ProcessDefinition> list = processDefinitionQuery.list();
+	if(list!=null && list.size()>0){
+		for (ProcessDefinition pd : list) {
+			System.out.println("流程定义的ID："+pd.getId()); //key：版本：随机生成数
+			System.out.println("流程定义的key："+pd.getKey()); //bpmn的properties视图中process的Id
+			System.out.println("流程定义的名称："+pd.getName()); //bpmn的properties视图中process的Name
+			System.out.println("流程定义的版本："+pd.getVersion());
+			System.out.println("流程定义的bpmn："+pd.getResourceName());
+			System.out.println("流程定义的图片："+pd.getDiagramResourceName());
+			System.out.println("流程部署id："+pd.getDeploymentId());
+			System.out.println("******************************");
+		}
+	}
+
+删除流程部署实例
+	String deploymentId="1";
+	RepositoryService repositoryService = processEngine.getRepositoryService();
+	repositoryService.deleteDeployment(deploymentId);//根据部署id删除部署对象数据,只能删除没有启动或者已经结束的流程
+	//repositoryService.deleteDeployment(deploymentId, true);//删除部署对象数据,级联删除,可以删除正则执行的流程
+
+将流程图复制到本地
+	RepositoryService repositoryService = processEngine.getRepositoryService();
+	String deploymentId="501";
+	String resourceName="";//资源名称
+	List<String> list = repositoryService.getDeploymentResourceNames(deploymentId);
+	if(list!=null & list.size()>0){
+		for (String str : list) {
+			if(str.indexOf("png")>0){
+				resourceName=str;//默认为diagrams/xxx.png
+			}
+		}
+	}
+	InputStream in = repositoryService.getResourceAsStream(deploymentId, resourceName);//得到资源的流
+	File file = new File("e:/"+resourceName);
+	org.apache.commons.io.FileUtils.copyInputStreamToFile(in, file);//用这个不需要关闭流
+
+流程定义的修改
+    流程定义没有修改功能,使用流程的版本来控制,
+    即使用流程定义的key(act_ru_procdef表中的KEY_)来启动后,引擎自动使用最新的流程定义来启动流程,
+    而之前未完成的旧的流程,依然按照旧的流程执行.

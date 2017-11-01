@@ -1,0 +1,24 @@
+插入数据
+    insert into student values(1,'杜兰特','男','01-1月-1988',1);
+插入部分(不允许为空的必须插入)
+    insert into student(studentid,studentname) values(4,'韦德');
+更改日期格式,临时生效
+    alter session set nls_date_format='yyyy-mm-dd';
+用to_data函数操作日期数据
+    insert into student(studentid,studentname,birthday) values(4,'姚明',to_date('1988-01-31','yyyy-mm-dd'));
+用子查询插入数据
+    insert into myemp(id,name,dept) select empno,ename,deptno from emp where deptno=10;
+
+
+修改数据
+    update student set birthday='1985-12-12',salary=salary/2 where studentid=1;
+用子查询更新数据
+    update emp set (job,sal,comm)=(select job,sal,comm from emp where ename='SMITH') where ename='SCOTT';
+
+
+删除数据
+    delete from student;删除所有记录，表结构还在，写日志，可以恢复，速度慢
+    truncate table student;删除所有记录，表结构还在，不写日志，不可恢复，速度快
+保存点恢复
+    savepoint a;
+    rollback to a;

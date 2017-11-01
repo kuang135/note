@@ -1,0 +1,37 @@
+分组函数max,min,avg,sum,count
+    select max(sal) as "最高工资",min(sal) as "最低工资" from emp;
+子查询
+    select ename,sal from emp where sal=(select max(sal) from emp);
+group by 对查询的结果分组统计
+    select avg(sal),max(sal),deptno from emp group by deptno;
+    select avg(sal),max(sal),deptno,job from emp group by deptno,job;
+having 限制分组显示结果
+    select deptno,avg(sal) from emp group by deptno having avg(sal)>2000;
+数据分组总计：
+    分组函数只能出现在选择列表，having，order by中
+    选择列中有列,表达式,分组函数，那么列和表达式必须有一个出现在group by子句中
+    group by,having,order by三者的顺序为group by,having,order by
+
+
+多表查询
+    select e.ename,d.dname,d.loc from emp e,dept d where e.deptno=d.deptno;
+    select e.ename,e.sal,s.grade from emp e,salgrade s where e.sal between s.losal and s.hisal;
+自连接
+    select e1.ename worker,e2.ename boss from emp e1,emp e2 where e1.mgr=e2.empno;
+
+
+单行子查询
+    select ename,sal from emp where sal=(select max(sal) from emp);
+多行子查询all操作符
+    select * from emp where sal>all (select sal from emp where deptno=30);
+多行子查询any操作符
+    select * from emp where sal>any (select sal from emp where deptno=30);
+多列子查询
+    select * from emp where (deptno,job)=(select deptno,job from emp where ename='SMITH');
+在from子句中使用子查询
+    select a2.ename,a2.sal,a2.deptno,a1.avgsal 
+    from emp a2,(select deptno,avg(sal) avgsal from emp group by deptno) a1
+    where a2.deptno=a1.deptno and a2.sal>a1.avgsal;
+    当在from子句中使用子查询时，该子查询会被作为一个视图来对待，叫作内嵌视图
+    当在from子句中使用子查询时，必须给子查询指定别名，不要用as
+    

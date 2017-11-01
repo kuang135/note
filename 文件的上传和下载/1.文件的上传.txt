@@ -1,0 +1,62 @@
+原理: 服务器端通过ServletInputStream reqeust.getInputStream();拿到表单中的所有数据,
+      通过第三方jar包去解析form表单中的数据,针对file的数据去做单独处理.
+
+
+jsp端设计:
+    1.必须是表单,提交方式为post
+    2.必须有<input type="file" name="upload"/>标签,name属性必须有
+    3.form添加一个属性,enctype="multipart/form-data"
+
+servlet中设计:
+    1.判断enctype的属性是否为multipart/form-data
+	boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+	if(!isMultipart) return;
+
+    2.获取封装了所有表单数据的List<FileItem>对象
+	FileItemFactory factory = new DiskFileItemFactory();
+	ServletFileUpload upload = new ServletFileUpload(factory);
+	upload.setHeaderEncoding("utf-8");//设置文件名的编码
+	List<FileItem> fileItems = upload.parseRequest(request);
+
+    3.遍历所有表单数据,判断是否为file上传的文件数据
+	for(FileItem fileItem : fileItems){
+	    if(item.isFormField()){//判断是否为file标签
+		String fieldName = fileItem.getFieldName();//name属性的值
+		String value = fileItem.getString("utf-8");//以utf-8方式获取输入的值
+		System.out.println(fieldName+"=="+value);
+	    }else{
+		String fileName = fileItem.getName();//获取文件名
+		String uuidName = UploadUtil.getUUIDfileName(fileName);//获取uuid文件名
+		String path=this.getServletContext().getRealPath("/upload");//获取上传到的目录的绝对路径
+		String uuidDir=UploadUtil.generateDir(uuidName);//生成二级文件夹
+		File dir=new File(path,uuidDir);
+		if(!dir.exists()){
+		    dir.mkdirs();//在上传到的目录中创建二级文件夹
+		}
+		File file= new File(dir,uuidName);//把文件夹和文件名组合成一个file对象
+		fileItem.write(file);//把文件写到服务器上
+		fileItem.delete();
+	    }
+	}
+
+    4.文件上传到服务器指定的目录
+	fileItem.write(file);//把文件写到服务器上
+	fileItem.delete();
+
+注意: ie上传文件的时候会带磁盘路径(截取)
+      同名文件重复上传(UUID)
+      服务器端同一个目录中文件太多(二级目录)
+
+
+文件的位置:
+    src -->系统配置文件.xml .properties .txt
+    WebRoot -->用户通过浏览器直接访问的资源
+    WEB-INF -->通过程序访问的资源,比如会员,权限访问资源
+
+
+FieldItem的方法:
+	String getFieldName();//name属性的值
+	String getString("utf-8");//输入的值
+	String getName();//文件的名称
+
+	

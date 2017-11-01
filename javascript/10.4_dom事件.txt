@@ -1,0 +1,32 @@
+事件捕获阶段：事件从最上一级标签开始往下查找，直到捕获到事件目标(target)。
+事件冒泡阶段：事件从事件目标(target)开始，往上冒泡直到页面的最上一级标签。
+
+假设一个元素div，它有一个下级元素p。
+<div>
+　　<p>元素</p>
+</div>
+这两个元素都绑定了click事件，如果用户点击了p，它在div和p上都触发了click事件，那这两个事件处理程序哪个先执行呢？事件顺序是什么？
+
+事件捕获: 当你使用事件捕获时，父级元素先触发，子级元素后触发，即div先触发，p后触发。
+事件冒泡: 当你使用事件冒泡时，子级元素先触发，父级元素后触发，即p先触发，div后触发。
+
+W3C模型
+	W3C模型是将两者进行中和，在W3C模型中，任何事件发生时，先从顶层开始进行事件捕获，直到事件触发到达了事件源元素。
+		然后，再从事件源往上进行事件冒泡，直到到达document。
+	程序员可以自己选择绑定事件时采用事件捕获还是事件冒泡，方法就是绑定事件时通过addEventListener函数，
+		它有三个参数，第三个参数若是true，则表示采用事件捕获，若是false，则表示采用事件冒泡。
+	ele.addEventListener('click',doSomething2,true)
+	true=捕获
+	false=冒泡
+
+传统绑定事件方式
+	在一个支持W3C DOM的浏览器中，像这样一般的绑定事件方式，是采用的事件冒泡方式。
+	ele.onclick = doSomething2
+	
+阻止事件的传播
+	在W3c中，使用stopPropagation()方法
+	在IE下设置cancelBubble = true；
+
+阻止事件的默认行为，例如click <a>后的跳转~
+	在W3c中，使用preventDefault()方法；
+	在IE下设置window.event.returnValue = false;

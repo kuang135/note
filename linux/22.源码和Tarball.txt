@@ -1,0 +1,34 @@
+软件安装：
+1.下载源代码，编译生成二进制文件
+	gcc -- 修改一个源文件，就要全部重新编译
+
+2.make与config
+  执行make时，会在当前目录下搜索Makefile或makefile，Makefile里面记录了源码如何编译的详细信息。
+  软件开发商通常会写一个名为config或configure的检测程序，来检测用户的操作环境，
+  检测完毕后，会自动新建Makefile文件。
+	make -- 修改某个源文件，针对该源文件进行编译
+
+
+Tarball软件：
+  将软件源码先以tar打包，再压缩，一般为*.tar.gz或*.tgz。
+  将Tarball解压后，一般会有:
+	源代码文件
+	检测程序文件( config 或 configure )
+	简易说明与安装说明( INSTALL 或 README )
+
+Tarball软件的安装步骤：
+	1.取得*.tar.gz文件，并解压
+	2.查阅INSTALL和README
+	3.根据INSTALL和README的内容安装相关软件(非必要)
+	4.以config检测操作环境，建立Makefile
+	5.编译，meke操作
+	6.安装
+Tarball软件安装的命令执行方式：
+	1.安装gcc
+	2.下载源码包
+	3.解压源码包到指定目录
+	4.进入解压目录
+	5.执行./configure --prefix 安装目录    -- 定义需求功能选项，检测系统环境，生成Makefile
+	7.make -- make依据Makefile中的默认工作进行编译
+	6.make clean -- make会读取Makefile中关于clean的工作，非必须
+	8.make install -- ake会依据Makefile中关于install的选项，将上一步编译完成的数据安装到默认的目录中

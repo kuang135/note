@@ -1,0 +1,33 @@
+1.jdbc_odbc桥连接方式，data source name要自己设置
+	Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	Connection con=DriverManager.getConnection("jdbc:odbc:data source name","scott","cat");
+	Statement sm=con.createStatement();
+	ResultSet rs=sm.executeQuery("select * from emp");
+	while(rs.next){
+		System.out.println("员工姓名："+rs.getString(2));
+    	}
+
+2.jdbc连接方式，引入oracle驱动包
+	Class.forName("oracle.jdbc.driver.OracleDriver");
+	Connection con=DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:myOrcl1","scott","cat");
+	Statement sm=con.createStatement();
+	ResultSet rs=sm.executeQuery("select * from emp");
+	while(rs.next){
+		System.out.println("员工姓名："+rs.getString(2));
+    	}
+
+3.分页显示
+	int rowCount;//查询得到
+	int pageSize=20;//自己设定
+	int pageNow;//页面传入
+	int pageCount=(int)Math.ceil((float)rowCount/page.Size);//显示到页面
+	int end=pageNow*pageSize;//rownum<=end
+	int start=(pageNow-1)*pageSize+1;//num>=start
+	select * from 
+		(select a.*,rownum rn from 
+			(select * from emp) a 
+		where rownum<=end) 
+	where rn>=start;
+
+4.操作日期数据，to_data函数
+	insert into student(studentid,studentname,birthday) values(4,'姚明',to_date('1988-01-31','yyyy-mm-dd'));

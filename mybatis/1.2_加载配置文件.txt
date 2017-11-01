@@ -1,0 +1,23 @@
+Configuration：Mybatis的所有配置信息
+Configuration会创建Executor，StatementHandler，PameterHandler，ResultSetHandler，这四个对象在创建的时候，都会被InterceptorChain拦截。
+
+加载配置文件的原理：
+	InputStream inputStream = Resources.getResourceAsStream( "mybatis-config.xml");
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+	//SqlSessionFactory 的 build()
+	XMLConfigBuilder parser = new XMLConfigBuilder(inputStream, environment, properties);
+	return build(parser.parse());
+
+	//XMLConfigBuilder 的 pares()
+	if (parsed) { //配置文件只加载一次
+		throw new BuilderException("Each XMLConfigBuilder can only be used once.");
+	}
+	parsed = true;
+	parseConfiguration(parser.evalNode("/configuration")); //解析config.xml
+	return configuration;
+
+	//parseConfiguration() 里的 mapperElement() 
+	InputStream inputStream = Resources.getResourceAsStream(resource);
+	XMLMapperBuilder mapperParser = new XMLMapperBuilder(inputStream, configuration, resource, configuration.getSqlFragments());
+	mapperParser.parse(); //解析mapper.xml

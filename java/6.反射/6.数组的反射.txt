@@ -1,0 +1,35 @@
+具有相同维数和元素类型的数组属于同一类型，即具有相同的Class实例对象。
+	int[] a1=new int[3];
+	int[] a2=new int[4];
+	int[][] a3=new int[3][4];
+	String[] a4=new String[3];
+	System.out.println(a1.getClass()==a2.getClass()); //true
+	System.out.println(a1.getClass()==a3.getClass()); //false
+	System.out.println(a1.getClass()==a4.getClass()); //false
+
+
+代表数组的Class实例对象的getSuperClass()方法返回的父类为Object类对应的Class。
+
+基本类型的一维数组可以被当做Object类型使用，不能当做Object[]类型使用；
+非基本类型的一维数组，既可以当做Object类型使用，又可以当做Object[]类型使用。
+
+Array.asList()方法处理int[]和String[]时的差异？
+
+Array工具类用于完成对数组的反射操作
+	private static void printObj(Object obj){
+		Class clazz=obj.getClass();
+		if(class.isArray()){
+			int len=Array.getLength(obj);
+			for(int i=0;i<len;i++){
+				System.out.println(Array.get(obj,i));
+			}
+		}else{
+			System.out.println(obj);
+		}
+	}
+如何得到数组中元素的数据类型？
+    只能得到数组中某个具体元素的数据类型，不能得到数组的数据类型
+	Object[] objs=new Object[]{"hello",124,true};
+	for(Object obj:objs){
+		System.out.println(obj.getClass().getName());
+	}

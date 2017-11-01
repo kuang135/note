@@ -1,0 +1,36 @@
+Method类代表某个类中的一个成员方法
+
+得到类中的某一个方法：
+	Method methodCharAt=String.class.getMethod("charAt"，int.class);
+调用方法：
+	通常方法：str.charAt(1);
+	反射方法：methodCharAt.invoke(str,1);
+如果传递给Method对象的invoke()方法的第一个参数为null，说明对应的是一个静态方法。
+
+调用main方法：
+	Method mainMethod=Class.forName("ClassName").getMethod("main"，String[].class);
+	mainMehod.invoke(null,(Object)new String[]{"xxx"});
+      或mainMehod.invoke(null,new Object[]{new String[]{"xxx"}});
+
+为什么要用反射的方式去调？
+	可以根据类名去启动某个类，写源程序的时候不知道要执行哪个类，运行的时候才知道。
+
+写一个程序，该程序根据用户提供的类名去执行这个类的main方法
+public class MethodTest {
+	public static void main(String[] args) throws Exception {
+		//直接调用
+		//Person.main(new String[]{"你好","我叫kuang"});
+		//反射调用
+		Method mainMethod=Class.forName(args[0]).getMethod("main", String[].class);
+		//注意：args[0]必须是类名的全称，比如com.test.Person
+		mainMethod.invoke(null, (Object)new String[]{"你好","我叫kuang"});
+		
+	}
+}
+public class Person {
+	public static void main(String[] args){
+		for(String arg:args){			
+			System.out.println(arg);
+		}
+	}
+}

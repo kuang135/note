@@ -1,0 +1,5 @@
+反射就是把Java类中的各种成分映射成相应的java类。
+属性→Field
+方法→Method
+构造器→Constructor
+包→Package

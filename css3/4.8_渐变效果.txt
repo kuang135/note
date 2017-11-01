@@ -1,0 +1,21 @@
+线性渐变
+	CSS3 提供了linear-gradient 属性实现背景颜色的渐变功能。在以前，这种效果必须采用图片才能实现的。
+	linear-gradient(方位, 起始色, 末尾色)
+		方位	可选参数，渐变的方位。可以使用的值有：to top、to top right、to right、to bottom、to bottom left、to left、to top left。
+		起始色	必选参数，颜色值
+		末尾色	必选参数，颜色值
+	举例
+		//结合背景，并使用透明渐变实现强大层次感
+		background-color: red;
+		background-image: linear-gradient(to top right, rgba(0,0,0,0.6),rgba(0,0,0,0));
+		//从某个项目中拷过来的
+		background: -moz-linear-gradient(top, #FFF,#F2F4F6);
+		background: -webkit-gradient(linear, 0 0, 0 100%, from(#FFF), to(#F2F4F6));
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFFFFF,endColorstr=#f3f5f6,grandientType=1);
+		
+径向渐变
+	CSS3 提供了径向渐变，也叫做放射性渐变：radial-gradient 属性值。它是从一个点向四周发散的方式扩展
+	radial-gradient(方位, 起始色, 末尾色)
+		方位	可选参数，径向的方位。可以使用的值有：像素、百分比、固定值，或复合搭配使用
+		起始色	必选参数，颜色值
+		末尾色	必选参数，颜色值

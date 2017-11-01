@@ -1,0 +1,36 @@
+Struts2的注解开发，底层采用插件扫描机制，需要导入 struts2-convention-plugin-2.3.15.3.jar
+
+
+jar包中的struts-plugin.xml中的配置:
+	<constant name="struts.convention.package.locators" value="action,actions,struts,struts2"/> 
+	表示Struts2 插件自动扫描 action、actions、struts、struts2 四个包及其子包 （使用注解的Action必须位于四个包中）
+
+	<constant name="struts.convention.action.suffix" value="Action"/>
+	表示扫描以Action结尾后缀名的类 
+
+主要注解:
+	@Action 配置访问路径 <action> -- 可以用在类上,也可以用在方法上
+	@Result 配置结果页面 <result> -- 用在类上
+	@ParentPackages 父包 <package extends > -- 用在类上 
+	@Namespace 命名空间 <package namespace > -- 用在类上
+	@ParentPackage("struts-default")
+
+
+
+举例:
+	@ParentPackage("struts-default")
+	@Namespace("/")
+	public class BookAction extends ActionSupport implements ModelDriven<Book> {
+
+		private Book book = new Book();
+		@Override
+		public Book getModel() {
+			return book;
+		}
+
+		@Action(value = "book_add", results = { @Result(name = "success", location = "/index.jsp") })
+		public String add() {
+			bookService.saveBook(book);
+			return NONE;
+		}
+	}

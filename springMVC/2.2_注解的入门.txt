@@ -1,0 +1,77 @@
+1.web.xml中配置前端控制器
+	<servlet>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+2.配置spring配置文件(DispatcherServlet-servlet.xml)
+  名字为ServletName的Servlet会加载WEB-INF/ServletName-servlet.xml的配置文件,也可以使用<init-param>标签.	
+	<!-- 注解驱动,AnnotationDrivenBeanDefinitionParser会注册RequestMappingHandlerMapping和RequestMappingHandlerAdapter -->
+	<mvc:annotation-driven/>
+	<!-- 配置扫描器，使得 @Controller 注解生效 -->
+	<context:component-scan base-package="cn.itcast.controller"/>
+	<!-- 定义视图解析器,prefix+viewName(hello)+suffix -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 前缀 -->
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<!-- 后缀 -->
+		<property name="suffix" value=".jsp"/>
+	</bean>
+
+3.编写HelloController2
+	@RequestMapping("/test")
+	@Controller
+	public class HelloController2 {
+	    @RequestMapping("/hello2")
+	    public ModelAndView test1(){
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("hello");//视图的文件名(没有后缀
+		mv.addObject("message", "Hello SpringMVC annotation");//添加模型数据,任意POJO对象
+		return mv;
+	    }
+	}
+
+4.编写hello.jsp
+	<html>
+		<head>
+		</head>
+		<body>
+			<h1>${message }</h1>
+		</body>
+	</html>
+
+5.访问: http ://... .../test/hello2.do
+
+
+特别注意: 使用 <mvc:annotation-driven/> 的原理
+	  org.springframework.web.servlet包中的DispatcherServlet.properties中配置的HandlerMapping和HandlerAdapter是
+		org.springframework.web.servlet.HandlerMapping=org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,\
+			org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping
+		org.springframework.web.servlet.HandlerAdapter=org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,\
+			org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,\
+			org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter
+	  但是DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter已经废弃,
+	  推荐使用RequestMappingHandlerMapping和RequestMappingHandlerAdapter
+	  org.springframework.web.servlet.config.AnnotationDrivenBeanDefinitionParser类中有说明,
+	  使用<mvc:annotation-driven/>,就会注册RequestMappingHandlerMapping和RequestMappingHandlerAdapter
+
+		A BeanDefinitionParser that provides the configuration for the <annotation-driven/> MVC namespace element. 
+
+		This class registers the following HandlerMappings:
+
+		RequestMappingHandlerMapping ordered at 0 for mapping requests to annotated controller methods. 
+		BeanNameUrlHandlerMapping ordered at 2 to map URL paths to controller bean names. 
+
+		Note: Additional HandlerMappings may be registered as a result of using the <view-controller> or the <resources> MVC namespace elements. 
+
+		This class registers the following HandlerAdapters: 
+
+		RequestMappingHandlerAdapter for processing requests with annotated controller methods. 
+		HttpRequestHandlerAdapter for processing requests with HttpRequestHandlers. 
+		SimpleControllerHandlerAdapter for processing requests with interface-based Controllers. 
+		This 

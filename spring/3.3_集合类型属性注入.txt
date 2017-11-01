@@ -1,0 +1,67 @@
+Spring 对每个常用集合对象，提供单独元素完成注入 
+	List 对象(包括数组) ---- <list> 元素
+	Set 对象 ---- <set> 元素
+	Map对象 ---- <map>元素
+	Properties 对象 ---- <props> 元素 
+
+主要应用: 框架的配置
+
+编写
+    public class CollectionBean {
+	private List<String> list;
+	private Set<Integer> set;
+	private Map<String, Integer> map;
+	private Properties properties;
+	
+	public void setList(List<String> list) {
+	    this.list = list;
+	}
+	public void setSet(Set<Integer> set) {
+	    this.set = set;
+	}
+	public void setMap(Map<String, Integer> map) {
+	    this.map = map;
+	}
+	public void setProperties(Properties properties) {
+	    this.properties = properties;
+	}
+    }
+
+配置
+    <bean id="collectionBean" class="cn.itcast.bean.CollectionBean">
+
+		<!-- 注入List -->
+		<property name="list">
+			<list>
+				<!-- value注入简单类型，ref注入复杂类型 -->
+				<value>abc</value>
+				<value>def</value>
+				<value>qwe</value>
+			</list>
+		</property>
+
+		<!-- 注入Set -->
+		<property name="set">
+			<set>
+				<value>10</value>
+				<value>20</value>
+			</set>
+		</property>
+
+		<!-- 注入Map -->
+		<property name="map">
+			<map>
+				<entry key="qaz" value="11" />
+				<entry key="wsx" value="22" />
+			</map>
+
+		</property>
+		<!-- 注入Properties -->
+		<property name="properties">
+			<props>
+				<prop key="qwe">1234</prop>
+				<prop key="asd">5678</prop>
+			</props>
+		</property>
+
+    </bean>

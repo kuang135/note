@@ -1,0 +1,80 @@
+一个项目一个对象
+
+var projectObj = (function(){
+	return {
+		Map: function Map() {
+			if (!(this instanceof Map)) {
+				throw new Error('Do not invoke without new.');
+			}
+			var entry = {};
+			this.put = function(key, value) {
+				if(typeof key !== 'string') {
+					throw new Error('key must be string.');
+					
+				}
+				entry[key] = value;
+				return entry;
+			};
+			this.get = function(key) {
+				if (typeof key !== 'string') {
+					throw new Error('key must be string.');
+				}
+				if (Object.prototype.hasOwnProperty.call(entry, key)) {
+					return entry[key];
+				} else {
+					undefined;
+				}
+			};
+			this.remove = function(key) {
+				if (typeof key !== 'string') {
+					throw new Error('key must be string.');
+				}
+				delete entry[key]
+				return entry;
+			};
+			this.removeAll = function() {
+				for(var property in entry) {
+					delete entry[property];
+				}
+				return entry;
+			};
+			this.each = function(action) {
+				for (var property in entry) {
+					if (Object.prototype.hasOwnProperty.call(entry, property)) {
+						action(property, entry[property]);
+					}
+				}
+			};
+		},
+		Validator: {
+			isBlank : function(str) {
+				if (typeof str === 'string') {
+					return !(str.trim());
+				} else {
+					throw new Error('type of parameter must be string.');
+				}
+			},
+			isEmailAddress : function(str) {
+				if (typeof str === 'string') {
+					return /^[a-zA-Z0-9\-]+@[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3})$/.test(str);
+				} else {
+					throw new Error('type of parameter must be string.');
+				}
+			},
+			cookieEnabled : function() {
+				return navigator.cookieEnabled;
+			}
+		}
+	};
+})();
+
+var m = new projectObj.Map();
+m.put('age', 11);
+m.put('name', 'kuang');
+m.each(function(key, value){
+	console.log(key + ': ' + value);
+});
+
+projectObj.Validator.isEmailAddress('ywk@163.com');
+projectObj.Validator.isBlank('	d');
+projectObj.Validator.isBlank('	');

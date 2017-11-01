@@ -1,0 +1,26 @@
+超链接归类到UL里
+	1.从语义不明确，如果外部包含UL 可以理解为标签列表；
+	2.从CSS 布局排版上，UL 作为一个整体，更容易统一排版；
+	3.从SEO 角度考虑，大量a 标签有可能会被判定堆积关键字嫌疑，从而导致网站降权，
+	  用UL 包含判断则让搜索引擎判定为有条例的列表，对搜索引擎更加友好。
+	li {
+		display: inline-block;
+		width: 100px;
+		height: 35px;
+		line-height: 35px;
+	}
+	li a {
+		display: block;
+	}
+
+<figcaption>标签，为figure的第一个标签或最后一个标签，
+把标题和其他图片有关的简要信息都归于<figcaption>可以达到更好的排版效果。
+
+section和div
+	div没有语义，用来页面布局和css样式以及js调用
+		1)如果是页面布局，且不是header，footer之类的专属区域，都应该使用div
+		2)如果只是单纯的对一段内容进行css样式定义，那么也应该使用div
+		3)如果想对一段内容进行js控制，那么也应该使用div
+	section具有语义，表示一段文档中的章节，比如包含一个标题和一个锻炼，而大纲规范中，至少要包含一个标题
+		nav，section，body需要标题，div，header，footer不需要标题，nav可以没有标题
+		section最好不要用于布局和css样式定义

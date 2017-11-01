@@ -1,0 +1,27 @@
+复合变量：用于存放多个值的变量，pl/sql记录，pl/sql表，嵌套表，varray
+
+pl/sql记录：类似于高级语言中的结构体(类)
+	引用时，必须加记录变量作为前缀(记录变量.记录成员)
+    declare
+	--定义一个pl/sql记录类型 emp_record_type,类型包含三个数据name,salary,title
+	type emp_record_type is record(name emp.ename%type,salary emp.sal%type,title emp.job%type);
+	--定义了一个my_record变量，这个变量的类型是emp_record_type，如v_ename varchar2(5);
+	my_record1 emp_record_type;
+    begin
+	select ename,sal,job into my_record1 from emp where empno=7788;
+	dbms_output.put_line('员工：'||my_record1.name);
+    end;
+
+pl/sql表：相当于高级语言中的数组，下标没有限制
+    declare 
+	--定义一个pl/sql表类型，用于存放 emp.ename%type类型，下标为整数
+	type emp_table_type is table of emp.ename%type index by binary_integer;
+	--定义了一个my_table变量
+	my_table emp_table_type;
+    begin
+	select ename into my_table(0) from emp where empno=7788;
+	dbms_output.put_line('员工名：'||my_table(0));
+    end; 
+    --emp_talbe_type是pl/sql表类型
+    --my_table是pl/sql表变量
+    --emp.ename%type指定了表元素的类型和长度

@@ -1,0 +1,34 @@
+参数的接收:
+    1.action本身作为model对象，通过成员setter封装
+	在action中定义属性,属性名和jsp的name一致,并添加set方法
+	http://localhost:8080/struts2/user.action!add?name=kobe&age=36
+	ParametersInterceptor会帮我们注入
+	
+
+    2.创建独立model对象，页面通过ognl表达式封装
+	在action中定义一个model对象的属性,添加get,set方法
+	ognl中对象的名字user和action中getUser方法(属性)的名字一致
+	http://localhost:8080/struts2/user.action!add?user.name=kobe&user.age=36
+	ParametersInterceptor先去调用getUser(),为null,就new一个User出来,
+	然后把ognl的属性值user.name的值kobe通过setUser()方法注入到User的name属性中,
+	以后每次出现ognl,拦截器都会这么做
+
+
+    3.使用ModelDriven<T>接口，对请求数据进行封装
+	在action中提供model对象的字段,无参构造出来,实现 T getModel()方法返回该字段
+	http://localhost:8080/struts2/user.action!add?name=kobe&age=36
+	ModelDrivenInterceptor会帮我们注入
+
+
+模型驱动优先于属性驱动
+
+
+Collection获取参数
+	action中提供private List<Customer> cstms;及get,set方法
+	jsp中name的形式为cstms[0].age
+	http://localhost:8080/struts2/customers!add?cstms[0].name=kobe&cstms[0].age=36&cstms[1].name=james&cstms[1].age=30
+
+Map获取参数
+	action中提供private Map<String,Customer> map;及get,set方法
+	jsp中name的形式为map[key].value
+	http://localhost:8080/struts2/customers!add?map['one'].name=kobe&map['one'].age=36&map['two'].name=james&map['two'].age=30

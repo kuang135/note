@@ -1,0 +1,5 @@
+1.查询visual_data库的表名和记录数
+	SELECT t.table_name,t.TABLE_ROWS 
+	FROM information_schema.TABLES t 
+	WHERE TABLE_SCHEMA='visual_data'
+	ORDER BY t.TABLE_ROWS DESC LIMIT 200;

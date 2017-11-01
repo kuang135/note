@@ -1,0 +1,19 @@
+Mapper文件中包含的元素有：
+	cache –- 配置给定命名空间的缓存。
+	cache-ref -– 从其他命名空间引用缓存配置。
+	resultMap –- 映射复杂的结果对象。
+	sql –- 可以重用的 SQL 块,也可以被其他语句用 include 引用。
+	insert -– 映射插入语句
+		返回插入数据的id, useGeneratedKeys="true" keyProperty="classId" keyColumn="tableId"
+	update –- 映射更新语句
+	delete –- 映射删除语句
+	select –- 映射查询语句
+
+参数的配置
+	1.不指定类型
+		#{property}
+	2.指定类型
+		#{property,javaType=int,jdbcType=NUMERIC}
+		#{height,javaType=double,jdbcType=NUMERIC,numericScale=2} -- 数字类型指定小数点后保留的位数
+	3.指定自定义的TypeHandler
+		#{age,javaType=int,jdbcType=NUMERIC,typeHandler=MyTypeHandler}

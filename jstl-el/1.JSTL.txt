@@ -1,0 +1,92 @@
+JSTL：JavaServer Pages Standard Tag Library
+
+使用：在tomcat的WEB-INF\lib中导入jstl.jar和standard.jar
+      在jsp中添加<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+核心标签库
+    表达式操作：out,set,remove,catch
+    流程控制：if,choose when otherwise
+    迭代操作：forEach,forTokens
+    URL操作：import param,url param,redirct param
+
+<c:out>----用来显示数据的内容
+<c:set>----用来将变量存储至jsp范围中或是JavaBean的属性中
+<c:remove>-用来移除变量
+<c:catch>--用来处理异常
+<c:if>-----同if
+<c:choose>,<c:when>,<c:otherwise>--用来代替switch,case,default
+<c:forEach>----循环控制
+<c:forTokens>--用来浏览字符串中所有成员
+<c:import>-----用来包含其他静态或动态文件
+<c:url>--------用来产生一个url,对url特殊字符进行编码
+	       用于文件的上传和下载，对url进行重新(拼接jsessionid)
+<c:param>------用于在url地址后拼接参数
+<c:redirect>---用来将客户端的请求从一个jsp页面导向其他文件
+
+----------------------------------------------------------------------------------
+
+javax.servlet.jsp.tagext.JspTag（接口）
+	|
+	+javax.servlet.jsp.tagext.SimpleTag（接口）
+		|
+		+javax.servlet.jsp.tagext.SimpleTagSupport（类）
+
+SimpleTag的方法：
+	void setJspContext( JspContext pc );//将PageContext传递进来
+	void setParent( JspTag parent );//将父标签传递进来
+	JspTag getParent();
+	void setJspBody( JspFragment jspBody );//将标签体传递进来
+	void doTag();//标签执行时，执行该方法
+	
+SimpleTagSupport类：
+	定义了JspTag,JspContext,JspFragment三个成员变量，这些变量可以在子类的doTag()中使用
+	JspFragment getJspBody();
+	JspContext getJspContext();
+
+SimpleTag方法的执行顺序：
+	1.WEB容器调用标签处理器对象的setJspContext方法，将代表JSP页面的pageContext对象传递给标签处理器对象
+	2.WEB容器调用标签处理器对象的setParent方法，将父标签处理器对象传递给这个标签处理器对象。
+	  注意，只有在标签存在父标签的情况下，WEB容器才会调用这个方法。
+	3.如果调用标签时设置了属性，容器将调用每个属性对应的set方法把属性值传递给标签处理器对象。
+	4.如果简单标签有标签体，容器将调用setJspBody方法把代表标签体的JspFragment对象传递进来。
+	5.容器调用标签处理器的doTag()方法，
+	  开发人员在方法体内通过操作JspFragment对象，就可以实现是否执行、迭代、修改标签体的目的。
+
+自定义标签
+    1.编写一个类继承SimpleTagSupport类
+    2.覆盖doTag()方法
+    3.建一个tld文件，设置短名，映射标签和java类的关系
+      必须放在WEB-INF中，不能放在lib和classes中
+        <short-name>c</short-name>
+	<uri>http://java.sun.com/jsp/jstl/core</uri>
+
+	<tag>
+		<name>if</name>
+		<tag-class>org.apache.taglibs.standard.tag.rt.core.IfTag</tag-class>
+		<body-content>JSP</body-content>
+	*自定义标签的body-content里一般写scriptless
+		<attribute>
+			<name>test</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		 </attribute>
+		<attribute>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+    4.在jsp页面中用taglib指令导入标签库
+    5.使用标签
+
+
+注意：1.当自定义的标签有属性的时候，必须在标签类中添加相应的字段和set方法，在doTag中使用
+      2.在doTag中调用JspFragment的invoke(Writer out)，就可以操作标签体了
+      3.若想在标签处理器中修改标签体内容，只需在调用invoke方法时指定一个可取出结果数据的输出流对象（例如StringWriter），
+        让标签体的执行结果输出到该输出流对象中，然后从该输出流对象中取出数据进行修改后再输出到目标设备

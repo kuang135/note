@@ -1,0 +1,81 @@
+Lucene 总的来说是：
+	一个高效的，可扩展的，全文检索库
+	全部用Java 实现，无须配置
+	仅支持纯文本文件的索引(Indexing)和搜索(Search)
+	不负责由其他格式的文件抽取纯文本文件，或从网络中抓取文件的过程
+
+	
+maven依赖：
+	<dependency>
+	  <groupId>org.apache.lucene</groupId>
+	  <artifactId>lucene-core</artifactId>
+	  <version>4.10.2</version>
+	</dependency>
+  	<dependency>
+	  <groupId>org.apache.lucene</groupId>
+	  <artifactId>lucene-analyzers-common</artifactId>
+	  <version>4.10.2</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.apache.lucene</groupId>
+	  <artifactId>lucene-queryparser</artifactId>
+	  <version>4.10.2</version>
+	</dependency>
+	<dependency>
+		<groupId>cn.itcast.lucene.analyzer</groupId>
+		<artifactId>ik-analyzer</artifactId>
+		<version>2012-4.x</version>
+	</dependency>
+	
+	
+基本概念：
+	Document -- 要索引的文档
+	Field -- 文档的类型，比如标题，作者，内容，路径等
+		索引(IndexOptions)：是否根据该字段进行搜索，比如商品的图片地址不需要索引
+		存储(Field.Store)：是否在返回的结果中显示该字段
+		分词(setTokenized)：是否用该字段的部分内容进行搜索，比如商品的ID不需要分词
+	
+
+创建索引核心API：
+	Directory -- 索引操作目录
+	Analyzer -- 分词器
+	Document -- 被索引的文档
+	IndexableField -- 文档内容数据信息
+	IndexWriterConfig -- 索引生成配置信息
+	IndexWriter -- 通过函数addDocument将文档添加到索引中，实现创建索引的过程
+
+查询索引核心API：
+	QueryParser -- 查询解析器，将查询字符串解析为Query对象
+	Query -- 代表用户的查询语句
+	Term -- 词，搜索的最小单位
+	IndexReader
+	IndexSearcher -- 索引查询对象，通过函数search搜索Lucene Index，计算term weight和score并且将结果返回给用户
+	TopDocsCollector -- 返回给用户的文档集合
+	TopDocs -- 查询结果排名前n文档对象
+	ScoreDoc -- 得分文档对象
+
+内建的Query对象：	
+	TermQuery -- 词条搜索
+	NumericRangeQuery -- 范围搜索
+	MatchAllDocsQuery -- 匹配所有搜索
+	WildcardQuery -- 模糊搜索
+			?代表1个任意字符
+			*代表0或多个任意字符
+	FuzzyQuery -- 相似度搜索，采用编辑距离算法实现
+	BooleanQuery -- 布尔搜索(组合查询)
+			MUST 必须包含
+			MUST_NOT 不能包含
+			SHOULD 或
+			
+关键字高亮：
+	Formatter -- 格式化显示数据
+	Scorer -- 对切片进行评分
+	Highlighter -- 高亮组件
+	Fragmenter -- 切片处理
+	Encoder -- 编码器(如：html)
+	
+得分：
+	boost -- 在建立索引时，对每个Field设置的一种激励因子，默认值是1
+	
+分页：
+	lucene只能获取多少条数据，需手动从中选取当前页

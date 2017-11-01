@@ -1,0 +1,95 @@
+每个类型(type)都有自己的映射(mapping)或者结构定义，就像传统数据库表中的列一样
+
+查看映射
+	GET /{index}/_mapping/{type}
+	
+更新映射
+	如果一个字段在映射中已经存在，就不能修改
+		DELETE /gb
+		PUT /gb
+		{
+		  "mappings": {
+			"tweet" : {
+			  "properties" : {
+				"tweet" : {
+				  "type" :    "string",
+				  "analyzer": "english"
+				},
+				"date" : {
+				  "type" :   "date"
+				},
+				"name" : {
+				  "type" :   "string"
+				},
+				"user_id" : {
+				  "type" :   "long"
+				}
+			  }
+			}
+		  }
+		}
+	更新object类型
+		DELETE /gb
+		PUT /gb
+		{
+			"mappings": {
+				"tweet": {
+					"properties": {
+						"tweet": {
+							"type": "string"
+						},
+						"user": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"gender": {
+									"type": "string"
+								},
+								"age": {
+									"type": "long"
+								},
+								"name": {
+									"type": "object",
+									"properties": {
+										"full": {
+											"type": "string"
+										},
+										"first": {
+											"type": "string"
+										},
+										"last": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	
+	增加一个不存在的字段
+		PUT /gb/_mapping/tweet
+		{
+		  "properties" : {
+			"tag" : {
+			  "type" :    "string",
+			  "index":    "not_analyzed"
+			}
+		  }
+		}
+	
+测试映射
+	GET /gb/_analyze?field=name
+	Black-cats 
+
+	GET /gb/_analyze?field=tag
+	Black-cats 
+	
+	
+
+
+

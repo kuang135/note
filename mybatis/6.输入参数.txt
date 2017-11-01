@@ -1,0 +1,71 @@
+输入参数类型: 基本类型,pojo,HashMap
+	基本类型,通过占位符(#可以是#{1}或#{param1},$只能用${param1})或者用注解指定名称取值
+	pojo,通过对象的属性(get方法)来取值
+	HashMap,通过其key的值来匹配取值
+
+两种方式操作数据库:
+	1.sqlSession直接操作,输入参数是基本类型,pojo或HashMap,仅有一个(Object)
+	2.sqlSession获取Mapper,通过Mapper定义的方法去操作,输入参数是基本类型,pojo或HashMap,可以有多个(自定义方法)
+
+# -- 占位符,会自动识别参数类型,不需要配置parameterType
+     单参数: 基本类型自动匹配,跟名字无关;pojo以get方式,HashMap根据其key的值来取
+     多参数: 基本类型通过占位符${1}或${param1},或者用注解的方式
+	     或者将基本类型封装到pojo和HashMap中.
+	     1).在sql语句中用0,1或param1,param2占位 
+			SELECT * FROM user WHERE name = #{0} and password= #{1}
+		     或 SELECT * FROM user WHERE name = #{param1} and password= #{param2}
+			public interface UserMapper {
+				public User queryUserByNameAndPassword(String name,String password);
+			}
+
+	     2).在Mapper方法的参数上加注解来和语句#占位符的名称进行映射
+			SELECT * FROM user WHERE name = #{uname} and password= #{upassword}
+			public interface UserMapper {
+				public User queryUserByNameAndPassword(@Param("uname")String name,@Param("upassword")String password);
+			}
+
+	     3).将参数封装到pojo或HashMap中传入Mapper的方法
+			<mapper namespace="cn.itcast.dao.UserMapper" >
+			    <select id="queryUserByUserName" resultType="cn.itcast.domain.User">
+				SELECT * FROM user WHERE name = #{uname} and password= #{upassword}
+			</mapper>
+
+			public interface UserMapper {
+				public User queryUserByNameAndPassword(PojoUser puser); //pojo的属性(getUname方法)和#占位符的名称一致
+				public User queryUserByNameAndPassword(HashMap<String,Object> map); //HashMap的key和#占位符的名称一致
+			}
+
+			User user=sqlSession.selectOne("cn.itcast.dao.UserMapper.queryUserByNameAndPassword", pojo);
+			或 User user=sqlSession.selectOne("cn.itcast.dao.UserMapper.queryUserByNameAndPassword", map);
+
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+			userMapper.queryUserByNameAndPassword(pojo);
+			或 userMapper.queryUserByNameAndPassword(map);
+
+-------------------------------------------------------------------------------
+
+输入参数总结：ognl表达式
+	1.String与基本类型：_parameter
+	2.pojo：属性名
+	3.Map：_parameter.key(Map<String,String) -- _parameter可以省略
+	       key.属性名(Map<String,User>)
+	4.数组：array[索引](String[])
+		array[索引].属性名(User[])
+
+	5.List：list[索引](List<String>)
+		     list[索引].属性名(List<User>)
+
+---------------------------------------------------------------------------------------------------------------------------------------		
+	     
+#{} 实现的是sql语句的预处理参数，执行的sql中用?号代替，可以防止sql注入.
+    使用时不需要关注输入参数的数据类型，Mybatis自动实现数据类型的转换.
+    使用#{}传参时，#{}只是做占位符，与参数名无关。 
+
+${} 实现是sql语句的直接拼接，不能防止sql注入.
+    对输入参数不做数据类型转换，需要手动判断数据类型(如果是字符串,就要加'',如果是数字,就不需要加'')
+    使用${}传参时，是通过参数名获取参数的，如果没有指定参数名则可以通过value获取，如果指定则需要按照名称获取。
+    order by 使用的比较多
+
+总结：
+#{} 占位符，用于参数传递。
+${}用于SQL拼接。

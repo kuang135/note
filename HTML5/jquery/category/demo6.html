@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+
+	<div class="replaceAllcontainer">
+		<div class="inner first">Hello</div>
+		<div class="inner second">And</div>
+		<div class="inner third">Goodbye</div>
+	</div>
+
+	<script type="text/javascript">
+
+		$( "<h2>New heading</h2>" ).replaceAll( ".replaceAllcontainer > .inner" );
+	</script>
+
+
+	<div class="replaceWithcontainer">
+		<div class="inner first">Hello</div>
+		<div class="inner second">And</div>
+		<div class="inner third">Goodbye</div>
+	</div>
+
+	<script type="text/javascript">
+		$( ".replaceWithcontainer >div.second" ).replaceWith( "<h2>New heading</h2>" );
+
+	</script>
+
+</body>
+</html>

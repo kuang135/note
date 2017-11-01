@@ -1,0 +1,20 @@
+oracle树查询的最重要的就是select … start with … connect by … prior语法了
+加level可以查询出级别
+
+--菜单目录结构表
+create table tb_menu(
+	id number(10) not null, --主键id
+	title varchar2(50), --标题
+	parent number(10) --父id，顶级为0
+)
+
+查找一个节点的所有直属子节点（所有后代）
+select level,m.* from tb_menu m start with m.id=1 connect by m.parent=prior m.id ORDER SIBLINGS BY m.orderby asc;
+
+查找一个节点的所有直属父节点（祖宗）
+select * from tb_menu m start with m.id=38 connect by prior m.parent=m.id;
+
+查找一个节点的顶级父节点
+select * from tb_menu m where m.parent = 0 start with m.id=38 connect by prior m.parent=m.id;
+
+参考：http://www.cnblogs.com/linjiqin/archive/2013/06/24/3152674.html

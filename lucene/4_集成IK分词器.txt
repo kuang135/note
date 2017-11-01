@@ -1,0 +1,42 @@
+
+原始版本：https://github.com/wks/ik-analyzer
+lucene5x：https://github.com/blueshen/ik-analyzer
+
+以下是lucene4的例子
+
+1.将jar包安装到本定仓库
+	mvn install:install-file -Dfile=D:\IKAnalyzer-2012-4x.jar -DgroupId=com.kuang.lucene.analyzer -DartifactId=ik-analyzer -Dversion=2012-4.x -Dpackaging=jar
+	
+2.导入依赖
+	<dependency>
+	  <groupId>org.apache.lucene</groupId>
+	  <artifactId>lucene-core</artifactId>
+	  <version>4.10.2</version>
+	</dependency>
+  	<dependency>
+	  <groupId>org.apache.lucene</groupId>
+	  <artifactId>lucene-analyzers-common</artifactId>
+	  <version>4.10.2</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.apache.lucene</groupId>
+	  <artifactId>lucene-queryparser</artifactId>
+	  <version>4.10.2</version>
+	</dependency>
+	<dependency>
+		<groupId>com.kuang.lucene.analyzer</groupId>
+		<artifactId>ik-analyzer</artifactId>
+		<version>2012-4.x</version>
+	</dependency>
+	
+3.导入配置文件
+	IKAnalyzer.cfg.xml
+		<?xml version="1.0" encoding="UTF-8"?>
+		<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">  
+		<properties>  
+			<comment>IK Analyzer 扩展配置</comment>
+			<!--用户可以在这里配置自己的扩展字典 -->
+			<entry key="ext_dict">/ext.dic;</entry> 
+			<!--用户可以在这里配置自己的扩展停止词字典-->
+			<entry key="ext_stopwords">/stopword.dic;</entry> 
+		</properties>

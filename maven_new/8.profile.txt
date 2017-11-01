@@ -1,0 +1,28 @@
+<profiles>
+		<profile>
+			<!-- 开发环境配置 -->
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<!-- 数据库 -->
+				<jdbc.jdbcDriver>57B89679E236E5AAB2E5FCF69CC1C49AF532DDBBA6181E2B386DBA81248E253F</jdbc.jdbcDriver>
+				<jdbc.url>DDFB006CC8F104C0111835770C0A6BDE58043DDD2241393AA295A859C322D75E0D87CA415ED32B9F458596E5537A9547</jdbc.url>
+				<jdbc.username>0E20F43110169A531F0DD7C5BB81575D</jdbc.username>
+				<jdbc.password>0E20F43110169A531F0DD7C5BB81575D</jdbc.password>
+			</properties>
+		</profile>
+
+		<!-- 测试环境配置 -->
+		<!-- 生产环境配置 -->
+
+	</profiles>
+	
+各属性节点的值，用占位符"${属性名}"占位，maven在package时，会根据profile的环境自动替换这些占位符为实际属性值。
+默认情况下：maven package
+将采用默认激活的profile环境来打包，也可以手动指定环境，比如：maven package -P dev
+eclipse profile: -p dev
+将自动打包成dev环境的部署包(注：参数P为大写)
+
+

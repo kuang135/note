@@ -1,0 +1,47 @@
+一个node.js文件就是一个模块，可能是JavaScript代码，JSON或者编译过的C/C++扩展。
+
+举例
+	var http = require('http')
+	http 就是 Node.js 的一个核心模块，其内部是用 C++ 实现的，外部用 JavaScript 封装
+
+创建及加载模块
+	exports 用来声明接口，是一个普通的空对象，即 {}
+	require 用于从外部获取一个模块的接口，即所获取模块的 exports 对象。
+模块返回方法
+	添加为 exports 的属性
+	//hello.js
+	exports.sayHello = function() {
+		console.log('Hello World');
+	}
+	//使用
+	var myModule = require('./module');
+	myModule.sayHello();
+模块返回对象
+	module.exports 指向该对象
+	//hello.js
+	function Hello() { 
+		var name; 
+		this.setName = function(thyName) { 
+			name = thyName; 
+		}; 
+		this.sayHello = function() { 
+			console.log('Hello ' + name); 
+		}; 
+	}; 
+	module.exports = Hello;
+	//使用
+	var Hello = require('./hello');
+	var hello = new Hello();
+	hello.setName('kuang');
+	hello.sayHello();
+	
+------------------------------------------------------------
+
+包通常是一些模块的集合，在模块的基础上提供了更高层的抽象，相当于提供了一些固定接口的函数库。
+Node.js 的包是一个目录
+	package.json 必须在包的顶层目录下；
+	bin 目录：二进制文件
+	lib 目录；JavaScript 代码
+	doc 目录；文档 
+	test 目录：单元测试
+	

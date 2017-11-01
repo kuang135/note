@@ -1,0 +1,10 @@
+当java虚拟机要加载一个类时，到底派出哪个类加载器去加载呢？
+·首先当前线程的类加载器去加载线程中第一个类
+·如果类A中引用了类B，java虚拟机将使用加载器类A的类加载器去加载类B
+·还可以直接调用ClassLoader.loadClass()方法来指定某个类加载器去加载某个类
+
+AppClassLoade→ExtClassLoader→BootStrap
+
+每个类加载器加载类时，又先委托给其上级类加载器
+·当所有祖宗类加载器没有加载到类，回到发起者类加载器，
+  还加载不了，则抛ClassNotFoundException，不是去找发起者类加载器的儿子

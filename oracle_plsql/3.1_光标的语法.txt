@@ -1,0 +1,28 @@
+定义光标：cursor 光标名 [(参数名 数据类型[,参数名 数据类型]...)]
+	  is select 语句;
+举例：cursor c1 is select ename from emp;
+
+
+使用光标：
+    打开光标
+	open c1; --初始情况下，指针指向第一条记录
+    取一行光标的值
+	fetch c1 into pename; --把当前指针指向的记录返回，并将指针指向下一条记录
+    关闭光标
+	close c1;
+举例：
+	--查询并打印员工的姓名和薪水
+	declare
+	  cursor cemp is select ename,sal from emp;
+	  pename emp.ename%type;
+	  psal emp.sal%type;
+	begin
+	  open cemp;
+	  loop
+	    fetch cemp into pename,psal;
+	    exit when cemp%notfound; 
+	    dbms_output.put_line(pename||'的薪水是：'||psal);
+	  end loop;
+	  close cemp;
+	end;
+	/

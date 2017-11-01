@@ -1,0 +1,32 @@
+查看core
+	通过管理界面上的 Core Selector
+	
+新建Core
+	1.example目录下创建test-solr目录
+	2.将./solr下的solr.xml拷贝到test-solr目录下
+	3.在test-solr下创建test目录，并在test目录下创建conf和data目录
+	4.将example\solr\collection1\core.properties文件拷贝到example\test-solr\test下，并且修改name=test
+	5.将example\solr\collection1\conf下的schema.xml,solrconfig.xml拷贝到example\test-solr\test\conf下
+	6.修改schema.xml文件，使其配置最小化
+		<?xml version="1.0" encoding="UTF-8" ?>
+		<schema name="example" version="1.5">
+			<!-- must need -->
+			<field name="_version_" type="long" indexed="true" stored="true"/>
+			<field name="_root_" type="string" indexed="true" stored="false"/> 
+			<!-- reference database table constructe -->
+			<field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false"/> 
+			<field name="title" type="string" indexed="true" stored="true"/>
+			<field name="sell_point" type="string" indexed="true" stored="true"/>
+			<field name="price" type="long" indexed="false" stored="true"/>
+			<field name="image" type="string" indexed="false" stored="true"/>
+			<!-- define primary key, must -->
+			<uniqueKey>id</uniqueKey>
+			<!-- define field type which used upstairs -->
+			<fieldType name="string" class="solr.StrField" sortMissingLast="true"/>
+			<fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+		</schema>
+	7.修改solrconfig.xml文件，修改一些配置，大部分配置先保持默认
+		1)注释调所有的<lib>标签
+		2)所有的<str name="df">text</str> 默认搜索字段，改为 <str name="df">title</str>
+		3)注释调 <searchComponent name="elevator" class="solr.QueryElevationComponent" >，类似百度的竞价排名
+	8.启动solr：java -Dsolr.solr.home=test-solr -jar start.jar

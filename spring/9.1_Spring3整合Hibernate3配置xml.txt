@@ -1,0 +1,61 @@
+Spring整合hibernate的思想：将SessionFactory交给Spring管理和创建	
+Spring提供的LocalSessionFactoryBean是一个FactoryBean,会创建SessionFactory
+
+	AbstractSessionFactoryBean implements FactoryBean<SessionFactory>
+		// 数据库连接池
+		private DataSource dataSource;
+		public void setDataSource(DataSource dataSource) {
+		    this.dataSource = dataSource;
+		}
+		// IoC容器发现配置Bean的class是FactoryBean,就自动调用getObject方法返回,所以不需要配方法
+		public SessionFactory getObject() {
+		    return this.sessionFactory;
+		}
+	
+	LocalSessionFactoryBean extends AbstractSessionFactoryBean
+		// hibernate的常用属性
+		private Properties hibernateProperties;
+		public void setHibernateProperties(Properties hibernateProperties) {
+		    this.hibernateProperties = hibernateProperties;
+		}
+		// hbm映射文件的类路径
+		private String[] mappingResources;
+		public void setMappingResources(String[] mappingResources) {
+		    this.mappingResources = mappingResources;
+		}
+		// hbm映射文件的磁盘路径,要写 classpath:
+		private Resource[] mappingLocations;
+		public void setMappingLocations(Resource[] mappingLocations) {
+		    this.mappingLocations = mappingLocations;
+		}
+		// hibernate配置文件的磁盘路径,要写 classpath:
+		private Resource[] configLocations;
+		public void setConfigLocation(Resource configLocation) {
+		    this.configLocations = new Resource[] {configLocation};
+		}
+
+方式一: 需要hibernate.cfg.xml的xml配置,DataSource,Hiernate的常用属性,hbm映射文件都在hibernate.cfg.xml中配置
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocations" value="classpath:hibernate.cfg.xml"/>
+	</bean>
+
+方式二: 不需要hibernate.cfg.xml的xml配置
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<!-- 引用配好的数据库连接池 -->
+		<property name="dataSource" ref="dataSource"/>
+		<!-- hibernate的常用属性 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<!-- hbm映射文件的磁盘路径 -->
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:cn/itcast/domain/Book.hbm.xml</value>
+			</list>
+		</property>
+	</bean>

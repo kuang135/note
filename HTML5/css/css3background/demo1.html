@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style> 
+		body
+		{
+			background:url(https://mdn.mozillademos.org/files/4127/border.png);
+			background-size:63px 100px;
+			-moz-background-size:63px 100px; /* 老版本的 Firefox */
+			background-repeat:no-repeat;
+			padding-top:80px;
+		}
+		div
+{
+background:url(https://mdn.mozillademos.org/files/4127/border.png);
+background-size:35% 100%;
+-moz-background-size:35% 100%; /* 老版本的 Firefox */
+background-repeat:no-repeat;
+border:1px solid black;
+padding:35px;
+background-position:left;
+}
+
+#div1
+{
+background-origin:border-box;
+}
+#div2
+{
+background-origin:content-box;
+}
+
+#div3
+{
+background:url(https://mdn.mozillademos.org/files/4127/border.png),url(https://www.w3.org/2008/site/images/logo-w3c-mobile-lg);
+}
+
+
+
+	</style>
+</head>
+<body>
+	<p>上面是缩小的背景图片。</p>
+
+	<p>原始图片：<img src="https://mdn.mozillademos.org/files/4127/border.png" alt=""></p>
+	<div>
+<p>这是一个段落。</p>
+<p>这是一个段落。</p>
+<p>这是一个段落。</p>
+<p>这是一个段落。</p>
+<p>这是一个段落。</p>
+<p>这是一个段落。</p>
+<p>这是一个段落。</p>
+<p>这是一个段落。</p>
+<p>这是一个段落。</p>
+</div>
+
+<div id="div1">
+这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。
+</div>
+
+<p>background-origin:content-box:</p>
+<div id="div2">
+这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。
+</div>
+
+
+<div id="div3">
+这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。这是文本。
+</div>
+
+
+</body>
+</html>

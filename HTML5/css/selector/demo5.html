@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>属性选择器</title>
+	<style type="text/css">
+		[title]
+		{
+			color:aqua;
+		}
+		a[href]
+		{
+			color:red;
+		}
+		a[href][title]
+		{
+			color:blueviolet;
+		}
+
+		a[href="http://www.google.com"]
+		{
+			color: blue;
+		}
+
+
+		img[title~="2"]
+		{
+			border: 20px solid gray;
+		}
+		img[title~="1"]
+		{
+			border: 10px solid gray;
+		}
+
+		img[title^="hel"]
+		{
+			border: 10px solid red;
+		}
+
+	    img[title$="df"]
+		{
+			border: 10px solid blue;
+		}
+
+	    img[title*="3"]
+		{
+			border: 10px solid yellow;
+		}
+
+	    img[title|="logo"]
+		{
+			border: 10px solid #FF7F50;
+		}
+
+
+
+	</style>
+</head>
+<body>
+	<h2 title="Hello world">Hello world</h2>
+	<a title="w3c" href="http://www.w3c.org">W3School</a>
+
+	<hr />
+
+	<h2>Hello world</h2>
+	<a href="http://www.w3c.org">W3School</a>
+	<a title="w3c Home" href="http://www.w3c.org">W3School</a>
+	<a href="http://www.google.com">google</a>
+
+	<img title="logo 1" src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg" />
+	<img title="logo 2" src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg" />
+
+
+	<img title="hello" src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg" />
+	<img title="abcdf" src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg" />
+
+<img title="w3c" src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg" />
+
+
+<img title="logo" src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg" />
+<img title="logo-w3c" src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg" />
+
+</body>
+</html>

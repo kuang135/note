@@ -1,0 +1,68 @@
+用户任务: 用户操作的任务,个人任务和群组任务
+	act_ru_identitylink: 存放任务的办理人(个人和群组),表示正在执行的任务
+	act_hi_identitylink: 存放任务的办理人(个人和群组),表示历史任务
+
+表中个人和群组的区别: 个人任务的TYPE_为participant
+		      群组任务的TYPE_为candidate和participant
+
+用户任务办理人获取有几种形式：
+	1.直接指定办理人
+	2.使用流程变量
+	3.使用java类
+
+1.直接指定办理人
+	设置: 任务节点的properties的main config的assignee直接指定"张三"
+	获取: 启动流程实例之后可以查询某个用户的个人任务
+		TaskService taskService = processEngine.getTaskService();//与正在执行的任务相关的sevice，操作任务节点(userTask节点)相关。
+		String  assignee = "张三";//任务办理人
+		TaskQuery taskQuery = taskService.createTaskQuery();//创建任务的查询对象
+		taskQuery.taskAssignee(assignee);//指定任务办理人
+		List<Task> list = taskQuery.list();//查询列表
+		
+2.使用流程变量
+	设置: 任务节点的properties的main config的assignee设置变量${userID}
+	      启动流程实例的时候设置用户任务办理人
+		String processDefinitionKey="helloworld";
+		Map<String, Object> variables = new HashMap<String, Object>();
+		variables.put("userID", "张翠三");
+		RuntimeService runtimeService = processEngine.getRuntimeService();//与运行过程中有关的操作：执行对象，流程实例
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey,variables);
+	获取: 启动流程实例之后可以查询某个用户的个人任务
+		TaskService taskService = processEngine.getTaskService();//与正在执行的任务相关的sevice，操作任务节点(userTask节点)相关。
+		String  userID = "张翠三";//任务办理人
+		TaskQuery taskQuery = taskService.createTaskQuery();//创建任务的查询对象
+		taskQuery.taskAssignee(userID);//指定任务办理人
+		List<Task> list = taskQuery.list();//查询列表
+	传递: 完成办理人的任务,通过流程变量设置下一个任务的办理人
+		TaskService taskService = processEngine.getTaskService();
+		String taskId = "1304";// 正在执行的任务ID
+		Map<String, Object> variables = new HashMap<String, Object>();// 流程变量
+		variables.put("userID", "张三丰");
+		taskService.complete(taskId, variables);//使任务ID完成任务,通过流程变量来设置连线的走向
+
+3.使用java类
+	设置: 不需要设置任务节点的properties的main config的assignee
+	       写一个类implements TaskListener,重写方法
+		public void notify(DelegateTask delegateTask) {
+			String assignee="刘备";//这里的办理人可以是随意的
+			delegateTask.setAssignee(assignee);//设置办理人
+		}
+	      设置任务节点的properties的Listeners,新增一个Listener
+	获取: 启动流程实例之后可以查询某个用户的个人任务
+		TaskService taskService = processEngine.getTaskService();//与正在执行的任务相关的sevice，操作任务节点(userTask节点)相关。
+		String  userID = "刘备";//任务办理人
+		TaskQuery taskQuery = taskService.createTaskQuery();//创建任务的查询对象
+		taskQuery.taskAssignee(userID);//指定任务办理人
+		List<Task> list = taskQuery.list();//查询列表
+	传递: 改变或重新指定办理人(任务没有完成)
+		String taskId = "3408";/任务ID
+		String userId = "周芷若";//指定认领的办理者
+		TaskService taskService = processEngine.getTaskService();
+		taskService.setAssignee(taskId, userId);
+说明：
+	1)在类中使用delegateTask.setAssignee(assignee);的方式分配个人任务的办理人，
+	  此时刘备是下一个任务的办理人
+	2)通过processEngine.getTaskService().setAssignee(taskId, userId);将个人任务从一个人分配给另一个人，
+	  此时刘备不再是下一个任务的办理人，而换成了周芷若
+	3)在开发中，可以将每一个任务的办理人规定好，例如张三的领导是李四，李四的领导是王五，这样张三提交任务，
+	  就可以查询出张三的领导是李四，通过类的方式设置下一个任务的办理人

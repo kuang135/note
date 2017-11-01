@@ -1,0 +1,31 @@
+使用 @Transactional 注解
+
+步骤:
+    1.配置事务管理器
+    2.开启注解驱动事务管理
+    3.在方法上使用 @Transactional 注解
+      注解的属性可以配置事务管理的定义信息
+
+
+
+	<!-- 1.配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	或
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- 2.开启注解驱动事务管理 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+	//3.在方法上使用注解,配置事务管理的定义信息
+	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRED,readOnly=false)
+	public void transfer(Account from,Account to,double money){
+		from.setMoney(from.getMoney()-money);
+		accountDao.update(from);
+		int i=3/0;
+		to.setMoney(to.getMoney()+money);
+		accountDao.update(to);
+	}

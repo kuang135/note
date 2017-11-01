@@ -1,0 +1,139 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<!-- 当前pom的版本 -->
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 子模块中对父模块的继承 -->
+	<parent>
+  		<groupId></groupId>
+		<artifactId></artifactId>
+		<version></version>
+	</parent>
+
+	<!-- 聚合多个maven木块 -->
+	<modules>
+		<module></module>
+	</modules>
+
+	<!-- 反写的公司网址+项目名 -->
+	<groupId>com.kuang.freemarkerdemo</groupId>
+	<!-- 项目名+模块名 -->
+	<artifactId>freemarkerdemo</artifactId>
+	<!-- 大版本号.分支版本号.小版本号 -->
+	<!-- snapshot 快照
+		 alpha 内部测试
+		 beta 公测
+		 release 稳定
+		 GA 正式发布 -->
+	<version>0.0.1-SNAPSHOT</version>
+	<!-- 打包方式：jar，war，zip，pom -->
+	<packaging>war</packaging>
+
+	<!-- 项目的描述名 -->
+	<name></name>
+	<!-- 项目地址 -->
+	<url></url>
+	<!-- 项目描述 -->
+	<description></description>
+	<developers></developers>
+	<licenses></licenses>
+	<organization></organization>
+
+	<!-- 定义一些属性，下面可以通过 ${junit.version} 来引用 -->
+	<properties>
+		<junit.version>4.10</junit.version>
+	</properties>
+
+
+	<!-- 设置deploy的地址 -->
+	<distributionManagement>
+		<repository>
+			<!-- setting中server的id -->
+			<id>nexus</id>
+			<name>Nexus</name>
+			<!-- 伺服仓库的地址 -->
+			<url>http://maven.kuang.com:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus</id>
+			<name>Nexus</name>
+			<url>http://maven.kuang.com:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	
+	<!-- 依赖列表 -->
+	<dependencies>
+		<!-- 依赖项 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<!-- 依赖的范围，test，provided，compile，runtime，system，import -->
+			<scope>test</scope>
+			<type></type>
+			<!-- 设置依赖是否可选，默认为false -->
+			<optional></optional>
+			<!-- 排除依赖传递列表 -->
+			<exclusions>
+				<exclusion></exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+
+	<!-- 依赖管理，不会被引入到实际的依赖中
+		 多定义在父模块中，供子模块继承 -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency></dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+
+	<!-- 为构建行为提供相应的支持 -->
+	<build>
+		<!-- 资源文件 -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+		<!-- 插件列表 -->
+		<plugins>
+			<!-- 配置tomcat插件 -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<configuration>
+					<port>80</port>
+					<path>/</path>
+				</configuration>
+			</plugin>
+			
+			<!-- 配置jetty插件 -->
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.10</version>
+				<configuration>
+					<webAppConfig>
+						<contextPath>/</contextPath>
+					</webAppConfig>
+					<connectors>
+						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+							<port>80</port>
+						</connector>
+					</connectors>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+  
+</project>

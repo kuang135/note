@@ -1,0 +1,5 @@
+
+ExceptionMappingInterceptor在执行intercept(ActionInvocation invocation)的时候,
+如果没有异常就正常处理,有异常就将一个ExceptionHolder对象放入值栈,
+ExceptionHolder有一个属性private Exception exception;
+所以可以<s:property value="exception.message"/>来获取错误信息

@@ -1,0 +1,78 @@
+一、高级Fixture
+    @Before和@After，表示在每个测试函数执行之前或之后执行的代码。 
+    @BeforeClass，只在测试用例初始化时执行的方法，
+    @AfterClass，当所有测试执行完毕之后执行的方法
+注意：每个测试类只能有一个方法被标注为@BeforeClass 或 @AfterClass，并且该方法必须是Public和Static的。
+用处：比如测试JDBC的连接数据库和关闭连接
+
+二、限时测试。
+    @Test(timeout = 1000)，单位为毫秒
+    可以给测试函数设定一个执行时间，超过了这个时间，他们就会被系统强行终止，
+    并且系统还会向你汇报该函数结束的原因是因为超时。
+ 
+
+三、测试异常
+    @Test(expected = ArithmeticException.class)
+    使用@Test标注的expected属性，将要检验的异常传递给jUnit，这样JUnit框架就能自动检测是否抛出了指定的异常。
+
+ 
+
+四、Runner (运行器)
+    当我们把测试代码提交给JUnit框架后，框架如何来运行你的代码呢？答案就是——Runner。
+    在JUnit中有很多个Runner，他们负责调用我们的测试代码，
+    每一个Runner都有各自的特殊功能，你要根据需要选择不同的Runner来运行你的测试代码。
+    JUnit中有一个默认Runner(TestClassRunner)，如果没有指定，那么系统自动使用默认Runner来运行你的代码。
+    @RunWith(TestClassRunner.class)
+    要想指定一个Runner，需要使用@RunWith标注，并且把你所指定的Runner作为参数传递给它。
+    另外一个要注意的是，@RunWith是用来修饰类的，而不是用来修饰函数的。
+    只要对一个类指定了Runner，那么这个类中的所有函数都被这个Runner来调用。
+ 
+
+五、参数化测试。
+    有的函数的参数有许多特殊值，或者说他的参数分为很多个区域。
+    比如，一个对考试分数进行评价的函数，返回值分别为“优秀，良好，一般，及格，不及格”，因此你在编写测试的时候，至少要写5个测试。 
+    用参数化测试：
+    1.为测试类指定特殊的运行器 org.junit.runners.Parameterized
+    2.为测试类声明几个变量，分别用于存放期望值和测试所用数据
+    3.为测试类声明一个使用注解 org.junit.runners.Parameterized.Parameters 修饰的，返回值为 java.util.Collection 的公共静态方法，
+      并在此方法中初始化所有需要测试的参数对。
+    4.为测试类声明一个带有参数的公共构造函数，并在其中为第二个环节中声明的几个变量赋值
+    5.编写测试方法，使用定义的变量作为参数进行测试。
+//1
+@RunWith(Parameterized.class)
+public class SquareTest{
+//2
+private int param;
+private int expected;     
+//3
+@Parameters
+public static Collection data(){
+        return Arrays.asList(new Object[][]{
+		{2, 4},
+                {0, 0},
+               {－3, 9},
+        });
+} 
+//4
+public SquareTest(int param, int expected){
+	this.param = param;
+        this.expected = expected;
+} 
+//5
+@Test   
+public void square(){	
+	Calculator calculator = new Calculator();
+        calculator.square(param);
+        assertEquals(expected, calculator.getResult());
+    }
+ }
+
+
+六、打包测试。
+    将所有需要运行的测试类集中起来，一次性的运行完毕。
+    @RunWith(Suite.class)
+    @Suite.SuiteClasses({TestCase1.class, TestCase2.class})
+    public class AllTests(){ }
+    这个功能也需要使用一个特殊的Runner，因此我们需要向@RunWith标注传递一个参数Suite.class。
+    同时，还需要另外一个标注@Suite.SuiteClasses，来表明这个类是一个打包测试类,把需要打包的类作为参数传递给该标注就可以了。
+    有了这两个标注之后，就已经完整的表达了所有的含义，因此下面的类已经无关紧要，随便起一个类名，内容全部为空既可。

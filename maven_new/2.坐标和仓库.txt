@@ -1,0 +1,38 @@
+任何一个插件，依赖，项目构建的输出，都可以称之为构建
+所有构建均通过坐标来作为其唯一的标识
+
+	groupId：定义当前Maven项目隶属项目 
+		 <groupId>cn.imooc.maven01</groupId>
+		 建议：groupId的值就是项目的包名
+	artifactId：定义实际项目中的一个模块（主类） 
+		    <artifactId>maven01</artifactId>
+		    建议：artifactId的值就是项目名-模块名
+	version：定义当前项目的当前版本 
+		 <version>0.0.1-SNAPSHOT</version>
+	packaging：定义该项目的打包方式（jar包或者war包）
+
+
+仓库：用来管理项目的依赖
+本地仓库：setting中的 localRepository
+	<localRepository>D:\repository</localRepository>
+远程仓库：lib\maven-model-builder.jar 中的 pom
+	<repositories>
+	    <repository>
+		<id>central</id>
+		<name>Central Repository</name>
+		<url>https://repo.maven.apache.org/maven2</url>
+		<layout>default</layout>
+		<snapshots>
+		    <enabled>false</enabled>
+		</snapshots>
+	    </repository>
+	</repositories>
+镜像仓库：setting中的mirrors，一旦配置mirror，原仓库都在访问
+	</mirrors>
+	    <mirror>
+		<id>oschina</id>  <!-- 该镜像仓库的id -->
+		<mirrorOf>*</mirrorOf> <!-- 为哪个仓库配置镜像，可以用 * 匹配所有仓库 -->
+		<name>mirror of any remote repository</name>
+		<url> http://maven.oschina.net/content/groups/public/ </url> 
+	    </mirror> 
+	</mirrors>

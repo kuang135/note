@@ -1,0 +1,35 @@
+
+目的: 让tomcat初始化的时候就得到DataSource对象,放入容器,
+      通过配置,让Spring往JdbcTemplate中注入DataSource
+
+	通过配置,
+
+步骤:
+    1.配置context.xml,让tomcat初始化的时就拿到DtaSource,命名为"jdbc/mysql",放入容器
+	      <Context>
+		  <Resource name="jdbc/mysql"
+			    auth="Container"
+			    type="javax.sql.DataSource"
+			    username="root"
+			    password="password"
+			    driverClassName="com.mysql.jdbc.Driver"
+			    url="jdbc:mysql://localhost:3306/missxu"
+			    maxActive="8"
+			    maxIdle="4"
+			    maxWait="10000"/>
+	      </Context>
+
+    2.配置applicationContext.xml,
+      JndiObjectFactoryBean会根据jndiName的值去拿到一个对象
+		<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+			<property name="jndiName" value="java:/comp/env/jdbc/oracle" />
+		</bean>
+
+    3.将拿到的对象注入到JdbcTemplate中
+		<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+			<property name="dataSource" ref="dataSource" />
+		</bean>
+    
+    4.容器中的其他程序Servlet获取JdbcTemplate对象
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		JdbcTemplate jdbcTemplate = (JdbcTemplate) applicationContext.getBean("jdbcTemplate");

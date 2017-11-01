@@ -1,0 +1,39 @@
+Ext对于原生的javascript对象进行了一系列的扩展，
+源码位置 ext-4.2.1.883\src\lang
+	- Ext.Object
+		Ext.Object.chain
+		Ext.Object.each
+		Ext.Object.fromQueryString
+		Ext.Object.toQueryString
+		Ext.Object.toQueryObjects
+	- Ext.Number
+		Ext.Number.constrain
+		Ext.Number.randomInt
+		Ext.Number.toFixed
+	- Ext.String
+		Ext.String.capitalize
+		Ext.String.ellipsis
+	- Ext.Array
+		Ext.Array.clean
+		Ext.Array.difference
+		Ext.Array.each
+		Ext.Array.erase
+		Ext.Array.every
+		Ext.Array.filter
+		Ext.Array.include
+		Ext.Array.unique
+	- Ext.Function
+		Ext.Function.alias
+		Ext.Function.bind
+		Ext.Function.defer
+	- Ext.Date
+		Ext.Date.between
+		Ext.Date.format
+		Ext.Date.parse
+	- Ext.Error
+		Ext.Error.raise
+	
+Ext4.x版本提供的一大亮点就是Ext.Loader这个类的动态加载机制！
+只要遵循路径规范，即可动态加载js文件，方便把自己扩展组件动态加载进来，并且减轻浏览器的压力。
+关于动态加载机制，在4.x里使用MVC模式那是一个必备的工作。学好动态加载，以后我们去用Ext基于前台MVC模式下的开发是至关重要的。
+

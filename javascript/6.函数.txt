@@ -1,0 +1,89 @@
+函数碰到 return 直接返回，没有 return 返回 undefined
+
+3种创建方式：
+	1: function语句形式
+		function fun1(){
+			alert('fun1...');
+		};
+	2: 函数直接量的形式
+		var fun2 = function(){
+			alert('fun2...');
+		};
+	3: 构造函数形式
+		var fun3 = new Function('x','y','return x+y;');		
+不同创建方式的区别：
+	1.function语句形式 ,javascript解释器直接回去找，其他的代码就从上到下顺序执行
+	2.构造函数形式，作用域与前两种不同，它具有顶级作用域
+
+-----------------------------------------------------------------
+	
+函数的内部对象：
+	1.arguments: 与数组类似(并不是Array对象)，可以用[]访问每一个元素
+		length，确定arguments的个数
+		callee，指向拥有这个arguments对象的函数，用于与函数名解耦(递归函数)
+			function fact(number) {
+				if (number == 1) {
+					return 1;
+				} else {
+					return arguments.callee(number-1)*number;
+				}
+			}	
+	2.this: 引用函数据以执行的环境对象，匿名函数的执行环境具有全局性
+		也就说一般函数总是指向调用者，谁调用函数，this就指向谁，
+		但是匿名函数中的this通常指向window
+		fun(); 就相当于 window.fun();
+		
+---------------------------------------------------------------------------
+
+函数的方法：
+	apply()，call()，主要是绑定作用域
+	apply(): 第一个参数是运行函数的作用域，第二个参数是数组
+	call(): 第一个参数是运行函数的作用域，之后逐个列举出传递给函数的参数
+		var color = 'red';
+		var obj = {color: 'yellow'};
+		function showColor() {
+			console.log(this.color);
+		}
+		showColor.apply(window); //red
+		showColor.call(obj); //yellow
+	bind(): 参数是运行函数的作用域，这个方法会创建一个函数的实例，其this值会被绑定到传给bind()函数的值
+		var showColorOfObj = showColor.bind(obj); //创建一个函数，其this绑定到了obj
+		showColorOfObj(); //yellow
+		showColor(); //red 
+	bind()函数的原理：
+		Function.prototype.bind = function(scope) {
+			var _fn = this; //因为，内部函数要访问其外部的this
+			return function() {
+				return _fn.apply(scope, arguments); //函数外部的任何this变量都不可见
+			}
+		}
+		
+-----------------------------------------------------------------------------------
+
+函数的属性：
+	caller，保存着调用当前函数的函数的引用
+	length，表示函数希望接收的命名参数的个数
+	arguments，
+	name，
+	prototype，指向原型
+	
+-------------------------------------------------------------------------------------
+
+传递参数：函数的参数都是按值传递的
+	传递基本类型的值时，被传递的值会被复制给一个局部变量(arguments的一个元素)
+	传递引用类型的值时，会把这个值在内存中的地址复制给一个局部变量，这个局部变量的变化会反映到函数外部
+		function setName(obj) {
+            obj.name = "Nicholas"; //可以修改值
+        }
+        var person = new Object();
+        setName(person);
+        alert(person.name);    //"Nicholas"
+
+		function setName(obj) {
+            obj.name = "Nicholas"; 
+			obj = new Object();//不可以修改引用
+			obj.name = "Greg";
+        }
+        var person = new Object();
+        setName(person);
+        alert(person.name);    //"Nicholas"

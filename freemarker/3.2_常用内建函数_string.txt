@@ -1,0 +1,33 @@
+String
+	remove_beginning, remove_ending
+		${"BigPig"?remove_beginning("Big")} -- Pig
+		${"BigPig"?remove_ending("Pig")} -- Big
+		
+	keep_before, keep_after, keep_before_last, keep_after_last
+		${"Big,Pig,"?keep_before(",")} -- Big
+		${",Big,Pig"?keep_after(",")} -- Big,Pig
+		${"Big,Pig,"?keep_before_last(",")} -- Big,Pig
+		${",Big,Pig"?keep_after_last(",")} -- Pig
+		
+	length, number, split, substring, trim
+		<#list "someMOOtestMOOtext"?split("MOO") as x>${x},</#list> -- some,test,text,
+		${"ABCDEF"[2..3]} -- CD
+	
+	contains, ends_with, starts_with, index_of, last_index_of
+		<#if "piceous"?contains("ice")>It contains "ice"</#if>
+		<#if "ahead"?ends_with("head")>It ends with "head"</#if>
+		${"abcabc"?index_of("bc")} -- 1
+		
+	date, time, datetime
+		<#assign someDate = "10/25/1995"?date("MM/dd/yyyy")>
+		<#assign someTime = "15:05:30"?time("HH:mm:ss")>
+		<#assign someDatetime = "1995-10-25 03:05 PM"?datetime("yyyy-MM-dd hh:mm a")>
+		
+	html, js_string, json_string, rtf(转为富文本), url
+		${"<input type=\"text\">"?html} -- &lt;input type=&quot;text&quot;&gt;
+		${"Big Joe's \"right hand\""?js_string} -- Big Joe\'s \"right hand\"
+		${"{\"name\":\"kuang\"}"?json_string} -- {\"name\":\"kuang\"}
+		
+	replace, matches
+		${"this is a car acarus"?replace("car", "bulldozer")}
+		<#if "fxo"?matches("f.?o")>Matches.<#else>Does not match.</#if>

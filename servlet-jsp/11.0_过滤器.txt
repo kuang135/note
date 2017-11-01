@@ -1,0 +1,44 @@
+过滤器: 在具体资源执行之前会过滤,执行之后,返回的时候也过滤
+
+应用: 敏感词过滤,权限控制,全站压缩,自动登录等
+
+体系: javax.servlet.Filter (接口)
+      javax.servlet.FilterChain (接口)
+      javax.servlet.FilterConfig (接口)
+
+Filter的方法:
+    void init(FilterConfig filterConfig);
+    void doFilter(ServletRequest request, ServletResponse response, FilterChain chain);
+    void destroy(); 
+
+FilterChain的方法:
+    void doFilter(ServletRequest request, ServletResponse response);
+
+FilterConfig的方法: 
+	封装了Filter的配置信息,一个Filter对应一个FilterConfig
+	可以在web.xml中配置filter的初始化参数
+	String getFilterName();
+	String getInitParameter(String name);
+	Enumeration<String> getInitParameterNames();
+	ServletContext getServletContext();
+
+原理: 一个请求过来,先进入Filter的doFilter(req,res,chain)方法,将request和response对象传递过来,
+      如果放行,就进入FilterChain的doFilter(req,res)方法,将request和response对象传递过去,
+      doFilter(req,res)之后的语句不执行,执行资源后返回,继续执行doFilter(req,res)后的语句.
+      
+Fileter的生命周期:
+    服务器加载web应用的时候就调用init方法,初始化一个filter对象
+    服务器关闭的时候,调用destroy方法,销毁一个filter对象
+
+步骤:   1.写一个类,实现Filter接口
+	2.在web.xml文件中注册并映射过滤器的拦截资源的路径
+
+什么时候执行filter :
+    访问servlet有4种方式
+	1.地址栏直接访问
+	2.另一个servlet转发到当前的servlet
+	3.另一个servlet包含到当前的servlet
+	4.全局错误配置了当前的servlet
+    filter-mapping中的dispatcher标签提供了4个值来处理这4种方式,默认情况下为request
+	REQUEST FORWARD INCLUDE ERROR
+

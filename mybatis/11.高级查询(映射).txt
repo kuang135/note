@@ -1,0 +1,106 @@
+mybatis作为一个orm框架，也对sql的高级查询做了支持.
+使用resultMap完成一对一,一对多,多对多的映射.
+
+以订单和用户,商品,订单商品详情为例
+1.一对一(订单和用户)
+	一方添加另一方对象的属性(Order中添加一个User属性)
+	<resultMap type="cn.itcast.domain.Order" id="one2one" autoMapping="true">
+		<id property="id" column="id"/>
+		<association property="user" javaType="cn.itcast.domain.User" autoMapping="true">
+			<result property="userName" column="user_name"/>
+		</association>
+	</resultMap>
+	<select id="queryOrderByNumber1" resultMap="one2one">
+		SELECT
+			o.*,
+			u.name,
+			u.user_name,
+			u.age
+		FROM
+			tb_order o
+		LEFT JOIN tb_user u ON u.id = o.user_id
+		WHERE
+			o.order_number = #{orderNumber}
+	</select>
+
+2.一对多(订单和订单商品详情)
+	一方添加多方对象的集合属性(Order中添加一个List<OrderItemDetail>属性)
+	<resultMap type="cn.itcast.domain.Order" id="one2many" autoMapping="true" extends="one2one"> <!-- extends可以省去重复的东西 -->
+		<collection property="orderItemDetail" javaType="List" ofType="cn.itcast.domain.OrderItemDetail">
+			<id property="id" column="orderdetail_id"/>
+		</collection>
+	</resultMap>
+	<select id="queryOrderByNumber2" resultMap="one2many">
+		SELECT
+			o.*,
+			u.name,
+			u.user_name,
+			u.age,
+			od.id orderdetail_id,
+		  	od.item_id
+		FROM
+			tb_order o
+		LEFT JOIN tb_user u ON u.id = o.user_id
+		LEFT JOIN tb_orderdetail od ON od.order_id = o.id
+		WHERE
+			o.order_number = #{orderNumber}
+	</select>
+
+3.多对多(订单和商品)
+	hibernate的中间表没有对应的对象; mybatis要自己创建中间表对应的对象.
+	本方和中间表的关系是一对多,中间表和另一方的关系是一对一,
+	先创建中间表对象,在本方添加中间表对象的集合属性,在中间表对象中添加另一方对象的属性.
+	(创建OrderItemDetail,在Order中添加一个List<OrderItemDetail>属性,在OrderItemDetail中添加一个Item属性)
+	<resultMap type="cn.itcast.domain.Order" id="many2many">
+		<id property="id" column="id"/>
+		<association property="user" javaType="cn.itcast.domain.User" autoMapping="true"/>
+		<collection property="orderItemDetail" javaType="List" ofType="cn.itcast.domain.OrderItemDetail" autoMapping="true">
+			<id property="id" column="orderdetail_id"/>
+			<association property="item" javaType="cn.itcast.domain.Item" autoMapping="true">
+				<id property="id" column="item_id"/>
+			</association>
+		</collection>
+	</resultMap>
+	<select id="queryOrderByNumber3" resultMap="many2many">
+		SELECT
+			o.*,
+			u.name,
+			u.user_name,
+			u.age,
+			od.id orderdetail_id,
+			od.item_id,
+			i.item_detail,
+			i.item_name,
+			i.item_price
+		FROM
+			tb_order o
+		LEFT JOIN tb_user u ON u.id = o.user_id
+		LEFT JOIN tb_orderdetail od ON od.order_id = o.id
+		LEFT JOIN tb_item i ON i.id = od.item_id
+		WHERE
+			o.order_number = #{orderNumber}
+	</select>
+
+
+4.如果表和表之间没有主外键关系,那么就不能使用做外联结查询.
+	<sql id="tableName">tb_order</sql>	
+
+	<resultMap type="com.taotao.order.pojo.Order" id="pojoResultMap" autoMapping="true">
+		<id column="order_id" property="orderId"/>
+		<association property="orderShipping" javaType="com.taotao.order.pojo.OrderShipping" column="order_id" select="queryOrderShippingByOrderId" autoMapping="true">
+		</association>
+		<collection property="orderItems" javaType="Arraylist" ofType="com.taotao.order.pojo.OrderItem" autoMapping="true" column="order_id" select="queryOrderItemByOrderId">
+		</collection>
+	</resultMap>
+	
+	<select id="queryOrderItemByOrderId" resultType="com.taotao.order.pojo.OrderItem" parameterType="String">
+		SELECT * FROM tb_order_item WHERE order_id = #{orderId};
+	</select>
+	
+	<select id="queryOrderShippingByOrderId" resultType="com.taotao.order.pojo.OrderShipping" parameterType="String">
+		SELECT * FROM tb_order_shipping WHERE order_id = #{orderId};
+	</select>
+
+	<select id="queryList" resultMap="pojoResultMap">
+		SELECT * FROM <include refid="tableName"/>
+	</select>

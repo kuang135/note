@@ -1,0 +1,19 @@
+Semaphore: 可以控制同时访问资源的线程个数，并提供了同步机制。
+例如，实现一个文件的并发访问数。
+	Semaphore semaphore = new Semaphore(3);
+	acquire()
+	release()
+	availablePermits()
+	
+CyclicBarrier: 多个线程彼此等待，集合好后才开始执行，执行完后又在指定地点集合碰面。
+	CyclicBarrier cb = new CyclicBarrier(3);
+	await()
+	getNumberWaiting()
+	
+CountDownLatch：好比倒计时计数器，可用实现一个线程通知多个线程，也可用实现多个线程通知一个线程。
+	CountDownLatch cdAnswer = new CountDownLatch(3);
+	countDown()
+	
+Exchanger：实现两个线程之间的数据交换，每个人在完成一定的事务后想与对方交换数据，
+	第一个先拿出数据的人将一直等待第二个人拿着数据到来时，才能彼此交换数据。
+	V exchange(V x)

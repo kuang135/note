@@ -1,0 +1,30 @@
+CSS3 提供了元素变形效果，也叫做变换。它可以将元素实现旋转、缩放和平移的功能。
+属性有两个：transform 和transform-origin
+
+transform
+	none 无变换
+	translate(长度值或百分数值)	在水平方向、垂直方向或两个方向上平移元素
+	translateX(长度值或百分数值) 
+	translatY(长度值或百分数值)
+	scale(数值)
+	scaleX(数值)	在水平方向、垂直方向或两个方向上缩放元素
+	scaleY(数值)
+	rotate(角度) 	旋转元素
+	skew(角度)		在水平方向、垂直方向或两个方向上使元素倾斜一定的角度
+	skewX(角度)	
+	skewY(角度)
+	matrix(4~6 数值，逗号隔开) 指定自定义变换
+	
+transform-origin 属性可以设置变换的起点。默认情况下，使用元素的中心作为起点
+	百分数值	指定元素x 轴或y 轴的起点
+	长度值		指定距离
+	left		指定x 轴的位置
+	center
+	right
+	top			指定y 轴的位置
+	center
+	bottom
+	
+	
+3D变形
+	

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		/*
+			浮动布局以前采用div，现在采用html5标签
+				主要采用float和clear两个属性来构建
+			固定布局：长度宽度为px
+			流体布局：只要更改body元素的限定长度为auto或100%,然后左右两列分别设置20%和80%即可
+		*/
+		body {
+			/*width: 960px;*/
+			width: 100%;
+			margin: 0 auto;
+			color: white;
+		}
+		header {
+			height: 120px;
+			background-color: olive;
+		}
+		aside {
+			/*width: 200px;*/
+			width: 20%;
+			height: 500px;
+			background-color: purple;
+			float: left;
+		}
+		section {
+			/*width: 760px;*/
+			width: 80%;
+			height: 500px;
+			background-color: maroon;
+			float:right;
+		}
+		footer {
+			height: 120px;
+			background-color: gray;
+			clear:both;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		header
+	</header>
+	<aside>
+		aside
+	</aside>
+	<section>
+		section
+	</section>
+	<footer>
+		footer
+	</footer>
+</body>
+</html>

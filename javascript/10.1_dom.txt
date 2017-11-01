@@ -1,0 +1,21 @@
+节点Node，对于nodeType、nodeName、nodeValue、getAttribute等等一些对加点的定义你一定不会陌生。
+
+
+DOM的访问
+	document.getElementById
+	document.getElementsByTagName
+	document.getElementsByName
+	innerHTML
+	innerText
+DOM的CRUD
+	createElement
+	parentNode
+	childNodes
+	appendChild
+	removeChild
+	replaceChild
+	inertBefore
+	firstChild
+	previousSibling
+DOM的样式
+	给节点添加一个style属性

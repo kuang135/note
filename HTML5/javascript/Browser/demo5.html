@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript">
+		function timedMsg()
+		{
+			var t=setTimeout("alert('5 秒！')",5000)
+		}
+
+		var t;
+		function timedCount()
+		{
+			document.getElementById('txt').value=parseInt(document.getElementById('txt').value)+1;
+			t=setTimeout("timedCount()",1000)
+		}
+
+		function stopCount()
+		{
+			setTimeout("document.getElementById('txt').value=0",0);
+			clearTimeout(t);
+		}
+
+	</script>
+</head>
+<body>
+	<form>
+		<input type="button" value="显示定时的警告框" onClick = "timedMsg()">
+	</form>
+	<p>请点击上面的按钮。警告框会在 5 秒后显示。</p>
+
+
+	<form>
+		<input type="button" value="开始计时！" onClick="timedCount()">
+		<input type="text" id="txt" value="0">
+		<input type="button" value="停止计时！" onClick="stopCount()">
+	</form>
+
+	<p>请点击上面的按钮。输入框会从 0 开始一直进行计时。</p>
+	<p>点击“停止计时”按钮可以终止计时，并将计数重置为 0。</p>
+
+</body>
+</html>

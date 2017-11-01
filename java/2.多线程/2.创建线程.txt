@@ -1,0 +1,30 @@
+Thread类的源码思想
+public class Thread implements Runnable{
+    private Runnable target;
+    public Thread(Runnalbe r){
+		target=r;
+    }
+    public void run(){
+		r.run();
+    }
+    public void start(){
+		//...开启线程
+		run();
+    }
+}
+
+创建线程的两种方法：
+1.继承Thread类，覆盖run方法
+	new Thread() {
+		@Override
+		public void run() {
+			System.out.println(Thread.currentThread().getName());
+		}
+	}.start();
+2.实现Runnable接口，覆盖run方法
+	new Thread(new Runnable() {
+		public void run() {
+			System.out.println(Thread.currentThread().getName());
+		}
+	}).start();
+

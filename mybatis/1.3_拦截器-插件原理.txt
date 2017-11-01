@@ -1,0 +1,67 @@
+Mybatis支持对Executor、StatementHandler、PameterHandler和ResultSetHandler进行拦截，也就是说会对这4种对象进行代理。
+
+InterceptorChain里保存了所有的拦截器，它在mybatis初始化的时候创建。
+
+Interceptor的原理：
+	1)void setProperties(Properties properties)用于设置额外的参数，参数配置在拦截器的Properties节点里。
+	  可以在自定义的拦截器中添加属性，在该方法中初始化这些属性(从配置文件中加载)，下面的方法就可以用这些属性了。
+
+	2)Object plugin(Object target) 生成对拦截目标(Executor,StatementHandler,PameterHandler,ResultSetHandler)的代理对象，
+	  实际是通过Plugin.wrap(target,this) 来完成的，把目标target和拦截器this传给了包装函数。
+	  通过获取 @Intercepts 注解来判断要拦截的类型(Executor,StatementHandler,PameterHandler,ResultSetHandler)，和该类型的方法。
+
+	3)Object intercept(Invocation invocation)是实现拦截逻辑的地方，需要对拦截的对象的方法做限制，
+	  可以通过拦截对象的 MappedStatement 属性 或这些方法的 MappedStatement 参数的id，来对接口(比如UserMapper)和接口的方法(比如List<User> getAll();)做限制
+	  也可以通过 ThreadLocal 查找某些参数，比如PageHelper对会查找Page，有Page就拦截，否则放行
+	  并且，内部要通过invocation.proceed()显式地推进责任链前进，也就是调用下一个拦截器拦截目标方法。	
+
+	注解里描述的是指定拦截方法的签名  [type,method,args] （即对哪种对象的哪种方法进行拦截），它在拦截前用于决断
+	@Intercepts(@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}))
+
+--------------------------------------------------------------------------------------------------------
+
+Plugin.wrap方法，每个拦截器的plugin方法是通过调用Plugin.wrap方法来实现的
+	public static Object wrap(Object target, Interceptor interceptor) {
+		//从拦截器的注解中获取拦截的类名和方法信息
+		Map<Class<?>, Set<Method>> signatureMap =getSignatureMap(interceptor);
+		Class<?> type = target.getClass();
+		//解析被拦截对象的所有接口（注意是接口）
+		Class<?>[] interfaces = getAllInterfaces(type, signatureMap);
+		if(interfaces.length > 0) {
+		    //生成代理对象，Plugin对象为该代理对象的InvocationHandler（InvocationHandler属于java代理的一个重要概念，不熟悉的请参考相关概念）
+		    return Proxy.newProxyInstance(type.getClassLoader(), interfaces, new Plugin(target,interceptor,signatureMap));
+		}
+		return target;
+	} 
+
+Plugin实现了InvocationHandler，在其invoke方法中，如果方法签名和拦截中的签名一致，就调用拦截器的拦截方法
+	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+		try {
+		   Set<Method> methods = signatureMap.get(method.getDeclaringClass());
+		    if(methods != null && methods.contains(method)) {
+			//调用代理类所属拦截器的intercept方法，
+		       return interceptor.intercept(new Invocation(target, method, args));
+		    }
+		    return method.invoke(target, args);
+		} catch(Exception e) {
+		    throw ExceptionUtil.unwrapThrowable(e);
+		}
+	} 
+
+--------------------------------------------------------------------------------------	
+
+自己编写的Interceptor
+	1.实现Interceptor，添加 @Intercepts 注解，实现方法
+	2.config.xml中添加<plugins>配置
+		<plugins>
+		    <plugin interceptor="com.github.pagehelper.PageHelper">
+			<property name="dialect" value="mysql"/>
+			<property name="rowBoundsWithCount" value="true"/>
+		    </plugin>
+		</plugins>
+
+
+总结：
+1)所有可能被拦截的处理类都会生成一个代理
+2)处理类代理在执行对应方法时，判断要不要执行插件中的拦截方法
+3)执行插接中的拦截方法后，推进目标的执行

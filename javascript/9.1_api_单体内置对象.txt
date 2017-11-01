@@ -1,0 +1,45 @@
+Global对象：不属于任何其他对象的属性和方法，都是它的属性和方法
+
+Global的方法：
+	inNaN()
+	isFinite()
+	Boolean()
+	Number()
+	parseInt() -- 按进制转换为整数
+	parseFloat() -- 按进制转换为小数
+	eval()
+	encodeURI() -- URI编码，不会对本身属于uri的特殊字符(://)编码
+	encodeURIComponent() -- URI某一段编码，对任何非标准字符进行编码，包括(://)
+	decodeURI()
+	decodeURIComponent()
+
+Global的属性：
+	undefined	Date
+	NaN		RegExp
+	Infinity	Error
+	Object		EvalError
+	Array		RangeError
+	Function	ReferenceError
+	Boolean		SyntaxError
+	String		TypeErrot
+	Number		URIError
+
+web浏览器都是将这个全局对象作为window对象的一部分加以实现的，
+全局作用域声明的变量和函数，都是window的属性
+
+Math对象
+Math的方法：
+	max()
+	min()
+	ceil()
+	floor()
+	round()
+	random()
+	值 = Math.floor(Math.random()*可能值的个数 + 第一个可能的值);  //
+		function selectFrom(lowerValue, upperValue) {
+		    var choices = upperValue - lowerValue + 1;
+		    return Math.floor(Math.random() * choices + lowerValue);
+		}
+		alert(selectFrom(2, 10));
+
+

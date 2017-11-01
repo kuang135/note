@@ -1,0 +1,48 @@
+1.web.xml中配置前端控制器
+	<servlet>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+2.配置spring配置文件(DispatcherServlet-servlet.xml)
+  名字为ServletName的Servlet会加载WEB-INF/ServletName-servlet.xml的配置文件,也可以使用<init-param>标签.
+	<!-- 定义HandlerMapping -->
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+	<!-- 定义适配器 -->
+	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+	<!-- 定义Handler对象 -->
+	<bean name="/hello.do" class="cn.itcast.controller.HelloController"/>
+	<!-- 定义视图解析器,prefix+viewName(hello)+suffix -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 前缀 -->
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<!-- 后缀 -->
+		<property name="suffix" value=".jsp"/>
+	</bean>
+
+3.编写HelloController
+	public class HelloController implements Controller{
+	    @Override
+	    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("hello");//视图的文件名(没有后缀)
+		mv.addObject("message", "Hello SpringMVC");//添加模型数据,任意POJO对象
+		return mv;
+	    }
+	}
+
+4.编写hello.jsp
+	<html>
+		<head>
+		</head>
+		<body>
+			<h1>${message }</h1>
+		</body>
+	</html>
+
+5.访问: http ://... .../hello.do

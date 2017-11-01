@@ -1,0 +1,29 @@
+如何处理表单重复提交
+    1.定义一个jsp页面
+    2.配置struts.xml文件
+
+1.在jsp页面增加一个隐藏域
+  <s:token></s:token>
+
+2.在package包中增加
+	<!-- 在默认栈中增加token拦截器 -->
+	<interceptors>
+	     <interceptor-stack name="tokenStack">
+		 <interceptor-ref name="defaultStack"></interceptor-ref>
+		 <interceptor-ref name="token">
+		     <!-- 配置token拦截器拦截哪些方法 -->
+		     <param name="includeMethods">save</param>
+		 </interceptor-ref>
+	     </interceptor-stack>
+	</interceptors>
+
+	<!-- 配置struts2运行时执行的拦截器栈 -->
+	<default-interceptor-ref name="tokenStack"></default-interceptor-ref>
+
+	<!-- 当表单重复提交时，转向invalid.token所指向的页面 -->
+	<result name="invalid.token">/model/error.jsp</result>
+
+3.jsp页面使用<s:actionerror/>打印错误信息
+
+注意: 以上配置加入了"invalid.token"结果，在会话的token与请求的token不一致时，
+      将会直接返回"invalid.token"结果

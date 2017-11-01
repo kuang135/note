@@ -1,0 +1,43 @@
+逻辑分页: 查询出所有数据,按需显示
+物理分页: 查询需要的数据,显示所有
+
+mysql分页查询语句: 
+    select * from account limit 5,4;
+    第6条记录开始,共4条: 6,7,8,9
+
+    总页数: (recordTotal-1)/howMany+1
+    每页开始: (pageNow-1)*howMany+1
+    每页结束:  pageNow*howMany 或 recordTotal
+
+PageBean的设计:
+    public class PageBean{
+	private int howMany; //每页个数
+	private int pageNow; //当前第几页
+	private int pageTotal; //总页数
+	private int recordTotal; //总记录数
+	private List<Customer> pageCustomers;//当前页的数据 
+    }
+
+
+pageBar的设计,显示 当前页前x页,当前页后y页
+
+    1.如果 pageTotal<=x+y+1  //共8页,5+4+1
+      那么 pageBegin=1,pageEnd=pageTotal
+      跨度 pageTotal
+
+    2.如果 pageTotal>x+y+1   //共12页,10
+	2.1如果 pageNow-x<=0  //当前第3页,5
+           那么 pageBegin=1;  //1
+                pageEnd=x+y+1;  //10
+	2.2如果 pageNow+y>=pageTotal  //当前第10页
+	   那么 pageBegin=pageTotal-x-Y; //3
+                pageEnd=pageTotal;  //12
+	2.3如果 pageNow-x>0&&pageNow+y<pageTotal //当前第7页
+           那么 pageBegin=pageNow-x; //2
+                pageEnd=pageNow+y;  //11
+      跨度 pageEnd-pageBegin+1=x+y+1
+
+
+  设计的时候,PageBean中还是尽量不要有依赖数据
+
+    

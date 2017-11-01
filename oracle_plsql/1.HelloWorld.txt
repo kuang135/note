@@ -1,0 +1,14 @@
+--打开输出开关
+set serveroutput on
+
+--打印Hello World
+declare
+    --说明部分(变量，光标或者例外)，没有可以不写
+begin
+    --程序体
+    dbms_output.put_line('Hello World'); --调用orcale提供的程序包
+end;
+/
+
+--使用desc查看程序包
+desc dbms_output

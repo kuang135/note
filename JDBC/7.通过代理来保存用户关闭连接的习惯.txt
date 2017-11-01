@@ -1,0 +1,36 @@
+用户都有connection.close()的习惯，
+一旦关闭，连接池就少了一个连接，
+为了防止用户用完连接后关闭连接，有不能改变用户的编程习惯，
+想要办法使用户调用connection.close()的时候，connection并不关闭，
+而是放回到连接池(集合)中去了
+
+方法1：MyConnection实现Connection接口，重写所有方法
+       构造的时候把Connection和MyDataSource传进来
+       close方法中，把调用者(一个Connection)放回集合(MyDataSource的属性)
+       其他方法，都交给Connection去完成，这个Connection是构造传进来的
+
+       在MyDataSource的getConnection方法中先得到一个Connection，
+       再用这个Connection和自己去构造一个MyConnection，
+       这样，getConnection得到的是MyConnection，
+       用MyConnection的时候，除了close，其他都是刚得到的Connection去完成的
+
+       其实MyConnection类就是一个代理类
+       把Connection要做的事都交给代理类去完成，并可以对某些方法进行修改
+
+方法2：动态代理，把上不的步骤封装起来
+
+       对怎样处理被代理类的方法进行封装：
+       用一个类去实现InvocationHandler接口，重写Object invoke(Object proxy, Method method, Object[] args)
+       在invoke方法中对相应的被代理的类的方法进行处理
+	参数：
+	    proxy - 在其上调用方法的代理实例
+	    method - 对应于在代理实例上调用的接口方法的 Method 实例
+	    args - 包含传入代理实例上方法调用的参数值的对象数组，如果接口方法不使用参数，则为 null 
+
+       根据方法的封装，被代理类的接口，得到一个代理类实例：
+       Proxy类有一个静态方法，返回一个指定接口的代理类实例
+       static Object newProxyInstance(ClassLoader loader, Class<?>[] interfaces, InvocationHandler h)
+	参数：
+	    loader - 定义代理类的类加载器
+	    interfaces - 代理类要实现的接口列表
+	    h - 指派方法调用的调用处理程序 

@@ -1,0 +1,17 @@
+OGNL: 对象图导航语言,Object Graphic Navigation Language
+
+OGNL的主要用法:
+    1.支持对象方法调用，如xxx.doSomeSpecial()；
+	<s:property value="'hello.itcast'.toUpperCase()" />
+
+    2.支持类静态的方法调用和值访问,格式为:
+      @[类全名（包括包路径）]@[方法名|值名]
+      设置struts.ognl.allowStaticMethodAccess=true
+	<s:property value="@java.lang.Math@max(10,20)"/>
+
+    3.访问OGNL上下文OgnlContext和ActionContext；
+
+    4.支持赋值操作和表达式串联，如price=100, discount=0.8,
+        calculatePrice()，这个表达式会返回80； 
+
+    5.操作集合对象,结合struts2标签库使用,比如生成checkbox,select

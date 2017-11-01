@@ -1,0 +1,34 @@
+模块的打包器
+
+安装
+	npm init
+	npm install webpack -g
+	npm install webpack --save-dev
+使用命令行
+	webpack hello.js hello.bundle.js
+  loader
+	npm install css-loader style-loader --save-dev
+  命令行指定loader
+	webpack hello.js hello.bundle.js --module-bind 'css=style-loader!css-loader'
+使用webpack.config.js
+	var htmlWebpackPlugin = require('html-webpack-plugin')
+	var webpack = require('webpack')
+	module.exports = {
+		entry: './src/script/main.js',
+		output: {
+			path: './dist',
+			filename: 'js/[name]-[chunkhash].js'
+		},
+		plugins: [
+			new htmlWebpackPlugin({
+				template: 'index.html'
+			})
+		],
+		module: {
+			loaders: [
+				{test: /\.css$/, loader: 'style!css'}
+			]
+		}
+	}
+插件
+	npm install html-webpack-plugin --save-dev

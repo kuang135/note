@@ -1,0 +1,108 @@
+maven的生命周期是抽象的，实际行为由插件完成
+
+三套互相独立的生命周期
+	clean -- 清理项目
+		pre-clean
+		clean
+		post-clean
+	default -- 构建项目
+		validata
+		...
+		compile
+		...
+		test-compile
+		...
+		test
+		...
+		package
+		...
+		verify
+		install
+		deploy
+	site -- 建立项目站点
+		pre-site
+		site
+		post-site
+		site-deploy
+		
+mvn clean install
+	调用clean生命周期的pre-clean、clean阶段，default生命周期从validate到install的所有阶段
+	
+	
+插件目标
+	mvn tomcat7:run
+	冒号前面是插件前缀，冒号后面是插件的目标
+	
+插件仓库
+	<project>
+		<pluginRepositories> 
+			<pluginRepository>
+				<id>aliyun-repos</id>
+				<name>aliyun Repository</name>
+				<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+				<releases>
+					<enabled>true</enabled>
+				</releases>
+				<snapshots>
+					<enabled>false</enabled>
+				</snapshots>
+			</pluginRepository>
+		</pluginRepositories> 
+	</project>
+
+插件配置
+	<project>
+		<build>  
+			<plugins> 
+				<!-- 导出有依赖jar包的jar包，可直接执行，mvn assembly:assembly -->
+				<plugin> 
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>  
+					<configuration>  
+						<descriptorRefs>  
+							<descriptorRef>jar-with-dependencies</descriptorRef>  
+						</descriptorRefs> 
+						<archive>  
+							<manifest>  
+								<mainClass>com.fccs.kpimail.business.main.KpiMain</mainClass>  
+							</manifest>  
+						</archive>           
+					</configuration>  
+				</plugin>  
+				<!-- install 的时候跳过 test -->
+				<plugin>  
+					<groupId>org.apache.maven.plugins</groupId>  
+					<artifactId>maven-surefire-plugin</artifactId>  
+					<version>2.18.1</version>  
+					<configuration>  
+						<skipTests>true</skipTests>  
+					</configuration>  
+				</plugin>			  
+				<!-- 配置tomcat插件 -->
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<configuration>
+						<port>80</port>
+						<path>/</path>
+					</configuration>
+				</plugin>
+				<!-- 配置jetty插件 -->
+				<plugin>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>maven-jetty-plugin</artifactId>
+					<version>6.1.10</version>
+					<configuration>
+						<webAppConfig>
+							<contextPath>/</contextPath>
+						</webAppConfig>
+						<connectors>
+							<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+								<port>80</port>
+							</connector>
+						</connectors>
+					</configuration>
+				</plugin>
+			</plugins>  
+		</build> 
+	</project>

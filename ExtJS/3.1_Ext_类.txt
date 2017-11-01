@@ -1,0 +1,47 @@
+define( className, properties, callback )
+	- classname:要定义的新类的类名
+	- properties：新类的配置对象,Class的Configs
+	- callback：回调函数，当类创建完后执行该函数
+Class的Configs：
+	- extend：用于继承
+	- alias:类的别名
+	- alternateClassName：备用名，与alias差不多
+	- requires：需要使用到的类名数组，在动态加载时会根据该属性去下载类，注意需要的类是在当前类之前被加载
+	- uses：与requires类似 但是被引用的类可以在该类之后才加载
+	- constructor：构造器属性，一般用来初始化类的配置和调用其父类的方法
+	- mixins：混入属性，多继承
+	- config：定义类的配置项，会把config里的每个属性加上get和set方法
+	- statics：定义静态方法，属性不能被子类继承，实例对象不能使用
+	- inheritableStatics：与statics类似，但是其属性可被子类继承
+	- singleton：设置该类为单件模式
+
+	Ext.define('Person', {
+			//config属性，就是配置当前类的属性内容，并且会加上get和set方法
+			config: {
+				name: '西布',
+				age: 28
+			},
+			//自己定义的方法
+			say: function(content) {
+				console.log(this.name + '说："' + content + '."');
+			},
+			//给当前定义的类加一个构造器
+			constructor: function(config) {
+				var me = this; //编程习惯，用局部变量，防止this错乱
+				me.initConfig(config); //真正的初始化传递进来的参数
+			}
+		}
+	);
+	
+create( [name], [args] )
+	var p = Ext.create('Person');
+	console.log(p);
+	console.log(p.getName());
+	console.log(p.getAge());
+	console.log(p.say('hello'));
+	
+	var p2 = Ext.create('Person', {name: '杜兰特', age: 28});
+	console.log(p2);
+	console.log(p2.getName());
+	console.log(p2.getAge());
+	console.log(p2.say('hello'));	

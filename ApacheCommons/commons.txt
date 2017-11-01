@@ -1,0 +1,73 @@
+组件			功能介绍
+BeanUtils		提供了对于JavaBean进行各种操作，克隆对象,属性等等.
+				<dependency>
+					<groupId>commons-beanutils</groupId>
+					<artifactId>commons-beanutils</artifactId>
+					<version>1.8.3</version>
+				</dependency>
+	
+Betwixt			XML与Java对象之间相互转换.
+Codec			处理常用的编码方法的工具类包 例如DES、SHA1、MD5、Base64等.
+Collections		java集合框架操作.
+Compress		java提供文件打包 压缩类库.
+Configuration	一个java应用程序的配置管理类库.
+				<dependency>
+					<groupId>commons-configuration</groupId>
+					<artifactId>commons-configuration</artifactId>
+					<version>1.9</version>
+				</dependency>
+	
+DBCP			提供数据库连接池服务.
+				<dependency>
+					<groupId>commons-dbcp</groupId>
+					<artifactId>commons-dbcp</artifactId>
+					<version>1.4</version>
+				</dependency>
+	
+DbUtils			提供对jdbc 的操作封装来简化数据查询和记录读取操作.
+				<dependency>
+					<groupId>commons-dbutils</groupId>
+					<artifactId>commons-dbutils</artifactId>
+					<version>1.6</version>
+				</dependency>
+				
+Email			java发送邮件 对javamail的封装.
+
+FileUpload		提供文件上传功能.
+				<dependency>
+					<groupId>commons-fileupload</groupId>
+					<artifactId>commons-fileupload</artifactId>
+					<version>1.2.2</version>
+				</dependency>
+		
+HttpClien		提供HTTP客户端与服务器的各种通讯操作. 现在已改成HttpComponents
+
+IO				io工具的封装.
+				<dependency>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>commons-io</artifactId>
+					<version>1.3.2</version>
+				</dependency>
+	
+Lang			Java基本对象方法的工具类包 如：StringUtils,ArrayUtils等等.
+				<dependency>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>commons-lang3</artifactId>
+					<version>3.1</version>
+				</dependency>
+		
+Logging			提供的是一个Java 的日志接口.
+
+Validator		提供了客户端和服务器端的数据验证框架.
+				<dependency>
+					<groupId>commons-validator</groupId>
+					<artifactId>commons-validator</artifactId>
+					<version>1.5.0</version>
+				</dependency>
+
+Net				封装了很多网络协议
+				<dependency>
+					<groupId>commons-net</groupId>
+					<artifactId>commons-net</artifactId>
+					<version>3.3</version>
+				</dependency>

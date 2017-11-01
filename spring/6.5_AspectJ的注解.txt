@@ -1,0 +1,49 @@
+主要注解:
+    @Aspect
+	这是一个切面
+
+    通知类型,value属性就是切入点的信息	 
+	@Before 前置通知
+	@AfterReturning 后置通知,returning属性,定义方法返回值参数
+	@Around 环绕通知
+	@AfterThrowing 抛出通知,throwing属性,设置发生异常对象参数
+	@After 最终通知 
+	
+    @Pointcut 定义切入点
+	切入点方法：private void 无参数方法，方法名为切入点名
+	通知引用切入点时,在同一个类定义,可以省略类名.
+	当通知多个切点时,可以使用 && 或 || 进行连接
+
+    举例
+	@After("pointcut1()||pointcut2()")
+	public void after(JoinPoint joinPoint) {
+	    System.out.println("释放资源...");
+	}
+	@Pointcut("execution(* *.save(..))")
+	private void pointcut1() {
+	}
+	@Pointcut("execution(* *.update(..))")
+	private void pointcut2() {
+	}
+
+具体步骤:
+    1.导入jar包
+    2.编写advice
+      在类上标注 @Component 和 @Aspect
+      在方法上标注通知类型注解和切入点属性
+    3.导入xsd
+      配置 <aop:aspectj-autoproxy/>
+
+
+	@Component
+	@Aspect
+	public class MyAroundAdvice {
+	    @Around("bean(*Dao)")
+	    public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
+		long begin=System.currentTimeMillis();
+		Object result=proceedingJoinPoint.proceed();
+		long end=System.currentTimeMillis();
+		System.out.print(proceedingJoinPoint.toShortString()+"的执行时间是:"+(end-begin)+"毫秒.");
+		return result;
+	    }
+	}

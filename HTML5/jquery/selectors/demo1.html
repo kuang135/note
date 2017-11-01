@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script  src="../jquery-3.1.0.min.js"></script>
+
+	<script type="text/javascript">
+
+		$(function(){
+
+			$("#all").click(function(){
+				$("*").css( "border", "3px solid red" );
+			});
+
+
+			$("#class").click(function(){
+				$(".test").css( "border", "3px solid red" );
+			});
+
+
+			$("#e").click(function(){
+				$("h4").css( "border", "3px solid red" );
+			});
+
+
+			$("#ms").click(function(){
+				$("h4,.test,a").css( "border", "3px solid red" );
+			});
+
+
+		});
+	</script>
+</head>
+<body>
+	<h1>标题</h1>
+	<h2 class="test">标题</h2>
+	<h3>标题</h3>
+	<h4>标题</h4>
+	<h5>标题</h5>
+	<h6>标题</h6>
+	<hr>
+	<p class="test">段落段落段落段落段落段落段落段落段落段落段落段落段落段落段落段落段落</p>
+	<p>段落段落段落段落段落段 <br>落段落段落段落段落段落段落段落段落段落段落段落</p>
+	<a href="http://www.w3c.org">go www.w3c.org</a>
+	<img src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg" alt="W3C">
+
+
+
+
+	<input type="button" id="all" value="All Selector ">
+	<input type="button" id="class" value="Class Selector ">
+	<input type="button" id="e" value="Element Selector ">
+	<input type="button" id="ms" value="Multiple Selector ">
+
+
+
+</body>
+</html>

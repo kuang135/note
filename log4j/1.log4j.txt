@@ -1,0 +1,36 @@
+如何使用: 导入log4j.jar
+	  配置log4j.properties
+
+Log4j的组成：日志记录器(Logger),输出端(Appender),日志格式化器(Layout)
+	Logger：控制要启用或禁用哪些日志记录语句，并对日志信息进行级别限制
+	Appender: 指定了日志将打印到控制台还是文件中
+	Layout: 控制日志信息的显示格式
+
+日志的级别(高到低)：off,fetal,error,warn,info,debug,all
+		    只会输出不比log4j.properties配置的日志级别低的信息
+
+Logger对象的获得或创建
+	static Logger getLogger(Class clazz);
+	static Logger getLogger(String name);
+	static Logger getRootLogger();
+	父类的方法
+	void addAppender(Appender newAppender);
+	void removeAppender(Appender appender);
+	Appender getAppender(String name);
+
+Appender用来指定日志信息输出到哪个地方,一个Logger可以同时指定多个输出目的地
+	Log4j常用的输出目的地:
+	org.apache.log4j.ConsoleAppender：控制台
+	org.apache.log4j.FileAppender：文件
+	org.apache.log4j.DailyRollingFileAppender：每天产生一个日志文件
+	org.apache.log4j.RollingFileAppender：文件大小到达指定尺寸的时候产生一个新的文件
+	org.apache.log4j.WriteAppender：将日志信息以流格式发送到任意指定地方
+	org.apache.log4j.jdbc.JDBCAppender：通过JDBC把日志信息输出到数据库中
+
+Layout用来指定日志格式,一个Appender可以设定一种Layout
+	HTMLLayout：以HTML表格形式布局
+	SimpleLayout：包含日志信息的级别和信息字符串
+	PatternLayout：可以灵活地指定布局模式
+	TTCCLayout: 包含日志产生的时间、线程、类别等等信息
+
+log4j.properties的配置: 对rootLogger的配置,主要配置记录器,输出源,日志布局

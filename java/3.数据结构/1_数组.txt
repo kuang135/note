@@ -1,0 +1,5 @@
+java把数组当成对象，创建数组时使用new操作符。
+	int arr[] = new int[10];
+	int arr[] = {1,2,3,4,5};
+	int[] arr = new int[10];
+	int[] arr = {1,2,3,4,5};

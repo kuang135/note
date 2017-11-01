@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script>
+		x=0;
+		$(document).ready(function(){
+			$("div").scroll(function(){
+				$("span").text(x+=1);
+			});
+		});
+
+
+		$( window ).resize(function() {
+			$( "#log" ).append("<ol>" + $( window ).width() + "</ol>" );
+		});
+
+	</script>
+</head>
+<body>
+	<div style="border:1px solid black;width:200px;height:100px;overflow:scroll;">
+		scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll scroll 
+	</div>
+	<p>滚动了 <span>0</span> 次。</p>
+
+	<ol id="log">
+		
+	</ol>
+
+
+</body>
+</html>

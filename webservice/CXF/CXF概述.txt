@@ -1,0 +1,12 @@
+Apache CXF = Celtix + Xfire,基于SOA总线结构,支持多种协议：SOAP1.1,1,2、XML/HTTP、RESTful HTTP 或者 CORBA
+
+开发步骤:
+    1.服务端编写接口和实现类,注解放在接口上
+    2.发布服务
+    3.客户端生成桩,wsdl2java命令
+    4.客户端编写代码访问服务端
+
+日志拦截器
+
+
+与spring整合

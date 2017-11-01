@@ -1,0 +1,8 @@
+
+--listagg() within GROUP (ORDER BY )
+SELECT ta.id,
+listagg(tc.course_name, ',') within GROUP (ORDER BY tc.course_name) AS "courseName"
+FROM t_ta_task ta
+LEFT JOIN t_ta_course tb ON tb.ta_id = ta.id
+LEFT JOIN t_tr_course tc ON tc.id = tb.course_id
+GROUP BY ta.id;

@@ -1,0 +1,10 @@
+webpack中的使用
+
+	import VueRouter from 'vue-router'
+	import VueResource from 'vue-resource'
+	Vue.use(VueRouter)
+	Vue.use(VueResource)
+	
+	//vue-router需要实例化,vue-resource不需要实例化
+	let router = new VueRouter()
+	

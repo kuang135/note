@@ -1,0 +1,38 @@
+基本设置
+	1.主题、字体，编辑区主题、字体，控制台字体，文件编码
+	2.版本控制
+		VersionControl -> Show director with changed descendants -- 子目录颜色反应到父母目录
+	3.Maven设置
+	4.实时代码模版
+	5.文件代码模版
+	
+常用设置
+	Editor -> General -> Code Completion
+		Case sensitive completion -- 选None, 代码提示和补充功能不区分大小写
+	Editor -> General -> Auto Import
+		Optiize imports on the fly -- 勾选，自动去掉没用的包
+		Add unambiguous imports on the fly -- 勾选，自动导入包
+	Editor -> General -> Editor Tabs
+		Show tabs in single row -- 不勾选，tab页分多行显示
+	
+	KeyMap
+		Duplicate Entire Lines 设置为 Ctrl+D (原来为Duplicate Line or Selection)
+		Code -> Completion -> Basic 设置为 Ctrl+, (原来Ctrl+空格与操作系统冲突)
+		
+	Editor -> Code Style -> Java
+		Code Generation -> Line comment at firt column -- 不勾选，代码单行注释不在开头
+		
+	Appearance & Behavior -> System Settings
+		Reopen last project on startup -- 打开idea时，不是打开之前的项目，哪些默认闭合
+	
+	Project ->齿轮 -> Compact Empty Middle Packages -- 不折叠空包
+	
+	右键文件Tab, Split Vertically 或 Split Horizontally -- 水平分页或垂直分组
+	
+	Editor -> General ->Code Folding -- 设置文件打开时哪些默认展开
+	
+常用工具
+	Tools -> Test RESTfull Web Service -- 自带模拟请求工具Rest Client
+	
+常用快捷键
+	Alt + F1 + 1 快捷键来定位当前文件所在 Project 组件窗口中的位置

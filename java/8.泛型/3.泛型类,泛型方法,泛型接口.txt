@@ -1,0 +1,34 @@
+泛型类、泛型方法、泛型接口
+
+定义类的时候可以把泛型定义在类上，要求使用者在创建本类对象的时候明确当前泛型的具体类型
+class Demo<T>{  //T表示的是该类中的属性类型或方法返回值类型或方法参数类型
+
+在定义方法的时候如果方法上使用的泛型类型和类上不一致，可以在方法上单独定义泛型,方法上的泛型需要定在返回值的前面
+public  <W>  void  method( W w ){
+
+}
+
+//静态方法不能使用类上的泛型,因为类上的泛型是随着对象的创建才明确出来的
+public static <WX> void func( WX aaa ){
+}
+}
+
+Demo<String> d = new Demo<>();
+
+
+
+接口上的泛型：
+interface  Inter<K>{
+
+}
+
+//接口上的泛型可以在定义实现的类的时候明确
+class InterImpl implements Inter<Object>{
+}
+
+//如果在定义实现类的时候不知道具体应该是什么类型，那么这时实现类依然可以使用泛型技术，让创建实现类时明确具体的泛型
+class InterImpl2<K> implements Inter<K>{
+
+}
+
+在创建InterImpl2对象的时候明确泛型

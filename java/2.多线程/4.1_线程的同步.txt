@@ -1,0 +1,69 @@
+共享数据，多个线程操作同一数据。
+
+同步代码块
+	任何对象obj可以想象成一把栓子，只用一个线程可以拿到这个栓子，给这段代码上锁，不让其他线程操作
+	多个线程操作同一段代码拿的必须是同一把锁，也就是说，obj必须为同一个对象
+	synchronize (obj) {
+	
+	}
+	
+同步方法
+	在方法前加 synchronize 关键字
+	非静态方法等价于 
+		synchronize (this) {
+		
+		}
+	静态方法等价于
+		synchronize (Obj.class) {
+		
+		}
+		
+		
+缺点：线程要判断锁，会消耗资源
+
+------------------------------------------------------------
+
+死锁：同步中嵌套同步，但锁不同
+	线程1拿着锁1执行代码1，代码中尝试去拿锁2
+	线程2拿着锁2执行代码2，代码中尝试去拿锁1
+	synchronized(obj1){
+		synchronized(obj2){
+			//...}
+	} 
+	synchronized(obj2){
+		synchronized(obj1){
+			//...}
+	}
+
+public class DeathLock {
+	public static final Object lockA = new Object();
+	public static final Object lockB = new Object();
+	public static void main(String[] args) {
+		new Thread(new Runnable(){
+			@Override
+			public void run() {
+				while(true) {
+					synchronized (DeathLock.lockA) {
+						System.out.println(Thread.currentThread().getName() + "拿到锁A，去拿锁B");
+						synchronized (DeathLock.lockB) {
+							System.out.println(Thread.currentThread().getName() + "拿到锁B");
+						}
+					}
+				}
+			}
+		}).start();
+		new Thread(new Runnable(){
+			@Override
+			public void run() {
+				while(true) {
+					synchronized (DeathLock.lockB) {
+						System.out.println(Thread.currentThread().getName() + "拿到锁B，去拿锁A");
+						synchronized (DeathLock.lockA) {
+							System.out.println(Thread.currentThread().getName() + "拿到锁A");
+						}
+					}
+				}
+			}
+		}).start();
+	}
+}

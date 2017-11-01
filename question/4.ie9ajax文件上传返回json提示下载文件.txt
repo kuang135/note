@@ -1,0 +1,16 @@
+@ResponseBody改为用response直接写出
+
+插件：jquery-form.js
+
+前台
+	uploadForm.ajaxSubmit({
+		url: 'importFromExcel.do',
+		dataType: 'json',
+		success: function (data){...}
+	});
+	
+后台
+	response.setContentType("text/html;charset=utf-8");
+	PrintWriter writer = response.getWriter();
+	ObjectMapper mapper = new ObjectMapper();
+	writer.print(mapper.writeValueAsString(data));

@@ -1,0 +1,24 @@
+DI: Dependency Injection,依赖注入
+
+DI: 工厂在创建Bean对象时,动态地将依赖对象(属性)注入到Bean组件
+
+	1.要在UserService中注入UserDao
+		private UserDAO userDAO;
+		public void setUserDAO(UserDAO userDAO) {
+		    this.userDAO = userDAO;
+		}
+	2.配置applicationContext.xml
+		<bean id="userDAO" class="cn.itcast.dao.impl.UserDAOImpl" />
+		<bean id="userService" class="cn.itcast.service.impl.UserServiceImpl" >
+			<!-- 注入userDAO -->
+			<!-- name对应setXxx方法,ref引用另一个bean的id -->
+			<property name="userDAO" ref="userDAO" /> 
+		</bean>
+	3.IoC实例化UserServiceImpl
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		UserService userService = (UserService) applicationContext.getBean("userService");
+
+IoC和DI的区别:
+	DI是IoC的另一种描述
+	IoC是被其它对象用
+	DI是用其它对象

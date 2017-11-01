@@ -1,0 +1,71 @@
+声明式事务管理: 底层 AOP 环绕通知
+
+步骤:
+    1.配置事务管理器
+    2.将事务管理器交给环绕通知,用<tx:advice>
+    3.配置切入点和切面(传统AOP)
+
+
+SpringJDBC或iBatis的事务管理器
+    DataSourceTransactionManager(间接实现PlatformTransactionManager)
+	// 数据库连接池
+	private DataSource dataSource;
+	public void setDataSource(DataSource dataSource){
+	    if (dataSource instanceof TransactionAwareDataSourceProxy) {
+		this.dataSource = ((TransactionAwareDataSourceProxy) dataSource).getTargetDataSource();
+	    }else {
+		this.dataSource = dataSource;
+	    }
+	}
+
+Hibernate3.0的事务管理器
+    HibernateTransactionManager(间接实现PlatformTransactionManager)
+	// SessionFactory
+	private SessionFactory sessionFactory;
+	public void setSessionFactory(SessionFactory sessionFactory) {
+	    this.sessionFactory = sessionFactory;
+	}
+
+环绕通知
+    TransactionInterceptor实现了MethodInterceptor(传统AOP的环绕通知)
+    TransactionInterceptor的父类TransactionAspectSupport
+	// 平台相关的事务管理器
+	private PlatformTransactionManager transactionManager;
+	public void setTransactionManager(PlatformTransactionManager transactionManager) {
+	    this.transactionManager = transactionManager;
+	}
+
+
+xml配置:
+	<!-- 1.配置SpringJDBC或iBatis的事务管理器,注入dataSource -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<!-- 1.配置Hibernate3的事务管理器,注入sessionFactory -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- 2.将事务管理器交给环绕通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- 配置事务管理的定义信息  -->
+		<tx:attributes>
+			<!-- 
+				method 方法名
+				isolation 隔离级别
+				propagation 传播行为
+				read-only 是否只读
+				timeout 超时时间
+				rollback-for 这里可以配置一些异常类型，发生这些异常 回滚
+				no-rollback-for 这里可以配置一些异常类型，发生这些异常，不回滚 
+			 -->
+			<tx:method name="query*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 3.配置切入点和切面 -->
+	<aop:config proxy-target-class="true">
+		<aop:pointcut expression="bean(*Service)" id="transactionpointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="transactionpointcut"/>
+	</aop:config>

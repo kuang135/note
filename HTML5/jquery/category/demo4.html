@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>after demo</title>
+	<style>
+		p {
+			background: yellow;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+	<p>I would like to say: </p>
+
+	<script>
+		$( "p" ).after( "<b>Hello</b>" );
+		$( "p" ).before( "<b>ok</b>" );
+
+
+	</script>
+
+
+	<div class="container">
+		<h2>Greetings</h2>
+		<div class="inner">Hello</div>
+		<div class="inner">Goodbye</div>
+	</div>
+
+<script type="text/javascript">
+	
+	$( "<p>Test</p>" ).insertAfter( ".inner" );
+</script>
+
+
+</body>
+</html>

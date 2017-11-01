@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+	<script type="text/javascript">
+
+		$(function(){
+			$("p").on("click",function(){
+				alert($(this).html());
+			});
+
+
+			$("span").one('click', function() {
+				alert($(this).html());
+			});
+
+		});
+
+	</script>
+
+
+</head>
+<body>
+	<p>Click this paragraph</p>
+
+	<script type="text/javascript">
+
+
+		for (var i = 0; i < 10; i++) {
+			var newe="<p>new paragraph"+i+"</p>";
+			$("body").append(newe);
+		}
+
+
+	</script>
+
+
+	<span>hi,one</span>
+
+
+</body>
+</html>

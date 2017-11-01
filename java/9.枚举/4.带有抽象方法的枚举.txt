@@ -1,0 +1,26 @@
+
+public enum TrafficLamp {
+	RED(35){ //表示其子类，实现了父类的抽象方法
+		@Override
+		public TrafficLamp nextLamp() {
+			return GREEN;
+		}
+	},
+	GREEN(30){
+		@Override
+		public TrafficLamp nextLamp() {
+			return YELLOW;
+		}
+	},
+	YELLOW(5){
+		@Override
+		public TrafficLamp nextLamp() {
+			return RED;
+		}
+	};
+	public int second;
+	private TrafficLamp(int second){
+		this.second=second;
+	}
+	public abstract TrafficLamp nextLamp();
+}

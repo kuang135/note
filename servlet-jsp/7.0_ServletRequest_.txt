@@ -1,0 +1,46 @@
+tomcat每次响应一个请求，都会产生一个HttpServletRequest对象,和一个HttpServletResponse对象，
+服务器用iso8859-1将请求行和请求头解码后放入request中，可以通过req设置对请求体的编码，
+调用Servlet的service(ServletRequest req, ServletResponse res)时，会传入这两个参数，
+在方法中，通过req可以获取请求的客户主机信息，请求的头信息，请求的参数信息，
+通过res可以设置响应的状态码和头信息，获取流写入响应体，
+还可以设置服务器对响应体的编码方式(默认iso8859-1)，设置浏览器对响应体的解码方式(解码为gbk)，
+最后，tomcat获取ServletResponse对象中的响应信息返回给浏览器，
+并销毁request和response这两个对象。
+
+浏览器对页面文档的编码解码都是在meta标签中设置
+
+javax.servlet.ServletRequest（接口）
+	|
+	+--javax.servlet.http.Interface HttpServletRequest（接口）
+
+
+协议规定了请求是怎样的，那么api就是怎样去设计的
+
+    浏览器发给服务器是请求：
+	GET /myweb/demo.html HTTP/1.1
+	Accept: */*
+	Accept-Language: zh-cn
+	User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727)
+	Accept-Encoding: gzip, deflate
+	Host: localhost:11000
+	Connection: Keep-Alive
+
+    ServletRequest中的方法：
+	Object getAttribute(String name);
+	void setAttribute(String name, Object o);
+	void removeAttribute(String name);
+	String getParameter(String name);
+	String[] getParameterValues(String name);
+	void setCharacterEncoding(String env)
+	RequestDispatcher getRequestDispatcher(String path);
+
+
+    HttpServletRequest中的方法：
+	String getMethod();
+	String getRequestURI();
+	StringBuffer getRequestURL();
+	String getHeader(String name);
+	Cookie[] getCookies();
+	HttpSession getSession();
+
+

@@ -1,0 +1,18 @@
+show [session|global] status; #默认当前连接
+
+	show  status;
+	#或者使用
+	use information_schema;
+	select * from SESSION_STATUS;
+
+1.sql操作计数: com_参数各种SQL对数据库执行的操作
+	show  status like 'com_%';
+	#或者使用
+	use information_schema;
+	select * from SESSION_STATUS WHERE variable_name like 'com_%';
+	
+	有几个参数是单独针对innodb存储引擎，记录了read,inserted,updated,deleted每种操作的行数。
+	show  status like 'innodb_rows%';
+	#或者使用
+	use information_schema;
+	select * from SESSION_STATUS WHERE variable_name like 'innodb_rows%';

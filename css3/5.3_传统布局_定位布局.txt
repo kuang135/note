@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		/*
+			CSS2 提供了position 属性来实现元素的绝对定位和相对定位
+			对于设计成流体布局，只要将长度设置成百分比即可
+		*/
+		body {
+			width: 960px;
+			margin: 0 auto;
+			position: relative;
+		}
+		header {
+			width: 960px;
+			height: 120px;
+			background-color: olive;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		aside {
+			width: 200px;
+			height: 500px;
+			background-color: purple;
+			position: absolute;
+			top: 120px;
+			left: 0;
+		}
+		section {
+			width: 760px;
+			height: 500px;
+			background-color: maroon;
+			position: absolute;
+			top: 120px;
+			/*left: 200px;*/
+			right: 0;
+		}
+		footer {
+			width: 960px;
+			height: 120px;
+			background-color: gray;
+			position: absolute;
+			top: 620px;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		header
+	</header>
+	<aside>
+		aside
+	</aside>
+	<section>
+		section
+	</section>
+	<footer>
+		footer
+	</footer>
+</body>
+</html>

@@ -1,0 +1,43 @@
+多表查询: 内连接,迫切内连接,隐式内连接,左外连接,迫切左外连接,右外连接,交叉连接
+	1.HQL支持所有,其中迫切内连接,迫切左外连接是HQL特有的
+	2.QBC支持内连接,左外连接
+	3.SQL无法将查询结果封装到实体类中,因为往往结果中存在多个表的数据
+
+迫切与非迫切的区别:
+	1.非迫切返回的是List<Object[2]>,Object[2]存放双方的对象
+	2.迫切返回List<一方>,一方中引用了另一方
+	3.用迫切连接查询,存在重复返回结果,通过distinct排重
+
+内连接:
+    用内连接查询,返回List<Object[2]>,Object[2]存放一个Customer和一个Order
+	Query hql = session.createQuery("from Customer c inner join c.orders ");
+	List list1 = hql.list();
+
+	//为每个表建立一个Criteria,针对不同Criteria(不同表)添加条件
+	Criteria orderCriteria = session.createCriteria(Order.class);
+	Criteria customerCriteria = orderCriteria.createCriteria("customer", Criteria.INNER_JOIN);
+	customerCriteria.add(Restrictions.eq("name", "tmac"));
+	List list = orderCriteria.list();
+	
+迫切内连接:
+    用迫切内连接查询,返回List<Customer>,Customer中引用了Order
+	Query hql = session.createQuery("from Customer c inner join fetch c.orders ");
+	List list2 = hql.list();
+    用迫切连接查询,存在重复返回结果,通过distinct排重
+	Query hql = session.createQuery("select distinct c from Customer c inner join fetch c.orders ");
+	List list3 = hql.list();
+
+隐式内连接: 
+    多对一方使用
+	Query hql = session.createQuery("from Order o where o.customer.name='tmac'");
+	List list = hql.list();//名为tmac的客户的所有订单
+
+左外连接:
+	Query hql = session.createQuery("from Customer c left outer join c.orders");
+	List list = hql.list();
+
+迫切左外连接:
+	Query hql = session.createQuery("from Customer c left outer join fetch c.orders");
+	Query hql = session.createQuery("select distinct c from Customer c left outer join fetch c.orders");
+	List list = hql.list();
+	

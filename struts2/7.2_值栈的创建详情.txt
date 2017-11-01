@@ -1,0 +1,29 @@
+值栈的生命周期: 就是request生命周期,一次请求对应一个值栈实例 
+
+值栈创建过程 
+	1.StrutsPrepareAndExecuteFilter的doFilter方法中,
+	  prepare.createActionContext(request, response);
+	  创建ValueStack(OgnlValueContext)和ActionContext(OgnlContext),
+	  stack.getContext().putAll(dispatcher.createContextMap(request, response, null, servletContext));
+	  将常用web对象保存到OgnlContext的_values中
+	  
+	2.Dispatcher的serviceAction方法中,
+	  request.setAttribute(ServletActionContext.STRUTS_VALUESTACK_KEY, stack);
+	  将ValueStack对象保存到request范围,所以ValueStack的生命周期就是request的生命周期
+
+	3.通过ActionProxy访问Action,调用ActionInvocation,
+	  DefaultActionInvocation的init方法中 stack.push(action);
+	  将当前Action对象，压入_root栈顶部 
+	  OgnlValueStack的root(对象栈)存在2个对象，DefaultTextProvider,ValueStackAction（Action栈顶）
+
+	4.执行ModelDriven拦截器，判断Action是否实现ModelDriven接口，如果实现了， 
+	  stack.push(model); 将model压入root栈顶部，root栈就存在3个对象了 
+
+结论: 值栈创建完成后,
+      OgnlCotext的_root中有3个对象(T,Action,DefaultTextProvider) //T表示ModelDriven<T>中的T
+      _values中保存了web对象
+
+注意: 如果是dispatcher, _root中至少两个对象(Action,DefaultTextProvider)
+      如果是redirect, _root中至少一个对象(DefaultTextProvider)
+
+在页面通过<s:debug/>查看值栈中元素

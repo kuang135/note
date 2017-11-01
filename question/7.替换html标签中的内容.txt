@@ -1,0 +1,7 @@
+var html = '<ul><li><atitle="第一章目录">第一章目录<img data="<p>目录图片</p>" src="www.baidu.com"/></a></li></ul>';
+var arry = [];
+html = html.replace(/<\/?[^>]*>/g,function (a){arry.push(a);return '<>';});  
+html = html.replace(/目录/gi,'<font style="background-color: #FFFF00">目录</font>');  
+var i=0;  
+html = html.replace(/<>/gi,function (){return arry[i++];});  
+console.log(html); 

@@ -1,0 +1,27 @@
+遍历
+	$.each(array, function(index, item){});
+		$.each(['a','b','c'], function(i, n){
+		  console.log(i + ': ' + n );
+		});
+			
+过滤
+	$.grep(array, function(item, index){}, [invert]);
+		$.grep([11, 12, 13, 14], function(item, index){
+			console.log(index + ': ' + item);  
+			return item > 12;
+		}, false); //invert为false返回true的元素
+		
+映射
+	$.map(array, function(item, index){});
+		$.map([11, 12, 13, 14], function(item, index){
+			console.log(index + ': ' + item);
+			return index + ': ' + item;
+		});
+
+合并两个数组
+	$.merge(arr1, arr2);
+		$.merge([1,2,3], ['a','b','c']);
+		
+确定一个元素在数组中的位置
+	$.inArray(item, array, [fromIndex]);
+		$.inArray('c', ['a','b','c','d']);

@@ -1,0 +1,23 @@
+自定义指令
+	restrict -- 匹配模式
+		A 属性(默认)：<div hello></div>
+		E 元素：<hello></hello>
+		M 注释：<!-- directive:hello -->
+		C 样式类：<div class="hello"></div>
+	template -- 模版
+		举例：'<div>Hi everyone!</div>'
+	templateUrl
+		举例：'hello.html'
+	replace -- 替换
+	transclude -- 用于嵌套
+	link函数 -- 一般用来操作DOM，绑定事件监听，参数：scope,element,attrs
+	
+	
+举例：
+	myModule.directive("hello", function() {
+		return {
+			restrict: 'E',
+			template: '<div>Hi everyone!</div>',
+			replace: true
+		}
+	});

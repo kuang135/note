@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript">
+		function whichButton(event)
+		{
+			var btnNum = event.button;
+			if (btnNum==2)
+			{
+				document.getElementById("p1").innerHTML="您点击了鼠标右键！";
+			}
+			else if(btnNum==0)
+			{
+				document.getElementById("p1").innerHTML="您点击了鼠标左键！";
+			}
+			else if(btnNum==1)
+			{
+				document.getElementById("p1").innerHTML="您点击了鼠标中键！";
+			}
+			else
+			{
+				document.getElementById("p1").innerHTML="您点击了" + btnNum+ "号键，我不能确定它的名称。";
+			}
+
+
+			x=event.clientX;
+			y=event.clientY;
+			document.getElementById("p2").innerHTML="x=" + x+ "y="+y;
+
+			document.getElementById("p3").innerHTML=event.keyCode;
+			document.getElementById("p4").innerHTML="您点击了鼠标中键！";
+
+			if (event.shiftKey==1)
+			{
+				document.getElementById("p4").innerHTML="The shift key was pressed!";
+			}
+			else
+			{
+				document.getElementById("p4").innerHTML="The shift key was NOT pressed!";
+			}
+
+
+			document.getElementById("p5").innerHTML="You clicked on a " + event.target.tagName + " element.";
+
+
+			document.getElementById("p6").innerHTML=event.type;
+
+
+
+		}
+	</script>
+
+
+</head>
+<body onmousedown="whichButton(event)">
+	<p>请在文档中点击鼠标。一个消息框会提示出您点击了哪个鼠标按键。</p>
+	<h1>标题</h1>
+	<h2>标题</h2>
+	<h3>标题</h3>
+	<h4>标题</h4>
+	<h5>标题</h5>
+	<h6>标题</h6>
+	<hr>
+	<p>段落段落段落段落段落段落段落段落段落段落段落段落段落段落段落段落段落</p>
+	<p>段落段落段落段落段落段 <br>落段落段落段落段落段落段落段落段落段落段落段落</p>
+	<a href="http://www.w3c.org">go www.w3c.org</a>
+	<img src="https://www.w3.org/2008/site/images/logo-w3c-mobile-lg" alt="W3C">
+	<p id="p1"></p>
+	<p id="p2"></p>
+	<p id="p3"></p>
+	<p id="p4"></p>
+	<p id="p5"></p>
+	<p id="p6"></p>
+
+</body>
+</html>

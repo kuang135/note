@@ -1,0 +1,40 @@
+相关性排序
+	默认情况下，结果集会按照相关性进行排序 -- 相关性越高，排名越靠前
+	
+字段值排序
+	GET /_search
+	{
+		"query" : {
+			"filtered" : {
+				"filter" : { "term" : { "user_id" : 1 }}
+			}
+		},
+		"sort": { "date": { "order": "desc" }}
+	}
+	
+多级排序
+	GET /_search
+	{
+		"query" : {
+			"filtered" : {
+				"query":   { "match": { "tweet": "manage text search" }},
+				"filter" : { "term" : { "user_id" : 2 }}
+			}
+		},
+		"sort": [
+			{ "date":   { "order": "desc" }},
+			{ "_score": { "order": "desc" }}
+		]
+	}
+	
+为多值字段排序
+	对于数字和日期，你可以从多个值中取出一个来进行排序，你可以使用min, max, avg 或 sum这些模式。
+		"sort": {
+			"dates": {
+				"order": "asc",
+				"mode":  "min"
+			}
+		}
+		
+多值字段字符串排序
+	为了使一个string字段可以进行排序，它必须只包含一个词：即完整的not_analyzed字符串。

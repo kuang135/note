@@ -1,0 +1,39 @@
+Spring为JDBC提供了简单操作的模板和回调
+	org.springframework.jdbc.core.JdbcTemplate
+    
+注入原理: JdbcTemplate的父类JdbcAccessor中有名为dataSource的成员变量和setDataSource方法,
+	  通过配置让Spring往JdbcTemplate中注入DataSource
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	    <property name="dataSource" ref="dataSource" /> <!-- dataSource另外配置 -->
+	</bean>
+
+	
+常用方法:
+	1.通过update方法，实现增加、修改、删除
+	2.通过queryXxx方法实现查询 
+	    返回简单类型数据
+		返回int ：queryForInt
+		返回long：queryForLong
+		返回String：queryForObject(sql, requiredType, args ) requiredType就是返回类型
+	    返回复杂类型数据： 
+		需要使用RowMapper对象 
+
+----------------------------------------------------------------------------------------------
+
+为了方便DAO中注入JdbcTemplate,Spring为JDBC提供了支持类
+	org.springframework.jdbc.core.support.JdbcDaoSupport
+    
+注入原理: JdbcDaoSupport中有个名为jdbcTemplate的成员变量和setJdbcTemplate方法,还有setDataSource的方法,
+	  通过配置让Spring往JdbcDaoSupport的子类中注入JdbcTemplate或DataSource,
+	  在注入DataSource的时候会创建JdbcTemplate,赋给jdbcTemplate.
+
+	<bean id="userDao" class="cn.itcast.dao.UserDao"> <!-- UserDao继承JdbcDaoSupport -->
+	    <property name="dataSource" ref="dataSource" /> <!-- dataSource另外配置 -->
+	</bean>
+
+
+重要方法:
+	final DataSource getDataSource();
+	final JdbcTemplate getJdbcTemplate();
+	final Connection getConnection();

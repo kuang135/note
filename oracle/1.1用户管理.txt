@@ -1,0 +1,24 @@
+切换用户
+    conn system/myOrcl1@数据库名;
+    conn scott/cat;
+
+创建用户，需要dba权限
+    create user weicool identified by c131;
+删除用户
+    drop user weicool; 
+    drop user weicool cascade;
+
+
+创建的新用户没有任何权限(包括登录)，需要为其指定相应的权限。
+
+
+使用profile管理用户口令
+创建：create profile lock_account limit failed_login_attempts 3 password_lock_time 2;
+      3次登录失败后锁2天
+应用：alter user weicool profile lock_account;
+解锁：alter user weicool account unlock;
+终止口令：create profile myprofile limit password_life_time 10 password_grace_time 2;
+	10天之后提醒更改密码，13天的时候不改就上锁
+删除profile：drop profile myprofile [cascade]
+
+ / as sysdba

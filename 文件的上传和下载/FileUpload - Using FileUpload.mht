@@ -1,0 +1,2429 @@
+From: <ÓÉ Microsoft Internet Explorer 5 ±£´æ>
+Subject: FileUpload - Using FileUpload
+Date: Fri, 9 Mar 2012 10:14:12 +0800
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_0000_01CCFDDD.5F9F58E0"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0000_01CCFDDD.5F9F58E0
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://commons.apache.org/fileupload/using.html
+
+=EF=BB=BF<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" =
+"http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML xmlns=3D"http://www.w3.org/1999/xhtml"><HEAD><TITLE>FileUpload - =
+Using FileUpload</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; charset=3Dutf-8">
+<STYLE type=3Dtext/css media=3Dall>@import url( ./css/maven-base.css );
+@import url( ./css/maven-theme.css );
+@import url( ./css/site.css );
+</STYLE>
+<LINK media=3Dprint =
+href=3D"http://commons.apache.org/fileupload/css/print.css"=20
+type=3Dtext/css rel=3Dstylesheet>
+<META content=3D"Martin Cooper" name=3Dauthor>
+<META content=3D"MSHTML 6.00.2900.6182" name=3DGENERATOR></HEAD>
+<BODY class=3Dcomposite>
+<DIV id=3Dbanner><A id=3DbannerLeft =
+href=3D"http://commons.apache.org/"><IMG alt=3D""=20
+src=3D"http://commons.apache.org/images/logo.png"> </A><A =
+id=3DbannerRight=20
+href=3D"http://commons.apache.org/fileupload/index.html"><IMG alt=3D""=20
+src=3D"http://commons.apache.org/fileupload/images/logo.png"> </A>
+<DIV class=3Dclear>
+<HR>
+</DIV></DIV>
+<DIV id=3Dbreadcrumbs>
+<DIV class=3Dxleft>Last Published: 30 July 2010 &nbsp;| Version: 1.2.2 =
+</DIV>
+<DIV class=3Dxright><A class=3DexternalLink=20
+href=3D"http://www.apachecon.com/">ApacheCon</A> | <A =
+class=3DexternalLink=20
+href=3D"http://www.apache.org/">Apache</A> | <A=20
+href=3D"http://commons.apache.org/">Commons</A> </DIV>
+<DIV class=3Dclear>
+<HR>
+</DIV></DIV>
+<DIV id=3DleftColumn>
+<DIV id=3Dnavcolumn>
+<H5>Commons FileUpload</H5>
+<UL>
+  <LI class=3Dnone><A=20
+  href=3D"http://commons.apache.org/fileupload/index.html">Overview</A>=20
+  <LI class=3Dnone><STRONG>User guide</STRONG>=20
+  <LI class=3Dnone><A=20
+  href=3D"http://commons.apache.org/fileupload/streaming.html">Streaming =
+API</A>=20
+  <LI class=3Dnone><A =
+href=3D"http://commons.apache.org/fileupload/faq.html">FAQ</A>=20
+
+  <LI class=3Dnone><A=20
+  =
+href=3D"http://commons.apache.org/fileupload/apidocs/index.html">Javadoc<=
+/A>=20
+  <LI class=3Dnone><A=20
+  href=3D"http://commons.apache.org/fileupload/mail-lists.html">Mailing =
+lists</A>=20
+  <LI class=3Dnone><A=20
+  =
+href=3D"http://commons.apache.org/fileupload/issue-tracking.html">Issue=20
+  Tracking</A>=20
+  <LI class=3Dnone><A=20
+  href=3D"http://commons.apache.org/fileupload/team-list.html">Team</A>=20
+  <LI class=3Dnone><A=20
+  href=3D"http://commons.apache.org/fileupload/tasks.html">Tasks</A>=20
+  <LI class=3Dnone><A=20
+  =
+href=3D"http://commons.apache.org/fileupload/source-repository.html">SVN =
+
+  repository</A> </LI></UL>
+<H5>Project Documentation</H5>
+<UL>
+  <LI class=3Dcollapsed><A=20
+  =
+href=3D"http://commons.apache.org/fileupload/project-info.html">Project=20
+  Information</A>=20
+  <LI class=3Dcollapsed><A=20
+  =
+href=3D"http://commons.apache.org/fileupload/project-reports.html">Projec=
+t=20
+  Reports</A> </LI></UL>
+<H5>Commons</H5>
+<UL>
+  <LI class=3Dnone><A href=3D"http://commons.apache.org/">Home</A>=20
+  <LI class=3Dcollapsed><A=20
+  href=3D"http://commons.apache.org/components.html">Components</A>=20
+  <LI class=3Dcollapsed><A=20
+  href=3D"http://commons.apache.org/sandbox/index.html">Sandbox</A>=20
+  <LI class=3Dcollapsed><A=20
+  href=3D"http://commons.apache.org/dormant/index.html">Dormant</A>=20
+  <LI class=3Dnone><A=20
+  href=3D"http://commons.apache.org/volunteering.html">Volunteering</A>=20
+  <LI class=3Dnone><A =
+href=3D"http://commons.apache.org/patches.html">Contributing=20
+  Patches</A>=20
+  <LI class=3Dnone><A =
+href=3D"http://commons.apache.org/building.html">Building=20
+  Components</A>=20
+  <LI class=3Dnone><A=20
+  href=3D"http://commons.apache.org/releases/index.html">Releasing =
+Components</A>=20
+  <LI class=3Dnone><A class=3DexternalLink=20
+  href=3D"http://wiki.apache.org/commons/FrontPage">Wiki</A> </LI></UL>
+<H5>ASF</H5>
+<UL>
+  <LI class=3Dnone><A class=3DexternalLink=20
+  =
+href=3D"http://www.apache.org/foundation/sponsorship.html">Sponsorship</A=
+>=20
+  <LI class=3Dnone><A class=3DexternalLink=20
+  href=3D"http://www.apache.org/foundation/thanks.html">Thanks</A> =
+</LI></UL><A=20
+class=3DpoweredBy title=3D"Built by Maven" =
+href=3D"http://maven.apache.org/"><IMG=20
+alt=3D"Built by Maven"=20
+src=3D"http://commons.apache.org/fileupload/images/logos/maven-feather.pn=
+g"></IMG>=20
+</A></DIV></DIV>
+<DIV id=3DbodyColumn>
+<DIV id=3DcontentBox>
+<DIV class=3Dsection>
+<H2><A name=3DUsing_FileUpload></A>Using FileUpload</H2>
+<P>FileUpload can be used in a number of different ways, depending upon =
+the=20
+requirements of your application. In the simplest case, you will call a =
+single=20
+method to parse the servlet request, and then process the list of items =
+as they=20
+apply to your application. At the other end of the scale, you might =
+decide to=20
+customize FileUpload to take full control of the way in which individual =
+items=20
+are stored; for example, you might decide to stream the content into a =
+database.=20
+</P>
+<P>Here, we will describe the basic principles of FileUpload, and =
+illustrate=20
+some of the simpler - and most common - usage patterns. Customization of =
+
+FileUpload is described <A=20
+href=3D"http://commons.apache.org/fileupload/customizing.html">elsewhere<=
+/A>. </P>
+<P>FileUpload depends on Commons IO, so make sure you have the version =
+mentioned=20
+on the <A=20
+href=3D"http://commons.apache.org/fileupload/dependencies.html">dependenc=
+ies=20
+page</A> in your classpath before continuing. </P></DIV>
+<DIV class=3Dsection>
+<H2><A name=3DHow_it_works></A>How it works</H2>
+<P>A file upload request comprises an ordered list of <EM>items</EM> =
+that are=20
+encoded according to <A class=3DexternalLink=20
+href=3D"http://www.ietf.org/rfc/rfc1867.txt">RFC 1867</A>, "Form-based =
+File Upload=20
+in HTML". FileUpload can parse such a request and provide your =
+application with=20
+a list of the individual uploaded items. Each such item implements the=20
+<CODE>FileItem</CODE> interface, regardless of its underlying =
+implementation.=20
+</P>
+<P>This page describes the traditional API of the commons fileupload =
+library.=20
+The traditional API is a convenient approach. However, for ultimate =
+performance,=20
+you might prefer the faster <A=20
+href=3D"http://commons.apache.org/fileupload/streaming.html">Streaming =
+API</A>.=20
+</P>
+<P>Each file item has a number of properties that might be of interest =
+for your=20
+application. For example, every item has a name and a content type, and =
+can=20
+provide an <CODE>InputStream</CODE> to access its data. On the other =
+hand, you=20
+may need to process items differently, depending upon whether the item =
+is a=20
+regular form field - that is, the data came from an ordinary text box or =
+similar=20
+HTML field - or an uploaded file. The <CODE>FileItem</CODE> interface =
+provides=20
+the methods to make such a determination, and to access the data in the =
+most=20
+appropriate manner. </P>
+<P>FileUpload creates new file items using a =
+<CODE>FileItemFactory</CODE>. This=20
+is what gives FileUpload most of its flexibility. The factory has =
+ultimate=20
+control over how each item is created. The factory implementation that =
+currently=20
+ships with FileUpload stores the item's data in memory or on disk, =
+depending on=20
+the size of the item (i.e. bytes of data). However, this behavior can be =
+
+customized to suit your application. </P></DIV>
+<DIV class=3Dsection>
+<H2><A name=3DServlets_and_Portlets></A>Servlets and Portlets</H2>
+<P>Starting with version 1.1, FileUpload supports file upload requests =
+in both=20
+servlet and portlet environments. The usage is almost identical in the =
+two=20
+environments, so the remainder of this document refers only to the =
+servlet=20
+environment. </P>
+<P>If you are building a portlet application, the following are the two=20
+distinctions you should make as you read this document:=20
+<UL>
+  <LI>Where you see references to the <CODE>ServletFileUpload</CODE> =
+class,=20
+  substitute the <CODE>PortletFileUpload</CODE> class.=20
+  <LI>Where you see references to the <CODE>HttpServletRequest</CODE> =
+class,=20
+  substitute the <CODE>ActionRequest</CODE> class. </LI></UL>
+<P></P></DIV>
+<DIV class=3Dsection>
+<H2><A name=3DParsing_the_request></A>Parsing the request</H2>
+<P>Before you can work with the uploaded items, of course, you need to =
+parse the=20
+request itself. Ensuring that the request is actually a file upload =
+request is=20
+straightforward, but FileUpload makes it simplicity itself, by providing =
+a=20
+static method to do just that. </P>
+<DIV class=3Dsource><PRE>// Check that we have a file upload request
+boolean isMultipart =3D =
+ServletFileUpload.isMultipartContent(request);</PRE></DIV>
+<P>Now we are ready to parse the request into its constituent items. =
+</P>
+<DIV class=3Dsection>
+<H3><A name=3DThe_simplest_case></A>The simplest case</H3>
+<P>The simplest usage scenario is the following:=20
+<UL>
+  <LI>Uploaded items should be retained in memory as long as they are =
+reasonably=20
+  small.=20
+  <LI>Larger items should be written to a temporary file on disk.=20
+  <LI>Very large upload requests should not be permitted.=20
+  <LI>The built-in defaults for the maximum size of an item to be =
+retained in=20
+  memory, the maximum permitted size of an upload request, and the =
+location of=20
+  temporary files are acceptable. </LI></UL>
+<P></P>
+<P>Handling a request in this scenario couldn't be much simpler: </P>
+<DIV class=3Dsource><PRE>// Create a factory for disk-based file items
+FileItemFactory factory =3D new DiskFileItemFactory();
+
+// Create a new file upload handler
+ServletFileUpload upload =3D new ServletFileUpload(factory);
+
+// Parse the request
+List /* FileItem */ items =3D upload.parseRequest(request);</PRE></DIV>
+<P>That's all that's needed. Really! </P>
+<P>The result of the parse is a <CODE>List</CODE> of file items, each of =
+which=20
+implements the <CODE>FileItem</CODE> interface. Processing these items =
+is=20
+discussed below. </P></DIV>
+<DIV class=3Dsection>
+<H3><A name=3DExercising_more_control></A>Exercising more control</H3>
+<P>If your usage scenario is close to the simplest case, described =
+above, but=20
+you need a little more control, you can easily customize the behavior of =
+the=20
+upload handler or the file item factory or both. The following example =
+shows=20
+several configuration options: </P>
+<DIV class=3Dsource><PRE>// Create a factory for disk-based file items
+DiskFileItemFactory factory =3D new DiskFileItemFactory();
+
+// Set factory constraints
+factory.setSizeThreshold(yourMaxMemorySize);
+factory.setRepository(yourTempDirectory);
+
+// Create a new file upload handler
+ServletFileUpload upload =3D new ServletFileUpload(factory);
+
+// Set overall request size constraint
+upload.setSizeMax(yourMaxRequestSize);
+
+// Parse the request
+List /* FileItem */ items =3D upload.parseRequest(request);</PRE></DIV>
+<P>Of course, each of the configuration methods is independent of the =
+others,=20
+but if you want to configure the factory all at once, you can do that =
+with an=20
+alternative constructor, like this: </P>
+<DIV class=3Dsource><PRE>// Create a factory for disk-based file items
+DiskFileItemFactory factory =3D new DiskFileItemFactory(
+        yourMaxMemorySize, yourTempDirectory);</PRE></DIV>
+<P>Should you need further control over the parsing of the request, such =
+as=20
+storing the items elsewhere - for example, in a database - you will need =
+to look=20
+into <A=20
+href=3D"http://commons.apache.org/fileupload/customizing.html">customizin=
+g</A>=20
+FileUpload. </P></DIV></DIV>
+<DIV class=3Dsection>
+<H2><A name=3DProcessing_the_uploaded_items></A>Processing the uploaded =
+items</H2>
+<P>Once the parse has completed, you will have a <CODE>List</CODE> of =
+file items=20
+that you need to process. In most cases, you will want to handle file =
+uploads=20
+differently from regular form fields, so you might process the list like =
+this:=20
+</P>
+<DIV class=3Dsource><PRE>// Process the uploaded items
+Iterator iter =3D items.iterator();
+while (iter.hasNext()) {
+    FileItem item =3D (FileItem) iter.next();
+
+    if (item.isFormField()) {
+        processFormField(item);
+    } else {
+        processUploadedFile(item);
+    }
+}</PRE></DIV>
+<P>For a regular form field, you will most likely be interested only in =
+the name=20
+of the item, and its <CODE>String</CODE> value. As you might expect, =
+accessing=20
+these is very simple. </P>
+<DIV class=3Dsource><PRE>// Process a regular form field
+if (item.isFormField()) {
+    String name =3D item.getFieldName();
+    String value =3D item.getString();
+    ...
+}</PRE></DIV>
+<P>For a file upload, there are several different things you might want =
+to know=20
+before you process the content. Here is an example of some of the =
+methods you=20
+might be interested in. </P>
+<DIV class=3Dsource><PRE>// Process a file upload
+if (!item.isFormField()) {
+    String fieldName =3D item.getFieldName();
+    String fileName =3D item.getName();
+    String contentType =3D item.getContentType();
+    boolean isInMemory =3D item.isInMemory();
+    long sizeInBytes =3D item.getSize();
+    ...
+}</PRE></DIV>
+<P>With uploaded files, you generally will not want to access them via =
+memory,=20
+unless they are small, or unless you have no other alternative. Rather, =
+you will=20
+want to process the content as a stream, or write the entire file to its =
+
+ultimate location. FileUpload provides simple means of accomplishing =
+both of=20
+these. </P>
+<DIV class=3Dsource><PRE>// Process a file upload
+if (writeToFile) {
+    File uploadedFile =3D new File(...);
+    item.write(uploadedFile);
+} else {
+    InputStream uploadedStream =3D item.getInputStream();
+    ...
+    uploadedStream.close();
+}</PRE></DIV>
+<P>Note that, in the default implementation of FileUpload, =
+<CODE>write()</CODE>=20
+will attempt to rename the file to the specified destination, if the =
+data is=20
+already in a temporary file. Actually copying the data is only done if =
+the the=20
+rename fails, for some reason, or if the data was in memory. </P>
+<P>If you do need to access the uploaded data in memory, you need simply =
+call=20
+the <CODE>get()</CODE> method to obtain the data as an array of bytes. =
+</P>
+<DIV class=3Dsource><PRE>// Process a file upload in memory
+byte[] data =3D item.get();
+...</PRE></DIV></DIV>
+<DIV class=3Dsection>
+<H2><A name=3DResource_cleanup></A>Resource cleanup</H2>
+<P>This section applies only, if you are using the <A=20
+href=3D"http://commons.apache.org/fileupload/apidocs/org/apache/commons/f=
+ileupload/disk/DiskFileItem.html">DiskFileItem</A>.=20
+In other words, it applies, if your uploaded files are written to =
+temporary=20
+files before processing them. </P>
+<P>Such temporary files are deleted automatically, if they are no longer =
+used=20
+(more precisely, if the corresponding instance of =
+<CODE>java.io.File</CODE> is=20
+garbage collected. This is done silently by the=20
+<CODE>org.apache.commons.io.FileCleaner</CODE> class, which starts a =
+reaper=20
+thread. </P>
+<P>This reaper thread should be stopped, if it is no longer needed. In a =
+servlet=20
+environment, this is done by using a special servlet context listener, =
+called <A=20
+href=3D"http://commons.apache.org/fileupload/apidocs/org/apache/commons/f=
+ileupload/servlet/FileCleanerCleanup.html">FileCleanerCleanup</A>.=20
+To do so, add a section like the following to your <CODE>web.xml</CODE>: =
+</P>
+<DIV class=3Dsource><PRE>&lt;web-app&gt;
+  ...
+  &lt;listener&gt;
+    &lt;listener-class&gt;
+      org.apache.commons.fileupload.servlet.FileCleanerCleanup
+    &lt;/listener-class&gt;
+  &lt;/listener&gt;
+  ...
+&lt;/web-app&gt;
+</PRE></DIV>
+<DIV class=3Dsection>
+<H3><A name=3DCreating_a_DiskFileItemFactory></A>Creating a=20
+DiskFileItemFactory</H3>
+<P>The FileCleanerCleanup provides an instance of=20
+<CODE>org.apache.commons.io.FileCleaningTracker</CODE>. This instance =
+must be=20
+used when creating a=20
+<CODE>org.apache.commons.fileupload.disk.DiskFileItemFactory</CODE>. =
+This should=20
+be done by calling a method like the following: </P>
+<DIV class=3Dsource><PRE>    public static DiskFileItemFactory =
+newDiskFileItemFactory(ServletContext context,
+                                                             File =
+repository) {
+        FileCleaningTracker fileCleaningTracker
+            =3D FileCleanerCleanup.getFileCleaningTracker(context);
+        DiskFileItemFactory factory
+            =3D new =
+DiskFileItemFactory(DiskFileItemFactory.DEFAULT_SIZE_THRESHOLD,
+                                      repository);
+        factory.setFileCleaningTracker(fileCleaningTracker);
+        return factory;
+    }
+</PRE></DIV></DIV>
+<DIV class=3Dsection>
+<H3><A name=3DDisabling_cleanup_of_temporary_files></A>Disabling cleanup =
+of=20
+temporary files</H3>
+<P>To disable tracking of temporary files, you may set the=20
+<CODE>FileCleaningTracker</CODE> to null. Consequently, created files =
+will no=20
+longer be tracked. In particular, they will no longer be deleted=20
+automatically.</P></DIV></DIV>
+<DIV class=3Dsection>
+<H2><A name=3DInteraction_with_virus_scanners></A>Interaction with virus =
+
+scanners</H2>
+<P>Virus scanners running on the same system as the web container can =
+cause some=20
+unexpected behaviours for applications using FileUpload. This section =
+describes=20
+some of the behaviours that you might encounter, and provides some ideas =
+for how=20
+to handle them. </P>
+<P>The default implementation of FileUpload will cause uploaded items =
+above a=20
+certain size threshold to be written to disk. As soon as such a file is =
+closed,=20
+any virus scanner on the system will wake up and inspect it, and =
+potentially=20
+quarantine the file - that is, move it to a special location where it =
+will not=20
+cause problems. This, of course, will be a surprise to the application=20
+developer, since the uploaded file item will no longer be available for=20
+processing. On the other hand, uploaded items below that same threshold =
+will be=20
+held in memory, and therefore will not be seen by virus scanners. This =
+allows=20
+for the possibility of a virus being retained in some form (although if =
+it is=20
+ever written to disk, the virus scanner would locate and inspect it). =
+</P>
+<P>One commonly used solution is to set aside one directory on the =
+system into=20
+which all uploaded files will be placed, and to configure the virus =
+scanner to=20
+ignore that directory. This ensures that files will not be ripped out =
+from under=20
+the application, but then leaves responsibility for virus scanning up to =
+the=20
+application developer. Scanning the uploaded files for viruses can then =
+be=20
+performed by an external process, which might move clean or cleaned =
+files to an=20
+"approved" location, or by integrating a virus scanner within the =
+application=20
+itself. The details of configuring an external process or integrating =
+virus=20
+scanning into an application are outside the scope of this document. =
+</P></DIV>
+<DIV class=3Dsection>
+<H2><A name=3DWatching_progress></A>Watching progress</H2>
+<P>If you expect really large file uploads, then it would be nice to =
+report to=20
+your users, how much is already received. Even HTML pages allow to =
+implement a=20
+progress bar by returning a multipart/replace response, or something =
+like that.=20
+</P>
+<P>Watching the upload progress may be done by supplying a progress =
+listener:=20
+</P>
+<DIV class=3Dsource><PRE>//Create a progress listener
+ProgressListener progressListener =3D new ProgressListener(){
+   public void update(long pBytesRead, long pContentLength, int pItems) =
+{
+       System.out.println("We are currently reading item " + pItems);
+       if (pContentLength =3D=3D -1) {
+           System.out.println("So far, " + pBytesRead + " bytes have =
+been read.");
+       } else {
+           System.out.println("So far, " + pBytesRead + " of " + =
+pContentLength
+                              + " bytes have been read.");
+       }
+   }
+};
+upload.setProgressListener(progressListener);
+</PRE></DIV>
+<P>Do yourself a favour and implement your first progress listener just =
+like the=20
+above, because it shows you a pitfall: The progress listener is called =
+quite=20
+frequently. Depending on the servlet engine and other environment =
+factory, it=20
+may be called for any network packet! In other words, your progress =
+listener may=20
+become a performance problem! A typical solution might be, to reduce the =
+
+progress listeners activity. For example, you might emit a message only, =
+if the=20
+number of megabytes has changed: </P>
+<DIV class=3Dsource><PRE>//Create a progress listener
+ProgressListener progressListener =3D new ProgressListener(){
+   private long megaBytes =3D -1;
+   public void update(long pBytesRead, long pContentLength, int pItems) =
+{
+       long mBytes =3D pBytesRead / 1000000;
+       if (megaBytes =3D=3D mBytes) {
+           return;
+       }
+       megaBytes =3D mBytes;
+       System.out.println("We are currently reading item " + pItems);
+       if (pContentLength =3D=3D -1) {
+           System.out.println("So far, " + pBytesRead + " bytes have =
+been read.");
+       } else {
+           System.out.println("So far, " + pBytesRead + " of " + =
+pContentLength
+                              + " bytes have been read.");
+       }
+   }
+};
+</PRE></DIV></DIV>
+<DIV class=3Dsection>
+<H2><A name=3DWhats_next></A>What's next</H2>
+<P>Hopefully this page has provided you with a good idea of how to use=20
+FileUpload in your own applications. For more detail on the methods =
+introduced=20
+here, as well as other available methods, you should refer to the <A=20
+href=3D"http://commons.apache.org/fileupload/apidocs/index.html">JavaDocs=
+</A>.=20
+</P>
+<P>The usage described here should satisfy a large majority of file =
+upload=20
+needs. However, should you have more complex requirements, FileUpload =
+should=20
+still be able to help you, with it's flexible <A=20
+href=3D"http://commons.apache.org/fileupload/customizing.html">customizat=
+ion</A>=20
+capabilities. </P></DIV></DIV></DIV>
+<DIV class=3Dclear>
+<HR>
+</DIV>
+<DIV id=3Dfooter>
+<DIV class=3Dxright>=C2=A9 2002-2010 The Apache Software Foundation =
+</DIV>
+<DIV class=3Dclear>
+<HR>
+</DIV></DIV></BODY></HTML>
+
+------=_NextPart_000_0000_01CCFDDD.5F9F58E0
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://commons.apache.org/images/logo.png
+
+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
+xKbXUAAAAABJRU5ErkJggg==
+
+------=_NextPart_000_0000_01CCFDDD.5F9F58E0
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://commons.apache.org/fileupload/images/logo.png
+
+iVBORw0KGgoAAAANSUhEUgAAASwAAABkCAIAAACzY5qXAAAABmJLR0QA/wD/AP+gvaeTAAAACXBI
+WXMAAAsSAAALEgHS3X78AAAAB3RJTUUH1AEOBCQ2oZ92+QAAIABJREFUeJztPWl4U9ex517Jkm14
+7/tSCt5kCIG0fa2N7YAtlphshNWAN7ZA0/CahsVAEpOlbZImaR5ZIDEQlrAb7BgH25TlGZKwpE1a
+LGM7GAMNryEhjSXZsjBJwLtl6b4f0zsdnXu1mKU0tuaHP1maO3fOnJk5c+bMOUeQJIkFIAABuHUg
+3moGAhCA3g4BIwxAAG4xBIwwAAG4xRAwwgAE4BZDwAgDEIBbDAEjDEAAbjEEjDAAAbjFEDDCAATg
+FkPACAMQgFsMASMMQABuMQSMMAABuMUQMMIABOAWQ8AIAxCAWwza6yfB7cMQBOFGkbpOaj5f4ZN4
+t5BvBg83T7Y3VrDXL6ibJOrvBQjXtpWpvLy8rKysvLwcHo+OjjYajSNHjjQYDCBB+tcnqdra2pKS
+EuRk5MiRo0aNMhqNQAGJ+KRmsViKiopGjRo1cuRI7hUmkwm4jY6OzszM5IhTykVFRSdPnqytrYV2
+eUdWbU5xcfGbb75JvxQEgZIdOXJkZmamJ1lZLJaysjIUCCL7zwOlgy9lcjdlZmZyL/VJzWQylZSU
+UFEA/eLiYtSBzMxMjrJPsvC42WxGCqhCTz311Jtvvul/13+/Qeom5OTkREdHe6KWnp7+5ZdfdnR0
+OBwOp9PpcrlcLpcnUm+99ZYXUgaD4fHHH7948WJnZ2dXV5d3anv27JkxYwY8WFhY2NnZ6XA4urq6
+Tpw4MWrUKCVxo9H4xRdfdHR0AHGg7IkfVWSOAbPZ/NZbb+G7HA4H8uCJ7LJly9rb26msamtrs7Oz
+VaWhRPbSRyaTSbXVtJs++eQT5NCTYMvKyrKzs5F5EGxnZ+dXX3315JNPqnZZQUFBe3s77TJVDrGZ
+0dHRGRkZGRkZYN6MsYyMDPCh8C7vHPYM6IYRmkwm7I8nnnji448/bmlpaWpqOn/+fGpqKu2MXbt2
+tbS0tLe3e9KYoqIiJPX4449TUq+++mpUVBSllpeX19raqtQ/s9mck5ODtoeQn5/f3Nzc0tKybNky
+L4qYmJh45cqV5ubm9vb2v/zlL17cAWMsKioKkSkbJpMpOztbqfHNzc3Nzc2ff/456pYqrFix4urV
+q9A6bvBUwuLFixEZ9FLZR2azGZkZOXJkQUFBa2trc3Pz1atXd+7cmZiYSAmmpaVBN3HOpaioaMaM
+GUqB5OfnNzU1ffTRRzAse4KdO3c2NTW1tbV1dnaq9j5wGB0d/ec//7mtrQ26/urVq8eOHUtKSkI6
+TU1Nzc3N3tvbM8BfIywqKsKu/eKLL5qbm7/77rvLly9funTJbrc3NDSMGDGC9sT27du/++67lpYW
+pQRzcnIQ7d13321qauJI2Wy2qVOnUmrTp0+/cuUKpeZyubKzs2fMmAEhEPfq06dPg8IZDIZly5bl
+5+fv3Llz8eLFHOZLL71kt9t37doF/2ZkZBQUFOTl5eXm5i5atCgyMlKJfOXKldbWVrTDUaNGzZgx
+Q2mEdrt927Zt4E2MRuPrr78OZDkpMcZOnTp1+fLltLQ0Jg/+77777q5du3bs2DFt2jRV5Kampvb2
+dqVeUi+ZkZHR3Nx85cqVb775prGxEQW7ZcsWSjAqKuqzzz7jnMuMGTNUBbt169atW7fCU0uWLMnL
+y9u1a9fixYs5QUVGRtpstm+++Qb6i7NDdJqffPIJalEjAXTBdru9sbHx22+/bW5uVtLpSeCXEaIF
+GgyGlpaW7777rrGxsaGhob6+vk6Gl156ifZEREREXV3d5cuXOQkiKcZYfn7+t99+a7fbKR0Ai8Uy
+ZcoUSnDq1KmNjY1Xr16l6uJ0Oh0Ox8qVKynm5MmTGWN33XVXaWlpY2MjaKHNZrNYLCaTiWNyw4YN
+jLHp06efP38e3EFjY2N9fX1tbW1ZWVlERARF/uqrr2w223fffdfW1oa+wOl0dnZ2ciMe8PCrX/2q
+urr68uXLwAOQfe655yjmf//3f0NLX331VRgQQCZWq/Xrr79et24dh1xbW2u325uamji9NJvNaIHp
+6elXrlyBVnOCtVqt77zzDmczp0+fBucCYxdAZ2dneno6Jy5oWlVVld1uv3TpUkNDg9Vq/fvf/56Q
+kEAx161bZ7FYoPfpeIjyNxqNV69eBQ7r6+ttNltDQ4Pdbrfb7YcPHwac2tpas9lss9m+/fbb1tbW
+HjwYajjjUUJ5efnEiRPhc2VlpV6vx8iQMSaKokaj0Wg0kZGRmzdvxqeam5sHDhw4dOhQQRBEURRF
+URAESiopKemll16CiRZHCpCnTJlSWFjY3NwM+J9//vntt99+5513CgSgDcOHD3/11Vfx1RcuXBg/
+fvzWrVsjIiIkSQI7cTqdXV1doaGhTU1Np0+fRiYPHz48adKkTZs29e3bF3BwMhMSEiJJ0l/+8hdE
+NhqNYWFhIgHGGLwiNDR03759lIe33nrrkUce6du3L2PM5XIBWafTGRcXV1xcjO2qrq6+cOHChg0b
+5syZg24FkYcMGfLnP//ZZrMBcn19/dy5c1FWKFjGWExMjNlsBrTi4mKdTgdRgyRJgiCgYEVR/NGP
+fnT16tVTp04BclNTU21tLXgNKlhghjaqubl51apVWVlZffv2BckDky6Xa8iQIcXFxYjpdDoffPBB
+7HqNRgNkV69eDXaYlJQ0efJk4BCao9VqgcPIyMjz589//vnnS5cuBcXQarX4a4/M0PheJ5w5cyZ8
+WLp0ab9+/dra2lB2Go1Gp9Pp9Xq9Xj948GBuyvFf//Vfra2tOHBJkrR8+XL8dcGCBW1tbTBzcLlc
+0A1ALVgGLnb6/e9/39raSicbTG1VY9iwYStWrIA0Bsx2QBG1Wm1QUBAX6A4bNuyNN94APlFrkRk6
+RWGMmc3m9vZ2OhTD96CRFPOJJ54YO3YsTLew+UA2KCgINB5h+fLl9957b1tbG+CD5qFshw8fjpg2
+mw0YAFaBrCRJOTk5aIHTp0+/7bbboJtQialg9Xr9K6+8QmPIw4cPnzhxAh5xOBww4ChlC40CqaIX
+1mg0QUFBSUlJNGqoqanB5tARDJmsqKjAXyVJAiLApE6ng+Cc+jilhHsS+DBC2rtTpkzB7mfuFgiy
+y8vLw4D+jTfe6NevH81umUwmGg0++OCDbW1t0OWiKAYFBendITg4eMyYMVRXbDbbpk2boHdRV5Sp
+8P79+3fJ4HK5YBzQ6XTBwcGhoaFjxozhkDs7O6FdVGVDQkKUyEePHsWUHRgAfA8unyOL4yrwoNVq
+9Xo9kOVWUPr169fR0YEWiNJQRf7ggw+QB7SWNWvWIMLkyZOxOYIgoHJTwQYHB3MTzldeeYXzmEw2
+A65RGFtyfNLpbkNDg8PhoPlkzqqtVuumTZugCdBB4J6AW/D7QUFBWq22p45+FHwYYUlJCX6OjY3l
+LFCn04HgQIK33377uXPnKisr/+///m/ChAkY1UAfUEUZPnw4p3NIDWIPVB0u7/r+++9TF4uxFsc2
+Ok46wIaEhIC6cMgYgjLZAkFNAZ8jS8NF9AIYmnLIjDHUMDAAoKnT6ThMNFdgGE3FCzJOSouLi9FR
+MsZiYmIgbYPNoYIF2er1+oyMDEq2pqbm66+/xjAHbEzZKAAMK4BPkCrXCxCBg0njiE0dyooVK3bs
+2AFiB08KbwQmjx8/Dp49KCgI7LAHm6I3IzSbzTh2jRgxAhwbuK4gGXCmAaE/mCIoEHQ/RPOCIOzd
+uxcph4WFgRUxOZ6hpKA/4HsuR3fmzJkOGdAIVXUFvkd7hu6EDxym0mIpcMgwU8JQEF+k5AH0BiyQ
+o6nV8oVKaM8oDe/IOGmUJIlOxhhjt912G8Z40Hw6oQLBarXaMWPGcEtBn376KQgWBiimtkSulCoK
+lpMAzhhpyMD15htvvDFr1qzKykr0aEx2W6NHjwayvWE89GaENHoEs8FpADdXRk9GY7k+ffqEhITo
+9XqtVltfX08pw3iCUzUlKSQ4evRojqvq6mqMcqGDue7BZyEbgSOARgZ1QcjaqXEHjjId22k46okH
+dO2UB08WizxQTCWySwbgwWKx0F/pbM2LYLVaLTfjramp4QJd1UahVHF0hW+URqKUFawYUZzTp0+n
+paVNmDDh73//O51pY3yERqjaaz0DvLXt5MmT+FmSJHSQNIeJCKhDYIR9+vTp27dv3759IaCqqKig
+lMFNQsyDXcipMhLklobr6+sdDgdONVXn61SncXQV1Eq0ONVEUPKDnKvaoZIBRgZJjqaSB/+RlTyU
+l5fTX3EWSmWrKhxuOd5ms0EAScd5VVkpBeuJSQT8fuXKldOnT+eQP/3005iYmKeffvrixYvKiWKv
+Hgmx5pDJYRidAoFz4kTDTdZxJFTGKujwvHQk0OccNhgwnZV5aYKgAH8wvRBk8mTPZ7IO9dUnTeog
+/GGAkRBayQbOsrzIFr7hUj7wLBds+9MowYN38/R4fn7+ggULlL9u3LjxgQceWL16NU74Vd1ozwOP
+Rsj1wenTp2kewpPcBRKU0jkhR/zo0aOUvhcLVP0Jl/68jIRK9uhP3r/x+ZOfdnizQZUBlK0/TkdJ
+EAXr08FdG4dgVytWrNi/f394eDj3a11d3XPPPfeTn/zkq6++giGd9fjqbf/3E9psNs5sVNHQbHz6
+sGvu47CwMC7O+Rcbwy23PZ88XLNgGQkjr5Ezr0B99KhRo8rKyp599lklmtVqffDBB/fs2YMrHDeD
+mX8f6MZ898iRI7RuyAumMgJUFiIeP37c07SBI8V9ExMTw26yrny/gCsuQ8HSWauXeAGBE+zNs0PI
+AMOy7cKFC//4xz/+/Oc/59Dq6uqef/75L7/8EpYuITrtqd3tzQi5paTdu3djPsCfIgZIGKAScPmV
+v/71rzS7wDz7b6orw4YNY92Zv/UG8CJYT0VFqvAvk60gCJhF79Onz5AhQ1544YVjx46NGzeOotXX
+169fv54rIeiRdujNCAcOHEj/PXv2bE1NDczHfFpOcXHxzJkzqU/lTPrs2bNIyru60IIBqEjkFKWX
+myIXZTQ0NDQ0NLgIeHqQCjYuLm7AgAE32wJnzZq1evVqoM8l0u+4445169atWrWK4h8+fBgLFXtw
+XOrNCI1GI+dlf/Ob31itVlrlrPpgeXn5zJkz33vvPaoKnBGeO3cO7dCLk+MWwcaNGyeQ5HvPzlz7
+CUlJSVw3geS9566Yu2zHjx/PCfYmyba8vBxZonFp3759/+M//iM9Pf2RRx5BZJvNBgXGtKi15w2G
+PuaE3NJqQ0PDypUra2trsX5S2cdggaNGjUpMTKQFVklJSdxiw/HjxzEh7iknTstB5s+fD5sYcCU9
+YISMMUEQlixZQr/56KOPoKrGy0KOxWLBBcaIiIh58+YJpFpAdfH9+kGSpOLiYhpMwZoW2CEMiYsW
+LaKP0BpUT0ryfQdvRigIwuOPP84VNx07dmz27Nnl5eXUDtFF5eTkjBo1ymw2FxQUwMovLQjOz8+n
+pAoLC+vr67HCUNXPYcVpZGQkZNKwbAqWHwN2CN1Et7A0NDS8++673GqqJ8EyxmDXIhWsalnPjYLV
+q1djuYUkV01hhf3QoUMRMzY2ltag9shhkHkxQpxuvfbaa9xPNpstIyMjPj7+mWee2bNnz549e4qK
+irKzswcNGgSblQoKCgYMGEC3UEjyeVC5ubmU1LPPPoujpdLP4R6OqKioffv2YSEFVo3fEIf9ve5X
+aL4oinl5eXTHyZo1a6xWKzpBbjCEk0Hg8+bNmyElA4PSjapQ8WIw69at+/rrr+nght2q0+kuX76M
+mBAkcwm8ngc+RkJRFDMzM3fs2KH8ta6u7p133nn44Yfnzp07Z86cNWvWgMHk5eVNmTIFd53heiuE
+OpmZmXBEAsDZs2effPJJWguKbruoqAhM2mAwHDp0qH///pIk4f4pKAMAb83NG5lXu6IbDoABn48g
+NDQ0+DO/8gkcMvLgDzQ0NHDfgGwHDRr04YcfUjt8+OGHzWYzDUYAzGYzbtHKzc2dNGkSFuWDbKGY
+XhAEq9XqP2O0yJExZrfb8TNnkBaL5be//S3UqVIfDUMxnHXAGJs8efIvfvEL7wVVPQN8hBzgojIy
+Mrj9taoQFRW1ffv2CRMm4JY/yb3MDaScmZl58OBB3AN69OjR5OTkDRs2YAlvUVHRmDFjZs2axRgz
+Go0ffvjhgAEDXGRXHhghVpzSLB9j7NixY6ABylUySZI45IaGhuPHj+OvHKxevZoinz17VkkZPnBk
+d+/ejTQ5BpTIx48fB/Pm4kZJsVeQycuAzH2lFLpp0KBBhw4dmjRpEjbtvvvue/HFF00mE/i4srKy
+5cuXDxw40Gw2GwyGXbt2TZ48GewTA0L0boIgrF271s9GcdupgE/mbn7UDg8ePJiSkgKTGro7+amn
+noKXTp8+fePGjVgs3rPn/z7OHZXkHXRtbW1ffPHFggUL8GwIDn75y18++uijcKIEc99yRstHkVpL
+S8s777yzc+dOPLuBAzgfKSEhATe8gq7ABja9Xn/gwIG6urqSkhLu5BjGWFhYWGxs7NSpU+++++47
+77xTr9dXVVWVl5erIjPGxo0bl5KSMmTIkLFjxwYHB3tBDgsLe/DBBxMTE++4446hQ4dWV1dXVlaW
+lJRwKsgYi42NjY+PNxqNs2bNCg0NDQoK2rdv38mTJ5X6CmTHjx+flJSUnJw8dOhQnU7nBTk2NnbC
+hAmDBg1KTk6+8847YcedJEldXV3t7e2tra0nTpxYsWJFTU2NqmANBsPSpUsXLVqEu5m7urogxAgN
+DQ0ODq6urq6oqMDQRsknNsput1dUVJSUlHDbqZDPSZMmZWRk/OhHPwoODtZqtbNnz7ZYLOHh4U6n
+s7S0lDEWGRmZmJhIN7sZDIasrKxHH30UToJzOp1BQUGQtgkODsbthapN+56CbyMEO+zs7Gxra2tt
+bb148WJFRcWRI0dglAsLC4uLi5swYQL6KvReuJUbwxsm70mF7od12KqqqpqamjNnzsBQqdFo0tLS
+jEZjZGQkpBYgoHK5XKIogrcGmg899BAy6ZK3+eH2XPACixcvTk5O1uv1GzduxOIBmGDQ7QLwXqPR
++MQTTwAyBFeIjLkBpGw0GseMGbNp0yZsF+UBy9O1Wm1ubm5oaKhOp5s3bx4yjKXSHPLixYvHjh2r
+0+mwiAQo0zwzIi9ZsiQ5ORmDAmhUR0cHCLa2tra6uvrIkSNYQmg0Go1GY2JiIvYCNApiUdihq9Pp
+1q1bR2Wl+urc3NyQkJCampq3336b6glNyYIyLFq0KDk5Gezn5MmT4eHhP/jBD+BQqerqarvdfvbs
+2fr6etjVkZiYmJqa2tXVBZ7X4XAwxnBzHLT05mWMbhX4PoEb1QvsENdtqLqj/eAeVs4C0XtRaiBo
+etoPblEDQYMBoJ3Q7blYFA4dD1bd0tICx1TC7BEWgkNDQ4ENoAnmBEMxILtcLo1GExwcDMjobhkZ
+t1tbWyky6ARQBk5cLhf6KVhcBs0GHnA3CaQZQMmAJiAzxgAZyYIQEBkYhgNBEJlSRjbADvGkYJe8
+W59mXMBgQLyYnMTNe9BTIFjgE14NfOIKO20UNB8cK45goijq9XqQKuxoEwTB6XRCc1CYNBvE5Op8
+zJ1qNBrUpZ66p8n3XRSCvHUdtpmL8p53mvkU5MJcDEGptVDBUWr4FF3GANdLJ+IgetWkKLwd6wFA
+nxhjOLgxsgVWIIeIoVWDCwc2vCADZUTGkQfcED7IZFcC7FHbABBFkRaywHsBGX08kBXlY464JTWk
+DCZK14fAFQIOUMY9QShY2heifMYZHlCCPABBVT7pq4FPEAVqApg0Jnuwp8DksCsZYzAIY6uRT+xK
+kWzt7cHTQr8uhKGWg1Xw3N52XOfFky88reMJZEMaUOOWKGjxFDfGeuoJzNmAlkvkeDU6CDOSpwUv
+ANqAKXLlVnqKrNPpKGVugUSUj4fRaDQuefczHdgpKJFRO7kGopQ4ykCco8wJNigoiKttoslGpWAp
+NUqH4xMbxfGJ1gXeDR6n9gMAOFqtFrnixAikRPdzBnpeFIrQjQth0DvSMheaX6adiubnyXVhcg/p
+0DQ6tUAOmNxn9HFgiQ4yQEFDACNMBESm/HMjrRIZKeOQyEiYjWMCIzaMgKEgJUuRkQdUcS/IGneg
+aoqRvIuUp6BgqWw5C1F2NFd2o3w1c5/lepEqItMBnOrDP/WSSIPr954H3buVCQMGSc6nu0j5KBoe
+KpB3qUkk1Y5dgrrC3MdMqiWUAnanS1EXQhWOahjFd5OFjCm6z2CVyIK8RI58Su7A8YBk4ctuMUz1
+1RMyZ0WM+DhOtkwRaOBTVLb4oNJalK/m8FWlysVESFByX8DAfzn2eqr5AVzL1WhUXkrV9Mf8lNSY
+Wo2FT4JKTpT8MPdd5P4g419VRVEiKxvivQk3kGHvIvL0LPcKT7LtVkfT7lMVlCeVoJTRTXhpVM+D
+a7yfEEDVZq4HlMz4SdNnK1StxSey0i94erV3hWbyaOmdlCce/Ef2zmR3n/Ln7f7z6d0IJffD3XqD
+7SFclxH2YKBnrmZkZFApWa3WtWvXms3mJ598EveFcEEdp5rFxcXcrr8b6OZVR2AOfA56Xij49C/X
+APAik8lkMBjoPqzv++jHSdJP0QWMkIecnBxlsYjRaCwoKIiKihIEYejQoVj8+cknnyQmJgpkiogp
+BLgEqri4GIrUYJGNkfkk8xqkeQe8YcpLMA+Ad99yPgIocKEgRwFv3sWnbkiwAxf0QplRYWEhbjQV
+3OE6X/QvBmgXVA4VFhbCl/6KTgqADHC7WHR09IkTJzo7O7/88ktus+z58+fxMkOAtLS0q1evXr16
+Fa6zhPtGMzMzlTdstsgAaD7vsvUOJpNJ9R5PDtLT0//0pz/hxQF061lZWZnyflUEg8GQnp6O9+Qo
+y+uvQbaqt6m+++67KBbcvHs9L/oXg8lkojc0M8YyMjLa29tB5n52tF/rhL0ERo8ebTab33zzzREj
+RjidzrCwsKNHj44bNw43E5w4cYLbXRkeHt7e3i6QZVKXywUXPkPIiph4g4AoL5Ezkl/tLowcOXLP
+nj2SJNXW1iYnJ3PbMqKiot5///3IyEhBEDQajcPhwFw/vhQovPfeeyaTCUo64dnU1NQVK1bAs/Ag
+t07ArjVchKI5yf20YqjvYXJqXSuf+f+9WJNYvnw5d80Rk2unJLJ1wecqSyAc/QcsX74ctth9+eWX
+UGEM3mv//v2//OUvAWf//v133XXXokWLDh06xBiLjIzct29fRESEQHY54iL+yZMnx44di/Tr6uok
+99smuFXsbnGLTtTlcplMpnvuuYf+euDAgYSEBIEs6GGlEVftwFGIioo6deqUy333GXcs/zXHisjw
+4MGD0ea3bNkCd6TSSg9cqv03N0ImC3DWrFl41cr06dO3bt0qkQImrG3w5HMDIyFjjEnkEu+wsDAa
+fU2cOPHAgQOlpaUTJ06MiYnp7Oxcu3bt/Pnz6+vrJ02aJElSR0eHINdn0SU77mbstrY2iZS/CYrF
+w2tjW5Ik5RXcP/7xj1taWqjBw/fKGRfoEFJISUmBkk7qL/BBURQl93xDd1mF1yUlJaERQmkuky+Q
+Ymqrzf+2gI1KT09HI3Q6ndDXolwXyWQBepJewAgZcz/Jhu7bgDEhLi5u2LBhMDaC0H/2s5/FxMRA
+LTWT9cbpfpAEF2K0t7e75JsYBVLKIynuXekW4OsotLa2uuS6bSe5BdlT1CNJUmpq6v79++Pj47Fy
+WpTrRaFgTfVF18YtpQNl34wxCEQxVsfamn9zO2SKLnC5XGCEXI2hF+kFjPAfeS38F3d8S4oss0DW
++jzJlFucQADlhnEPbINOzW+sqqHBQ62v04/zkSS5For6Ghj6lHK4Ht44TmBThSAIUN5NJXM9b/mX
+gdKtuFwu3MfDGNNoNFzZoJJIwAgZcz9vAowQd1pgkTQMd1xZluS+g0RDrpfixA1FmDAicSWm1wA0
+8a3sV0gwwhROtSyeycUDyi+Zu2vHQNTTu66NcwSsGWbyfVJKtf5+gcvlwgJa8IM+3UpvN0KQDpev
+w62ugrymp5F3JEnu5bIA1AgxCclpG86Irt8CETxNnIA+DC8UTVArFqUJAyzylNxvRLqefAyyytRG
+UYlU594osdxywG0rLrItwQt+bzdCphY3wnICppUhTFKOEgiCfJkeTUYr0XyGsqosKWfznCorUzug
+07QeAG2JEkHK+D14E7AEbn8Gl1MVPFTh0S+VEawXS1Y2WTV465ZkPIEylrk2Cl7m2C557ygqjBdT
+7L1GWFxcjBMh+n1paSkcUaWRTwlIT0/HwZCDyspKqJjBXIvoYQcJN1fk+gNVgU5QDQYDPS6ZCyOZ
+53CUPiK4bw1RBp+M2IYgh9YueQMuHQYBBxY/aRkDnCMsSVJ0dLQqw0qWlGLxJBn6K0pGkqTMzEwa
+Myslo0qBVhpRbv2kQNmQJMloNEZFRXlhWPWzEnqvEc6cOVP1++zsbO4buPYI9dhqte7btw8OYkpL
+S8vLy2OKAiVVL+7dy5pMJlj85b5//PHHly5dCkqPxkDXzVVfpARVZI5VOmDScBQQoASvpKSksLAQ
+bGDv3r1PP/00nVFDqc3rr79OX01HUVWb9KKjkiStXr1a9dAtuHw7IyMDygm5xtJ3mc3mNWvWqJ6a
+lZGRsXLlSlUKHKuqHQTHkVE/7nPcU0KP3a3sE1zyWSawToVQVVVVVlZ24sSJkydPnjlz5sKFCxDi
+V1RUrF+//oEHHvjxj3/861//Go/ZlNRA+TpVLQRki8UyZsyY0aNHR0VFFRYW7t69u6CgAC88W7t2
+7dChQ/fs2YOnVmMCk/m3d8GTanII8K9y2KyoqHj22WcHDx48e/ZsqIN1uVwOh2P27Nlz5szhinUs
+Fsvbb7995513fvXVV3icLM24eOGT/ivJhe9worQkSYWFhVAOduHChddff91gMFgslmeeeeaee+4p
+KipyyKCsESsqKho4cGBOTk5UVNTu3bvhHKDF4fY4AAAVW0lEQVTPP/986dKljLG9e/cOGTKkrKyM
+e5xOUCVJmjlz5ujRo00m06pVqy5evAhE8vPzrVbrfffd94c//EHJvD+9A9B7R0LMlHDhKCgNY0wQ
+BHqAwPr160VRpKfrAhFYLRTkcFTwtcrM9ZDVah07diyUMqenp2P3p6SkTJ06df78+YD8i1/8oqur
+KzU1VbmV3rvN+/ySQ+CGzdjYWOURwF1dXQ899ND+/fsZY3ABfVVVFUWzWq3jxo2rrq4GPml860/w
+BlBcXDxnzhzGWEZGRkFBAWYdBwwYsHDhwqlTp44fP95qtVoslocffnjv3r07d+7E0RvnBWvXrsUj
+pP/4xz+C23W5XP3793/55ZedTufGjRsZYz//+c/hvD98nJ5UMGjQIKgr/vjjjyMiIoCIJElTp05N
+SUl55JFHDhw4QBviZblYFXrpSEhjBk5M1BFS2L59e25u7q5du+jtK06nE+p08dISeqS097cDJCcn
+m83mVatWpaWlYZ0AwJQpUxYuXIiYL7zwApQF0wtSbl46EUzx3LlzTU1NFy5coD/99re/raioePHF
+Fy0Wy4YNG+CEyIMHD1IPBRdf0xJwdGdeXor9snfvXrBAg8GQn58P2TIEh8PRv3//0tJSfOOBAwfe
+fvttrJmGMc1sNoMFMsaSkpKASEdHBx4P/6tf/Qp+tVqte/fuxZ9oP86cOROC2IKCAqimAgAKDodj
+y5YttOGS2uEd3qGXGiEFpaSUxkmNlpaJuVwuLJmH/uvWCsSvf/1rCOeysrI4CwTA47QZY3V1dfv2
+7aNXhflj8NcJ0OSIiIi0tDT80uVyFRUVPfTQQ3AUIvDz05/+9L333sOD1Rlj27Ztu3jxIu4aUb0V
+QxWsVuvcuXPh85IlS6gFYnzrdDrDw8M3b96MT8FZ49gRDofjxIkT+OvJkyeBAvyKlowIFRUVeMw0
++jiYjjLGli1bdtdddyEnlA2n04nGjPIJzAl9Aw3MVBMbzH02RRfKqHBxJKRbfrw7e4S6ujq4Dik9
+PR0iHNrHoK/x8fH0kdLSUjR4PPr1phohAPeKZ5555j//8z/pIbTA8w9/+MOnnnqKYv7v//4v4OCm
+Hp/CkSQJr6NgjC1cuJAbvmiTExIShg8fjsgvv/wy7Yvw8HD8KTIyEi2Qzv0QwWq1dsiAgyFeBJCa
+mkodAXYQ/EpdDzU/LzkCCr13TqjMWADQdW0AmqxniswK1CjBQiJMfnCt3MvbJUmCORV8LikpoVcy
+4FtcLldERER9fT1gfvjhh3CuLpOztcpFwpsBnCbBocBQz6CRj4oETiZMmLBq1Sq82uD06dPt7e0S
+Kc1hfkyT1q9fDx8SExPpuCSQEnls+JQpUz799FP4XF1dXVtbGxUVBWNRXFxcbm7uxo0bIyMjX3zx
+RVqGgbN32kaHwyHIFQ6iKG7atAnTTlBVC9bLiPCVKQBoZrc8Y+81QuZBj7kcPaYWVEthJHI4L60S
+9OftlZWV8AEWPPzkGU8rx01Gfj54AwGyo0755F9J3nIBnydMmIBbn8+ePQuJK3RnPpNDBw8exM8R
+ERE4LoGEUe/xsObU1NTf//73+EhVVVW/fv0wIJwyZUpKSgowjNWITO76bdu24YPQlfAUsIqdkpiY
+CPseYSTHxmIqTqM4rhbfovTySui9RkhjTvo9NULR/YBNSO5x+LRGzM/wAwC1bevWrRMnTsRoTSRH
+jzJysj1eNccdhfovGAyV6we0pQI5DRnmzGiEdrsdRp7Ozk6K4+lFkiRVVVXhvy6XC0t5sadEuUgQ
+ZD5w4EBK4ciRI/fffz8j67qifF44cnvmzJmdO3ceOnRo6tSp9Fk0UY1G09XVhV4yIiICg1jJvZYI
+N5pQWSmdtXfopXNCBKUR0nkgBWX1FoLkDqybhWnopz3lPCkzlOFu2fz1gCd3joMS3m0YHBxMUzhM
+HmHwVhmfk9i6ujr6LL1qlinCE4Bp06bRR/CuG5q7EgTBbrfn5eXde++9r7322vDhw+vr67mRkDo4
+DHGZ3EEcGyIpGBbd6wHFbta7996REEHVCJm7NeIH5Ujov8OjQBWxqqrq3nvvBR3FGQWNmnBsZIzh
+UKm0yRsFyhmOdz+F9X3AoWpshvrtJTGjNM66ujpIGkvu50HTilam6AKYMzscDjSShoaGzZs3b968
+OSIiYuPGjcOHD1cNjHHR2Ol00mVPmC5CGAKt49yi0gh9JgUo9GojFDzUl3E4TGGZHEJ3zYDTNqvV
+6pRvFhDJ7nU0e4h5RHljriAI3OkY3Xp7d0G1yeiP6IgEIbRTviSHMRYWFibKdcyYsvLyLm5gr66u
+dsg30nFiAYDgUCkBGrFv2bLl5ZdfZoxNnTr1nXfeAQTVGF4Z0QCAL8C9zsyrETLipPzUjd4ejnoH
+pQWqIlwnHD58mAtB6XQU7A2CvRAZ8EpdsEMuArx06ZLqi7zEgZAGhPIXCp6iUOauiNz8GTHj4uIw
+eaOq30qgSw6MMZvNxgmHU3HODQ0bNoyRFfMlS5aABU6bNm3r1q2i+1KTy0PNp9IXKC/k8GRm/tse
+QsAIuwc3atjhFPGDDz7ADvZugfn5+XAxIF4YpmTps88+oy/yZ9LI3TgPwMWl3E9KYwAVp1cvx8fH
+dytmliSJrrkxxmpqarxkvJQaD0YIpFatWvX+++/DvwsWLKAGplxPp0QkSaJrjIyx06dPd7cOxn8I
+GOEtg5SUFPycn59P9UwgGxS18g2eer3+lVdeOXXqFGeBgiBgtTfAZ599xqkUVR2lDoEFcsOpl/Ff
+CTRkoPY8ceLE7s5d4fA1hGPHjknuhWC0LUAT66cjIiLi4uLwRUePHkU68fHxeG+UPytJcXFx9N8j
+R45gUH3D7TBghLcMaPnbmTNndu/erfTNOOMKCgo6ePDg+vXrV65cSbfwg36npaXRA1H/9Kc/wQdJ
+AUo2JEmCAsslS5ZwIR/zsCfQCwiCUFFRAZ/vuuuuiIgIUQHeqQmCsGDBAvz3+PHjdrsdhy9uVJQk
+iWZQHnnkESaXW/z1r3+lYzKkTLEURjVJyzkLWjNYUFBgs9m4cmJ/rNEfcw0YoTfAnr4ZxOlIyBhb
+s2bN8ePHaQfjT4Ig/OEPf5g3b96yZcvomfZUCRYvXoz4drt906ZNjEyNUGOo6sCHkpKS8vJyo9E4
+YsQIbpC5humNJEl4+B9kQQQ5peSnBTLGFixYQEui4ZhjaAWmW5BVqO1kjEVGRs6fPx8zJXa7nVLe
+vHkz1p3hSkNpaSn3akY6Hc+bBXj++efpGgZdqqWDv9Lr0a5U1aWAEfoF12CH3h8RBCEyMhJyBgjP
+Pffc6tWrrVYrvZoTds3NnTsX9o+qjgmCIGRlZdGhFTbgSuTuTk594UNOTs6sWbMMBkNeXh41fprz
+UNphQ0MDtpHTtrVr10KO55VXXoFpFZez0agdUMABVJnhv3v27Ll06RJ1KMiq2WyG8s6oqCjYT4Q2
+P378eEpzx44dVVVVWN9bV1f38ssvP/bYY4hQU1MDH+x2u81mkyQpPj5+8uTJiHDu3LkFCxZAoogu
+exYXF7/99tuIduTIkbNnz1I35yUMAejVSxQA3LbUhoaG2267zRMyF/8of/UnREFYsGBBZWUl9ceF
+hYWFhYVxcXGRkZGwwAV1G2AnXIKOTrdEUdy+ffukSZNwsXvDhg0ff/zx8uXLR44cCRqDWZy6urq9
+e/fCQf0Gg+Gjjz6CTTrIPEecY/vNN9+87bbb7rvvPtpkl8tVUlLyzDPPMMZSU1Mfe+yxtrY2eFwj
+n66tvGRbCfDI9OnTXS7XokWL4MuFCxdu27bNYDCgAUBbnnrqKYvFYjAYtm3bFh4e3traKsgLBlqt
+Nj4+/vTp00DBZrPNmzcvNjY2LCzs3LlzNpstIiKiqqpq2rRpIDGbzTZ//vz+/ft/9NFHO3fujI6O
+liTpueeeq66uxtrdc+fOTZs2bdy4cVOmTNHpdI2NjaWlpZWVlXBqKzYBhtCYmJi8vDzVgZHPcl2D
+j+8xAHLJycl5+umn8cu5c+dmZWUxxnQ6XWhoaN++fUNDQ4ODg+E2ecbY3XffTcOP0tLSfv36iaKo
+1+v79OkTGhoaEhKi0+k2bNjw7LPPIlp2djZcwBIUFBQaGhoaGqrX62FV7dFHHz18+LAXPqdPn75j
+xw7kmSliPCZXeF28eHHDhg25ubkchYSEhKioKFDcqqoq9Dvp6emvvfZaeHg4HXsZY5CYxVUQxtic
+OXMw/xEeHm6z2WJiYubMmZOSkhIaGnrlypUdO3bABtnXXnvtscceg1N9od5SEAS4+F6v1zc2NsbG
+xiJjw4YN27JliyRJGo0mJCQEpAfHfjscDpPJlJWVBVO7sLCwuXPnpqSkDB48OCQk5IMPPnj++ect
+FovRaMzNzf3hD38Ie8rwzg+tVtvY2EhvIqAwYcKEF154ITo6+n/+53+2bt1Kf5ozZ052djYuAtXX
+1y9ZsgSNWQnbt29nsuEBn/fff/8999wTGxsLKgGg1+s9Le32XiOEE0fgmi7up5iYmNjY2Li4OKPR
+eMcdd4SGhl6+fPnTTz+trKwsLy/n8MPCwn72s5898MADI0aMGDx48N/+9reampqDBw9ifgLh/vvv
+j42NjY+PNxqNYISw+N7R0WEymVasWHHmzBnukUmTJj322GOJiYm059ACMUMjCAKUVoEiXrx4cfv2
+7ceOHcO4kYOoqKi0tLTU1NQRI0Zwcy0mF2fitRBg5LNnz0YjXLVqFVwHwM27srKysrKyIiIiYJsF
+FruKonj58uWzZ88eOnSI1mcDxMbGxsTEDBs2DOwZjFAURSDS3t6+devWDz/8UCmcpKQkKEBzOp24
+TQmX1EHjbTZbVlbWqVOnaOdmZ2cPHz4cMsx2uz0jIwPHumXLls2aNSsoKAhcBriDrq6u7du379q1
+i5NnQkLC7373uxEjRhw6dGjhwoUJCQnz5s0bO3YsFLtqNBq9Xh8aGgquGfy4aizQq40QRkLQP9Bg
+6Eso0dBoNElJSWiEp06dEuTtRZBqw+2h4HqHDx9+++23/+1vf2tsbETDQHUE/WCMRUVFJSYmgmuE
+Oq+uri7cdAcLhjBjTEhI4K4Tgf7DyknQM9y+AFy1t7fDNWOgCufOnbt06RJWtMARY6gH3AyTydXY
+GD1i2To1wpUrV959991dXV3nz5//5ptv9Hr9oEGDRo0aBSf8AydQboZWffny5ZqaGiyzhF/RUMFs
+0Ah1Op1Go0G3Av3idDqPHj0KDR84cODIkSPRQeBuTLrLAcfwrq6ukydPfv311w6H4yc/+cmAAQM0
+Gg2s+oC1S5J06NAhh8Px05/+9Ac/+AFjDMdtOMLcJdfQWywWGBIFQUhISDAYDMBqQ0ODJEn9+vUD
+rcACNzBCDHwAGYMXhN5rhKh/oBCgu7ANHHbfBAUFBQcHg1rQcJTig+VAuZlOp4OACjwohJqdnZ24
++RWMUKvVYtULaK3T6QSXj/GbJNfy0zOFucJltE80QtBFsEPcfQ+ktO5AnTGdqHDzN2rhs2bN4ozQ
+4XBgq6F+AHWaJoFg0MZxlQ7a6CxAZYODg5GUVqsFOrijF8QiyDs26CitOpLDr+AROjo6oAtwBxYW
+u4KhwlQTtwuClYLZICd0bKdvQT+FRJzy8e1Q0Q7DIHQ3hqN0MAwkZv4JmMRDG+BGDC7pgjEhnaHh
+r4gJng83/mnJLVmYgZTIwgDdPC7Jx8hSBJps5BKYlElRPnJfIoeagtPh9AA5QSNH+vCT0lPT7B/a
+AOUTX6EhxaWi+8lUKECXy4XajM3BEQM+U+XGtiA/gvvuPo28F0ySzykGEwWXB51LX0Q/M/d7aTTy
+bQIoH3o+ALIhkF2OGvkWCu6mN+Zh3TVghP8ANBWIGSRJwngPe11pCXD3FWYCqLgp2aCgIJe88Y+S
+FeUzhVEJNBoNLmRJ8kUX3BhIHTCNbaip47+4ME1tFYEqH7VAbIjgIZOpqkyUJnP3Fzj80kaBKOBL
+jbxDn7YLkdGhoMZTD8JkvaeU4SmXvJtBksvNcWs8NhOHUyqrIAK0c4ECtzkYewHUBtlGI+Q8Lyex
+gBHyFiXK+wBE+YZHlDLVLfDfgCa57yfAfkULhKcw8UgNSSNf2YuqptVqYWDhEqFKI9QoUm1oh8iP
+6qkZ3CCAr6aAOJ4mLHS8ovwLBDTkBEGBjNXAG8gN9R49IFVr5FDjfnABfQvHjIYUBiAd7DV8HUVm
+ZD+hpNgdIsozTypS9JICGUuZe/qa6y9PHq23GyEdBzAph3KkdoVSFuXtRUy++Irz7jSKQ/rUaDlz
+BUzUiaCgoC5yWi5qMwXUHuWIJMo3SVF7VpZKKo1QqcHehUZFx43PqpThWYxj8Z5G1GZoGg0TOMlw
+tTLYHUztZCDaBUy2iqCgIPRuHG8YWtNgnroP9IPcxkjBHZR6RYd3ioPQe40QZSGScM7pdELoyNw3
+1FK9dMlXz4uiCHlFJKjsV4rGBTAaRaIMkYEHaoSiO3Del7aIsxCtfPYUN6HlVIfaDKdPnqQneoiT
+RffpLscnJooEefMrN3lGF4NPgRgheYNzMOXALiqmdsx9zAeD91QVxE37Ve0ZKSjpILdKO/Qp1d5r
+hAiiHK5gNyuFK5KRQSPvrBXlOzQ5d0u1RyJXbXJkUUeRE6qXnM2I7rEZ0uHaIhDPwpHiCDKFHVI1
+opQ9haOMmKJIQi+qcKqahwga+S5bOmXlHmdk7zUnSdpkVUsQ5FhaI5+t5lIU5VL2lDLnEERyXA1F
+pjiCuxF6kiqFXm2EnHBFOblHvSxTEx98g33AeWX6LO0qpfOmmExWGpHcj6t8qSo/qpgSSSQyz7ak
+VFwljsViobUH+fn5ycnJlAIdpekg5okmcqiRc9FK3VUVDm2IROq/PL2OE4Xofg6/Et/7rz47SPnZ
+i1T/iezFz/Ue8Kmm9ANnVJ6QOeLeafpkxgu+d/CfW1XKRUVF5eXlJSUl3H1GsbGx9913X3h4OKyb
+9+nTh272V7WibrHkqZneh2VPP9Fn6fDlHV8VzRPzqo7GH/osYIQB8A4zZ87E0Eu5KVYQhISEhIUL
+F2KlCzXC7vqLXgsBIwyAN5DkxD0WpkJdEZa5YGVWcHAwVLpA0iVghP5Dr54TBsAnYAhHozhM3HML
+lYgcML9uQcAIA+ARlJMoUV4VxMSvVq0SNQDdgoARBsAHYKZElLc4MXmdBr/RqNUlB8BPCBhhADwC
+ZoNx7YHWCTH34ixlDV0A/ISAEQbAB8D4ppErpDXyvgf6E1eZdatZ/p5BwAgD4A0EUp/JZCOkdSeC
+h5K3gCn6D4EligD4AJogVVbACe6A39xKjr9v8P853bO/cr2sBQAAAABJRU5ErkJggg==
+
+------=_NextPart_000_0000_01CCFDDD.5F9F58E0
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://commons.apache.org/fileupload/images/logos/maven-feather.png
+
+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
+QIABAIRapCc65nZyAAAAAElFTkSuQmCC
+
+------=_NextPart_000_0000_01CCFDDD.5F9F58E0
+Content-Type: text/css;
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://commons.apache.org/fileupload/css/maven-base.css
+
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+IMG {
+	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: =
+none; BORDER-BOTTOM-STYLE: none
+}
+TABLE {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+MARGIN-LEFT: -2px; WIDTH: 100%; MARGIN-RIGHT: -2px; PADDING-TOP: 0px
+}
+ACRONYM {
+	CURSOR: help; BORDER-BOTTOM: #feb 1px dotted
+}
+TABLE.bodyTable TH {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 4px; PADDING-BOTTOM: 2px; =
+VERTICAL-ALIGN: top; PADDING-TOP: 2px
+}
+TABLE.bodyTable TD {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 4px; PADDING-BOTTOM: 2px; =
+VERTICAL-ALIGN: top; PADDING-TOP: 2px
+}
+DIV.clear {
+	CLEAR: both; VISIBILITY: hidden
+}
+DIV.clear HR {
+	DISPLAY: none
+}
+#bannerLeft {
+	FONT-WEIGHT: bold; FONT-SIZE: xx-large
+}
+#bannerRight {
+	FONT-WEIGHT: bold; FONT-SIZE: xx-large
+}
+#bannerLeft IMG {
+	MARGIN: 0px
+}
+#bannerRight IMG {
+	MARGIN: 0px
+}
+.xleft {
+	FLOAT: left
+}
+#bannerLeft IMG {
+	FLOAT: left
+}
+.xright {
+	FLOAT: right
+}
+#bannerRight {
+	FLOAT: right
+}
+#banner {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+#banner IMG {
+	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: =
+none; BORDER-BOTTOM-STYLE: none
+}
+#breadcrumbs {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 3px; =
+PADDING-TOP: 3px
+}
+#leftColumn {
+	FLOAT: left; OVERFLOW: auto; WIDTH: 170px
+}
+#bodyColumn {
+	MARGIN-LEFT: 197px; MARGIN-RIGHT: 1.5em
+}
+#legend {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 8px; =
+PADDING-TOP: 8px
+}
+#navcolumn {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 8px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 8px
+}
+#navcolumn H5 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: small; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+#navcolumn UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: small; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+#navcolumn LI {
+	BACKGROUND-POSITION: 0px 0.4em; PADDING-LEFT: 16px; =
+LIST-STYLE-POSITION: outside; FONT-SIZE: smaller; BACKGROUND-IMAGE: =
+none; LINE-HEIGHT: 1.2em; BACKGROUND-REPEAT: no-repeat; LIST-STYLE-TYPE: =
+none
+}
+#navcolumn LI.expanded {
+	BACKGROUND-IMAGE: url(../images/expanded.gif)
+}
+#navcolumn LI.collapsed {
+	BACKGROUND-IMAGE: url(../images/collapsed.gif)
+}
+#poweredBy {
+	TEXT-ALIGN: center
+}
+#navcolumn IMG {
+	MARGIN-TOP: 10px; MARGIN-BOTTOM: 3px
+}
+#poweredBy IMG {
+	DISPLAY: block; MARGIN: 20px 0px 20px 17px
+}
+#search IMG {
+	DISPLAY: block; MARGIN: 0px
+}
+#search #q {
+	BORDER-RIGHT: #999 1px solid; BORDER-TOP: #999 1px solid; =
+MARGIN-BOTTOM: 10px; BORDER-LEFT: #999 1px solid; BORDER-BOTTOM: #999 =
+1px solid
+}
+#search #btnG {
+	BORDER-RIGHT: #999 1px solid; BORDER-TOP: #999 1px solid; =
+MARGIN-BOTTOM: 10px; BORDER-LEFT: #999 1px solid; BORDER-BOTTOM: #999 =
+1px solid
+}
+#search FORM {
+	MARGIN: 0px
+}
+#lastPublished {
+	FONT-SIZE: x-small
+}
+.navSection {
+	PADDING-RIGHT: 8px; PADDING-LEFT: 8px; MARGIN-BOTTOM: 2px; =
+PADDING-BOTTOM: 8px; PADDING-TOP: 8px
+}
+.navSectionHead {
+	FONT-WEIGHT: bold; FONT-SIZE: x-small
+}
+.section {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; =
+PADDING-TOP: 4px
+}
+#footer {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; FONT-SIZE: x-small; =
+PADDING-BOTTOM: 3px; PADDING-TOP: 3px
+}
+#breadcrumbs {
+	FONT-SIZE: x-small; MARGIN: 0pt
+}
+.source {
+	PADDING-RIGHT: 12px; PADDING-LEFT: 12px; PADDING-BOTTOM: 12px; MARGIN: =
+1em 7px; PADDING-TOP: 12px
+}
+.source PRE {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+
+------=_NextPart_000_0000_01CCFDDD.5F9F58E0
+Content-Type: text/css;
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://commons.apache.org/fileupload/css/maven-theme.css
+
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: #fff; =
+PADDING-BOTTOM: 10px; COLOR: #000; PADDING-TOP: 0px
+}
+H2 {
+	BACKGROUND-COLOR: #036
+}
+H3 {
+	BACKGROUND-COLOR: #888
+}
+.a TD {
+	BACKGROUND: #ddd; COLOR: #000
+}
+.b TD {
+	BACKGROUND: #efefef; COLOR: #000
+}
+TH {
+	COLOR: #fff; BACKGROUND-COLOR: #bbb
+}
+DIV#banner {
+	BORDER-BOTTOM: #fff 1px solid
+}
+#banner {
+	BACKGROUND: #fff; COLOR: #fff
+}
+#banner TD {
+	BACKGROUND: #fff; COLOR: #fff
+}
+#banner {
+	BORDER-BOTTOM: #fff 1px solid
+}
+#leftColumn {
+	BORDER-RIGHT: #aaa 1px solid; BORDER-TOP: #fff 1px solid; COLOR: #000; =
+BORDER-BOTTOM: #aaa 1px solid; BACKGROUND-COLOR: #eee
+}
+#navcolumn {
+	COLOR: #000; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; =
+BORDER-BOTTOM-STYLE: none
+}
+#navcolumn H5 {
+	BORDER-BOTTOM: #aaa 1px solid
+}
+#navcolumn LI STRONG {
+	COLOR: #369
+}
+#breadcrumbs {
+	BORDER-TOP: #aaa 1px solid; COLOR: #000; BORDER-BOTTOM: #aaa 1px solid; =
+BACKGROUND-COLOR: #ccc
+}
+.source {
+	BORDER-RIGHT: #888 1px solid; BORDER-TOP: #888 1px solid; MARGIN-TOP: =
+1em; MARGIN-LEFT: 7px; BORDER-LEFT: #888 1px solid; COLOR: #000; =
+MARGIN-RIGHT: 7px; BORDER-BOTTOM: #888 1px solid; BACKGROUND-COLOR: #fff
+}
+.source PRE {
+	MARGIN-LEFT: 7px; MARGIN-RIGHT: 7px
+}
+UNKNOWN {
+=09
+}
+#breadcrumbs A:link {
+	COLOR: #36a
+}
+#navcolumn A:link {
+	COLOR: #36a
+}
+#breadcrumbs A:visited {
+	COLOR: #47a
+}
+#navcolumn A:visited {
+	COLOR: #47a
+}
+.contentBox A:visited {
+	COLOR: #47a
+}
+.tasknav A:visited {
+	COLOR: #47a
+}
+A:active {
+	COLOR: #f30! important
+}
+A:hover {
+	COLOR: #f30! important
+}
+#leftColumn A:active {
+	COLOR: #f30! important
+}
+#leftColumn A:hover {
+	COLOR: #f30! important
+}
+A.selfref:link {
+	COLOR: #555! important
+}
+A.selfref:visited {
+	COLOR: #555! important
+}
+#legend LI.externalLink {
+	PADDING-LEFT: 18px; BACKGROUND: url(../images/external-classic.png) =
+no-repeat left top
+}
+A.externalLink {
+	PADDING-RIGHT: 18px; BACKGROUND: url(../images/external-classic.png) =
+no-repeat right center
+}
+A.externalLink:link {
+	PADDING-RIGHT: 18px; BACKGROUND: url(../images/external-classic.png) =
+no-repeat right center
+}
+A.externalLink:visited {
+	PADDING-RIGHT: 18px; BACKGROUND: url(../images/external-classic.png) =
+no-repeat right center
+}
+A.externalLink:active {
+	PADDING-RIGHT: 18px; BACKGROUND: url(../images/external-classic.png) =
+no-repeat right center
+}
+A.externalLink:hover {
+	PADDING-RIGHT: 18px; BACKGROUND: url(../images/external-classic.png) =
+no-repeat right center
+}
+#legend LI.newWindow {
+	PADDING-LEFT: 18px; BACKGROUND: url(../images/newwindow-classic.png) =
+no-repeat left top
+}
+A.newWindow {
+	PADDING-RIGHT: 18px; BACKGROUND: url(../images/newwindow-classic.png) =
+no-repeat right center
+}
+A.newWindow:link {
+	PADDING-RIGHT: 18px; BACKGROUND: url(../images/newwindow-classic.png) =
+no-repeat right center
+}
+A.newWindow:visited {
+	PADDING-RIGHT: 18px; BACKGROUND: url(../images/newwindow-classic.png) =
+no-repeat right center
+}
+A.newWindow:active {
+	PADDING-RIGHT: 18px; BACKGROUND: url(../images/newwindow-classic.png) =
+no-repeat right center
+}
+A.newWindow:hover {
+	PADDING-RIGHT: 18px; BACKGROUND: url(../images/newwindow-classic.png) =
+no-repeat right center
+}
+H2 {
+	PADDING-RIGHT: 5px; MARGIN-TOP: 1em; PADDING-LEFT: 5px; =
+BACKGROUND-IMAGE: url(../images/nw_maj_rond.gif); MARGIN-BOTTOM: 0px; =
+PADDING-BOTTOM: 5px; COLOR: #fff; MARGIN-RIGHT: 2px; PADDING-TOP: 5px; =
+BACKGROUND-REPEAT: no-repeat
+}
+H3 {
+	PADDING-RIGHT: 5px; MARGIN-TOP: 1em; PADDING-LEFT: 5px; =
+BACKGROUND-IMAGE: url(../images/nw_maj_rond.gif); MARGIN-BOTTOM: 0px; =
+PADDING-BOTTOM: 5px; COLOR: #fff; MARGIN-RIGHT: 2px; PADDING-TOP: 5px; =
+BACKGROUND-REPEAT: no-repeat
+}
+IMG.handle {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 2px; BORDER-LEFT-WIDTH: 0px; =
+BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+#navcolumn DIV DIV {
+	BACKGROUND-IMAGE: none; BACKGROUND-REPEAT: no-repeat
+}
+#navcolumn DIV DIV {
+	PADDING-LEFT: 10px
+}
+.functnbar {
+	BACKGROUND-COLOR: #aaa
+}
+.functnbar2 {
+	BACKGROUND-COLOR: #aaa
+}
+.functnbar2 {
+	BACKGROUND-POSITION: left bottom; BACKGROUND-IMAGE: =
+url(../images/sw_maj_rond.gif); BACKGROUND-REPEAT: no-repeat; =
+BACKGROUND-COLOR: #aaa
+}
+.functnbar3 {
+	BACKGROUND-POSITION: left bottom; BACKGROUND-IMAGE: =
+url(../images/sw_maj_rond.gif); BACKGROUND-REPEAT: no-repeat; =
+BACKGROUND-COLOR: #aaa
+}
+.functnbar3 {
+	BACKGROUND-IMAGE: url(../images/sw_med_rond.gif); BACKGROUND-COLOR: =
+#ddd
+}
+.functnbar {
+	COLOR: #000
+}
+.functnbar2 {
+	COLOR: #000
+}
+.functnbar3 {
+	COLOR: #000
+}
+.functnbar A {
+	COLOR: #000; TEXT-DECORATION: underline
+}
+.functnbar2 A {
+	COLOR: #000; TEXT-DECORATION: underline
+}
+.functnbar3 A {
+	COLOR: #000; TEXT-DECORATION: underline
+}
+#navcolumn .body DIV {
+	BACKGROUND-POSITION: 0.5em 0.5em; BACKGROUND-IMAGE: =
+url(../images/strich.gif); BACKGROUND-REPEAT: no-repeat
+}
+BODY.docs #toc LI LI {
+	BACKGROUND-POSITION: 0.5em 0.5em; BACKGROUND-IMAGE: =
+url(../images/strich.gif); BACKGROUND-REPEAT: no-repeat
+}
+#searchbox .body DIV {
+	BACKGROUND-IMAGE: none
+}
+#navcolumn .body .heading {
+	BACKGROUND-IMAGE: none
+}
+A.selfref:link {
+	TEXT-DECORATION: none
+}
+A.selfref:visited {
+	TEXT-DECORATION: none
+}
+#leftColumn A {
+	TEXT-DECORATION: none
+}
+#breadcrumbs A {
+	TEXT-DECORATION: none
+}
+.contentBox H2 A:link {
+	COLOR: #fff! important; TEXT-DECORATION: underline
+}
+.contentBox H2 A:visited {
+	COLOR: #fff! important; TEXT-DECORATION: underline
+}
+.contentBox H3 A:link {
+	COLOR: #fff! important; TEXT-DECORATION: underline
+}
+.contentBox H3 A:visited {
+	COLOR: #fff! important; TEXT-DECORATION: underline
+}
+TABLE {
+	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: =
+none; BORDER-BOTTOM-STYLE: none
+}
+TH {
+	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: =
+none; BORDER-BOTTOM-STYLE: none
+}
+TD {
+	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: =
+none; BORDER-BOTTOM-STYLE: none
+}
+DIV.colbar {
+	BORDER-RIGHT: #eee 1px solid; BORDER-TOP: #999 1px solid; BACKGROUND: =
+#eee; BORDER-LEFT: #999 1px solid; BORDER-BOTTOM: #eee 1px solid
+}
+.toolgroup {
+	BACKGROUND: #efefef
+}
+.toolgroup .label {
+	BORDER-RIGHT: #666 1px solid; BACKGROUND: #ddd; COLOR: #555; =
+BORDER-BOTTOM: #666 1px solid
+}
+.toolgroup .body {
+	BORDER-RIGHT: #aaa 1px solid; BORDER-BOTTOM: #aaa 1px solid
+}
+#main {
+	BORDER-TOP: #999 1px solid
+}
+#rightcol DIV.www {
+	BORDER-RIGHT: #ddd 1px solid; BORDER-TOP: #ddd 1px solid; BORDER-LEFT: =
+#ddd 1px solid; BORDER-BOTTOM: #ddd 1px solid
+}
+#rightcol DIV.help {
+	BORDER-RIGHT: #ddd 1px solid; BORDER-TOP: #ddd 1px solid; BORDER-LEFT: =
+#ddd 1px solid; BORDER-BOTTOM: #ddd 1px solid
+}
+BODY.docs DIV.docs {
+	BORDER-TOP: #ddd 1px solid; BORDER-LEFT: #ddd 1px solid; =
+BACKGROUND-COLOR: #fff
+}
+#helptext .label {
+	BACKGROUND-POSITION: 97% 50%; BACKGROUND-IMAGE: =
+url(../images/icon_help_sml.gif); BACKGROUND-REPEAT: no-repeat
+}
+BODY.docs {
+	BACKGROUND: url(../images/help_logo.gif) #eee no-repeat right top
+}
+.docs H2 {
+	BORDER-TOP: #000 1px solid
+}
+.docs H3 {
+	BORDER-TOP: #000 1px solid
+}
+#apphead H2 EM {
+	COLOR: #777
+}
+.tabs TH {
+	BORDER-RIGHT: #333 1px solid; BORDER-LEFT: #fff 1px solid; COLOR: #fff; =
+BACKGROUND-COLOR: #ddd
+}
+.tabs TD {
+	BORDER-RIGHT: #fff 1px solid; BORDER-LEFT: #fff 1px solid; =
+BORDER-BOTTOM: #fff 1px solid; BACKGROUND-COLOR: #999
+}
+.tabs {
+	BORDER-BOTTOM: #ddd 6px solid
+}
+.tabs TH {
+	COLOR: #555
+}
+.tabs TH A:link {
+	COLOR: #555
+}
+.tabs TH A:visited {
+	COLOR: #555
+}
+.tabs TD {
+	COLOR: #fff
+}
+.tabs TD A:link {
+	COLOR: #fff
+}
+.tabs TD A:visited {
+	COLOR: #fff
+}
+.tabs A {
+	TEXT-DECORATION: none
+}
+.axial TH {
+	COLOR: black; BACKGROUND-COLOR: #ddd
+}
+.alert {
+	BACKGROUND-COLOR: #ff9
+}
+.expandedwaste {
+	BACKGROUND: url(../images/icon_arrowwaste2_sml.gif) no-repeat
+}
+.collapsedwaste {
+	BACKGROUND: url(../images/icon_arrowwaste1_sml.gif) no-repeat
+}
+.filebrowse .expanded {
+	BACKGROUND-IMAGE: url(../images/icon_arrowfolderopen2_sml.gif); =
+BACKGROUND-REPEAT: no-repeat
+}
+.filebrowse-alt .expanded {
+	BACKGROUND-IMAGE: url(../images/icon_arrowfolderopen2_sml.gif); =
+BACKGROUND-REPEAT: no-repeat
+}
+.filebrowse .collapsed {
+	BACKGROUND-IMAGE: url(../images/icon_arrowfolderclosed1_sml.gif); =
+BACKGROUND-REPEAT: no-repeat
+}
+.filebrowse-alt .collapsed {
+	BACKGROUND-IMAGE: url(../images/icon_arrowfolderclosed1_sml.gif); =
+BACKGROUND-REPEAT: no-repeat
+}
+.filebrowse .leafnode {
+	BACKGROUND-IMAGE: url(../images/icon_folder_sml.gif); =
+BACKGROUND-REPEAT: no-repeat
+}
+.filebrowse-alt .leafnode {
+	BACKGROUND-IMAGE: url(../images/icon_folder_sml.gif); =
+BACKGROUND-REPEAT: no-repeat
+}
+.filebrowse .leaf {
+	BACKGROUND-IMAGE: url(../images/icon_doc_sml.gif); BACKGROUND-REPEAT: =
+no-repeat
+}
+.filebrowse-alt .leaf {
+	BACKGROUND-IMAGE: url(../images/icon_doc_sml.gif); BACKGROUND-REPEAT: =
+no-repeat
+}
+.sortup {
+	BACKGROUND: url(../images/icon_sortup.gif) no-repeat
+}
+.sortdown {
+	BACKGROUND: url(../images/icon_sortdown.gif) no-repeat
+}
+.collapsedwaste {
+	BACKGROUND: url(../images/icon_arrowwaste1_sml.gif) no-repeat
+}
+BODY .grid TD {
+	BORDER-TOP: #ccc 1px solid; BORDER-LEFT: #ccc 1px solid; =
+BACKGROUND-COLOR: transparent
+}
+.confirm {
+	COLOR: #090
+}
+.info {
+	COLOR: #069
+}
+.errormessage {
+	BACKGROUND-POSITION: 5px 1.33em; BORDER-TOP: #900 5px solid; =
+BACKGROUND-IMAGE: url(../images/icon_error_lrg.gif); BORDER-LEFT: #900 =
+1px solid; BACKGROUND-REPEAT: no-repeat
+}
+.warningmessage {
+	BACKGROUND-POSITION: 5px 1.33em; BORDER-TOP: #900 5px solid; =
+BACKGROUND-IMAGE: url(../images/icon_error_lrg.gif); BORDER-LEFT: #900 =
+1px solid; BACKGROUND-REPEAT: no-repeat
+}
+.donemessage {
+	BACKGROUND-POSITION: 5px 1.33em; BORDER-TOP: #900 5px solid; =
+BACKGROUND-IMAGE: url(../images/icon_error_lrg.gif); BORDER-LEFT: #900 =
+1px solid; BACKGROUND-REPEAT: no-repeat
+}
+.infomessage {
+	BACKGROUND-POSITION: 5px 1.33em; BORDER-TOP: #900 5px solid; =
+BACKGROUND-IMAGE: url(../images/icon_error_lrg.gif); BORDER-LEFT: #900 =
+1px solid; BACKGROUND-REPEAT: no-repeat
+}
+.warningmessage {
+	BORDER-LEFT-COLOR: #c60; BACKGROUND-IMAGE: =
+url(../images/icon_warning_lrg.gif); BORDER-BOTTOM-COLOR: #c60; =
+BORDER-TOP-COLOR: #c60; BORDER-RIGHT-COLOR: #c60
+}
+.donemessage {
+	BORDER-LEFT-COLOR: #090; BACKGROUND-IMAGE: =
+url(../images/icon_success_lrg.gif); BORDER-BOTTOM-COLOR: #090; =
+BORDER-TOP-COLOR: #090; BORDER-RIGHT-COLOR: #090
+}
+.infomessage {
+	BORDER-LEFT-COLOR: #069; BACKGROUND-IMAGE: =
+url(../images/icon_info_lrg.gif); BORDER-BOTTOM-COLOR: #069; =
+BORDER-TOP-COLOR: #069; BORDER-RIGHT-COLOR: #069
+}
+.docinfo {
+	BACKGROUND: url(../images/icon_doc_lrg.gif) no-repeat
+}
+.dirinfo {
+	BACKGROUND: url(../images/icon_folder_lrg.gif) no-repeat
+}
+.memberinfo {
+	BACKGROUND: url(../images/icon_members_lrg.gif) no-repeat
+}
+.usergroupinfo {
+	BACKGROUND: url(../images/icon_usergroups_lrg.gif) no-repeat
+}
+.errormark {
+	BACKGROUND: url(../images/icon_error_sml.gif) no-repeat
+}
+.warningmark {
+	BACKGROUND: url(../images/icon_error_sml.gif) no-repeat
+}
+.donemark {
+	BACKGROUND: url(../images/icon_error_sml.gif) no-repeat
+}
+.infomark {
+	BACKGROUND: url(../images/icon_error_sml.gif) no-repeat
+}
+.warningmark {
+	BACKGROUND-IMAGE: url(../images/icon_warning_sml.gif)
+}
+.donemark {
+	BACKGROUND-IMAGE: url(../images/icon_success_sml.gif)
+}
+.infomark {
+	BACKGROUND-IMAGE: url(../images/icon_info_sml.gif)
+}
+.cvsdiff {
+	BACKGROUND-COLOR: #ccc
+}
+.cvsblame {
+	BACKGROUND-COLOR: #ccc
+}
+.cvsdiffadd {
+	BACKGROUND-COLOR: #afa
+}
+.cvsdiffremove {
+	BACKGROUND-COLOR: #faa
+}
+.cvsdiffchanges1 {
+	BACKGROUND-COLOR: #ff7
+}
+.cvsdiffchanges2 {
+	BACKGROUND-COLOR: #ff7
+}
+LI.selection UL A {
+	BACKGROUND: #fff
+}
+.band1 {
+	COLOR: #fff; BACKGROUND-COLOR: #663
+}
+.band2 {
+	COLOR: #fff; BACKGROUND-COLOR: #66c
+}
+.band3 {
+	BACKGROUND-COLOR: #c99
+}
+.band4 {
+	BACKGROUND-COLOR: #cff
+}
+.band5 {
+	COLOR: #fff; BACKGROUND-COLOR: #336
+}
+.band6 {
+	COLOR: #fff; BACKGROUND-COLOR: #966
+}
+.band7 {
+	BACKGROUND-COLOR: #9cc
+}
+.band8 {
+	BACKGROUND-COLOR: #ffc
+}
+.band9 {
+	COLOR: #fff; BACKGROUND-COLOR: #633
+}
+.band10 {
+	COLOR: #fff; BACKGROUND-COLOR: #699
+}
+.band11 {
+	BACKGROUND-COLOR: #cc9
+}
+.band12 {
+	BACKGROUND-COLOR: #ccf
+}
+.band13 {
+	COLOR: #fff; BACKGROUND-COLOR: #366
+}
+.band14 {
+	COLOR: #fff; BACKGROUND-COLOR: #996
+}
+.band15 {
+	BACKGROUND-COLOR: #99c
+}
+.band16 {
+	BACKGROUND-COLOR: #fcc
+}
+.contentBox .helplink {
+	CURSOR: help
+}
+#helptext .helplink {
+	CURSOR: help
+}
+.legend TH {
+	BACKGROUND-COLOR: #fff
+}
+.bars TH {
+	BACKGROUND-COLOR: #fff
+}
+BODY {
+	FONT-FAMILY: Verdana, Helvetica, Arial, sans-serif
+}
+TH {
+	FONT-FAMILY: Verdana, Helvetica, Arial, sans-serif
+}
+TD {
+	FONT-FAMILY: Verdana, Helvetica, Arial, sans-serif
+}
+INPUT {
+	FONT-FAMILY: Verdana, Helvetica, Arial, sans-serif
+}
+SELECT {
+	FONT-FAMILY: Verdana, Helvetica, Arial, sans-serif
+}
+CODE {
+	FONT-FAMILY: 'Andale Mono', Courier, monospace
+}
+PRE {
+	FONT-FAMILY: 'Andale Mono', Courier, monospace
+}
+BODY {
+	FONT-SIZE: small
+}
+H2 {
+	FONT-SIZE: small
+}
+H3 {
+	FONT-SIZE: small
+}
+#rightcol H2 {
+	FONT-SIZE: small
+}
+PRE {
+	FONT-SIZE: small
+}
+CODE {
+	FONT-SIZE: small
+}
+#apphead H2 SMALL {
+	FONT-SIZE: small
+}
+H3 {
+	FONT-SIZE: small
+}
+TH {
+	FONT-SIZE: small
+}
+TD {
+	FONT-SIZE: small
+}
+SMALL {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+DIV#footer {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+DIV#login {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+DIV.tabs TH {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+DIV.tabs TD {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+INPUT {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+SELECT {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+.paginate {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+.functnbar {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+.functnbar2 {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+.functnbar3 {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+#breadcrumbs {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+.courtesylinks {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+#rightcol DIV.help {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+.colbar {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+.tasknav {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+BODY.docs DIV#toc {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+#leftColumn {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+.legend {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+.bars {
+	FONT-SIZE: x-small; voice-family: inherit
+}
+.tabs TD {
+	FONT-WEIGHT: bold
+}
+.tabs TH {
+	FONT-WEIGHT: bold
+}
+DT {
+	FONT-WEIGHT: bold
+}
+.tasknav .selfref {
+	FONT-WEIGHT: bold
+}
+#login .username {
+	FONT-WEIGHT: bold
+}
+.selection {
+	FONT-WEIGHT: bold
+}
+LI.selection UL {
+	FONT-WEIGHT: normal
+}
+#apphead H2 EM {
+	FONT-STYLE: normal
+}
+#banner H1 {
+	FONT-SIZE: 1.25em
+}
+#breadcrumbs DIV {
+	FONT-SIZE: x-small
+}
+#leftColumn {
+	WIDTH: 150px
+}
+#navcolumn {
+	PADDING-TOP: 5px
+}
+#navcolumn H5 {
+	PADDING-TOP: 3px
+}
+#navcolumn LI {
+	PADDING-LEFT: 8px
+}
+#bodyColumn H2 {
+	MARGIN-TOP: 0.3em; PADDING-LEFT: 0.5em; MARGIN-BOTTOM: 0.5em
+}
+P {
+	MARGIN-TOP: 0.67em; MARGIN-BOTTOM: 0.67em
+}
+UL {
+	MARGIN-TOP: 0.67em; MARGIN-BOTTOM: 0.67em
+}
+OL {
+	MARGIN-TOP: 0.67em; MARGIN-BOTTOM: 0.67em
+}
+DL {
+	MARGIN-TOP: 0.67em; MARGIN-BOTTOM: 0.67em
+}
+.bars TABLE {
+	MARGIN-TOP: 0.67em; MARGIN-BOTTOM: 0.67em
+}
+FORM {
+	MARGIN: 0px
+}
+#bodyColumn {
+	PADDING-RIGHT: 0px; MARGIN-TOP: 0.4em; MARGIN-LEFT: 158px; =
+MARGIN-RIGHT: 0px
+}
+UNKNOWN {
+	WIDTH: auto
+}
+.docs {
+	LINE-HEIGHT: 1.4
+}
+OL OL {
+	LIST-STYLE-TYPE: lower-alpha
+}
+OL OL OL {
+	LIST-STYLE-TYPE: lower-roman
+}
+.contentBox TD {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 2px; =
+PADDING-TOP: 2px
+}
+.contentBox TH {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 2px; =
+PADDING-TOP: 2px
+}
+.section P {
+	MARGIN-LEFT: 7px; MARGIN-RIGHT: 7px
+}
+.section P {
+	MARGIN-LEFT: 7px; MARGIN-RIGHT: 7px
+}
+.section DT {
+	MARGIN-LEFT: 7px; MARGIN-RIGHT: 7px
+}
+.section DT {
+	MARGIN-LEFT: 7px; MARGIN-RIGHT: 7px
+}
+.tasknav {
+	MARGIN-BOTTOM: 1.33em
+}
+DIV.colbar {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; MARGIN: 2px =
+2px 0px; PADDING-TOP: 3px
+}
+.tabs {
+	MARGIN-TOP: 0.67em; PADDING-LEFT: 8px; MARGIN-LEFT: 2px; MARGIN-RIGHT: =
+2px
+}
+.tabs TD {
+	PADDING-RIGHT: 9px; PADDING-LEFT: 9px; PADDING-BOTTOM: 3px; =
+PADDING-TOP: 3px
+}
+.tabs TH {
+	PADDING-RIGHT: 9px; PADDING-LEFT: 9px; PADDING-BOTTOM: 3px; =
+PADDING-TOP: 3px
+}
+#rightcol DIV.www {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+#rightcol DIV.help {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+BODY.docs #toc {
+	PADDING-RIGHT: 20px; PADDING-LEFT: 0px; LEFT: 0px; PADDING-BOTTOM: 0px; =
+WIDTH: 120px; PADDING-TOP: 0px; POSITION: absolute; TOP: 15px
+}
+BODY.docs #toc UL {
+	PADDING-LEFT: 0px; MARGIN-LEFT: 0px
+}
+#toc OL {
+	PADDING-LEFT: 0px; MARGIN-LEFT: 0px
+}
+BODY.docs #toc LI {
+	MARGIN-TOP: 7px; PADDING-LEFT: 10px; LIST-STYLE-TYPE: none
+}
+BODY.docs DIV.docs {
+	PADDING-RIGHT: 2em! important; PADDING-LEFT: 1em! important; =
+PADDING-BOTTOM: 1em! important; MARGIN: 61px 0px 0px 150px; PADDING-TOP: =
+1em! important
+}
+UNKNOWN {
+	MARGIN-TOP: -0.67em; TEXT-INDENT: 5%
+}
+.docs H2 {
+	MARGIN-BOTTOM: 0.1em; PADDING-TOP: 0.3em
+}
+.docs H3 {
+	MARGIN-BOTTOM: 0.1em; PADDING-TOP: 0.3em
+}
+.functnbar {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; MARGIN: =
+0.67em 2px; PADDING-TOP: 5px
+}
+.functnbar2 {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; MARGIN: =
+0.67em 2px; PADDING-TOP: 5px
+}
+.functnbar3 {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; MARGIN: =
+0.67em 2px; PADDING-TOP: 5px
+}
+.functnbar3 {
+	MARGIN-TOP: 0px
+}
+BODY {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 1em; PADDING-BOTTOM: 1em; =
+PADDING-TOP: 1em
+}
+BODY.composite {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+BODY.docs {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+TH {
+	VERTICAL-ALIGN: top; TEXT-ALIGN: left
+}
+TD {
+	VERTICAL-ALIGN: top; TEXT-ALIGN: left
+}
+.right {
+	TEXT-ALIGN: right! important
+}
+.center {
+	TEXT-ALIGN: center! important
+}
+.axial TH {
+	TEXT-ALIGN: right
+}
+.axial TH .strut {
+	TEXT-ALIGN: right
+}
+.contentBox .axial TD TH {
+	TEXT-ALIGN: left
+}
+BODY .stb {
+	MARGIN-TOP: 1em; TEXT-INDENT: 0px
+}
+BODY .mtb {
+	MARGIN-TOP: 2em; TEXT-INDENT: 0px
+}
+.courtesylinks {
+	MARGIN-TOP: 1em; PADDING-TOP: 1em
+}
+DD {
+	MARGIN-BOTTOM: 0.67em
+}
+.toolgroup {
+	MARGIN-BOTTOM: 6px
+}
+.toolgroup .body {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 0px; PADDING-BOTTOM: 4px; =
+PADDING-TOP: 4px
+}
+.toolgroup .label {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; =
+PADDING-TOP: 4px
+}
+.toolgroup .body DIV {
+	PADDING-LEFT: 1em; PADDING-BOTTOM: 0.3em
+}
+.toolgroup .body DIV DIV {
+	MARGIN-TOP: 0.3em; PADDING-BOTTOM: 0px
+}
+.tier1 {
+	MARGIN-LEFT: 0px
+}
+.tier2 {
+	MARGIN-LEFT: 1.5em
+}
+.tier3 {
+	MARGIN-LEFT: 3em
+}
+.tier4 {
+	MARGIN-LEFT: 4.5em
+}
+.tier5 {
+	MARGIN-LEFT: 6em
+}
+.tier6 {
+	MARGIN-LEFT: 7.5em
+}
+.tier7 {
+	MARGIN-LEFT: 9em
+}
+.tier8 {
+	MARGIN-LEFT: 10.5em
+}
+.tier9 {
+	MARGIN-LEFT: 12em
+}
+.tier10 {
+	MARGIN-LEFT: 13.5em
+}
+.filebrowse .expanded {
+	PADDING-LEFT: 34px
+}
+.filebrowse .collapsed {
+	PADDING-LEFT: 34px
+}
+.filebrowse .leafnode {
+	PADDING-LEFT: 20px
+}
+.filebrowse .leaf {
+	PADDING-LEFT: 20px
+}
+.messagechild {
+	PADDING-LEFT: 34px
+}
+.filebrowse-alt .expanded {
+	DISPLAY: inline-block; PADDING-LEFT: 0px! important; FLOAT: left; =
+WIDTH: 34px; HEIGHT: 15px
+}
+.filebrowse-alt .collapsed {
+	DISPLAY: inline-block; PADDING-LEFT: 0px! important; FLOAT: left; =
+WIDTH: 34px; HEIGHT: 15px
+}
+.filebrowse-alt .leaf {
+	DISPLAY: inline-block; PADDING-LEFT: 0px! important; FLOAT: left; =
+WIDTH: 34px; HEIGHT: 15px
+}
+.filebrowse-alt .leafnode {
+	DISPLAY: inline-block; PADDING-LEFT: 0px! important; FLOAT: left; =
+WIDTH: 34px; HEIGHT: 15px
+}
+.expandedwaste {
+	DISPLAY: inline-block; PADDING-LEFT: 0px! important; FLOAT: left; =
+WIDTH: 34px; HEIGHT: 15px
+}
+.collapsedwaste {
+	DISPLAY: inline-block; PADDING-LEFT: 0px! important; FLOAT: left; =
+WIDTH: 34px; HEIGHT: 15px
+}
+.sortup {
+	DISPLAY: inline-block; PADDING-LEFT: 0px! important; FLOAT: left; =
+WIDTH: 34px; HEIGHT: 15px
+}
+.sortdown {
+	DISPLAY: inline-block; PADDING-LEFT: 0px! important; FLOAT: left; =
+WIDTH: 34px; HEIGHT: 15px
+}
+.filebrowse-alt .leaf {
+	WIDTH: 20px
+}
+.filebrowse-alt .leafnode {
+	WIDTH: 20px
+}
+.sortup {
+	WIDTH: 20px
+}
+.sortdown {
+	WIDTH: 20px
+}
+.filebrowse UL {
+	PADDING-LEFT: 0px; MARGIN-LEFT: 0px; LIST-STYLE-TYPE: none
+}
+.filebrowse-alt UL {
+	PADDING-LEFT: 0px; MARGIN-LEFT: 0px; LIST-STYLE-TYPE: none
+}
+.filebrowse UL UL {
+	MARGIN-TOP: 0px; MARGIN-LEFT: 1.5em; PADDING-TOP: 0.67em
+}
+.filebrowse-alt UL UL {
+	MARGIN-TOP: 0px; MARGIN-LEFT: 1.5em; PADDING-TOP: 0.67em
+}
+.filebrowse LI {
+	MARGIN-BOTTOM: 0.67em
+}
+.filebrowse-alt LI {
+	MARGIN-BOTTOM: 0.67em
+}
+TD.filebrowse H2 {
+	MARGIN-TOP: 0px
+}
+.errormessage {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 42px; MIN-HEIGHT: 32px; =
+PADDING-BOTTOM: 0.67em; MARGIN: 0.67em 0px; PADDING-TOP: 0.33em
+}
+.warningmessage {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 42px; MIN-HEIGHT: 32px; =
+PADDING-BOTTOM: 0.67em; MARGIN: 0.67em 0px; PADDING-TOP: 0.33em
+}
+.donemessage {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 42px; MIN-HEIGHT: 32px; =
+PADDING-BOTTOM: 0.67em; MARGIN: 0.67em 0px; PADDING-TOP: 0.33em
+}
+.infomessage {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 42px; MIN-HEIGHT: 32px; =
+PADDING-BOTTOM: 0.67em; MARGIN: 0.67em 0px; PADDING-TOP: 0.33em
+}
+.docinfo {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 42px; MIN-HEIGHT: 32px; =
+PADDING-BOTTOM: 0.67em; MARGIN: 0.67em 0px; PADDING-TOP: 0.33em
+}
+.dirinfo {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 42px; MIN-HEIGHT: 32px; =
+PADDING-BOTTOM: 0.67em; MARGIN: 0.67em 0px; PADDING-TOP: 0.33em
+}
+.memberinfo {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 42px; MIN-HEIGHT: 32px; =
+PADDING-BOTTOM: 0.67em; MARGIN: 0.67em 0px; PADDING-TOP: 0.33em
+}
+.usergroupinfo {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 42px; MIN-HEIGHT: 32px; =
+PADDING-BOTTOM: 0.67em; MARGIN: 0.67em 0px; PADDING-TOP: 0.33em
+}
+.errormark {
+	PADDING-LEFT: 20px; MIN-HEIGHT: 15px
+}
+.warningmark {
+	PADDING-LEFT: 20px; MIN-HEIGHT: 15px
+}
+.donemark {
+	PADDING-LEFT: 20px; MIN-HEIGHT: 15px
+}
+.infomark {
+	PADDING-LEFT: 20px; MIN-HEIGHT: 15px
+}
+.alt {
+	DISPLAY: none
+}
+#banner H1 {
+	MARGIN: 0px
+}
+#banner IMG {
+	PADDING-RIGHT: 8px; PADDING-LEFT: 8px; PADDING-BOTTOM: 8px; =
+PADDING-TOP: 8px
+}
+.axial TH {
+	WIDTH: 12em
+}
+.axial TH .strut {
+	WIDTH: 12em
+}
+#leftColumn .strut {
+	WIDTH: 12em
+}
+#breadcrumbs {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 3px; =
+PADDING-TOP: 3px
+}
+.legend {
+	FLOAT: right
+}
+.legend TH {
+	PADDING-LEFT: 1em; TEXT-ALIGN: right
+}
+.bars TH {
+	PADDING-LEFT: 1em; TEXT-ALIGN: right
+}
+.bars TABLE {
+	TABLE-LAYOUT: fixed
+}
+.bars TH {
+	WIDTH: 12em
+}
+#projectdocumentlist TD.filebrowse-alt {
+	PADDING-RIGHT: 0.75em
+}
+#organizationLogo IMG {
+	MARGIN: 8px
+}
+#projectLogo IMG {
+	MARGIN: 8px
+}
+#projectLogo SPAN {
+	MARGIN: 8px
+}
+
+------=_NextPart_000_0000_01CCFDDD.5F9F58E0
+Content-Type: text/css;
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://commons.apache.org/style/commons-maven.css
+
+BODY {
+	FONT-SIZE: 13px; COLOR: #000; BACKGROUND-COLOR: #fff
+}
+P {
+	MARGIN-TOP: 8px; MARGIN-BOTTOM: 4px; MARGIN-LEFT: 4px
+}
+UL {
+	MARGIN-TOP: 4px; MARGIN-BOTTOM: 4px
+}
+OL {
+	MARGIN-TOP: 4px; MARGIN-BOTTOM: 4px
+}
+H2 {
+	PADDING-RIGHT: 4px; MARGIN-TOP: 8px; PADDING-LEFT: 6px; FONT-WEIGHT: =
+900; FONT-SIZE: 13px; BACKGROUND-IMAGE: url(../images/nw_maj_rond.gif); =
+MARGIN-BOTTOM: 4px; PADDING-BOTTOM: 4px; COLOR: #fff; BORDER-TOP-STYLE: =
+none; PADDING-TOP: 4px; BACKGROUND-REPEAT: no-repeat; =
+BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BACKGROUND-COLOR: =
+#036; BORDER-BOTTOM-STYLE: none
+}
+H3 {
+	PADDING-RIGHT: 4px; MARGIN-TOP: 12px; PADDING-LEFT: 6px; FONT-WEIGHT: =
+900; FONT-SIZE: 13px; BACKGROUND-IMAGE: url(../images/nw_maj_rond.gif); =
+MARGIN-BOTTOM: 4px; PADDING-BOTTOM: 4px; COLOR: #fff; BORDER-TOP-STYLE: =
+none; PADDING-TOP: 4px; BACKGROUND-REPEAT: no-repeat; =
+BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BACKGROUND-COLOR: =
+#888; BORDER-BOTTOM-STYLE: none
+}
+DIV#bodyColumn {
+	MARGIN-TOP: 0px; MARGIN-LEFT: 158px
+}
+DIV#bodyColumn A {
+	TEXT-DECORATION: underline
+}
+DIV#bodyColumn A:link {
+	COLOR: #00f
+}
+DIV#bodyColumn A:visited {
+	COLOR: #00f
+}
+A:active {
+	COLOR: #f30! important
+}
+A:hover {
+	COLOR: #f30! important
+}
+DIV.source {
+	MARGIN-TOP: 1em; MARGIN-LEFT: 4px; COLOR: #000; MARGIN-RIGHT: 0px; =
+BACKGROUND-COLOR: #eee
+}
+DIV#leftColumn {
+	BORDER-RIGHT: #aaa 1px solid; BACKGROUND-POSITION: 50% 1%; MARGIN-TOP: =
+0px; BACKGROUND-IMAGE: =
+url(http://www.apache.org/events/current-event-125x125.png); =
+MARGIN-LEFT: 0px; WIDTH: 150px; COLOR: #000; BORDER-TOP-STYLE: none; =
+BORDER-BOTTOM: #aaa 1px solid; BACKGROUND-REPEAT: no-repeat; =
+BORDER-LEFT-STYLE: none; BACKGROUND-COLOR: #eee
+}
+DIV#navcolumn {
+	PADDING-RIGHT: 4px; MARGIN-TOP: 129px; PADDING-LEFT: 8px; =
+PADDING-BOTTOM: 0px; COLOR: #000; BORDER-TOP-STYLE: none; PADDING-TOP: =
+6px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; =
+BORDER-BOTTOM-STYLE: none
+}
+#navcolumn LI {
+	PADDING-LEFT: 8px
+}
+#navcolumn H5 {
+	PADDING-TOP: 3px
+}
+#banner {
+	COLOR: #000; BACKGROUND-COLOR: #fff
+}
+#banner TD {
+	COLOR: #000; BACKGROUND-COLOR: #fff
+}
+#banner TD {
+	VERTICAL-ALIGN: middle; HEIGHT: 100%
+}
+#menuCommons A.externalLink {
+	PADDING-RIGHT: 0px; BACKGROUND-IMAGE: none
+}
+#menuCommons A.externalLink:link {
+	PADDING-RIGHT: 0px; BACKGROUND-IMAGE: none
+}
+#menuCommons A.externalLink:visited {
+	PADDING-RIGHT: 0px; BACKGROUND-IMAGE: none
+}
+#menuCommons A.externalLink:active {
+	PADDING-RIGHT: 0px; BACKGROUND-IMAGE: none
+}
+#menuCommons A.externalLink:hover {
+	PADDING-RIGHT: 0px; BACKGROUND-IMAGE: none
+}
+
+------=_NextPart_000_0000_01CCFDDD.5F9F58E0
+Content-Type: text/css;
+	charset="gb2312"
+Content-Transfer-Encoding: 7bit
+Content-Location: http://commons.apache.org/fileupload/css/site.css
+
+@import url( http://commons.apache.org/style/commons-maven.css );
+
+------=_NextPart_000_0000_01CCFDDD.5F9F58E0
+Content-Type: text/css;
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://commons.apache.org/fileupload/css/print.css
+
+#banner {
+	DISPLAY: none! important
+}
+#footer {
+	DISPLAY: none! important
+}
+#leftcol {
+	DISPLAY: none! important
+}
+#breadcrumbs {
+	DISPLAY: none! important
+}
+.docs #toc {
+	DISPLAY: none! important
+}
+.docs .courtesylinks {
+	DISPLAY: none! important
+}
+#leftColumn {
+	DISPLAY: none! important
+}
+#navColumn {
+	DISPLAY: none! important
+}
+#bodyColumn {
+	MARGIN: 0px; BORDER-TOP-STYLE: none! important; BORDER-RIGHT-STYLE: =
+none! important; BORDER-LEFT-STYLE: none! important; =
+BORDER-BOTTOM-STYLE: none! important
+}
+BODY.docs DIV.docs {
+	MARGIN: 0px; BORDER-TOP-STYLE: none! important; BORDER-RIGHT-STYLE: =
+none! important; BORDER-LEFT-STYLE: none! important; =
+BORDER-BOTTOM-STYLE: none! important
+}
+
+------=_NextPart_000_0000_01CCFDDD.5F9F58E0--

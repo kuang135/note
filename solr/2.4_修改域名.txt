@@ -1,0 +1,8 @@
+默认的域名为：http://localhost:8983/solr
+修改域名：
+	1.配置hosts文件，配置nginx
+	2.修改 example\contexts 下的solr-jetty-context.xml
+		<Set name="contextPath"><SystemProperty name="hostContext" default="/solr"/></Set>
+		改为
+		<Set name="contextPath"><SystemProperty name="hostContext" default="/"/></Set>
+	3.重启后，通过http://localhost:8983访问

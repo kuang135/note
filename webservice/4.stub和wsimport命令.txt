@@ -1,0 +1,13 @@
+stub(桩): 通过wsdl生成的访问服务端的接口(代码)
+
+jdk提供了将wsdl生成桩的命令 wsimport
+
+参数	说明
+-p	定义客户端生成类的包名称
+-s	指定客户端执行类的源文件存放目录
+-d	指定客户端执行类的class文件的存放目录
+-keep   表示生成客户端执行类的源代码
+-b	指定jaxws/jaxb绑定文件或额外的schemas
+-extension	使用扩展来支持SOAP1.2
+
+举例: wsimport -p client -s source -d bin http://localhost:8888/biz?wsdl

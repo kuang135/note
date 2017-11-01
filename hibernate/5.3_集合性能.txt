@@ -1,0 +1,37 @@
+List集合: 有序,不排重
+    应用: 帖子的回复,快递的中转信息 
+	有序是因为表中多了一个字段来存放List的下标,要在一方的<class>标签下配置<index>
+	注意: 不能在一的一方配置inverse=true,放弃对外键的维护,就不能维护List的下标列了
+	<class name="cn.itcast.po.Product" table="t_product" schema="kuang">
+		<id name="id">
+			<generator class="native"/>
+		</id>
+		<property name="name" />
+		<list name="transferInfos" cascade="save-update" > 
+			<!-- 外键 -->
+ 			<key column="fk_product_id" />  
+			<!-- 在数据表中生成字段来记录集合中元素的索引 -->
+ 			<list-index column="t_index" /> 
+ 			<one-to-many class="cn.itcast.po.TransferInfo"/> 
+ 		</list> 
+	</class>
+
+
+不需要排序,也不需要排重的时候,用List,配<bag>
+    配置<bag>,不需要配置<index>,可以用inverse
+    <class name="cn.itcast.po.Product" table="t_product" schema="kuang">
+		<id name="id">
+			<generator class="native"/>
+		</id>
+		<property name="name" />
+		<bag name="transferInfos" cascade="save-update" inverse="true">
+			<!-- 外键 -->
+			<key column="fk_product_id" /> 
+			<one-to-many class="cn.itcast.po.TransferInfo"/>
+		</bag>
+	</class>
+
+
+Set集合: 无序,排重
+
+效率: bag > set > list

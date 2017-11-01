@@ -1,0 +1,67 @@
+Struts2校验方式:
+    1.手动完成输入校验
+    2.编写校验规则文件
+    3.自定义校验器
+    4.基于Annotation的输入校验
+    
+原理: ValidationInterceptor
+
+手动校验:
+    1.对action中的所有方法校验
+	a.继承ActionSupport
+	b.重写void validate();
+	c.在validate方法中对参数校验,校验失败调用addFieldError(String fieldName,String errorMessage)方法
+	d.在jsp上用<s:fielderror/>显示错误消息
+    2.对action中指定的方法校验
+	a.继承ActionSupport
+	b.写一个validateXxx()方法,validateXxx()只会校验action中方法名为Xxx的方法
+	c.在validateXxx()方法中对参数校验,校验失败调用addFieldError(String fieldName,String errorMessage)方法
+	d.在jsp上用<s:fielderror/>显示错误消息
+
+xml配置文件:
+    1.对action中所有的方法校验
+	a.继承ActionSupport,间接实现Validateable接口
+	b.action包下创建ActionClassName-validation.xml,引入dtd
+	c.配置xml
+	  <!-- 根元素 -->
+	  <validators>
+		<!-- name属性指定被验证的表单字段的名字 -->
+		<field name="password">
+			<!-- 指定校验器 -->
+			<field-validator type="stringlength">
+				<!-- 校验器需要的参数 -->
+				<param name="minLength">3</param>
+				<param name="maxLength">9</param>
+				<!-- 验证失败后的提示信息 -->
+				<message>输入不能为空</message>
+			</field-validator>
+		</field>
+	  </validators>
+    2.对action中指定的方法校验
+    	a.继承ActionSupport
+	b.action包下创建ActionClassName-ActionName-validation.xml,
+	  其中ActionName为struts.xml中action的名称
+	  比如: UserAction-user_add-validation.xml,动态指定方法
+	        UserAction-user-validation.xml,method指定方法
+	c.配置xml,同上
+
+自定义校验器
+     1.编写一个类实现Validator或继承ValidatorSupport,FieldValidatorSupport 
+     2.重写void validate(Object obj)方法
+	String fieldName=this.getFieldName(); //获取参数的名称
+	Object fieldValue=this.getFieldValue(fieldName, obj); //获取参数的值
+     3.注册
+	src下新建validators.xml
+	引用xwork-core-2.1.6.jar包下的xwork-validator-config-1.0.dtd
+	<validators>
+		<validator name="telephone" class="cn.itcast.validator.TelephoneValidator" />
+	</validators>
+     4.使用,在校验器的xml配置文件中配置
+	<field name="telephone">
+		<field-validator type="stringlength">
+			<message>输入的不是手机号</message>
+		</field-validator>
+	</field>
+
+
+

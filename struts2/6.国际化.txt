@@ -1,0 +1,50 @@
+应用: 
+    1.错误信息显示(类型转换错误,数据合法性校验失败)
+    2.页面文本信息
+ 
+
+全局国际化:
+    1.src下创建baseName_language_country.properties
+    2.<constant name="struts.custom.i18n.resources" value="baseName"/>
+    3.获取国际化文件信息
+   
+Action范围国际化:
+    1.相应action包下创建ActionClassName_language_country.properties
+    2.无需在struts.xml中配置
+    3.获取国际化文件信息
+
+Package范围国际化:
+    1.相应包下创建package_language_country.properties
+    2.无需配置
+    3.获取国际化文件信息
+
+-----------------------------------------------------------------------------------
+
+获取国际化文件信息
+    jsp中用<s:i18n>标签
+	<s:i18n name="message">
+		<s:text name="info"/>
+	</s:i18n>
+	message为类路径下资源文件的基本名
+	info为文件中的key
+
+    action中ActionSupport的方法
+	String getText(String key);//从小往大依次读取
+
+    配置文件中
+	校验器的xml中message标签有个key属性
+	<message key="info"></message>
+
+--------------------------------------------------------------------------------
+
+输出带占位符的国际化信息(底层用了MessageFormat)
+    场景: message.properties中的配置, info=你好,{0}
+
+    jsp中
+	<s:text name="message">
+		<s:param>kobe</s:param>
+	</s:text>
+
+    action中
+	用String getText(String key, String[] args)
+	getText("info",new String[]{"kobe"});

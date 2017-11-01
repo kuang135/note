@@ -1,0 +1,36 @@
+Spring为HibernateTemplate提供了简单操作的模板和回调:
+	org.springframework.orm.hibernate3.HibernateTemplate
+
+注入原理: HibernateTemplate的父类HibernateAccessor有名为sessionFactory的成员变量和setSessionFactory的方法
+	  通过配置让Spring往HibernateTemplate中注入SessionFactory.
+	
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+常用API:
+	Serializable save(Object entity);
+	void update(Object entity);
+	void delete(Object entity);
+	<T> T get(Class<T> entityClass, Serializable id);
+	<T> T load(Class<T> entityClass, Serializable id); 
+	List find(String queryString, Object... values);
+	List findByCriteria(DetachedCriteria criteria);
+	List findByNamedQuery(String queryName, Object... values);//在hbm中配置命名查询语句
+	
+----------------------------------------------------------------------------------------------------------
+
+为了方便DAO中注入HibernateTemplate,Spring为Hibernate提供了支持类:
+	org.springframework.orm.hibernate3.support.HibernateDaoSupport
+
+注入原理: HibernateDaoSupport有名为hibernateTemplate的成员变量和setHibernateTemplate方法,还有setSessionFactory方法.
+	  通过配置让Spring往HibernateDaoSupport的子类中注入HibernateTemplate或SessionFactory,
+	  在注入SessionFactory的时候会创建HibernateTemplate,赋给hibernateTemplate.
+
+	<bean id="bookDao" class="cn.itcast.dao.BookDao"> <!-- BookDao继承HibernateDaoSupport -->
+		<property name="sessionFactory" ref="sessionFactory"/> <!-- sessionFactory另外配置 -->
+	</bean>
+
+重要方法:
+	final SessionFactory getSessionFactory();
+	final HibernateTemplate getHibernateTemplate();

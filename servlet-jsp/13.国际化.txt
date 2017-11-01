@@ -1,0 +1,5 @@
+文本国际化: java.util.ResourceBundle
+
+日期国际化: java.text.DateFormat
+
+数字国际化:　java.text.NumberFormat

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.div1 {
+			border: 2px solid blue;
+		}
+		p {
+			background: yellow;
+			margin: 4px;
+		}
+
+		.div2 {
+			border: 2px solid red;
+		}
+
+
+
+	</style>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+	<p>Hello</p>
+	<p> <strong>cruel</strong> </p>
+	<p> <q>World</q>  </p>
+	<script>
+		$("p").wrapAll("<div class='div2'></div>");
+		$( "p" ).wrapInner( "<spna>hi</spnan>");
+		$("p").wrap( "<div class='div1'></div>");
+		
+	</script>
+</body>
+</html>

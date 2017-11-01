@@ -1,0 +1,77 @@
+目录相关操作
+	.    代表当前目录
+	..   代表上一层目录
+	-    代表前一个工作目录
+	~    代表当前用户所在的主文件夹
+	~account 代表account这个用户的主文件夹
+
+7.1
+cd：切换目录
+pwd：显示当前路径
+mkdir：新建一个新的目录
+rmdir：删除一个空的目录
+
+
+7.2
+ls：查看文件与目录
+	ls -alhil /
+
+cp：复制文件或目录
+	cp ~/.bashr /tmp/bashrc -- 复制，并重命名
+	cp -r /etc/ /tmp -- 复制目录中的所有文件或目录
+rm：移除文件或目录
+	rm -rf /opt -- 强制删除目录中的文件和目录
+mv：移动文件或目录，或重命名
+	mv bashrc testdir -- 将文件移动到目录中
+	mv testdir test2dir -- 重命名
+	mv bashrc1 bashrc2 rest2dir -- 移动多个文件到目录中
+
+basename：获取路径的文件名，basename `pwd`
+dirname：获取路径的目录名，dirname `pwd`
+
+
+
+7.3
+cat：由第一行开始显示文件内容
+	cat -n log.txt -- 打印出行号
+tac：从最后一行开始显示文件的内容
+nl：显示的时候输出行号
+more：一页一页的显示文件内容
+less：与more类似，可以往前翻页
+head：只看头几行
+	head -n 10 log.txt -- 显示头10行
+	head -n -10 log.txt -- 不显示后10行
+tail：只看尾几行
+	tail -n 10 log.txt -- 显示后10行
+	tail -n +10 log.txt -- 不显示前10行
+	tail -f log.txt -n 20
+od：以二进制的方式读取档案内容
+
+touch：修改文件时间或创建新文件
+	mtime：modification time，文件内容变更时，会更新这个时间。
+	ctime：status time，文件属性或权限变更时，会更新这个时间。
+	atime：access time，文件内容被取用时，会更新这个读取时间。
+
+
+
+7.4
+umask：文件预设权限
+	umask
+	umask -S
+
+chattr：配置文件和目录的隐藏属性
+lsattr：显示文件或目录的隐藏属性
+
+file：观察文件类型
+
+
+
+7.5
+which：脚本文件名出搜索
+	which ifconfig
+whereis：搜寻特定文件
+	whereis ifconfig
+locate：搜寻文件（数据库搜索）
+	locate tomcat
+find：搜索文件（本地磁盘搜索）
+	find /opt -type d -name tomcat

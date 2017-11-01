@@ -1,0 +1,18 @@
+1.安装
+	在Python中，安装第三方模块，是通过包管理工具pip完成的。
+	linux安装python3后，自带pip3
+
+	新建连接文件：ln -s /opt/python3/bin/pip3 /usr/bin/pip3
+	到https://pypi.python.org/pypi/pip下载pip
+	解压进入 执行 sudo python3 setup.py install
+	
+
+	安装MySQLdb
+		sudo pip install Pillow
+		from PIL import Image #没报错即可
+	
+2.模块搜索路径
+	加载一个模块时，Python会在指定的路径下搜索对应的.py文件，如果找不到，就会报错
+	默认情况下，Python解释器会搜索当前目录、所有已安装的内置模块和第三方模块，搜索路径存放在sys模块的path变量中
+		>>> import sys
+		>>> sys.path

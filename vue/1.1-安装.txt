@@ -1,0 +1,15 @@
+要求
+	node.js(>=4.x)
+	git
+	
+安装vue-cli	
+	npm install vue-cli -g
+		
+vue-router
+	npm install vue-router --save
+	
+vuex状态管理
+	npm install vuex --save
+	
+vue-resource
+	npm install vue-resource --save

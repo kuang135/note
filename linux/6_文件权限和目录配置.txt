@@ -1,0 +1,42 @@
+用户信息：/etc/passwd
+密码信息：/etc/shadow
+组信息：/etc/group
+
+d：目录
+-：文件
+l：连接文件
+b：设备文件中的可供存储的接口设备
+c：设备文件中的串行端口设备，如鼠标，键盘
+
+chgrp：改变文件所属用户组
+	chgrp [-R] 用户组名 dirname/filename ...
+	-R：递归
+	chgrp users install.log
+
+chown：改变文件所有者
+	chown [-R] 用户名 dirname/filename
+	chown [-R] 用户名:用户组名 dirname/filename
+	-R：递归
+	chown bin install.log
+	chown root:root install.log
+
+chmod：改变文件的权限
+	chmod [-R] rwx dirname/filename
+	-R：递归
+	chmod 777 .bashrc
+	chmod u=rwxk,go=rx .bashrc
+	chmod a+w .bashrc  --  不知道原来属性，但想增加权限
+
+文件的权限意义
+	r：读取文件的实际内容
+	w：编辑，新增或者修改文件的内容
+	x：被系统执行
+
+目录的权限意义
+	r：读取目录结构列表，ls
+	w：更改目录结构列表，新建,删除,重命名,转移目录内的文件或目录
+	x：进入该目录成为工作目录，cd
+
+绝对路径和相对路径
+	. ：代表当前目录，也可以用 ./ 表示
+	.. ：代表上一层目录，也可以用 ../ 表示

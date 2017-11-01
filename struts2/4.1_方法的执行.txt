@@ -1,0 +1,22 @@
+action中方法的执行:
+
+    1.通过action的method属性明确指定
+
+    2.strut.xml中action用通配符配置
+	<action name="user_*" class="cn.itcast.action.UserAction" method="{1}">
+		<result name="success">/{1}.jsp</result> <!-- name中也可以写{1} -->
+	</action>
+	<!-- user_register,user_search -->
+
+	<action name="*_*" class="cn.itcast.action.{1}" method="{2}">	
+		<result name="success">/{2}.jsp</result>
+	</action>
+	<!-- ProductAction_add,ProductAction_delete -->
+
+    3.动态方法调用
+      <constant name="struts.enable.DynamicMethodInvocation" value="true" />
+      <action name="user" class="cn.itcast.action.UserAction">
+		<result name="success">/index.jsp</result>
+		<result name="error">/login.jsp</result>
+      </action>
+      <!-- http://localhost:8080/struts_day1/user!login -->

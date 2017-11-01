@@ -1,0 +1,13 @@
+{
+	"name" : "pswd",
+	"version" : "0.0.1",
+	"description" : "a directive to manage account and password",
+	"preferGlobal" : "true",
+	"bin" : {
+		"pswd" : "pswd.js"
+	},
+	"author" : "kuang135",
+	"engines" : {
+		"node" : "*"
+	}
+}

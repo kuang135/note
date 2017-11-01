@@ -1,0 +1,23 @@
+--系统例外：no_data_found
+set serveroutput on
+declare
+  pename emp.ename%type;
+begin
+  select ename into pename from emp where empno = 1234;
+exception
+  when no_data_found then dbms_output.put_line('没有数据');
+  when others then dbms_output.put_line('其他例外');
+end;
+/
+
+--系统例外：too_many_rows
+set serveroutput on
+declare
+  pename emp.ename%type;
+begin
+  select ename into pename from emp where deptno = 10;
+exception
+  when too_many_rows then dbms_output.put_line('select语句匹配多行');
+  when others then dbms_output.put_line('其他例外');
+end;
+/

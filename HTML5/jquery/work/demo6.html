@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script  src="../jquery-3.1.0.min.js"></script>
+
+	<script type="text/javascript">
+
+		$(function(){
+
+			$("p").click(function(){
+				if($(this).hasClass('class1')){
+					$(this).removeClass('class1');
+				}
+				else
+				{
+
+					$(this).addClass('class1');
+				}
+
+			});
+		});
+
+	</script>
+
+
+	<style type="text/css">
+
+		.class1{
+
+			font-weight: bold;
+			color: red;
+
+		}
+
+
+	</style>
+
+
+
+</head>
+<body>
+	
+
+	<p>hello</p>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+
+可滚动的结果集，在创建的时候需要给几个参数
+	st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
+
+ResultSet往后移：rs.next();
+ResultSet往前移：rs.previous();
+指定到某一行：rs.absolute(150);
+最后一行的后面：rs.afterLast();
+第一行的前面：rs.beforeFirst();
+
+用处：分页，用于不支持分页的数据库，
+      因为效率较低，先把所有记录都全部查询出来了
+从第150条开始，取10条
+	rs.absolute(150);
+	int i = 0;
+	while (rs.next() && i < 10) {
+		i++;
+		...
+	}
+

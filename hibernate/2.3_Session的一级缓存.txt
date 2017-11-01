@@ -1,0 +1,59 @@
+
+一级缓存: Session定义了很多java集合,这些集合就被称为hibernate的一级缓存
+	  Session引用的对象都是持久态,持久态的对象都被Session引用
+
+一级缓存的作用: 保存持久态对象的引用,可以优化查询
+		第一次查询时将结果放入缓存,第二次查询就直接从缓存中获取
+
+一级缓存的生命周期: 一级缓存的生命周期就是Session的生命周期
+
+一级缓存的数据结构: 一个Map,key为持久态对象的地址,value为该对象的快照(对象值类型属性的值)
+
+-----------------------------------------------------------------------------------------------
+
+快照: Session加载持久态的对象后,会对其值类型的属性进行一份复制.
+快照机制: 通过对比对象的当前属性和快照,来判断哪些属性发生了变化.
+
+缓存的刷出: Session在某些时间点,按照缓存中对象的变化来执行相关的SQL语句,同步更新数据库
+刷出的时间点:
+	1.执行Session的flush()
+	2.执行Transaction的commit(),会先刷出缓存
+	3.执行Query查询,如果缓存中持久化对象的属性已经变化,会先刷出缓存.
+
+一级缓存的常见操作:
+	flush() -- 刷出
+	refresh() -- 刷新缓存,重新查询数据库,更新缓存和快照
+	clear() -- 清除所有对象的缓存
+	evict(Object obj) -- 清除某个对象的缓存
+
+---------------------------------------------------------------------------------------------------
+
+测试代码: 
+    1.测试一级缓存的存在
+	Session session = HibernateUtils.openSession();
+	Customer c1 = (Customer)session.get(Customer.class, 5);
+	Customer c2 = (Customer)session.get(Customer.class, 5);
+	System.out.println(c1.hashCode());
+	System.out.println(c2.hashCode());
+	session.close();
+  现象: 打印出的哈希码相同
+
+    2.测试快照和刷出
+	Session session = HibernateUtils.openSession();
+	Transaction transaction = session.beginTransaction();
+	Customer c = (Customer)session.get(Customer.class,3);
+	c.setName("汤普森");//原来不是"汤普森"
+	transaction.commit();
+	session.close();
+  现象: 控制台输出select语句和update语句,数据库更新了数据
+
+  --------------------------------------------------------------------
+
+  实际应用:
+	Session代表一次会话过程，与一个数据库连接相关连，
+	所以Session不要长时间打开,通常仅用于一个事务中,在事务结束时就关闭。
+
+	Session线程不安全,被多个线程共享时容易出错.
+	通常,全局意义上的缓存才有较大的缓存价值，
+	
+	因此,Hibernate一级缓存的作用并不明显,应用价值不大.

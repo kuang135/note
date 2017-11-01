@@ -1,0 +1,17 @@
+使用 CallableStatement 对象调用
+
+      --在java程序中调用存储函数
+	Class.forName("oracle.jdbc.driver.OracleDriver");
+	Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:myOrcl1","scott","tiger");
+	CallableStatement call = conn.prepareCall("{?=call queryempincome(?)}");
+	//对于输出参数，声明
+	call.registerOutParameter(1, OracleTypes.NUMBER);
+	//对于输入参数，赋值
+	call.setInt(2, 7839);
+	//执行调用
+	call.execute();
+	//取出结果
+	double income = call.getDouble(1);
+	System.out.println("该员工的年收入是："+income);
+	call.close();
+	conn.close();

@@ -1,0 +1,11 @@
+javax.xml.ws.Endpoint
+	static Endpoint publish(String address, Object implementor);//服务端发布,webservice地址,提供给外部访问的类
+
+javax.xml.ws.Service
+	static Service create(URL wsdlDocumentLocation, QName serviceName);//客户端生成本地服务视图实例,wsdl地址和QName
+	<T> T getPort(Class<T> serviceEndpointInterface);//客服端获取桩实例(本地代理对象)
+
+javax.xml.namespace.QName
+	QName(String namespaceURI, String localPart);//两个参数对应<definitions targetNamespace="" name="">
+
+

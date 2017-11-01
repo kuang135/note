@@ -1,0 +1,86 @@
+Mybatis可以通过配置sql语句的方式(SQL映射),来操作数据库,将结果集封装到pojo或Map中.
+
+快速入门
+	1.导入jar,编写实体类,src下创建UserMapper.xml,导入dtd,完成SQL的映射
+		<mapper namespace="myNamespace" > <!-- namespace和id可以随意写 -->
+			<select id="myId" resultType="cn.itcast.domain.User"> <!-- id表示在命名空间中唯一的标识符,可以被用来引用这条语句 -->
+				SELECT * FROM user WHERE name = #{userName}
+			</select>
+		</mapper>
+
+	2.src下创建mybatis-config.xml,jdbc.properties,log4j.properties,导入dtd
+		<configuration>
+			<!-- 引入外部的配置文件 -->
+			<properties resource="jdbc.properties"/>
+			<!-- 指定环境,environment 元素体中包含对事 务管理和连接池的环境配置 -->
+			<environments default="development">
+				<environment id="development">
+					<transactionManager type="JDBC" />
+					<dataSource type="POOLED">
+						<property name="driver" value="${jdbc.driver}" />
+						<property name="url" value="${jdbc.url}" />
+						<property name="username" value="${jdbc.username}" />
+						<property name="password" value="${jdbc.password}" />
+					</dataSource>
+				</environment>
+			</environments>
+			<mappers>
+				<mapper resource="UserMapper.xml" /> <!-- 导入xxxMapper.xml -->
+			</mappers>
+		</configuration>
+		
+	3.编写代码操作数据库
+		// 读取配置文件
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		// 通过SqlSessionFactoryBuilder构建一个SqlSessionFactory
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		//打开SqlSession,true表示自动提交事务
+		SqlSession sqlSession = sqlSessionFactory.openSession(true);
+		//执行查询
+		User user=sqlSession.selectOne("myNamespace.myId", "kobe");//namespace+"."+id
+		System.out.println(user);
+
+--------------------------------------------------------------------------------------------
+
+Mybatis也可以通过配置的方式,来动态生成DAO的实现.
+
+	1.写一个UserDao接口,定义方法
+		public interface UserDao {
+			public User queryUserByUserName(String name);
+		}
+	2.src下UserMapper.xml中配置
+		<mapper namespace="cn.itcast.dao.UserDao" > <!-- namespace是接口名的全路径 -->
+			<select id="queryUserByUserName" resultType="cn.itcast.domain.User"> <!-- id是接口中定义的方法名 -->
+				SELECT * FROM user WHERE name = #{userName}
+			</select>
+		</mapper>
+
+	3.src下创建mybatis-config.xml,完成配置
+
+	4.代码测试
+		// 读取配置文件
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		// 通过SqlSessionFactoryBuilder构建一个SqlSessionFactory
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		//打开SqlSession
+		SqlSession sqlSession = sqlSessionFactory.openSession(true);
+		//获取动态创建的UserDao的实现(映射器)
+		UserDao userDao = sqlSession.getMapper(UserDao.class);
+		User user = userDao.queryUserByUserName("lbj");
+		System.out.println(user);
+
+---------------------------------------------------------------------------------------------------
+
+    需要导入的jar包
+	mybatis-3.2.8.jar(核心)
+	asm-3.3.1.jar
+	cglib-2.2.2.jar
+	javassist-3.17.1-GA.jar
+	commons-logging-1.1.1.jar
+	log4j-1.2.17.jar
+	log4j-api-2.0.2.jar
+	log4j-core-2.0.2.jar
+	slf4j-api-1.7.5.jar
+	slf4j-log4j12-1.7.5.jar

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="jquery-1.12.0.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var content = '<div>hello</div><div>world</div>';
+			$('a:first-child').attr('title', htmlEncode(content));
+			$('a').eq(1).attr('title', htmlDecode(htmlEncode(content)));
+			$('a:last-child').attr('title', htmlDecode(content));
+		});
+
+		//将字符串内容中的html标签转义
+		function htmlEncode(content){
+		  return $('<div/>').text(content).html();
+		}
+		//将字符内容中已经转义的html标签转成html标签
+		//或者直接去掉字符串中的html标签
+		function htmlDecode(content){
+		  return $('<div/>').html(content).text();
+		}
+
+	</script>
+</head>
+<body>
+	<a>转义</a>
+	<a>转回来</a>
+	<a>去掉html标签</a>
+</body>
+</html>

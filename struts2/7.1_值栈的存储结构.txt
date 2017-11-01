@@ -1,0 +1,19 @@
+值栈包含两个部分:
+	ObjectStack 对象栈,保存Action相关对象 --- List结构
+	ContextMap 上下文Map,保存常用web对象引用 ---- Map结构 
+
+OgnlValueStack中的属性:
+	CompoundRoot root;//对象栈,继承ArrayList
+	transient Map<String, Object> context;//上下文map,OgnlContext,实现Map接口
+
+OgnlContext中的属性:
+	private Object _root; //顶层对象,对CompoundRoot的引用,
+			     //保存Action相关对象的引用
+	private Map _values = new HashMap(23); //保存了常用web对象的引用
+			//request,response,servletContext,session,attr,parameters
+
+ognl表达式取值:
+	在用ognl表达式取值的时候,就会访问OgnlContext(上下文),
+	通过_root属性可以访问到OgnlValueStack(值栈)中的CompoundRoot(对象栈),从而访问到Action相关对象
+	通过_values属性可以访问到常用web对象
+

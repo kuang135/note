@@ -1,0 +1,66 @@
+Struts2内置了常见数据类型多种转换器
+	boolean 和 Boolean
+	char 和 Character
+	int 和 Integer
+	long 和 Long
+	float 和 Float
+	double 和 Double
+	Date 可以接收 yyyy-MM-dd格式字符串
+	数组  可以将多个同名参数，转换到数组中
+	集合  支持将数据保存到 List 或者 Map 集合
+
+-------------------------------------------------------------------
+
+com.opensymphony.xwork2.conversion.TypeConverter(接口)
+	|
+	+com.opensymphony.xwork2.conversion.impl.DefaultTypeConverter(类)
+		|
+		+org.apache.struts2.util.StrutsTypeConverter
+
+TypeConverter的方法:
+	Object convertValue(Map<String, Object> context, Object target, Member member, String propertyName, Object value, Class toType);
+
+DefaultTypeConverter的方法:
+	Object convertValue(Object value, Class toType)
+	//将参数进行转型时,value为String[],Request.getParameterValues() 
+
+StrutsTypeConverter有两个抽象方法:
+	//页面String[]参数values,转为action的属性
+	public abstract Object convertFromString(Map context, String[] values, Class toClass);
+	//复杂对象o转为String类型
+	public abstract String convertToString(Map context, Object o);
+
+
+自定义转换器,继承DefaultTypeConverter或StrutsTypeConverter
+    1.局部转换器,只能用属性注入的方式获取参数
+	a.写一个类继承DefaultTypeConverter
+	b.重写Object convertValue(Object value, Class toType)方法,value为数组
+	  方法中针对特殊类型做处理,其他的交给父类处理return super.convertValue(value, toType);
+	c.在action所在的包下创建ActionClassName-conversion.properties
+	  配置：属性名称=类型转换器的全类名
+	  　　　createtime=cn.itcast.conversion.DateConverter
+
+    2.全局转换器
+	a.写一个类继承DefaultTypeConverter
+	b.重写Object convertValue(Object value, Class toType)方法,value为数组
+	  方法中针对特殊类型做处理,其他的交给父类处理return super.convertValue(value, toType);
+	c.src下放置xwork-conversion.properties文件
+	  配置: 待转换的类型=类型转换器的全类名
+	  　　　java.util.Date=cn.itcast.conversion.DateConverter
+
+------------------------------------------------------------------------------------
+
+类型转换中的错误处理
+    1.如果类型转换器执行类型转换时出现错误,StrutsConversionErrorInterceptor将类错误信息封装到FieldError,
+      并将FieldError放入ActionContext
+    2.DefaultWorkflowInterceptor从ActionContext拿到FieldError判断是否为空,不为空就往INPUT跳
+    3.在Action所在包中,创建ActionNameClass.properties，
+    　配置：invalid.fieldvalue.属性名= 错误信息
+	    invalid.fieldvalue.customer.birthday=生日输入格式有误
+      也可以在src目录下创建任意名字的properties文件,配置同样的信息,开启国际化文件
+    4.在input逻辑视图所对应jsp页面中，通过<s:fielderror/> 输出类型转换信息
+
+注意: 1.用户定义Action必须继承ActionSupport
+      2.action的result中配置input
+      3.在自定义类型转换器中,异常必须抛出不能捕获,ConversionErrorInterceptor才会处理该异常,
+        添加fieldError,workflow才能拿到fieldError,返回input视图

@@ -1,0 +1,41 @@
+接口ProcessEngine extends EngineServices
+
+EngineServices的方法
+	RepositoryService getRepositoryService() -- 管理流程定义
+	RuntimeService	getRuntimeService() -- 执行管理,包括启动,推进,删除流程实例等操作 
+	TaskService getTaskService() -- 任务管理 
+	HistoryService getHistoryService() -- 历史管理(执行完的数据的管理)
+	IdentityService	getIdentityService() -- 组织机构管理
+	FormService getFormService() -- 一个可选服务,任务表单管理
+	ManagementService getManagementService() 
+
+ProcessEngine processEngine=ProcessEngines.getDefaultProcessEngine();
+	-- 创建23张表
+	-- act_ge_property  -- 主键策略表(为流程相关表提供主键),版本号
+
+RepositoryService
+DeploymentBuilder
+Deployment
+	-- act_re_deployment -- 流程部署对象表: 
+	-- act_re_procdef    -- 流程定义表: 具体流程包含哪些东西
+	-- act_ge_bytearray  -- 资源文件表: 存放bpmn图片
+	
+
+RuntimeService
+Execution
+ProcessInstance
+	-- act_ru_execution  -- 执行对象和流程实例对象表
+	-- act_ru_task  -- 正在执行的任务表(只有流程执行到userTask节点的时候，引擎才向该表插入数据)
+	-- act_ru_identitylink
+	-- act_hi_actinst -- 活动的历史表(流程中所有走过的节点活动信息都会存放在这里)
+	-- act_hi_identitylink
+	-- act_hi_procinst -- 流程实例的历史表
+	-- act_hi_taskinst -- 任务历史表(只有流程执行到userTask节点的时候，引擎才向该表插入数据)
+
+TaskService
+TaskQuery
+Task
+	-- act_ru_variable
+	-- act_hi_varinst
+
+HistoryService

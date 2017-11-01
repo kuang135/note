@@ -1,0 +1,23 @@
+函数为一命名的存储程序，可带参数，并返回一计算值。
+函数和过程的结构类似，但必须有一个return子句，用于返回函数值。
+
+创建：
+    create [or replace] function 函数名(参数列表)
+    return 函数值类型
+    as -- 相当于plsql的declare
+    begin
+    end;
+    /
+
+举例：
+    --查询某个员工的年收入
+    create or replace function queryempincome(eno in number)
+    return number
+    as
+        psal emp.sal%type;
+	pcomm emp.comm%type;
+    begin
+	select sal,comm into psal,pcomm from emp where empno = eno;
+    return psal*12+NVL(pcomm,0);
+    end;
+    /

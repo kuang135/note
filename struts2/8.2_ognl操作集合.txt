@@ -1,0 +1,27 @@
+ognl操作List和数组: 
+	list[index] -- 根据下标得到list中的值
+	array[index] -- 根据下标得到array中的值
+	list[index].属性 -- 当值为对象时,拿到值中的属性
+	list.size -- list的大小
+	list.isEmpty -- list是否为空
+	
+	Action中: private List list=new ArrayList();
+	Jsp: <s:property value="allList.size"/>
+	     <s:property value="allList[0]"/>
+             <s:property value="allList[0].name"/>
+             <s:property value="allList[0].age"/>
+
+ognl操作Map:
+	map.key -- 根据key得到value
+	map[key] -- 根据key得到value
+	map[key].属性 -- 当value为对象时,拿value中的属性
+	map.size -- map的大小
+	map.isEmpty -- map是否为空
+
+	Action中: private Map map=new HashMap();
+	Jsp: <s:property value="map.size"/>
+	     <s:property value="map['first']"/>
+             <s:property value="map['first'].name"/>
+             <s:property value="map['first'].age"/>
+
+

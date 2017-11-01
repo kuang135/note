@@ -1,0 +1,12 @@
+视图：一个虚拟表，其内容由查询定义。
+视图并不在数据库中以存储的数据值集形式存在。
+
+创建视图：
+    create view 视图名 as select语句 [with read only]
+
+创建或修改视图
+    create or replace view 视图名 as select语句 [with read only]
+
+删除视图
+    drop view 视图名
+    

@@ -1,0 +1,40 @@
+//固定大小的线程池
+//ExecutorService threadPool = Executors.newFixedThreadPool(3);
+
+//缓存线程池，线程数动态变化
+//ExecutorService threadPool = Executors.newCachedThreadPool();
+
+//单一线程池，如果线程死掉，马上会新建一个线程
+ExecutorService threadPool = Executors.newSingleThreadExecutor();
+
+//3个线程做10个任务
+for (int i = 1; i <= 10; i++) {
+	final int task = i;
+	threadPool.execute(new Runnable(){
+		@Override
+		public void run() {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.println(Thread.currentThread().getName() + " 正在做任务 " + task);
+		}
+	});
+}
+//任务完成后关闭
+threadPool.shutdown();
+
+--------------------------------------------------------------
+
+//定时功能的线程池
+ScheduledExecutorService threadPool = Executors.newScheduledThreadPool(3);
+//3个线程做一个任务，2秒后，每隔2秒做一次
+threadPool.scheduleAtFixedRate(
+	new Runnable(){
+		@Override
+		public void run() {
+			System.out.println(Thread.currentThread().getName());
+		}
+	}, 2, 2, TimeUnit.SECONDS
+		);

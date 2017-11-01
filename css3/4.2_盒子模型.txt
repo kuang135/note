@@ -1,0 +1,58 @@
+1.元素尺寸
+	width		设置元素的宽度
+	height		设置元素的高度
+	min-width	设置元素的最小宽度
+	min-height	设置元素的最小高度
+	max-width	设置元素的最大宽度
+	max-height	设置元素的最大高度
+	
+2.元素内边距
+	padding-top		设置顶部内边距
+	padding-bottom	设置底部内边距
+	padding-left	设置左边内边距
+	padding-right	设置右边内边距
+	padding			简写属性
+	
+3.元素外边距
+	margin-top		设置顶部外边距
+	margin-bottom	设置底部外边距
+	margin-left		设置左边外边距
+	margin-right	设置右边外边距
+	margin			简写属性
+	
+4.处理溢出
+	溢出主要朝两个方向：右侧和底部
+		overflow-x	设置水平方向的溢出
+		overflow-y	设置垂直方向的溢出
+		overflow	简写属性
+	溢出处理主要有四种处理值：
+		auto	浏览器自行处理溢出内容。如果有溢出内容，就显示滚动条，否则就不显示滚动条。
+		hidden 	如果有溢出的内容，直接剪掉。
+		scroll	不管是否溢出，都会出现滚动条。但不同平台和浏览器显示方式不同。
+		visible	默认值，不管是否溢出，都显示内容。
+	
+5.元素可见性
+	visibility
+		visible  默认值，元素在页面上可见
+		hidden 	 元素不可见，但会占据空间
+		collapse 元素不可见，隐藏表格的行与列，如果不是表格，则和hidden 一样。
+	
+6.元素盒类型
+	display
+		block 	盒子为块级元素(div)
+		inline 	盒子为行内元素(span)
+		inline-block 	盒子为行内-块元素(img)
+		none 	盒子不可见，不占位
+		
+7.元素的浮动
+	float
+		left 	浮动元素靠左
+		right 	浮动元素靠右
+		none 	禁用浮动
+	浮动有一个问题：当一个元素盒子被浮动后，下面的元素会自动堆叠处理，导致元素不可见或部分不可见。
+	使用clear 属性来处理
+	clear 
+		none	允许两边均可浮动
+		left 	左边界不得浮动
+		right	右边界不得浮动
+		both	两边都不得浮动

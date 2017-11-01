@@ -1,0 +1,18 @@
+1.freemarker解决方案
+
+	ltList<列头>
+	vList<map<key=列头,value=viewValue>>
+
+	<th>
+		<#list ltList as lt>
+			<td>${lt}</td>
+		</#list>
+	</th>
+
+	<#list vList as map>
+		<tr>
+			<#list ltList as lt>
+				<td>${map[lt]}</td>
+			</#list> 
+		</tr>
+	</#list>

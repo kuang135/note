@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+
+<style type="text/css">
+		h1
+{
+text-shadow: 5px 5px 5px #FF0000;
+}
+
+p.test
+{
+width:11em; 
+border:1px solid #000000;
+word-wrap:break-word;
+}
+
+div.textoverflow
+{
+white-space:nowrap; 
+width:12em; 
+overflow:hidden; 
+border:1px solid #000000;
+}
+	
+</style>
+
+
+
+
+</head>
+<body>
+	<h1>文本阴影效果！</h1>
+
+<p class="test">This paragraph contains a very long word: thisisaveryveryveryveryveryverylongword. The long word will break and wrap to the next line.</p>
+
+
+<div class="textoverflow" style="text-overflow:ellipsis;">text-overflow:ellipsis;text-overflow:ellipsis;text-overflow:ellipsis;</div>
+
+
+<div class="textoverflow" style="text-overflow:clip;">text-overflow:clip;text-overflow:clip;text-overflow:clip</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+if：自动调用Boolean()转换函数将表达式的结果转换为一个布尔值
+
+for: 不存在块级作用域，循环内部定义的变量也可以在外边访问到
+	多级for循环时，不要命名相同名字的变量，容易死循环
+
+for in：可以用来枚举对象的属性，对象的属性没有顺序
+	建议在循环之前，先检查确认该对象的值不是null或undefined
+	if(obj !== null && obj !== undefined){
+	    for(var property in obj){
+			//防止obj有一个属性或方法也叫hasOwnProperty
+			if(Object.prototype.hasOwnProperty.call(obj,property)){
+				alert(obj[property]);
+			}
+	    }
+	}		
+
+with：将代码的作用域设置到一个特定的对象中
+
+switch：可以使用任何数据类型，每个case的值不一定是常量，可以是变量，甚至是表达式
+	var num = 25;
+	switch (true) {
+	    case num < 0: 
+			alert("Less than 0.");
+			break;
+	    case num >= 0 && num <= 10: 
+			alert("Between 0 and 10.");
+			break;
+	    case num > 10 && num <= 20: 
+			alert("Between 10 and 20.");
+			break;
+	    default: 
+			alert("More than 20.");
+	}

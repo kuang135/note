@@ -1,0 +1,66 @@
+Java中关于xml文件的解析的类位于：org.w3c.dom 包下。
+
+    Node 接口：标签整个文档中的节点（标签、属性、文本）
+    Document 接口继承自Node：代表整个xml文档对象
+    Element 接口继承自Node：标签
+    Attr 接口继承自Node：属性
+    Text 接口继承自Node：文本
+
+1.获取Document对象，DocumentBuilderFactory和DocumentBuilder在javax.xml.pasres包下
+    DocumentBuilderFactory  factory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder  builder = factory.newDocumentBuilder();
+    Document dom = builder.parse("文件路径")；
+
+2.获取节点或属性
+    Document的方法：
+	Element getElementById(String elementId) //如果xml没有被约束，该方法无用
+	NodeList getElementsByTagName(String name)
+    Node的方法：
+	NodeList getChildNodes() 
+	Node getParentNode()  
+	Node getFirstChild() 
+	Node getLastChild() 
+	String getNodeName() //空格节点的名字为 #text
+	String getTextContent() 
+    Element的方法：
+	String getAttribute(String name) 
+	NodeList getElementsByTagName(String name) 
+    Attr的方法：
+	String getName() 
+ 	String getValue() 
+	setValue(String value） 
+	
+    
+3.遍历节点
+    NodeList的方法：
+	int getLength() 
+	Node item(int index)  
+
+4.修改标签下的文本
+    Node的方法：
+	setTextContent(String textContent) 
+
+5.转换器：更改了内存中的dom后要更改硬盘中的文件，引入javax.xml.transform 包
+	TransformerFactory tff = TransformerFactory.newInstance();
+	Transformer transformer = tff.newTransformer();
+	transformer.transform( new DOMSource(dom), new StreamResult(new FileOutputStream("books.xml")));
+
+6.增加节点
+    DocumentBuilder的方法：
+	Document newDocument() 
+    Node的方法：
+	Node appendChild(Node newChild) 
+	setTextContent(String textContent) 
+    Document的方法：
+	Element createElement(String tagName)
+	Text createTextNode(String data) 
+    Element的方法：
+	void setAttribute(String name, String value) 
+	
+
+7.删除节点
+    Node的方法：
+	Node removeChild(Node oldChild) 
+    
+
+    

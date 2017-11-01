@@ -1,0 +1,23 @@
+http头：location
+
+
+请求重定向：一个web资源收到客户端请求后，通知浏览器去访问另外一个web资源，这称之为请求重定向 
+
+因为响应通过设置响应头，通知浏览器去访问另一个web资源(互联网上的任何资源)，所有请求发生了两次，并且浏览器地址栏改变。
+
+现象：
+    1.浏览器发生了两次请求
+    2.浏览器地址栏发生了变化，指向了重定向的地址
+    3.浏览器看到了重定向后的页面的内容
+
+
+应用场景：
+    用户登录成功后，用重定向，
+
+如何应用：
+   1.302+location
+	response.setStatus(302);
+	response.setHeader("location","http://localhost:8080");
+	
+    2.用方法封装方式1
+	response.sendRedirect("/day10_response/1.html");

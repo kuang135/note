@@ -1,0 +1,24 @@
+水平居中
+	margin: 0 auto;
+
+垂直居中
+	height: 80px;
+	line-height: 80px;
+	
+多余文本显示...
+	p {
+		width: 160px;
+		background: silver;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+	
+相邻边框导致边框变粗
+	margin: 0 -1px;
+	
+ul去标题
+	list-style: outside none none;
+
+a去下划线
+	text-decoration: none;

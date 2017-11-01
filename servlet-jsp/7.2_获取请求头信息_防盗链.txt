@@ -1,0 +1,23 @@
+获取请求头信息：
+	String getHeader(String name);
+	Enumeration<String> getHeaderNames();
+	Enumeration<String> getHeaders(String name);
+	
+	获取来访者的浏览器类型
+		getHeader("User-Agent")
+
+	获取所有请求头的信息
+		Enumeration names = request.getHeaderNames();
+		while(names.hasMoreElements()){
+			String name = (String) names.nextElement();
+			String value = request.getHeader(name);
+			System.out.println(name+" = " + value);
+		}
+		
+
+应用：通过referer头实现防盗链
+      防盗链：阻止第三方恶意网站通过直接挂链接的方式来访问本网站的资源
+      referer头信息：本次请求从哪个页面而来
+
+      如果是从本网站点击而来，request.getHeader("referer")的返回值为null
+      实际开发中会去判断来访者的主机名是否以本网站开头

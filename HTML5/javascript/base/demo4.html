@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<p id="demo"></p>
+	<script type="text/javascript">
+		
+		var time=new Date().getHours();
+		if (time<10)
+		{
+			x="早上好";
+		}
+		else if (time<13)
+		{
+			x="中午好";
+		}
+		else if (time<16)
+		{
+			x="下午好";
+		}
+		else
+		{
+			x="晚上好";
+		}
+		document.getElementById("demo").innerHTML=x;
+
+	</script>
+</body>
+</html>

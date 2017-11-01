@@ -1,0 +1,12 @@
+BlockingQueue<E>
+	 boolean add(E e); //满了再放，抛异常
+	 boolean remove(Object o); //没有时取，抛异常
+	 
+	 boolean offer(E e); //满了再放，立马返回false
+	 E poll(long timeout, TimeUnit unit) throws InterruptedException; //没有时取，返回null
+	 
+	 void put(E e) throws InterruptedException; //满了再放，阻塞
+	 E take() throws InterruptedException; //没有时取，阻塞
+	 
+	 
+	

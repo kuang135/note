@@ -1,0 +1,35 @@
+功能：用于指示jsp执行某些步骤，表现特定行为
+
+
+语法：<%@ directive [attribute="value"]* %>
+
+
+分类：page
+      include
+      taglib
+    
+page指令：用于定义jsp文件的全局属性，有很多属性，一般不会更改
+	errorPage="500.jsp"-----针对某个servlet中的错误
+	isEerrorPage="true"-----错误显示页面，可以使用exception
+		配置全局错误，在web-app标签下配置
+			<error-page>
+				<error-code>500</error-code>
+				<location>/500.jsp</location>
+			</error-page>
+		应用：访问已经移除了的促销页面
+	pageEncoding：告诉编辑器保存页面源代码时用什么编码保存到硬盘上
+	contentType：告诉浏览器收到的二进制数据以什么方式解码,jsp是一个servlet,数据由jsp写给浏览器
+		meta标签里的content：html自带，多余
+
+include：静态包含，用于包含一些jsp页面
+	原理：将要包含的页面的源代码组合起来编译生成一个.class文件，运行，输出结果
+	应用：用来替代RequestDispatcher的include方法
+
+jsp的include标签：动态包含
+	原理：将要包含的页面先编译成.class文件，运行，然后将运行的结果组合起来
+
+taglib：用于在jsp页面中导入标签库
+	应用：导入标签库 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+
+

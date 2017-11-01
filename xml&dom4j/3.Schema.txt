@@ -1,0 +1,61 @@
+DTD的不足：一个xml文件只能引入一个DTD约束
+	  无法对标签中的属性或标签的数据类型做严格限定
+
+Schema：基于XML的DTD替代者
+	一个xml可以引入多个Schema约束
+	可以对标签中的属性或标签中的数据类型做严格限定
+
+Schema文件本身就是一个xml文件，Schema中的标签由W3C定义好
+
+
+1.创建Schema文件，扩展名为 .xsd 
+
+2.Schema文件中的根标签为 <schema> </schema>
+
+3.在schema根标签中引入w3c对schema文件的规范        
+  xmlns="http://www.w3.org/2001/XMLSchema"
+
+4.给当前的schema文件起名字(名称空间)
+  targetNamespace="abcdefg"   一般写域名
+  作用是在约束那个xml时，在xml中通过这个名称空间来引入这个Schema约束
+  elementFormDefault="unqualified" 约束当前xml文件中书写的标签要不要使用名称空间的别名
+	unqualified 这时除了全局元素或者类型将归于目标命名空间外，局部元素将归于无名命名空间
+	qualified  这时全局元素或者类型将归于目标命名空间，局部元素将以缺省方式归于目标命名空间
+
+5.书写schema文件中的标签
+  <element name=""></element>    name="" 表示xml文件中的标签名
+  复杂标签：xml中的标签中如果拥有属性或者子标签，或属性和子标签，这样的标签称为复杂标签
+  简单的标签：只有文本内容的标签。
+  对于复杂标签，其中的属性或者子标签必须使用complexType标签来声明
+  定义属性：<xs:attribute name="xxx" type="yyy"/>
+<schema  xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="abcdefg"
+	elementFormDefault="qualified"
+	<element name="users">
+ 		<complexType>  <!-- complexType 声明当前的users标签是一个复杂标签 -->
+ 			<sequence> <!-- 声明复杂标签中子标签的顺序 -->
+ 				<element name="user" maxOccurs="unbounded"> <!-- maxOccurs="unbounded" 当前的标签可以出现任意个 -->
+ 					<complexType>
+ 						<sequence>
+ 							<!-- 如果是简单标签，需要在简单标签上使用type属性声明简单标签中的文本数据类型 -->
+ 							<element name="name"  type="string"></element>
+						 	<element name="age"  type="int"></element>
+						 	<element name="addr"  type="string"></element>
+						 	<any></any>
+ 						</sequence>
+ 					</complexType>
+ 				</element>
+ 			</sequence>
+ 		</complexType>
+ 	</element>
+</schema>
+
+6.在xml文件中引入schema文件，给根标签添加如下属性
+  <users xmlns="abcdefg"	//
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://sh.itcast.cn/1026 users.xsd">  注意：后面加上xsd的路径
+    .......
+   </users>
+
+
+

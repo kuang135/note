@@ -1,0 +1,33 @@
+if 条件 then 语句;
+语句;
+end if;
+
+if 条件 then 语句;
+else 语句;
+end if;
+
+if 条件 then 语句;
+elsif 条件 then 语句;
+else 语句;
+end if;
+
+	/*
+	判断用户从键盘输入的数字
+	1.如何使用if语句
+	2.接收一个键盘输入(字符串)
+	*/
+	set serveroutput on
+	--接收一个键盘输入
+	--num：地址值，含义是：在该地址上保存了输入的值
+	accept num prompt '请输入一个数字';
+	--定义变量，取地址中的值加&
+	declare
+	  pnum number := &num;
+	begin
+	  if pnum = 0 then dbms_output.put_line('您输入了0');
+	    elsif pnum = 1 then dbms_output.put_line('您输入了1');
+	    elsif pnum = 2 then dbms_output.put_line('您输入了2');
+	    else dbms_output.put_line('您输入了非012');
+	  end if;
+	end;
+	/

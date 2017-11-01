@@ -1,0 +1,68 @@
+线程间通信：多个线程在操作同一个资源，但是操作的动作不同。
+
+等待唤醒机制：
+    wait()，等待线程都存在线程池中
+    notify()，唤醒的是线程池中的线程，通常是第一个
+
+wait(),notify(),notifyAll()
+	操作这些方法的对象必须是锁对象，即同步锁
+	不可以对不同锁中的线程进行唤醒，也就是说，等待和唤醒必须是同一把锁
+	
+经验：要用到共同数据(包括同步锁)的若干个方法应该归在同一个类上，
+	用this作为锁，用this操作wait和notify，保证等待和唤醒用的是同一把锁。
+	
+-----------------------------------------------------------------------------------
+
+public class InDeCrease {
+	 // 一个线程+1，一个线程-1，交替10次
+	public static void main(String[] args) {
+		final Business business = new Business();
+		new Thread(new Runnable(){
+			@Override
+			public void run() {
+				for (int i = 0; i < 10; i++) {
+					business.decrease();
+				}
+			}}).start();
+		new Thread(new Runnable(){
+			@Override
+			public void run() {
+				for (int i = 0; i < 10; i++) {
+					business.increase();
+				}
+			}
+		}).start();
+	}
+}
+//把操作数据的代码封装到一个对象中，这样就可以用this作为锁了
+class Business {
+	private int count = 0;
+	//加一
+	public synchronized void increase() {
+		//用while代替if，防止假唤醒
+		while (count > 0) {
+			try {
+				//设置条件，按先wait，再notify，思路更清晰
+				this.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		count++;
+		System.out.println(Thread.currentThread().getName() + " 加1,count: " + count);
+		this.notify();
+	}
+	//减一
+	public synchronized void decrease() {
+		while (count < 1) {
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		count--;
+		System.out.println(Thread.currentThread().getName() + " 减1,count: " + count);
+		this.notify();
+	}
+}

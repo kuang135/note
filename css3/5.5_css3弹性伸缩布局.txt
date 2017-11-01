@@ -1,0 +1,33 @@
+CSS3 提供一种崭新的布局方式：Flexbox 布局，即弹性伸缩布局模型(Flexible Box).
+
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		p {
+			width: 150px;
+			border: 1px solid gray;
+			background-color: silver;
+			margin: 5px;
+			padding: 5px;
+		}
+		div {
+			width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+		}
+		p:nth-child(1){flex:1;}
+		p:nth-child(2){flex:3;}
+		p:nth-child(3){flex:1;}
+	</style>
+</head>
+<body>
+	<div>
+		<p>text1 text text text text text text text text text text text text text text text text text text</p>
+		<p>text2 text text text text text text text text text text text text text text text text text text</p>
+		<p>text3 text text text text text text text text text text text text text text text text text text</p>
+	</div>
+</body>
+</html>

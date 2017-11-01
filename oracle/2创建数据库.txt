@@ -1,0 +1,6 @@
+创建数据库有两种方法：
+
+1.通过oracle提供的向导工具
+  Database Configuration Assistant
+
+2.用手工步骤直接创建

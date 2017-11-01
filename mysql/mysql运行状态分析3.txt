@@ -1,0 +1,6 @@
+show [session|global] variables; #默认当前连接
+
+	show  variables;
+	#或者使用
+	use information_schema;
+	select * from SESSION_variables;

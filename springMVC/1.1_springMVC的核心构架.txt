@@ -1,0 +1,22 @@
+MVC: Model,View,Controller
+
+Servlet: 控制器 -- Servlet
+	 模型 -- JavaBean组件(域模型层+业务逻辑层+持久层)
+	 视图 -- JSP
+
+Struts2: 控制器 -- StrutsPrepareAndExecuteFilter
+	 模型 -- ModelDrive<T>(域模型层+业务逻辑层+持久层)
+	 视图 -- JSP
+
+SpringMVC: 前端控制器 -- DispatcherServlet
+	   处理器映射器 -- HandlerMapping
+	   处理器适配器 -- HandlerAdapter -- 支持多种类型的处理器
+	   处理器 -- Handler(HttpRequestHandler,Servlet,Controller...)
+	   视图解析器 -- ViewResolver
+	   视图 -- View
+
+SpringMVC和struts2的区别:
+1.SpringMVC的入口是Servlet，Struts2的入口是Filter，两者的实现机制不同.
+2.SpringMVC基于方法设计，传递参数是通过方法形参，其实现是单例模式(也可以改为多例，推荐用单例)
+  Struts2基于类设计，传递参数是通过类的属性，只能是多例实现。
+3.参数传递方面，Struts2是用类的属性接收的，也就是在多个方法间共享，而SpringMVC基于方法，多个方法间不能共享。

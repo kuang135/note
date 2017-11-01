@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE validators PUBLIC
+  		"-//Apache Struts//XWork Validator 1.0.3//EN"
+  		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+ 
+		
+<!-- 配置对action中所有的方法进行校验 -->
+ <validators>
+ 	<!-- name属性指定被验证的表单字段的名字 -->
+		<field name="name">
+			<!-- 指定校验器 -->
+			<field-validator type="stringlength">
+				<!-- 校验器需要的参数 -->
+				<param name="maxLength">9</param> 
+				<param name="minLength">3</param>
+				<!-- 验证失败后的提示信息 -->
+				<message>长度不符合规定</message>
+			</field-validator>
+		</field> 
+		
+		<field name="age">
+			<!-- 指定校验器 -->
+			<field-validator type="int">
+				<!-- 校验器需要的参数 -->
+				<param name="max">9</param> 
+				<param name="min">3</param>
+				<!-- 验证失败后的提示信息 -->
+				<message>年龄不符合</message>
+			</field-validator>
+		</field>
+ </validators>

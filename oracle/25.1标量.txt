@@ -1,0 +1,19 @@
+标量：identifier [constant] datatype [not null] [:= default expr]
+      v_number number(6,2):=5.4;
+      v_valid boolean not null default false;
+
+输入员工号，显示雇员姓名，工作，个人所得税(税率为0.03)
+    declare
+	c_tax_rate number(3,2):=0.03;
+	v_ename varchar2(5);
+	v_sal number(7,2);
+	v_tax_sal number(7,2);
+    begin
+	select ename,sal into v_ename,v_sal from emp where empno=&no;
+	v_tax_sal:=v_sal*c_tax_tate;
+	dbms_output.put_line('姓名是：'||v_ename||' 工资:'||v_sal||' 交税:'||v_tax_sal);
+    end;
+
+使用%type类似，按照数据库列来确定定义的标量的类型和长度
+    标识符名 表名.列名%type；
+    v_ename emp.ename%type;

@@ -1,0 +1,33 @@
+Struts2存取数据是通过值栈完成的,ognl是访问值栈数据的表示式语言 
+三种语法 ：
+	# 号用法 
+	% 号用法
+	$ 号用法
+
+# 号的用法
+    1.访问OgnlContext的_values(Map)中常用web对象
+	<s:property value="#request.name"/>
+	#attr按照page,request,session,application进行搜索
+
+    2.不加#调用ValueStack搜索,先搜索_root中对象的属性，再搜索_values的key
+	<s:property value="username"/>
+    
+    3.集合属性过滤
+
+    4.构造Map
+	#{'key1':'value1','key2':'value2'} 相当于Map对象
+	{'s1','s2','s3','s4'} 相当于List对象 
+	应用: 常用于给radio或select、checkbox等标签赋值
+
+
+% 号的用法
+    1.在标签的属性值被理解为字符串类型时，告诉执行环境%{}里的是OGNL表达式.
+      在表达式添加'',比如%{'name'},就不会被ognl解析
+
+
+$ 号的用法
+    1.用于在国际化资源文件中,引用OGNL表达式
+	
+    2.在Struts2配置文件中,引用OGNL表达式
+	<result type="redirect">/login.jsp?name=${username}</result>
+	login.jsp中,${param.name}

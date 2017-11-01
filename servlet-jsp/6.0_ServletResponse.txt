@@ -1,0 +1,49 @@
+tomcat每次响应一个请求，都会产生一个HttpServletRequest对象,和一个HttpServletResponse对象，
+服务器用iso8859-1将请求行和请求头解码后放入request中，可以通过req设置对请求体的编码(post)，
+调用Servlet的service(ServletRequest req, ServletResponse res)时，会传入这两个参数，
+在方法中，通过req可以获取请求的客户主机信息，请求的头信息，请求的参数信息，
+通过res可以设置响应的状态码和头信息，获取流写入响应体，
+还可以设置服务器对响应体的编码方式(默认iso8859-1)，设置浏览器对响应体的解码方式(解码为gbk)，
+最后，tomcat获取ServletResponse对象中的响应信息返回给浏览器，
+并销毁request和response这两个对象。
+
+浏览器对页面文档的编码解码都是在meta标签中设置
+
+javax.servlet.ServletResponse（接口）
+	|
+	+--javax.servlet.http.Interface HttpServletResponse（接口）
+
+
+
+协议规定了响应是怎样的，那么api就是怎样去设计的
+
+    服务器发给服浏览器是响应：
+	HTTP/1.1 200 OK
+	Server: Apache-Coyote/1.1
+	Accept-Ranges: bytes	
+	ETag: W/"74-1396536247531"
+	Last-Modified: Thu, 03 Apr 2014 14:44:07 GMT
+	Content-Type: text/html
+	Content-Length: 74
+	Date: Thu, 03 Apr 2014 14:45:00 GMT
+	Connection: close
+
+    ServletResponse中的方法：
+	ServletOutputStream getOutputStream();
+	PrintWriter getWriter();
+	void setCharacterEncoding(String charset);
+	void setContentType(String type);
+
+    HttpServletResponse中的方法：
+	void addHeader(String name, String value);
+	void setHeader(String name, String value);
+	void setStatus(int sc);
+	void sendRedirect(String location);
+	void addCookie(Cookie cookie);
+	
+状态码：
+    200：响应成功
+    302：重定向
+    304：缓存
+    404：资源不存在
+    500：服务器端异常

@@ -1,0 +1,64 @@
+
+去web.xml文件配置写好的servlet程序
+    1.注册servlet
+    2.映射对外访问路径:
+	1)绝对路径匹配：优先级最高（必须以/开始）	/hello	  
+		http://localhost:8080/my_day09_servlet/hello
+
+	2)目录匹配：优先级次之（必须以/开始，以*结尾）	/first/second/*  
+		http://localhost:8080/my_day09_servlet/first/second
+		http://localhost:8080/my_day09_servlet/first/second/
+		http://localhost:8080/my_day09_servlet/first/second/anyname
+
+	3）扩展名匹配：优先级最低（必须不以/开始，必须以*开始）	*.do，*.html	  
+		http://localhost:8080/my_day09_servlet/anyname.do
+		http://localhost:8080/my_day09_servlet/anyname.html   访问的是一个servlet，不是html页面
+
+
+ <!-- 注册servlet -->
+ <servlet>
+  	<servlet-name>kobe</servlet-name>
+  	<servlet-class>cn.itcast.test.ServletClassName</servlet-class>
+  </servlet>
+
+  <!-- 映射对外访问路径 -->
+  <servlet-mapping>
+	<servlet-name>kobe</servlet-name>
+	<url-pattern>/hello</url-pattern>
+		<!-- 绝对路径，优先级最高 -->
+		<!-- http://localhost:8080/my_day09_servlet/hello -->
+  	<url-pattern>/first/second/*</url-pattern> 
+		<!-- 目录路径，优先级次之 -->
+	  	<!-- http://localhost:8080/my_day09_servlet/first/second -->
+	  	<!-- http://localhost:8080/my_day09_servlet/first/second/ -->
+	  	<!-- http://localhost:8080/my_day09_servlet/first/second/anyname -->
+  	<url-pattern>*.do</url-pattern>
+		<!-- 扩展名路径，优先级最低 -->
+	  	<!-- http://localhost:8080/my_day09_servlet/anyname.do -->
+  </servlet-mapping>
+
+
+让服务器启动时就创建servlet
+    配置<load-on-startup></load-on-startup>,值为0-9，表示创建实例的先后顺序
+	<servlet>
+  		<servlet-name>kobe</servlet-name>
+  		<servlet-class>cn.itcast.test.ServletClassName</servlet-class>
+		<load-on-startup>2</load-on-startup> 
+	</servlet>
+应用：为web应用写一些加载配置文件的InitSerlet
+
+默认的Servlet：
+	如果某个Servlet的映射路径仅仅为一个正斜杠（/），那么这个Servlet就成为当前Web应用程序的缺省Servlet。 
+	凡是在web.xml文件中找不到匹配的<servlet-mapping>元素的URL，它们的访问请求都将交给缺省Servlet处理，
+	也就是说，缺省Servlet用于处理所有其他Servlet都不处理的访问请求。 
+  应用：在<tomcat的安装目录>\conf\web.xml文件中，注册了一个名称为org.apache.catalina.servlets.DefaultServlet的Servlet，
+	并将这个Servlet设置为了缺省Servlet。
+	当访问Tomcat服务器中的某个静态HTML文件和图片时，实际上是在访问这个缺省Servlet。
+
+
+配置全局错误页面：
+	web-app标签下添加
+		<error-page>
+			<error-code>500</error-code>
+			<location>/500.jsp</location>
+		</error-page>

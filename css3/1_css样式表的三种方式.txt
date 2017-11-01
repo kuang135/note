@@ -1,0 +1,28 @@
+1.元素内嵌样式
+	<p style="color:red;font-size:50px;">这是一段文本</p>
+
+	
+2.文档内嵌样式
+	<head>
+		<style type="text/css">
+			p {
+			color: blue;
+			font-size: 40px;
+			}
+		</style>
+	</head>
+	<body>
+		<p>这是一段文本</p>
+	</body>
+
+	
+3.外部引用样式
+	<link rel="stylesheet" type="text/css" href="style.css">
+	//style.css
+	@charset "utf-8";
+	p {
+		color: green;
+		font-size: 30px;
+	}
+	如果有多个.css 文件，可以使用@import 导入方式引入.css 文件。
+	只不过，性能不如多个<link>链接。

@@ -1,0 +1,29 @@
+
+save: 瞬时 → 持久
+      把瞬时对象加入到一级缓存中
+      根据主键生成策略,为持久化对象分配唯一的OID
+      在使用代理主键的情况下, setId()方法为瞬时对象设置 OID 是无效的
+      执行一条insert语句,把对象当前的属性值组装到insert语句中
+
+update: 托管 → 持久
+	把脱管对象加入到一级缓存中
+	执行一条 update 语句
+	托管态对象和数据库的数据完全一致也会执行,在hbm.xml中的class标签中配置select-before-update为true,一致就不执行
+	注意: Session不允许两个不同的对象具有相同的OID,否则会出NonUniqueObjectException异常
+	      不允许更新一个OID在数据库不存在的对象,否则会出StaleObjectStateException异常
+
+saveOrUpdate
+	如果参数是瞬时对象就用save方法,
+	如果是脱管对象就用update方法,
+	如果是持久化对象就直接返回
+	如何判断:
+		主键生成策略为代理主键,存在OID为托管,不存在OID为瞬时
+		自然主键,执行select判断数据在数据库中是否存在,存在为托管,不存在为瞬时
+
+get,load
+	根据id查询,获取持久态对象
+	如果id不存在,get返回null, load不会马上报错,使用对象时抛出ObjectNotFoundException异常
+
+delete: 持久 → 瞬时
+	可以删除持久态,也可以删除托管态,删除托管态对象时,先使对象被Session关联
+	单表没有区别,多表删除持久态会有级联操作,多表删除托管态没有级联操作

@@ -1,0 +1,22 @@
+操作文档对象的css
+    attr("style",value) -- 通过attr属性设置获取style属性
+    css(name) -- 获取名为name的css样式属性的值
+    css(name,value) -- 设置css样式属性名为key,值为value
+    css(properties) -- 设置cssuangs属性 {key1:value1,key2:value2 ... }
+    addClass(class|fn) -- 添加一个class属性
+		function(index, class) -- index参数为对象在这个集合中的索引值，class参数为这个对象原先的class属性值
+			$('ul li:last').addClass(function(index, class) {
+				return 'item-' + index();
+			});	
+	removeClass([class]) -- 移除一个class属性
+    toggleClass(class) -- 如果存在(不存在)就删除(添加)一个class属性
+	heigth()
+	width()
+	innerHeight()
+	innerWidth()
+	outerHeight()
+	outerWidth()
+	offset()
+	position()
+	scrollTop()
+	srollLeft()

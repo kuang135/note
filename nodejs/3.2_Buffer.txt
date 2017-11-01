@@ -1,0 +1,54 @@
+Buffer 可以让 Node.js 处理二进制数据
+
+1.构造
+	var buf = new Buffer('你好');
+	console.log(buf.constructor.toString());
+	
+	function Buffer(arg, encoding) {
+	  // Common case.
+	  if (typeof arg === 'number') {
+		// If less than zero, or NaN.
+		if (arg < 0 || arg !== arg)
+		  arg = 0;
+		return allocate(arg);
+	  }
+
+	  // Slightly less common case.
+	  if (typeof arg === 'string') {
+		return fromString(arg, encoding);
+	  }
+
+	  // Unusual.
+	  return fromObject(arg);
+	}
+	
+2.类方法
+	Buffer.isEncoding(encoding)
+	Buffer.isBuffer(obj)
+	Buffer.byteLength(string[,encoding])
+	Buffer.compare(buf1,buf2)
+	Buffer.concat(list[, totalLength])
+		var buf1 = new Buffer('你好');
+		var buf2 = new Buffer('node.js');
+		var buf = Buffer.concat([buf1,buf2]);
+		console.log(buf.toString());
+		
+3.实例属性
+	length -- 内存长度，与内容无关
+
+4.实例方法	
+	写入缓冲区
+		buf.write(string[, offset[, length]][, encoding])
+			var buf = new Buffer(256);
+			var len = buf.write('你好');
+			console.log('写入字节数：' + len);
+		
+	从缓冲区读取数据
+		buf.toString([encoding[, start[, end]]])
+	
+	将 Buffer 转换为 JSON 对象
+		buf.toJSON()
+
+	buf.compare(otherBuffer) -- 比较
+	buf.copy(targetBuffer[, targetStart[, sourceStart[, sourceEnd]]]) -- 拷贝
+	buf.slice([start[, end]]) -- 裁剪

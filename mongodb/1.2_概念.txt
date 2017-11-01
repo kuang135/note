@@ -1,0 +1,30 @@
+SQL：	database	table		row			column	index	tableJoins	primaryKey
+Mongo:	database	collection	document	field	index	嵌入文档		primaryKey(_id)
+
+---------------------------------------------------------------------------
+
+数据库
+	一个mongodb中可以建立多个数据库
+	默认数据库为"db"，该数据库存储在data目录中
+	
+文档
+	文档是一个键值(key-value)对(即BSON)
+	一个集合的文档不需要设置相同的字段，并且相同的字段不需要相同的数据类型
+	文档中的键/值对是有序的
+	文档不能有重复的键
+	文档的键是字符串
+	
+集合
+	集合就是 MongoDB 文档组
+	集合没有固定的结构，对集合可以插入不同格式和类型的数据，但通常情况下我们插入集合的数据都会有一定的关联性
+	当第一个文档插入时，集合就会被创建
+Capped collections是固定大小的集合
+	db.createCollection("mycoll", {capped:true, size:100000})
+元数据
+	数据库的信息是存储在集合中：<dbname>.system.*
+		dbname.system.namespaces列出所有名字空间
+		dbname.system.indexes	列出所有索引
+		dbname.system.profile	包含数据库概要(profile)信息
+		dbname.system.users		列出所有可访问数据库的用户
+		dbname.local.sources	包含复制对端（slave）的服务器信息和状态
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		p:first-line 
+		{
+			color: #ff0000;
+			font-variant: small-caps
+		}
+
+		p:first-letter
+		{
+			color:#ff0000;
+			font-size:xx-large;
+		}
+
+		a[alt="doc"]:before
+		{
+
+			content:url("https://c.s-microsoft.com/zh-cn/CMSImages/Logo_Word_145x60.png?version=1662d5b5-bb6d-1de7-b018-e6b092dbdab3")
+		}
+
+
+		a[alt="xls"]:before
+		{
+
+			content:url("https://c.s-microsoft.com/zh-cn/CMSImages/Logo_Excel_137x60.png?version=c4c4c3b3-661c-2f4a-d52b-6dbc0ad113c3")
+		}
+
+
+
+	</style>
+</head>
+<body>
+	<p>
+		You can use the :first-line pseudo-element to add a special effect to the first line of a text!
+	</p>
+
+	<a href="http：//doc.xxx.com/test.doc" alt="doc">doc下载</a>
+	<a href="http：//doc.xxx.com/test.doc" alt="xls">excel下载</a>
+
+</body>
+</html>

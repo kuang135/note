@@ -1,0 +1,11 @@
+data, time
+	<#assign aDateTime = .now>
+	<#assign aDate = aDateTime?date>
+	<#assign aTime = aDateTime?time>
+	${aDateTime} -- Aug 30, 2016 7:45:08 PM
+	${aDate} -- Aug 30, 2016
+	${aTime} -- 7:45:08 PM
+	
+string
+	<#assign lastUpdated = .now>
+	${lastUpdated?string["yyyy-MM-dd HH:mm:ss"]} -- 2016-08-30 19:48:06

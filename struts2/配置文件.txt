@@ -1,0 +1,18 @@
+src目录下: struts.xml
+	用户自定义配置信息
+struts2_core.jar: struts-default.xml
+	拦截器,结果集
+struts2_core.jar: org.apache.struts2包下,default.properties
+	初始化配置信息
+struts2_core.jar: com.opensymphony.xwork2.validator.validators包下,default.xml
+	校验器的name和对应的class
+
+StrutsPrepareAndExcuteFilter在初始化的时候会加载很多配置文件,顺序为:
+	init_DefaultProperties(); // [1]
+		default.properties
+	init_TraditionalXmlConfigurations(); // [2]
+		struts-default.xml,struts-plugin.xml,struts.xml
+	init_LegacyStrutsProperties(); // [3]
+	init_CustomConfigurationProviders(); // [5]
+	init_FilterInitParameters() ; // [6]
+	init_AliasStandardObjects() ; // [7]

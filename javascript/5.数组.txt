@@ -1,0 +1,44 @@
+数组的大小可以动态调整
+
+创建：var arr = new Array();
+	var arr = [];
+
+检测：value instanceof Array -- 如果存在多个Array()构造函数，就不使用 
+	Array.isArray(value); 
+
+属性：
+	length，不是只读，可以通过该属性从数组的末尾移除或添加元素
+
+方法：
+	toString() -- 返回由数组中每个值的字符串形式拼接而成的一个以逗号分隔的字符串join(',')
+	join() -- 分隔，如果数组中的元素为null或undefined，则返回空字符串
+
+	push() -- 推入，任意个参数，往数组后端添加多项，返回数组的长度
+	pop() -- 弹出，移除最后一项，返回该项
+	shift() -- 移除第一项，返回该项
+	unshift() -- 任意个参数，往数组前端添加多项，返回数组的长度
+
+	reverse() -- 反转
+	sort() -- 排序，可以接收一个比较函数
+
+	concat() -- 合并，不会改变原始数组
+	slice() -- 截取，不会改变原始数组
+	splice() -- 拼接，可以增删改
+
+	indexOf() -- 从前往后找
+	lastIndexOf() -- 从后往前找
+
+	every() -- 对每一项运行给定函数，如果函数对每一项返回true，则返回true
+	some() -- 对每一项运行给定函数，如果函数对任意一项返回true，则返回true
+	filter() -- 对每一项运行给定函数，返回该函数回返回true的项组成的数组
+	forEach() -- 对每一项运行给定函数，没有返回值
+	map() -- 对每一项运行给定函数，返回每次函数调用的结果组成的数组
+	以上方法都不会修改数组中包含的值，给定函数可以接受3个参数，function(item, index, array){}
+
+	reduce() -- 归并，迭代数组的每一项，构建一个最终返回的值
+		var values = [1,2,3,4,5];
+        var sum = values.reduce(function(prev, cur, index, array){
+            return prev + cur;
+        });
+        alert(sum);
+

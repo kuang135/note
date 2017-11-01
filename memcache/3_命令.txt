@@ -1,0 +1,39 @@
+存，有六个命令项
+	set：添加一个新条目到memcached，或是用新的数据替换替换掉已存在的条目 
+	add：当KEY不存在的情况下，它向memcached存数据，否则，返回NOT_STORED响应 
+	replace：当KEY存在的情况下，它才会向memcached存数据，否则返回NOT_STORED响应 
+	cas: 改变一个存在的KEY值 ，但它还带了检查的功能 
+	append: 在这个值后面插入新值 
+	prepend: 在这个值前面插入新值 
+
+
+取，有两个命令项
+	get: 取单个值，从缓存中返回数据时，将在第一行得到KEY的名字，flag的值和返回的value长度，
+		 真正的数据在第二行，最后返回END，如KEY不存在，第一行就直接返回END 
+	get_multi：一次性取多个值 
+
+
+删除，一个命令
+	delete
+	
+刷新，一个命令
+	flush_all：清除所有缓存的item
+			   该命令不终止服务，会马上返回，因为它没有刷新缓存，而是使所有的item过期
+	
+	
+查看状态
+	stats: 统计memcached的各种信息 
+	stats reset: 重新统计数据 
+	stats slabs：显示slabs信息，可以详细看到数据的分段存储情况 
+	stats items：显示slab中的item数目 
+	stats cachedump 1 0：列出slabs第一段里存的KEY值 
+	stat evictions 0：表示要腾出新空间给新的item而移动的合法item数目 
+	
+------------------------------------------------------------------------------------------------------
+
+实例操作
+	连接：telnet 127.0.0.1 11211
+	存入: <command> <key> <flags> <exptime> <bytes>
+		  set key1 0 60 3
+		  yao
+	获取：get key1

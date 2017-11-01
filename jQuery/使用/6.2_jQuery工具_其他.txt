@@ -1,0 +1,19 @@
+ 字符串配平
+	$.trim(string);
+	
+对象序列化
+	$.param(obj,[traditional]); //traditional:是否使用传统的方式浅层序列化
+			$.param({name:'kobe',age:38});
+		
+			var myObject = {
+			  a: {
+				one: 1, 
+				two: 2, 
+				three: 3
+			  }, 
+			  b: [1,2,3]
+			};
+			var recursive = decodeURIComponent($.param(myObject));
+			console.log(recursive);//a[one]=1&a[two]=2&a[three]=3&b[]=1&b[]=2&b[]=3
+			var shallow = decodeURIComponent($.param(myObject, true));
+			console.log(shallow);//a=[object+Object]&b=1&b=2&b=3

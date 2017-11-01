@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.mybatis.mapper.OrderMapper">
+
+	<select id="queryOrderAndUserByOrderNumber" resultType="OrderUser">
+		SELECT
+			o.*,
+			u.name,
+			u.user_name,
+			u.age
+		FROM
+			tb_order o
+		LEFT JOIN tb_user u ON u.id = o.user_id
+		WHERE
+			o.order_number = #{orderNumber}
+	</select>
+	
+	<resultMap type="Order" id="orderAndUserResultMap" autoMapping="true">
+		<id property="id" column="id"/>
+		
+		<!-- 
+			映射对象
+			property ： Order对象中的user属性名
+			javaType ：属性的java类型 
+		 -->
+		<association property="user" javaType="User" autoMapping="true">
+			<!-- 
+			<result property="name" column="name"/>
+			<result property="userName" column="user_name"/>
+			<result property="age" column="age"/> 
+			-->
+		</association>
+	</resultMap>
+	
+	<select id="queryOrderAndUserByOrderNumber2" resultMap="orderAndUserResultMap">
+		SELECT
+			o.*,
+			u.name,
+			u.user_name,
+			u.age
+		FROM
+			tb_order o
+		LEFT JOIN tb_user u ON u.id = o.user_id
+		WHERE
+			o.order_number = #{orderNumber}
+	</select>
+	
+	<resultMap type="Order" id="orderAndUserAndOrderDetailResultMap" autoMapping="true" 
+	 extends="orderAndUserResultMap">
+		<!-- 
+			<id property="id" column="id"/>
+			<association property="user" javaType="User" autoMapping="true"/> 
+		-->
+		
+		<!-- 
+			property: java对象中的属性名称
+			javaType: 集合类型
+			ofType： 集合中的元素的数据类型
+		 -->
+		<collection property="orderdetails" javaType="List" ofType="Orderdetail" autoMapping="true">
+			<id property="id" column="orderdetail_id"/>
+			<!-- <result property="itemId" column="item_id"/> -->
+		</collection>
+	</resultMap>
+	
+	<select id="queryOrderAndUserAndOrderDetailByOrderNumber" resultMap="orderAndUserAndOrderDetailResultMap">
+		SELECT
+			o.*,
+			u.name,
+			u.user_name,
+			u.age,
+			od.id orderdetail_id,
+		  od.item_id
+		FROM
+			tb_order o
+		LEFT JOIN tb_user u ON u.id = o.user_id
+		LEFT JOIN tb_orderdetail od ON od.order_id = o.id
+		WHERE
+			o.order_number = #{orderNumber}
+	</select>
+	
+	<resultMap type="Order" id="orderAndUserAndOrderDetailAndItemResultMap">
+		<id property="id" column="id"/>
+		<association property="user" javaType="User" autoMapping="true"/>
+		
+		<!-- 
+			property: java对象中的属性名称
+			javaType: 集合类型
+			ofType： 集合中的元素的数据类型
+		 -->
+		<collection property="orderdetails" javaType="List" ofType="Orderdetail" autoMapping="true">
+			<id property="id" column="orderdetail_id"/>
+			
+			<!-- 完成 Item对象的映射 -->
+			<association property="item" javaType="Item" autoMapping="true">
+				<id property="id" column="item_id"/>
+			</association>
+		</collection>
+	</resultMap>
+	<select id="queryOrderAndUserAndOrderDetailAndItemByOrderNumber" resultMap="orderAndUserAndOrderDetailAndItemResultMap">
+		SELECT
+			o.*,
+			u.name,
+			u.user_name,
+			u.age,
+			od.id orderdetail_id,
+		  od.item_id,
+			i.item_detail,
+			i.item_name,
+			i.item_price
+		FROM
+			tb_order o
+		LEFT JOIN tb_user u ON u.id = o.user_id
+		LEFT JOIN tb_orderdetail od ON od.order_id = o.id
+		LEFT JOIN tb_item i ON i.id = od.item_id
+		WHERE
+			o.order_number = #{orderNumber}
+	</select>
+	
+	<!-- 实现延迟加载 -->
+	<resultMap type="Order" id="orderAndLazyUserResultMap">
+		<id property="id" column="id"/>
+		<!-- 
+			通过select指定查询的Statement
+		 -->
+		<association property="user" select="queryUserById" column="user_id">
+		</association>
+	</resultMap>
+	
+	<select id="queryUserById" resultType="User">
+		SELECT * FROM tb_user WHERE id = #{id}
+	</select>
+	<select id="queryOrderAndLazyUserByOrderNumber" resultMap="orderAndLazyUserResultMap">
+		SELECT * FROM tb_order WHERE order_number = #{orderNumber}
+	</select>
+	
+</mapper>

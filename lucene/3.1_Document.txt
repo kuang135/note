@@ -1,0 +1,16 @@
+通过 IndexWriter 和 IndexReader 都可获取 Document 的信息
+
+增
+	indexWriter.addDocument(doc);
+	indexWriter.addDocuments(docs);
+
+删
+	删除操作之后，还在缓存中，可以恢复，lucene会通过周期性刷新目录来执行删除操作
+	indexWriter.deleteDocuments(Term... terms);
+	indexWriter.deleteDocuments(Query... queries);
+	
+改
+	lucene 执行先删除再添加
+    设计时，根据id更新，id最好能唯一标识一部文档，且 id 为 StringField
+	updateDocument(term, doc);
+	updateDocuments(term, docs);

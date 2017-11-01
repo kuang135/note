@@ -1,0 +1,31 @@
+
+assertThat可以代替其余其他的assert
+
+public static <T> void assertThat(T actual,org.hamcrest.Matcher<T> matcher)
+需要下载hamcrest-core.jar和hamcrest-library.jar，才能用matcher语法
+需要自己引入jUnit.jar,不能用eclipse自带的
+跟老大assert相比，更自然
+
+assertThat( n, allOf( greaterThan(1), lessThan(15) ) );
+assertThat( n, anyOf( greaterThan(16), lessThan(8) ) );
+assertThat( n, anything() );
+assertThat( str, is( "bjsxt" ) );
+assertThat( str, not( "bjxxt" ) );
+
+assertThat( str, containsString( "bjsxt" ) );
+assertThat( str, endsWith("bjsxt" ) ); 
+assertThat( str, startsWith( "bjsxt" ) ); 
+assertThat( n, equalTo( nExpected ) ); 
+assertThat( str, equalToIgnoringCase( "bjsxt" ) ); 
+assertThat( str, equalToIgnoringWhiteSpace( "bjsxt" ) );
+
+assertThat( d, closeTo( 3.0, 0.3 ) );
+assertThat( d, greaterThan(3.0) );
+assertThat( d, lessThan (10.0) );
+assertThat( d, greaterThanOrEqualTo (5.0) );
+assertThat( d, lessThanOrEqualTo (16.0) );
+
+assertThat( map, hasEntry( "bjsxt", "bjsxt" ) );
+assertThat( iterable, hasItem ( "bjsxt" ) );
+assertThat( map, hasKey ( "bjsxt" ) );
+assertThat( map, hasValue ( "bjsxt" ) );

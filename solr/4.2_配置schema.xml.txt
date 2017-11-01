@@ -1,0 +1,65 @@
+schema.xml
+	schema.xml文件里面主要定义了索引数据类型，索引字段等信息。
+
+1.fieldtype
+	fieldtype节点主要用来定义数据类型。   
+		<fieldType name="string" sortMissingLast="true" class="solr.StrField"/>    
+		<fieldType name="boolean" sortMissingLast="true" class="solr.BoolField"/>
+
+	name指定的是节点定义的名称
+	class指向org.apache.solr.analysis中定义的类型名称
+	fieldtype还可以自己定义当前类型建立索引和查询数据的时候使用的查询分析器。
+	tokenizer指定分词器
+	filter指定过滤器
+		<fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+		  <analyzer type="index">
+			   <tokenizer class="solr.StandardTokenizerFactory"/>
+			   <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
+			   <filter class="solr.LowerCaseFilterFactory"/>
+		  </analyzer>
+		  <analyzer type="query">
+			   <tokenizer class="solr.StandardTokenizerFactory"/>
+			   <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
+			   <filter class="solr.SynonymFilterFactory" ignoreCase="true" expand="true" synonyms="synonyms.txt"/>
+			   <filter class="solr.LowerCaseFilterFactory"/>
+		  </analyzer>
+		</fieldType>
+	positionIncrementGap：可选属性，定义在同一个文档中此类型数据的空白间隔，避免短语匹配错误。
+	positionIncrementGap=100  只对 multiValue = true 的fieldType有意义。
+	StrField类型不被分析，而是被逐字地索引/存储  
+	solr.TextField 允许用户通过分析器来定制索引和查询，分析器包括一个分词器（tokenizer）和多个过滤器（filter）
+
+2.field
+	field节点指定建立索引和查询数据的字段。
+	name代表数据字段名称
+	type代表数据类型，也就是之前定义的fieldtype
+	indexed代表是否被索引
+	stored代表是否被存储
+	multiValued是否有多个值，如果字段可能有多个值，尽可能设为true
+	_version节点和root节点是必须保留的，不能删除
+	<field name="_version_" stored="true" indexed="true" type="long"/>
+	<field name="_root_" stored="false" indexed="true" type="string"/>
+	<field name="ProductCode" stored="true" indexed="true" type="string" multiValued="false" required="true"/>
+	<field name="ProductName" stored="true" indexed="true" type="text_general"/>
+
+3.copyfield
+	通过这个节点，可以把一个字段的值复制到另一个字段中，也可以把多个字段的值同时复制到另一个字段中，这样搜索的时候都可以根据一个字段来进行搜索。
+	<copyField source="ProductName" dest="text"/>
+	<copyField source="ProductCode" dest="text"/>
+
+4.dynamicField
+	dynamicField 表示动态字段，可以动态定义一个字段，只要符合规则的字段都可以。
+	dynamicField name="*_i" stored="true" indexed="true" type="int"/>
+	*_i只要以_i结尾的字段都满足这个定义。
+
+5.uniquekey
+	<uniqueKey>id</uniqueKey>
+	uniquekey节点是文档的唯一标示，相当于主键，每次更新，删除的时候都根据这个字段来进行操作。必须填写。
+
+6.defaultSearchField
+	<defaultSearchField>text</defaultSearchField>
+	defaultSearchField指定搜索的时候默认搜索字段的值。
+
+7.solrQueryParser
+	<solrQueryParser defaultOperator="OR"/>
+	solrQueryParser指定搜索时多个词之间的关系，可以是or,and两种。

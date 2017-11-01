@@ -1,0 +1,52 @@
+@RequestMapping可以加在类上,也可以加在方法上
+窄化请求映射,可以认为是方法级别的 @RequestMapping继承类级别的 @RequestMapping
+
+@RequestMapping有几个重要属性 value,method,params,headers,consumes,produces
+
+请求映射分为如下几种：
+    1.URL路径映射：使用URL映射请求到处理器的功能处理方法
+		1).表中url映射
+		   @RequestMapping("/hello")
+		   @RequestMapping(value="/hello")
+		2).占位符映射(uri模板映射)
+			url中可以通过一个或多个{xxxx}占位符映射,通过 @PathVariable("xxx")绑定到方法的入参中
+			例如：  @RequestMapping("/user/{pageName}")
+				public ModelAndView test(@PathVariable("pageName") String page){}
+				请求URL：http ://localhost/user/query
+		3).ant风格的url
+			? -- 匹配一个字符，如/index? 可以匹配/index1,但不能匹配/index 或/index12
+			* -- 匹配零个或多个字符，如/index1/*,可以匹配/index1/demo，但不匹配/index1/demo/demo
+			** -- 匹配零个或多个路径，如/index2/**,可以匹配/index2 路径下的所有子路径,如匹配/index2/demo,或/index2/demo/demo
+		4).组合使用是"或"的关系
+		   如 @RequestMapping(value={"/test1", "/user/create"})
+
+
+    2.请求方法映射限定：如限定功能处理方法只处理GET请求
+		@RequestMapping(value = "/query",method=RequestMethod.GET)
+		@RequestMapping(value = "/query",method={RequestMethod.GET,RequestMethod.POST})
+		组合使用是"或"的关系
+
+    3.请求参数映射限定：如限定只处理包含"abc"请求参数的请求
+		@RequestMapping(value="/query",params="userId") 请求参数中必须包含userId
+		@RequestMapping(value="/query",params="!userId") 请求参数中不能包含userId
+		@RequestMapping(value="/query",params="userId=1") 请求参数必须包含userId，且其值为1
+		@RequestMapping(value="/query",params="userId!=1") 请求参数必须包含userId，但其值不能为1
+		@RequestMapping(value="/query",params={"userId","name"}) 必须包含userId和name参数
+		组合使用是"且"的关系
+
+    4.请求头映射限定：如限定只处理"Accept=application/json"的请求
+		@RequestMapping(value="/query",headers= "Accept") 请求头中必须有Accept参数
+		@RequestMapping(value="/query",headers = "!abc") 请求头中必须没有abc参数
+		@RequestMapping(value="/query",headers = "Content-Type=application/json") 请求头中必须有"Content-Type=application/json"参数
+		@RequestMapping(value="/query",headers = "Accept!=text/vnd.wap.wml") 请求头中必须有"Accept"参数,但值不等于"text/vnd.wap.wml"
+		@RequestMapping(value="/query",headers = {"Accept!=text/vnd.wap.wml", "abc=123"}) 组合使用是"且"的关系
+		
+	5.可消费的媒体类型,只用当 Content-Type 请求头匹配可消费的媒体类型，才认为这个请求是可映射的
+		@RequestMapping(value = "/pets", method = RequestMethod.POST, consumes="application/json")
+		
+	6.可生产的媒体类型, 当Accept 请求头匹配可消费的媒体类型，才认为这个请求是可映射的
+		@ResponseBody
+		@RequestMapping(value = "/pets/{petId}", method = RequestMethod.GET, produces="application/json")
+
+
+

@@ -1,0 +1,32 @@
+创建索引：
+	1.准备要索引的文档(Document)
+		文件一：Students should be allowed to go out with their friends, but not allowed to drink beer.
+		文件二：My friend Jerry went to school to see his students but found them drunk which is not allowed.
+	
+	2.将文档传给分词组件(Tokenizer)，得到词元(Token)
+		1)将文档分成一个一个单独的单词
+		2)去除标点符号
+		3)去除停词(Stop word)
+		经过分词(Tokenizer)后得到的结果称为词元(Token):
+			“Students”，“allowed”，“go”，“their”，“friends”，“allowed”，“drink”，“beer”，“My”，“friend”，
+			“Jerry”，“went”，“school”，“see”，“his”，“students”，“found”，“them”，“drunk”，“allowed”。
+	
+	3.将词元(Token)传给语言处理组件(Linguistic Processor)，得到词(Term)
+		1)变为小写(Lowercase)
+		2)将单词缩减为词根形式，如“cars”到“car”等。这种操作称为：stemming
+		3)将单词转变为词根形式，如“drove”到“drive”等。这种操作称为：lemmatization
+		经过语言处理，得到的结果称为词(Item)：
+			“student”，“allow”，“go”，“their”，“friend”，“allow”，“drink”，“beer”，“my”，“friend”，“jerry”，
+			“go”，“school”，“see”，“his”，“student”，“find”，“them”，“drink”，“allow
+			
+	4.将词(Term)传给索引组件(Indexer)，得到文档倒排链表(Posting List)
+		1. 利用得到的词(Term)创建一个字典
+		2. 对字典按字母顺序进行排序
+		3. 合并相同的词(Term)成为文档倒排链表
+			Term	Document Frequcency		Document ID,Frequency
+			词		文档频率				文档ID,词频率
+			allow	2						1,2 --> 2,1
+			beer	1						1,2
+			drink	2						1,1 --> 2,1
+			Document Frequency：即文档频次，表示总共有多少文件包含此词(Term)
+			Frequency：即词频率，表示此文件中包含了几个此词(Term)

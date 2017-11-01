@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		p {
+			background: yellow;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+	<p class="demo1">is what I'd say</p>
+	<p class="demo1">is what I said</p>
+
+	<script>
+		$( "p.demo1" ).prepend( "<strong>hi,</strong>" );
+		$( "p.demo1" ).append( "<q>OK</q>" );
+	</script>
+
+
+	<p class="demo2">is what I'd say</p>
+	<p class="demo2">is what I said</p>
+
+	<script>
+
+		$("<strong>OK</strong>").appendTo("p.demo2");
+		$("<q>hi,</q>").prependTo("p.demo2");
+
+	</script>
+
+
+
+<span>hi, <q>ok</q> <strong>jquery</strong> </span>
+<hr>
+<a href=""></a>
+<script type="text/javascript">
+	
+$("a").text($("span").html());
+
+</script>
+
+</body>
+</html>

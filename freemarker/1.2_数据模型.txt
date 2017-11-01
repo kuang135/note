@@ -1,0 +1,56 @@
+在内部，模板中可用的变量都是实现了 freemarker.template.TemplateModel 接口的Java对象
+但在数据模型中，可以使用基本的Java集合类作为变量，因为这些变量会在内部被替换为适当的 TemplateModel 类型
+Template的process(Object dataModel, Writer out)方法中，会用freemarker.template.ObjectWrapper对java的类型进行包装
+ 
+4种标量: -- TemplateScalarModel -- 直接通过name访问
+	布尔值
+	数字
+    字符串 -- SimpleScalar
+    日期类型(日期，时间，日期-时间)
+	
+3种容器:
+	哈希表 -- TemplateHashModel的SimpleHash -- 通过name.key或name["key"]访问
+    序列 -- TemplateSequenceModel的SimpleSequence -- 通过name[index]访问，从0开始
+    集合 -- TemplateCollectionModel的SimpleCollection
+	
+方法:
+	方法变量在存于实现了 TemplateMethodModel 接口的模板中, TemplateMethodModelEx 接口扩展了 TemplateMethodModel 接口
+		这个接口包含一个方法： TemplateModel exec(java.util.List arguments)
+		形式参数以 TemplateModel 的形式放进 java.util.List
+		当使用 方法调用表达式 调用方法时，exec 方法将会被调用
+	public class F2_Method implements TemplateMethodModelEx {
+		@Override
+		public Object exec(List args) throws TemplateModelException {
+			if (args.size() != 2) {
+				throw new TemplateModelException("Wrong arguments");
+			}
+			SimpleScalar s1 = (SimpleScalar) args.get(1);
+			SimpleScalar s0 = (SimpleScalar) args.get(0);
+			return new SimpleNumber(s1.toString().indexOf(s0.toString()));
+		}
+	}
+	root.put("indexOf", new IndexOfMethod());
+	${indexOf("met", "something")} -- 2
+	${indexOf("foo", "something")} -- -1
+	
+指令:
+	实现 TemplateDirectiveModel 接口在Java代码中实现自定义指令
+		http://freemarker.org/docs/pgui_datamodel_directive.html
+	使用
+		1）把这个指令放到数据模型中
+			root.put("upper", new com.example.UpperDirective());
+		2）将常用的指令作为 共享变量 放到 Configuration 中
+		3）使用 内建函数new 将指令放到一个FTL库(宏的集合，就像在模板中， 使用 include 或 import )中：
+			<#assign upper = "com.example.UpperDirective"?new()>
+			<#macro upper>
+			  ...
+			</#macro>
+
+结点变量: -- TemplateNodeModel
+	为了 在数据模型中处理XML文档，也可以用于构建树状模型
+	
+对象包装:
+	对象包装器是实现了 freemarker.template.ObjectWrapper 接口的类。
+	它的目标是实现Java对象(应用程序中特定类等，比如 String， Map，List 实例)和FTL类型系统之间的映射。
+	
+	

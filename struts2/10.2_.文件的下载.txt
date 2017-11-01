@@ -1,0 +1,45 @@
+文件下载: 一个输出流， 两个头信息 
+	  response输出流
+	  Content-Type头信息
+	  Content-Disposition头信息
+
+Struts2 实现文件下载，可以通过 stream 类型结果集
+原理:
+    StreamResult中有3个重要的属性
+	protected String contentType = "text/plain";//文件的MIME类型
+	protected String contentDisposition = "inline";//要重新设置为以附件形式下载
+	protected String inputName = "inputStream";//输入流的名字,可以在struts.xml中重新配置
+    doExecute(String finalLocation, ActionInvocation invocation)中从值栈中获取contentType和contentDisposition值,
+    并根据inputName的值从值栈中去获取InputStream
+	String disposition = stack.findString("contentDisposition");
+        String contentType = stack.findString("contentType");
+        String inputName = stack.findString("inputName");
+
+    我们要做的就是在action中把contentType,contentDisposition,inputName的值放入值栈,
+    并根据inputName的值提供获取InputStream的方法,一般inputName用默认的
+
+步骤:
+    1.编写action,将三个参数放入值栈,xml中用ongl获取值栈中的参数值
+	//最简单的方式: 把InputStream用名字inputStream放入值栈(通过action)
+	public InputStream getInputStream(){
+	    //把contentType放入值栈
+		String contentType=ServletActionContext.getServletContext().getMimeType(fileName);
+		ActionContext.getContext().put("contentType", contentType);
+	    //把fileName放入值栈
+		String fileName = new String("文件名.txt".getBytes("gbk"),"iso-8859-1");
+		ActionContext.getContext().put("filename", fileName);
+	    //返回一个InputStream
+		String realPath=ServletActionContext.getServletContext().getRealPath("/upload/missxu.sql");
+		return new FileInputStream(realPath);
+	}
+
+    2.配置struts.xml,用ognl表达式获取action中相应的参数值
+	<!-- 文件下载 -->
+    	<action name="download" class="cn.itcast.action.DownloadAction">
+    		<result type="stream">
+    			<param name="contentType">${#contentType}</param>
+			<param name="inputName">inputStream</param>
+    			<param name="contentDisposition">attachment;filename=${#fileName}</param>
+    		</result>
+    	</action>
+

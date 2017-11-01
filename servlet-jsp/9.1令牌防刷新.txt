@@ -1,0 +1,21 @@
+防止重复提交更改数据库
+
+原理:
+    用户在访问jsp的时候生成一个令牌号,将这个令牌放入session,通过表单的hidden隐藏起来提交,
+    到servlet的时候,记下hidden隐藏的令牌,并获取session中的令牌,同时移除session中的令牌,
+    对两个令牌做对比,如果一致,说明正常,如果不一致,说明是重复提交.
+
+jsp中:
+	<%String token =  UUID.randomUUID().toString().replaceAll("-", "");
+	  request.getSession().setAttribute("token_session", token);
+	%>
+	<input type="hidden" value="${token_session }" name="token">
+
+servlet中:
+	String token  = request.getParameter("token");
+	String token_session = (String) request.getSession().getAttribute("token_session");
+	request.getSession().removeAttribute("token_session");
+	if(!token.equals(token_session)){
+		return;
+	}
+	...

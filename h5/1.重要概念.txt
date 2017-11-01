@@ -1,0 +1,13 @@
+semantic tags
+audio & video
+htmls forms
+geolocation
+web storage
+drag & drop
+canvas
+offline
+web sql
+indexedDB
+web sockets
+history api
+file api

@@ -1,0 +1,77 @@
+$.ajax(url,[settings])
+	-- jQuery底层ajax实现,$.ajax()返回其创建的 XMLHttpRequest 对象
+	-- 所有的选项都可以通过$.ajaxSetup()函数来全局设置
+	-- 如果要处理$.ajax()得到的数据，则需要使用回调函数
+    数据类型
+	-- $.ajax()函数依赖服务器提供的信息来处理返回的数据
+	-- 通过dataType可以指定不同数据处理方式,如xml,html,json,jsonp,script,text,_default
+	-- text和xml类型返回的数据不会经过处理,仅仅简单的将XMLHttpRequest的responseText或responseHTML属性传递给success回调函数
+	-- 如果指定为html类型，任何内嵌的JavaScript都会在HTML作为一个字符串返回之前执行。
+	-- 如果指定script类型的话，会先执行服务器端生成JavaScript，然后再把脚本作为一个文本数据返回。
+	-- 如果指定为json类型，会把获取到的数据作为一个JavaScript对象来解析，并且把构建好的对象作为结果返回。
+	-- 如果获取的数据文件存放在远程服务器上（域名不同，也就是跨域获取数据），则需要使用jsonp类型。
+	   使用这种类型的话，会创建一个查询字符串参数 callback=? ，这个参数会加在请求的URL后面。
+	   服务器端应当在JSON数据前加上回调函数名，以便完成一个有效的JSONP请求
+	-- 如果指定了script或者jsonp类型，那么当从服务器接收到数据时，实际上是用了<script>标签而不是XMLHttpRequest对象
+    发送数据到服务器
+	-- data选项可以包含一个查询字符串，比如 key1=value1&amp;key2=value2 
+	   也可以是一个映射，比如 {key1: 'value1', key2: 'value2'}
+    回调函数处理数据
+	-- 返回xml,要把xml对象转出jQuery对象再操作,$(data)
+	   返回json,可以直接操作json对象(js的方式),也可以转换为jQuery对象再操作,$(data)
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+$(selector).load(url,[data],[callback])
+	-- 载入远程 html 文件代码并插入至被选元素中
+	-- 默认使用 get 方式,传递附加参数时自动转换为 post 方式
+	-- 服务器端返回 html 代码,就不需要callback函数了
+
+$.get(url,[data],[callback],[type])
+	-- 基本上用于从服务器获得数据
+	-- GET 方法可能返回缓存数据		
+
+$.post(url,[data],[callback],[type])
+	-- 可用于从服务器获取数据
+	-- 常用于连同请求一起发送数据
+	-- POST 方法不会缓存数据
+
+$("form").serialize()
+	-- 将表单中的数据转化为 key=value&... 格式的字符串 
+	-- 用于Ajax请求,作为[data]参数
+
+--------------------------------------------------------------------------------------------------------------------------
+
+$.getJSON(url,[data],[callback])
+	-- 支持跨域
+		$.getJSON("${pageContext.request.contextPath}/jsonp","callback=?",function(json){
+		    alert(json.name+"--"+json.age);
+		});
+	servlet中
+		String callback=request.getParameter("callback");
+		response.setContentType("text/json;charset=utf-8");
+		String data="{name:'科比',age:23}";
+		response.getWriter().print(callback+"("+data+")");
+
+$.getScript(url,[callback])
+	-- 支持跨域
+		$.getScript("http://www.missxu.com/webapp/js/user.js",function(){
+		    alert(user.name+"--"+user.age);
+		    user.shot();
+		});
+	user.js中
+		var user={name:"杜兰特",age:27};
+		user.shot=function(){
+		    alert("3分命中");
+		};
+
+------------------------------------------------------------------------------------------
+
+跨域: html页面可以通过<script src="...连接..."></script>跨域获取数据
+      等于是将数据放到了当前<script>...数据...</script>标签中
+
+
+test.json中的数据改为:
+	var data={key:"123"};
+<script type="text/javascript" src="..."></script>下添加
+<script type="text/javascript">alert(data.key);</script>

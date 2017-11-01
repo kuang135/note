@@ -1,0 +1,24 @@
+
+写action的三种方式:
+    1.写一个类实现Action接口,覆盖execute()方法
+    
+    2.继承ActionSupport,ActionSupport类implements Action, Validateable, ValidationAware, TextProvider, LocaleProvider, Serializable
+    
+    3.写一个pojo类,必须有一个public String execute()方法
+
+ -----------------------------------------------------------------------------
+
+com.opensymphony.xwork2.Action(接口)
+	|
+	+com.opensymphony.xwork2.ActionSupport(类)
+
+
+Action的方法:
+    String execute();
+
+ActionSupport的方法:
+    Collection<String> getActionMessages();
+    setActionMessages(Collection<String> messages);
+    Map<String, List<String>> getFieldErrors();
+    ... ...
+

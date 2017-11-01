@@ -1,0 +1,30 @@
+颜色和透明度
+	color 	设置前景色(文本)
+			颜色值
+	opacity 设置元素的透明度，对前景背景都有效
+			0-1值
+
+		
+盒子阴影
+	box-shadow 阴影效果
+		hoffset	阴影的水平偏移量，是一个长度值，正值表示阴影向右偏移，负值表示阴影向左偏移。
+		voffset	阴影的垂直偏移量，是一个长度值，正值代表阴影位于元素盒子的下方，负值代表阴影位于元素盒子上方。
+		blur	(可选)指定模糊值，是一个长度值，值越大盒子的边界越模糊。默认值为0，边界清晰
+		spread	(可选)指定阴影延伸半径，是一个长度值，正值代表阴影向盒子各个方向延伸扩大，负值代表阴影沿相反方向缩小
+		color	(可选)设置阴影的颜色，如果省略，浏览器会自行选择一个颜色
+		inset	(可选)将外部阴影设置为内部阴影。
+
+盒子轮廓
+	outline 和边框一样，只不过它可以在边框的外围再加一层
+		outline-color 	外围轮廓的颜色
+		outline-offset 	轮廓距离元素边框边缘的偏移量
+		outline-style 	轮廓样式，和border-style 一致
+		ontline-witdh 	轮廓宽度
+		outline 		简写<颜色> <样式> <宽度>
+		
+光标样式
+	cursor	auto,default,none,context-menu,help,pointer,progress,wait,
+			cell,crosshair,text,verticaltext,alias,copy,move,no-drop,
+			not-allowed,e-resize,n-resize,ne-resize,nw-resize,s-resize,
+			se-resize,sw-resize,w-resize,ew-resize,ns-resize,
+			nesw-resize,nwse-resize,col-resize,row-resize,all-scroll

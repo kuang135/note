@@ -1,0 +1,27 @@
+oracle分页有3种方式
+
+1.根据rownum来分,速度快
+    select a.*,rownum rn from (select * from emp) a;
+    选择6,7,8,9,10
+    select * from 
+        (select a.*,rownum rn from
+	   (select * from emp) a 
+	where rownum<=10)
+    where rn>=6;
+    指定查询列，只需修改最里层的子查询
+    select * from 
+        (select a.*,rownum rn from 
+	    (select ename,sal from emp) a
+	where rownum<=10)
+    where rn>=6;
+    排序，在最里层的子查询
+    select * from (
+	select a.*,rownum rn from (
+	    select ename,sal from emp order by sal
+	) a where rownum<=10
+    )where rn>=6;
+
+2.按分析函数来分，最慢
+
+3.按rowid来分，最快
+ 

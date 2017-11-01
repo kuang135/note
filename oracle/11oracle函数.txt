@@ -1,0 +1,63 @@
+字符函数
+    lower(char)
+    upper(char)
+    length(char)
+    substr(char,m,n)
+    replace(char1,search_string,replace_string)
+查看首字母大写的名字
+    select upper(substr(ename,1,1))||lower(substr(ename,2,length(char)-1)) from emp;
+    
+数学函数
+    round(n,[m]) 四舍五入
+    trunc(n,[m]) 截取数字
+    mod(m,n) 取模，m/n的余数
+    floor(n) 向下取整
+    ceil(n)  向上取整
+一个月30天的情况下所有员工的日资金，忽略余数
+    select trunc(sal/30),ename from emp;
+    select floor(sal/30),ename from emp;
+
+日期函数，默认日期格式dd-mon-yy，即31-1月-88
+    sysdate 返回系统时间
+    add_months(d,n)
+    last_day(d) 返回日期当前月的最后一天
+各月倒数第三天受雇的所有员工
+    select hiredate,ename from emp where last_day(hiredate)-2=hiredate;
+
+转换函数，将数据类型从一种转为另外一种
+    to_char()，to_date()
+日期显示 时/分/秒
+    select ename,to_char(hirdate,'yyyy-mm-dd hh24:mi:ss'),to_char(sal,'L99,999.99') from emp;
+薪水显示货币符号
+    yy：两位数字的年份 2013-->13
+    yyyy：四位数字的年份 2013年
+    mm：两位数字的月份 8月-->08
+    dd：两位数字的天 30天-->30
+    hh24：8点-->20
+    hh12：8点-->08
+    mi：显示分钟
+    ss：显示秒
+    9：显示数字，忽略前面0
+    0：显示数字，位数不足，用0补齐
+    .：在指定位置显示小数点
+    ,：在指定位置显示逗号
+    $：在数字前叫美元
+    L：在数字前加本地货币符号
+    C：在数字前加国际货币符号
+    G：在指定位置显示组分隔符
+    D：在指定位置显示小数点符号
+显示1980年入职的所有员工
+    select ename,hiredate from emp where to_char(hiredate,'yyyy')=1980;
+显示12月份入职的员工
+    select ename,hiredate from emp where to_char(hiredate,'mm')=12;
+
+系统函数，sys_context
+    select sys_context('USERENV','参数') from emp;
+参数：
+    terminal：当前会话客户所对应的终端的识别符
+    language：语言
+    db_name：当前数据库名称
+    nls_date_format：当前会话客户所对应的日期格式
+    session_user：当前会话客户所对应的数据库用户名
+    current_schema：当前会话客户所对应的默认方案名
+    host：返回数据库所在主机的名称

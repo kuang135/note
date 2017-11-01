@@ -1,0 +1,19 @@
+例外：系统例外
+      自定义的例外
+
+系统例外：
+    No_data_found	(没有找到数据)
+    Too_many_rows	(select ...into语句匹配多个行)
+    Zero_Divide		(被零除)
+    Value_error		(算术或转换错误)
+    Timeout_on_resource	(在等待资源时发生超时)
+
+declare
+  pename emp.ename%type;
+begin
+  select ename into pename from emp where empno = 1234;
+exception
+  when no_data_found then dbms_output.put_line('没有数据');
+  when others then dbms_output.put_line('其他例外');
+end;
+/

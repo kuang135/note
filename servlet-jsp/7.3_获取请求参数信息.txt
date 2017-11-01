@@ -1,0 +1,39 @@
+获取请求参数信息：
+	String getParameter(String name);
+	//对于checkbox
+	String[] getParameterValues(String name);
+
+乱码问题：
+	页面上设置让浏览器以utf-8编码
+	服务器默认以iso8859-1对请求信息解码后封装到request对象中
+
+
+当请求方式为post时：
+	post方式时，参数是在请求体中
+
+    解决方法：
+	设置服务器对请求体的解码方式，一定要在获取参数之前设置
+	request.setCharacterEncoding("utf-8");
+	request.getParameter("userName");
+
+
+当请求方式为get时：
+	get方式，参数在url地址栏中
+	参数在地址栏中对应的编码称为url编码
+		为了保证数据可以传输，必须编码，因为以二进制传输
+		为了让服务器正确获得值，要用%去断开
+	
+    解决方法：
+	拿到参数值后用iso8859-1编码，再以utf-8重新解码
+	
+	1.手动解决
+	  String userName=request.getParameter("userName");
+	  userName=new String(userName.getBytes("iso8859-1"),"utf-8");
+		
+	2.工具解决
+	  String userName=request.getParameter("userName");
+	  String encodeStr=URLEncoder.encode(userName,"iso8859-1");
+	  userName=URLDecoder.decode(encodeStr,"utf-8");
+
+	
+	

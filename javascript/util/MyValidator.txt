@@ -1,0 +1,25 @@
+模块化，这个例子并不合理，因为没有局部变量
+
+var MyValidator;
+	MyValidator = (function(){
+		//模块化，这里可以添加局部变量，与外界隔离
+		return {
+			isBlank : function(str) {
+				if (typeof str === 'string') {
+					return !(str.trim());
+				} else {
+					throw new Error('type of parameter must be string.');
+				}
+			},
+			isEmailAddress : function(str) {
+				if (typeof str === 'string') {
+					return /^[a-zA-Z0-9\-]+@[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3})$/.test(str);
+				} else {
+					throw new Error('type of parameter must be string.');
+				}
+			},
+			cookieEnabled : function() {
+				return navigator.cookieEnabled;
+			}
+		};
+	})();

@@ -1,0 +1,23 @@
+Spring的核心组件：Beans,Context和Core
+	Beans: 包装的是Object,Object中有数据
+	Context: 发现每个Bean之间的关系,建立并维护这种关系.
+		 Context就是一个Bean关系的集合,这个关系集合又叫Ioc容器
+	Core: 发现,建立和维护每个Bean之间的关系所需的一系列工具.
+
+Bean组件: 在Spring的org.springframework.beans包下.
+	  这个包下的所有类主要解决了三件事：Bean的定义、Bean的创建以及对Bean的解析.
+	  Spring对Bean的创建用的是典型的工厂模式,顶级接口是BeanFactory.
+
+Context组件:　在Spring的org.springframework.context包下．
+	　　　给Spring提供一个运行时的环境,用以保存各个对象的状态.
+	      ApplicationContext是Context的顶级父类,继承了BeanFactory,说明Spring容器中运行的主体对象是Bean
+	      ApplicationContext也继承了ResourceLoader接口,使得ApplicationContext可以访问到任何外部资源.
+
+	      总体来说ApplicationContext必须要完成以下几件事： 
+			1.标识一个应用环境 
+			2.利用BeanFactory创建Bean对象 
+			3.保存对象关系表 
+			4.能够捕获各种事件 
+
+Core组件: 其中包含了很多的关键类,其中一个重要组成部分就是定义了资源的访问方式
+	  Resource接口封装了各种可能的资源类型,也就是对使用者来说屏蔽了文件类型的不同

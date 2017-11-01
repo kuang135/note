@@ -1,0 +1,25 @@
+在out参数中使用光标，需要声明包结构
+
+1.包头(只赋值声明)
+	create or replace package mypackage
+	as
+	    type empcursor is ref cursor;
+	    procedure queryEmpList(dno in number,empList out empcursor);
+	end mypackage;
+
+2.包体(只赋值实现)
+	create or replace package body mypackage
+	as
+	    procedure queryEmpList(dno in number,empList out empcursor)
+	    as
+	    begin
+		open empList for select * from emp where deptno = dno;
+	    end queryEmpList;
+	end mypackage;
+
+
+--查询某个部门中所有员工的所有信息
+1.plsql中新建包，右键"包程序"，新建，ctrl+s 进行编译
+2.右键新建的包，创建主题，ctrl+s 进行编译
+
+注意：访问存储过程时，必须带上包的名字

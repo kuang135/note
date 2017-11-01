@@ -1,0 +1,50 @@
+对于类成员变量，注入方式有三种
+	1.构造函数注入
+	    编写
+		public class Car {
+		    private String name;
+		    private double price;
+		    public Car(String name, double price) {
+				this.name = name;
+				this.price = price;
+		    }
+		}
+	    配置
+		<bean id="car" class="cn.itcast.bean.Car">
+			<!-- index 参数索引,name 参数名称,type 参数类型,
+			     value 注入简单类型数据(String,基本类型),
+			     ref 注入另一个对象，引用另一个Bean的id
+			     index|name|type 三选一,三选二;ref|value 二选一 -->
+			<constructor-arg index="0" value="宝马" />
+			<constructor-arg index="1" value="1000000" />
+		</bean>
+		
+	2.属性setter方法注入(开发推荐)
+	    编写
+		public class Employee {
+		    private String name;
+		    private Car car;
+		    public void setName(String name) {
+				this.name = name;
+		    }
+	       	public void setCar(Car car) {
+				this.car = car;
+		    }
+		}
+	    配置
+		<bean id="employee" class="cn.itcast.bean.Employee">
+			<!-- name 对应setter方法的属性名
+			     value 注入简单类型数据
+			     ref 注入另一个Bean的对象，引用另一个Bean的id -->
+			<property name="name" value="张三" />
+			<property name="car" value="car" />
+		</bean>
+
+	3.接口注入(spring不支持)
+		public class UserAction extends ActionSupport implements ServletRequestAware{
+		    private HttpServletRequest request;
+		    @Override
+		    public void setServletRequest(HttpServletRequest request) {
+				this.request=request;
+		    }
+		}

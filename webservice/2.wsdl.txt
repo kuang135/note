@@ -1,0 +1,56 @@
+1.wsdl是什么
+    网络服务描述语言(web services description language),是描述WebService的说明书
+    可规定服务的位置，以及此服务提供的操作（或方法）.
+
+2.解决的问题
+    服务端将接口以wsdl的形式提供为外界,
+    客户端将wsdl解析为接口(桩),用以访问服务端的数据
+
+3.wsdl的文档结构(由下往上阅读)
+    <service> -- 整个webservice的服务视图,包括了所有的服务端点
+    <binding> -- 为每个端口定义消息格式和协议细节
+    <portType> -- 描述webservice可被执行的操作,以及相关的消息,通过binding指向portType
+    <message> -- 定义一个操作(方法)的数据参数(可有多个参数),一个方法对应两个message
+    <type> -- 定义webservice使用的全部数据类型
+
+4.wsdl和java类的映射
+	<definitions targetNamespace="" name=""> -- QName构造的两个参数
+	    <types>  -- 定义所有数据类型
+		<xs:complexType name=""> -- 这个方法有两个参数
+		    <xs:sequence>
+			<xs:element name="arg0" type="xs:string" minOccurs="0"/>
+			<xs:element name="arg1" type="xs:string" minOccurs="0"/>
+		    </xs:sequence>
+		</xs:complexType>
+		<xs:complexType name=""> -- 这个返回结果不是简单类型
+		    <xs:sequence>
+			<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		    </xs:sequence>
+		</xs:complexType>
+	    </types> 
+
+	    <message name=""> -- 定义一个方法的输入参数
+		<part name="" element="">
+	    </message> 
+	    <message name=""> -- 定义一个方法的输出参数
+		<part name="" element="">
+	    </message>
+
+	    <portType name=""> -- 生成的类的名字
+		<operation name=""> -- 类中的方法
+		    <input wsam:Action="" message=""/> -- 输入参数
+		    <output wsam:Action="" message=""/> -- 输出参数
+		</operation>
+	    </portType>
+
+	    <binding>
+		<operation name="">
+		</operation>
+	    </binding>
+
+	    <service name="">
+		<port name="" binding="">
+		</port>
+	    </service>
+	</definitions>
+

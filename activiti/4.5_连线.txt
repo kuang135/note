@@ -1,0 +1,16 @@
+连线: SequenceFlow
+
+1.一个活动中可以指定一个或多个SequenceFlow
+	开始活动中有一个SequenceFlow
+	结束活动中没有SequenceFlow
+	其他活动中有1条或多条SequenceFlow
+
+2.如果只有一个，则可以不使用流程变量设置condition的名称.
+  如果有多个，则需要使用流程变量设置condition的名称.
+
+如何设置: 鼠标点到连线,在properties中的main config中设置${message=='不重要'}
+	  message表示流程变量的名称,'不重要'表示流程变量的值,
+	  ${}中间的内容要使用boolean类型的表达式,用来判断应该执行的连线.
+
+只要有多条线,就得使用流程变量来判断了.
+

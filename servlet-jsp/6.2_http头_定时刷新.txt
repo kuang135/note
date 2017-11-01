@@ -1,0 +1,12 @@
+http头：refresh
+
+应用场景：定时刷新网页
+	  定时刷新指定页面
+
+如何应用：
+	1.refresh头
+	  response.setHeader("refresh","5");
+	  response.setHeader("refresh","5;url=http://www.sina.com");
+
+	2.通过html标签的meta标签
+	  <meta http-equiv="refresh" content="5;url=http://localhost:8080">

@@ -1,0 +1,21 @@
+定义变量，类型是exception
+使用raise抛出自定义例外
+
+--自定义例外
+set serveroutput on
+declare
+  cursor cemp is select ename from emp where deptno = 123456;
+  pename emp.ename%type;
+  no_emp_found exception;
+begin
+  open cemp;
+    fetch cemp into pename;
+    if cemp%notfound then raise no_emp_found;
+    end if;
+  --orcale自动启动pmon(process monitor)来关闭光标
+  close cemp;
+exception
+  when no_emp_found then dbms_output.put_line('没有找到员工');
+  when others then dbms_output.put_line('其他例外');
+end;
+/

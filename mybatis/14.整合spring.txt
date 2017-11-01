@@ -1,0 +1,46 @@
+1.Mybatis-spring的集成包
+
+2.配置applicationContext.xml
+
+	<!-- 构造sqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 指定dataSource -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 指定Mybatis的配置文件 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+		<!-- 别名包 -->
+		<property name="typeAliasesPackage" value="cn.itcast.mybatis.pojo"></property>
+		<!-- 使用通配符配置mapper.xml -->
+		<property name="mapperLocations" value="classpath:mappers/*.xml"></property>
+	</bean>
+
+	
+	<!-- 定义Mapper -->
+	<bean id="orderMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		 <!-- 指定接口 -->
+		<property name="mapperInterface" value="cn.itcast.mybatis.mapper.OrderMapper" />
+		<!-- 指定sqlSessionFactory -->
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- 定义Mybatis mapper接口扫描器,上面的定义Mapper就不需要了 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	     <property name="basePackage" value="cn.itcast.mybatis.mapper,cn.itcast.mybatis.mapper2" />
+	</bean>
+
+代码测试:
+	ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        orderMapper = context.getBean(OrderMapper.class);//没有在OrderMapper上加IoC注解,按类型获取
+
+
+事务管理: Mybatis和spring整合后的事务管理是由Spring管理的，
+	  事务管理器依然使用jdbc的事务管理器，org.springframework.jdbc.datasource.DataSourceTransactionManager
+
+代码测试:
+	ApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"applicationContext.xml","applicationContext-transaction.xml"});
+        orderMapper = context.getBean(OrderMapper.class);//没有在OrderMapper上加IoC注解,按类型获取
+
+	ApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
+        SqlSessionFactory sqlSessionFactory = (SqlSessionFactory)context.getBean("sqlSessionFactory");
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);//直接拿SqlSession进行操作
+        User user=sqlSession.selectOne("cn.itcast.mapper.UserMapper.selectUser",1);

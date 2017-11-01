@@ -1,0 +1,17 @@
+函数用于返回特定的数据，当建立函数时，在函数头部必须包含return子句，
+而在函数体内必须包含return语句返回的数据。
+
+建立函数：输入雇员的姓名，返回该雇员的年薪
+    create function my_fun1(myName varchar2) return number is yearSal number(7,2);
+    begin
+	select sal*12+nvl(comm,0) into yearSal from emp where ename=myName;
+	return yearSal;
+    end;
+	
+调用函数
+    var income number;
+    call my_fun1('SCOTT') into:income;
+
+在java程序中调用函数
+    select my_fun1('SCOTT') from dual;
+    rs.getInt(1);//得到返回的结果

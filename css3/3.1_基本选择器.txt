@@ -1,0 +1,72 @@
+基本选择器：通用选择器，元素选择器，id选择器，类选择器，属性选择器
+
+1.通用选择器
+	* {
+		border: 1px solid red;
+	}
+	匹配所有html元素的选择器包括<html>和<body>标签
+
+2.元素选择器
+	p {
+		color: red;
+	}
+	
+3.ID 选择器
+	#abc {
+		font-size: 20px;
+	}
+	
+4.类选择器
+	.abc {
+		border: 1px solid red;
+	}
+	也可以使用"元素.class 值"的形式，限定某种类型的元素
+	b.abc {
+		border: 1px solid red;
+	}
+	类选择器还可以调用多个样式，中间用空格隔开进行层叠
+	<span class="abc edf">无</span>
+		
+5.属性选择器
+	//所需CSS2 版本
+	[href] {
+		color: orange;
+	}
+	解释：属性选择器，直接通过两个中括号里面包含属性名即可。
+
+	//所需CSS2 版本
+	[type="password"] {
+		border: 1px solid red;
+	}
+	解释：匹配属性值的属性选择器。
+
+	//所需版本CSS3
+	[href^="http"] {
+		color: orange;
+	}
+	解释：属性值开头匹配的属性选择器。
+	
+	//所需版本CSS3
+	[href$=".com"] {
+		color: orange;
+	}
+	解释：属性值结尾匹配的属性选择器。
+
+	//所需版本CSS3
+	[href*="baidu"] {
+		color: orange;
+	}
+	解释：属性值包含指定字符的属性选择器。
+
+	//所需版本CSS2
+	[class~="edf"] {
+		font-size: 50px;
+	}
+	解释：属性值具有多个值时，匹配其中一个值的属性选择器。
+
+	//所需版本CSS2
+	[lang|="en"] {
+		color: red;
+	}
+	解释：属性值具有多个值且使用"-"号连接符分割的其中一个值的属性选择器。比如
+		<i lang="en-us">HTML5</i>
